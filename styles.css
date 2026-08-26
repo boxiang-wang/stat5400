@@ -1,0 +1,105 @@
+/* STAT 5400 site styles — black & gold accents on a clean base.
+   Re-skin the course by editing the variables below. */
+:root {
+  --c-gold: #FFCD00;
+  --c-gold-dark: #b8860b;
+  --c-black: #000000;
+  --c-link: #0072B2;      /* R blue, also link color (7400 convention) */
+  --c-python: #D55E00;    /* Python orange (7400 convention) */
+}
+
+a { color: var(--c-link); }
+.navbar { background-color: var(--c-black) !important; }
+.navbar .navbar-brand, .navbar .nav-link { color: var(--c-gold) !important; }
+
+h1.title { border-bottom: 4px solid var(--c-gold); padding-bottom: .25em; }
+h2 { border-bottom: 2px solid var(--c-gold); padding-bottom: .15em; margin-top: 1.6em; }
+.header-section-number { color: var(--c-gold-dark); }
+
+/* Small top buttons under the title */
+.page-buttons { margin: .5em 0 1.5em 0; }
+.page-buttons .btn { margin-right: .5em; }
+.page-codefiles { color: #777; font-size: .85em; margin-top: .4em; }
+.page-codefiles a.codefile { color: var(--c-black); margin-left: .6em; text-decoration: none; border-bottom: 1px dotted var(--c-gold-dark); }
+.page-codefiles a.codefile:hover { color: var(--c-link); }
+.page-codefiles a.codefile i { color: var(--c-gold-dark); margin-right: .15em; }
+
+/* Language badges on static code blocks (7400 style): badge sits inside the box, top-left */
+div.sourceCode { position: relative; }
+div.sourceCode:has(> pre.r) > pre, div.sourceCode:has(> pre.python) > pre { padding-top: 2.1em; }
+div.sourceCode:has(> pre.r)::before,
+div.sourceCode:has(> pre.python)::before {
+  position: absolute; top: .5em; left: .7em; z-index: 5;
+  padding: .1em .55em; border-radius: .35em; font-size: .72em; font-weight: 700; color: #fff;
+  line-height: 1.4;
+}
+div.sourceCode:has(> pre.r)::before { content: "R"; background: var(--c-link); }
+div.sourceCode:has(> pre.python)::before { content: "Python"; background: var(--c-python); }
+
+/* Block-mode pill: [{{< fa play >}} Run]{.mode} */
+.mode {
+  display: inline-block; background: var(--c-black); color: var(--c-gold);
+  padding: .1em .7em; border-radius: .7em; font-weight: 600; font-size: .85em;
+  margin: .8em 0 .3em 0;
+}
+.mode a { color: var(--c-gold); text-decoration: underline; }
+a.mode-link { text-decoration: none; }
+a.mode-link:hover { background: var(--c-gold); color: var(--c-black); }
+
+/* Hover notes: [phrase]{.more note="extra text"} */
+.more {
+  border-bottom: 1px dotted var(--c-gold-dark); cursor: help; position: relative;
+}
+.more::before { content: "\24D8"; font-size: .7em; color: var(--c-gold-dark); vertical-align: super; margin-right: .15em; }
+.more::after {
+  content: attr(data-note);
+  position: absolute; left: 0; top: 1.7em; z-index: 50;
+  width: 30em; max-width: 75vw;
+  background: #fffbe6; border: 1px solid var(--c-gold); border-radius: .4em;
+  padding: .5em .8em; font-size: .9em; font-weight: 400; line-height: 1.35; color: #222;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  visibility: hidden; opacity: 0; transition: opacity .15s;
+}
+.more:hover::after { visibility: visible; opacity: 1; }
+
+/* Explore (ask-AI) row */
+.explore {
+  border-left: 4px solid var(--c-gold); background: #fafafa;
+  padding: .6em .9em; margin: 1em 0; border-radius: 0 .4em .4em 0;
+}
+.explore .explore-label { font-weight: 600; color: var(--c-gold-dark); margin-right: .4em; }
+.explore .explore-prompt { font-style: italic; }
+.explore .explore-buttons { margin-top: .4em; }
+.explore .explore-buttons a, .explore .explore-buttons button {
+  display: inline-block; margin: .15em .35em .15em 0; padding: .15em .7em;
+  border: 1px solid var(--c-black); border-radius: .6em; background: #fff;
+  color: var(--c-black); font-size: .85em; text-decoration: none; cursor: pointer;
+}
+.explore .explore-buttons a:hover, .explore .explore-buttons button:hover { background: var(--c-gold); }
+
+figcaption, .source { color: #777; font-size: .85em; }
+
+/* Run-in-Codespace row */
+.codespace { margin: -.4em 0 1.2em 0; font-size: .85em; }
+.codespace a, .codespace button {
+  display: inline-block; margin-right: .5em; padding: .2em .8em;
+  border: 1px solid var(--c-black); border-radius: .6em; background: var(--c-black);
+  color: var(--c-gold); font-weight: 600; text-decoration: none; cursor: pointer; font-size: .9em;
+}
+.codespace button { background: #fff; color: var(--c-black); font-weight: 400; }
+.codespace a:hover { background: var(--c-gold); color: var(--c-black); }
+.codespace .codespace-file { color: #777; }
+
+/* Live Google Trends embed: folded; click the title to load the chart */
+.trends { margin: .6em 0; }
+.trends details { border-left: 4px solid var(--c-gold); background: #fafafa; border-radius: 0 .4em .4em 0; padding: .4em .8em; }
+.trends summary { cursor: pointer; font-weight: 600; color: var(--c-gold-dark); list-style: none; }
+.trends summary::before { content: "\25B8"; display: inline-block; width: 1em; color: var(--c-gold-dark); }
+.trends details[open] summary::before { content: "\25BE"; }
+.trends .trends-body { margin-top: .6em; }
+.trends iframe { display: block; margin-bottom: .4em; background: #fff; }
+.trends .trends-open { font-size: .9em; }
+
+/* hover-note phrases that are also links: look like a hover note, not a blue link */
+a.more { color: inherit; text-decoration: none; }
+a.more:hover { color: var(--c-link); }
