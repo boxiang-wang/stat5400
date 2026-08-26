@@ -6,7 +6,8 @@ subtitle: "University of Iowa · Fall 2026"
 **Instructor** [Boxiang Wang](https://boxiang-wang.github.io/), 362 SH · office hours Monday 2:00–5:00 PM\
 **Teaching assistant** Zhihan Chen\
 **Lectures** Monday and Wednesday, 5:00–6:15 PM, 75 SH\
-**Announcements, homework, grades** [ICON](https://icon.uiowa.edu)
+**Announcements, homework, grades** [ICON](https://icon.uiowa.edu)\
+**Syllabus** [PDF](syllabus.pdf)
 
 STAT:5400 Computing in Statistics is a required course for first-year master's students in statistics and data science. Through hands-on work on real problems, it develops the computing skills that applied statistics and research in statistical methodology and theory depend on.
 

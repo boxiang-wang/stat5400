@@ -690,6 +690,7 @@ Three things to notice, all of which return in Section 6:
 - [ ] Apply for GitHub Education.
 - [ ] Open the course Codespace once and run `notes/run/s1p1_sumC.R`.
 - [ ] Create a Gemini API key and store it as the `GEMINI_API_KEY` Codespaces secret.
+- [ ] Register a free account at [MorphMind](https://morphmind.ai).
 - [ ] Run the two API examples above in the Codespace. Did the two answers differ?
 
 Questions about these notes? Later this semester the course tutor, built on [MorphMind](https://morphmind.ai), will answer them. Until then, the *Ask AI* buttons.
