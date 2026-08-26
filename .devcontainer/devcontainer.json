@@ -1,0 +1,55 @@
+// STAT 5400 course environment — used by GitHub Codespaces ("Code" -> "Create codespace")
+// and by VS Code Dev Containers locally. Students get identical R/Python/Quarto versions,
+// a C/C++ compiler (for Rcpp), and the packages the notes use.
+{
+  "name": "STAT 5400",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    // C/C++ toolchain so Rcpp can compile
+    "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+      "packages": "build-essential,gfortran,libcurl4-openssl-dev,libssl-dev,libxml2-dev,zstd"
+    },
+    // R (release version) via rig
+    "ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+      "version": "release",
+      "installRMarkdown": true,
+      "installVscDebugger": false
+    },
+    // R packages used in the notes (binary installs, fast)
+    "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
+      "packages": "Rcpp,microbenchmark,languageserver,knitr,rmarkdown,ellmer",
+      "installSystemRequirements": true
+    },
+    // Python
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    },
+    // Quarto CLI
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "installTinyTex": false
+    }
+  },
+  // postCreate runs once at build: Python packages, then Ollama with two small models (about 1.7 GB; see setup-ollama.sh).
+  // The two run independently, so one failing does not block the other.
+  "postCreateCommand": {
+    "python": "pip install --user numpy pandas matplotlib jupyter google-genai ollama",
+    "ollama": "bash .devcontainer/setup-ollama.sh"
+  },
+  // every start: make sure the Ollama server is up
+  "postStartCommand": "bash .devcontainer/start-ollama.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "quarto.quarto",
+        "REditorSupport.r",
+        "ms-python.python",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+      ]
+    },
+    "codespaces": {
+      // files opened automatically when the Codespace starts
+      "openFiles": ["notes/run/README.md"]
+    }
+  }
+}

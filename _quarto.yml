@@ -1,0 +1,36 @@
+# repo the "Run in Codespace" buttons open (switch to boxiang-wang/stat5400 when public)
+codespace-repo: boxiang-wang/stat5400
+
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+    - "notes/*.qmd"
+  resources:
+    - "notes/code/*"
+    - "notes/*.pdf"
+
+website:
+  title: "STAT 5400"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+    right:
+      - icon: github
+        href: https://github.com/boxiang-wang/stat5400
+  sidebar:
+    style: docked
+    search: true
+    contents:
+      - index.qmd
+      - section: "Lecture Notes"
+        contents:
+          - auto: "notes/*.qmd"
+
+format:
+  live-html:
+    theme: cosmo
+    css: styles.css
+    toc: true

@@ -1,0 +1,25 @@
+---
+title: "STAT 5400 — Computing in Statistics"
+subtitle: "University of Iowa · Fall 2026"
+---
+
+**Instructor** [Boxiang Wang](https://boxiang-wang.github.io/), 362 SH · office hours Monday 2:00–5:00 PM\
+**Teaching assistant** Zhihan Chen\
+**Lectures** Monday and Wednesday, 5:00–6:15 PM, 75 SH\
+**Announcements, homework, grades** [ICON](https://icon.uiowa.edu)
+
+STAT:5400 Computing in Statistics is a required course for first-year master's students in statistics and data science. Through hands-on work on real problems, it develops the computing skills that applied statistics and research in statistical methodology and theory depend on.
+
+The course has two components.
+
+- **Statistical computing methods**: generating random variables, Monte Carlo studies, resampling methods, computing linear models, computation for high-dimensional statistics, machine learning algorithms, and large language models.
+- **Tech guide**: the tools of reproducible statistical work — Linux, Git and GitHub, R Markdown and Quarto, writing R packages, C and Fortran from R, parallel computing, and working with large language models through APIs and R packages.
+
+**What makes this course different**
+
+- **AI from the first week.** LLMs are used to brainstorm, as a tutor, and for vibe coding. You will also call AI from R and Python the way a statistician would: as something to sample from and to evaluate.
+- **Bilingual.** Examples and assignments in both R and Python.
+- **Interactive notes.** Most examples run right in the browser, with nothing to install. Examples that need a real machine (a compiler, an API key, more memory) open in a GitHub Codespace, or you can run them on your own computer.
+- **Real tools.** Git and GitHub, Codespaces, Copilot, Linux, R packages.
+
+_Notes will be added section by section during the semester._
