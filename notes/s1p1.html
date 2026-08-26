@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Boxiang Wang">
+<meta name="dcterms.date" content="2026-08-26">
+
+<title>STAT:5400 Section 1.1 — Introduction – STAT 5400</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-629c56ba100745318e9dcb35146191d0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STAT 5400</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/boxiang-wang/stat5400"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/s1p1.html">Lecture Notes</a></li><li class="breadcrumb-item"><a href="../notes/s1p1.html">STAT:5400 Section 1.1 — Introduction</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT 5400 — Computing in Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Lecture Notes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/s1p1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">STAT:5400 Section 1.1 — Introduction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/s1p1.html">Lecture Notes</a></li><li class="breadcrumb-item"><a href="../notes/s1p1.html">STAT:5400 Section 1.1 — Introduction</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">STAT:5400 Section 1.1 — Introduction</h1>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author"><a href="https://boxiang-wang.github.io/">Boxiang Wang</a> </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://stat.uiowa.edu/">
+            Department of Statistics and Actuarial Science, University of Iowa
+            </a>
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 26, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="page-buttons">
+<p><a href="s1p1.pdf" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-file-pdf" aria-label="file-pdf"></i> PDF</a> <a class="btn btn-sm btn-outline-dark" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-code"></i> Open in Codespace</a></p>
+<div class="page-codefiles">
+All code on this page, in one file: <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/code/s1p1.R" target="_blank" rel="noopener"><i class="fa-brands fa-r-project"></i> R</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/code/s1p1.py" target="_blank" rel="noopener"><i class="fa-brands fa-python"></i> Python</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/code/s1p1.Rmd" target="_blank" rel="noopener"><i class="fa-brands fa-markdown"></i> Rmd</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/code/s1p1.ipynb" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i> ipynb</a>
+</div>
+</div>
+<section id="why-statistics-data-science" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="why-statistics-data-science"><span class="header-section-number">1</span> Why statistics &amp; data science?</h2>
+<ul>
+<li><p>2009: “<em>I keep saying that the <span style="color:#0072B2">sexy</span> job in the next 10 years will be statisticians. And I’m not kidding.</em>”</p>
+<p><a href="http://www.nytimes.com/2009/08/06/technology/06stats.html" class="more" data-note="Varian was Google's chief economist when he said this; the interview was about the coming flood of free, abundant data and the scarcity of people who could make sense of it.">Hal Varian</a>, Chief Economist at Google</p></li>
+<li><p>2012: <a href="https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century">“Data Scientist: The <span style="color:#0072B2">Sexiest</span> Job of the 21st Century”</a>, Harvard Business Review.</p></li>
+<li><p>2022: <a href="https://hbr.org/2022/07/is-data-scientist-still-the-sexiest-job-of-the-21st-century">“Is Data Scientist Still the Sexiest Job of the 21st Century?”</a>, Harvard Business Review.</p>
+<ul>
+<li>The U.S. Bureau of Labor Statistics predicts data science will see more growth than almost any other field between now and 2029. Data scientist jobs are projected to grow <strong>+36%</strong> (2023–2033), with over 20,000 openings per year.</li>
+<li>In 2024, the <a href="https://www.bls.gov/ooh/math/data-scientists.htm">median pay was $112,590</a>. The median salary for an experienced data scientist in California is approaching $200,000.</li>
+<li>Data Scientist is <a href="https://money.usnews.com/careers/best-jobs/rankings/best-stem-jobs">#6 <em>Best STEM Job</em></a> and <a href="https://money.usnews.com/careers/best-jobs/data-scientist">#4 <em>Best Technology Job</em></a>.</li>
+</ul></li>
+<li><p>2023–2025: the question changes. Nobody has written the next “sexiest job” piece; the discussion is now whether AI changes the job. <a href="https://www.linkedin.com/pulse/do-data-scientists-still-hold-worlds-sexiest-stephen-deangelis" class="more" data-note="Stephen DeAngelis, 'Do Data Scientists Still Hold the World's Sexiest Positions?', LinkedIn, Oct 2023: AI lets business specialists do analysis without code; data scientists stay essential for model accuracy and new methods.">A 2023 essay</a> argued the title is “being challenged by AI”; <a href="https://medium.com/data-science-collective/data-science-the-rise-fall-and-evolution-of-the-sexiest-job-of-the-21st-century-ad03d2a86fb9" class="more" data-note="'Data Science: The Rise, Fall, and Evolution of the Sexiest Job of the 21st Century', Medium, 2025: the hype cooled from its early-2010s peak, and the role split into analyst, engineer, and scientist tracks.">a 2025 essay</a> called it “the rise, fall, and evolution” of the job.</p></li>
+<li><p>2026: the numbers say the job kept growing. <a href="https://www.bls.gov/ooh/math/data-scientists.htm">BLS projects</a> data-scientist employment <strong>+34%</strong> over 2024–2034, about 23,400 openings a year; <a href="https://www.bls.gov/ooh/math/mathematicians-and-statisticians.htm">for statisticians</a>, growth “much faster than average” as well.</p></li>
+</ul>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">What are the current job outlook and median pay for data scientists and statisticians in the U.S.? Use the latest Bureau of Labor Statistics Occupational Outlook figures, and compare them with the 2023–2033 projection of +36% growth and the 2024 median pay of $112,590.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=What%20are%20the%20current%20job%20outlook%20and%20median%20pay%20for%20data%20scientists%20and%20statisticians%20in%20the%20U.S.%3F%20Use%20the%20latest%20Bureau%20of%20Labor%20Statistics%20Occupational%20Outlook%20figures%2C%20and%20compare%20them%20with%20the%202023%E2%80%932033%20projection%20of%20%2B36%25%20growth%20and%20the%202024%20median%20pay%20of%20%24112%2C590.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=What%20are%20the%20current%20job%20outlook%20and%20median%20pay%20for%20data%20scientists%20and%20statisticians%20in%20the%20U.S.%3F%20Use%20the%20latest%20Bureau%20of%20Labor%20Statistics%20Occupational%20Outlook%20figures%2C%20and%20compare%20them%20with%20the%202023%E2%80%932033%20projection%20of%20%2B36%25%20growth%20and%20the%202024%20median%20pay%20of%20%24112%2C590.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=What%20are%20the%20current%20job%20outlook%20and%20median%20pay%20for%20data%20scientists%20and%20statisticians%20in%20the%20U.S.%3F%20Use%20the%20latest%20Bureau%20of%20Labor%20Statistics%20Occupational%20Outlook%20figures%2C%20and%20compare%20them%20with%20the%202023%E2%80%932033%20projection%20of%20%2B36%25%20growth%20and%20the%202024%20median%20pay%20of%20%24112%2C590.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="What are the current job outlook and median pay for data scientists and statisticians in the U.S.? Use the latest Bureau of Labor Statistics Occupational Outlook figures, and compare them with the 2023–2033 projection of +36% growth and the 2024 median pay of $112,590. Search the web for current information, and cite your sources with their dates." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+</section>
+<section id="data-science" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="data-science"><span class="header-section-number">2</span> Data Science</h2>
+<ul>
+<li>The science of data science focuses on the <span style="color:#b8860b">computation</span> and <span style="color:#b8860b">inference</span> for the <span style="color:black"><strong>data-driven analysis</strong></span> from the <span style="color:#b8860b">interdisciplinary perspectives</span>.</li>
+<li>The term <strong>data science</strong> is believed to be credited to <a href="https://www.isye.gatech.edu/users/jeff-wu" class="more" data-note="C. F. Jeff Wu, now Professor Emeritus at Georgia Tech. His 1997 inaugural lecture at the University of Michigan was titled 'Statistics = Data Science?' and argued that statistics should be renamed data science.">Jeff Wu</a>, Georgia Tech.</li>
+<li>Statistical endeavors:
+<ul>
+<li>Applied statistics and data analysis</li>
+<li>Development of statistical methods and software</li>
+<li>Research in statistical theory</li>
+</ul></li>
+<li>Computing essential to all of statistical endeavors.
+<ul>
+<li>Computational intensive methods.</li>
+<li>Efficiency facilitate modern statistical research.</li>
+<li>Large-scale data pipelines; GPU/TPU-accelerated algorithms.</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-ai-data-science" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sec-ai-data-science"><span class="header-section-number">3</span> Data science: skills and jobs</h2>
+<ul>
+<li><strong>Core skill set.</strong>
+<ul>
+<li><em>Statistics:</em> modeling, inference, experimental design, uncertainty quantification</li>
+<li><em>Computing:</em> Python/R, data engineering, GPU-accelerated methods, versioning</li>
+<li><em>Communication:</em> domain knowledge, visualization, storytelling, ethics</li>
+</ul></li>
+</ul>
+<p><strong>What employers ask for</strong> (checked Aug 2026):</p>
+<ul>
+<li><strong>Statistician</strong> — <a href="https://www.onetonline.org/link/summary/15-2041.00" class="more" data-note="O*NET is the Department of Labor's occupation database, built from surveys of people in the job. Statisticians: median pay $105,650 (2025), 32,200 employed (2024), growth 'much faster than average' through 2034.">O*NET, U.S. Department of Labor, 15-2041</a>: top skills <em>mathematics, critical thinking, reading, listening, speaking</em>; tools employers list: <strong>Python, R</strong>, SAS, SPSS, Tableau, Excel.</li>
+<li><strong>Data scientist</strong> — <a href="https://www.onetonline.org/link/summary/15-2051.00" class="more" data-note="Data scientists: median pay $120,230 (2025), 245,900 employed (2024), growth 'much faster than average' through 2034.">O*NET, 15-2051</a>: top skills <em>mathematics, critical thinking, active learning, speaking</em>; tools: <strong>Python, SQL</strong>, Git, Spark, TensorFlow/PyTorch, AWS, Tableau.</li>
+<li><strong>Data-scientist job postings</strong> — <a href="https://365datascience.com/career-advice/data-scientist-job-market/" class="more" data-note="365 Data Science, 'Data Scientist Job Market 2026': 1,000 postings collected from Monster, 827 kept after cleaning. Percent of postings that name the skill.">827 U.S. postings, 2025–26</a>: machine learning 69%, <strong>Python 57%, R 33%, SQL 30%</strong>, NLP 19% (5% a year earlier); a graduate degree in 54% (PhD 24%, master’s 30%).</li>
+<li><strong>What is rising</strong> — <a href="https://news.linkedin.com/2026/Skills-on-the-rise-2026" class="more" data-note="LinkedIn, Feb 2026, from members adding skills and getting hired, Dec 2024 to Nov 2025. Postings asking for AI literacy grew more than 70% in a year.">LinkedIn <em>Skills on the Rise 2026</em></a>: AI literacy, data-driven decision making, data storytelling, data governance and responsible AI. <a href="https://hiringlab.indeed.com/2026/01/22/january-labor-market-update-jobs-mentioning-ai-are-growing-amid-broader-hiring-weakness/" class="more" data-note="Indeed Hiring Lab, Jan 2026: 45% of data &amp; analytics postings mention AI, the highest share of any field; 4.2% of all U.S. postings.">Indeed</a>: 45% of data &amp; analytics postings now mention AI.</li>
+<li><strong>What people use</strong> — <a href="https://survey.stackoverflow.co/2025/technology" class="more" data-note="About 49,000 developers, all fields, not only data science; R is small there because most respondents are software developers.">Stack Overflow Developer Survey 2025</a>: Python 58%, SQL 59%, R 5%; 84% use or plan to use AI tools, 33% trust the answers.</li>
+<li>Live listings: <a href="https://www.glassdoor.com/Job/us-data-scientist-jobs-SRCH_IL.0,2_IN1_KO3,17.htm">Glassdoor, data scientist</a> · <a href="https://www.bls.gov/ooh/math/data-scientists.htm">BLS, data scientists</a> · <a href="https://www.bls.gov/ooh/math/mathematicians-and-statisticians.htm">BLS, statisticians</a>.</li>
+</ul>
+<p>Read the two O*NET lists again: both start with <strong>mathematics and critical thinking</strong>; the tools come after. Your degree is the first part. This course is the second: <strong>Python, R, SQL, Git</strong>, and the habit of checking.</p>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">What are the key skills employers want from a statistician or a data scientist in 2026? Cite sources with dates.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=What%20are%20the%20key%20skills%20employers%20want%20from%20a%20statistician%20or%20a%20data%20scientist%20in%202026%3F%20Cite%20sources%20with%20dates.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=What%20are%20the%20key%20skills%20employers%20want%20from%20a%20statistician%20or%20a%20data%20scientist%20in%202026%3F%20Cite%20sources%20with%20dates.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=What%20are%20the%20key%20skills%20employers%20want%20from%20a%20statistician%20or%20a%20data%20scientist%20in%202026%3F%20Cite%20sources%20with%20dates.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="What are the key skills employers want from a statistician or a data scientist in 2026? Cite sources with dates. Search the web for current information, and cite your sources with their dates." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">What should a modern statistical computing course for statistics master's students look like in 2026? List the topics, the tools, and where AI fits.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=What%20should%20a%20modern%20statistical%20computing%20course%20for%20statistics%20master%27s%20students%20look%20like%20in%202026%3F%20List%20the%20topics%2C%20the%20tools%2C%20and%20where%20AI%20fits." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=What%20should%20a%20modern%20statistical%20computing%20course%20for%20statistics%20master%27s%20students%20look%20like%20in%202026%3F%20List%20the%20topics%2C%20the%20tools%2C%20and%20where%20AI%20fits." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=What%20should%20a%20modern%20statistical%20computing%20course%20for%20statistics%20master%27s%20students%20look%20like%20in%202026%3F%20List%20the%20topics%2C%20the%20tools%2C%20and%20where%20AI%20fits." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="What should a modern statistical computing course for statistics master's students look like in 2026? List the topics, the tools, and where AI fits." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+<!-- Live Google Trends charts, one per <div class="trends">. Click a title to open its chart (it loads only then).
+     data-keywords: search terms or Google topic IDs (/m/...), separated by "|"   data-geo: "US", "" (worldwide), "US-IA", ...
+     data-time: "all", "today 5-y", "today 12-m", "2020-01-01 2026-08-01" -->
+<div class="trends" data-title="Job titles: statistician vs data scientist vs machine learning engineer (US, since 2004)" data-keywords="statistician|data scientist|machine learning engineer" data-geo="US" data-time="all"></div>
+<div class="trends" data-title="Python vs R (programming-language topics, US, since 2004)" data-keywords="/m/05z1_|/m/0212jm" data-geo="US" data-time="all"></div>
+<div class="trends" data-title="ChatGPT vs Gemini vs Claude (US, past 5 years)" data-keywords="/g/11khcfz0y2|/g/11vclq3pb3|/g/11w3cb3168" data-geo="US" data-time="today 5-y"></div>
+<script>
+(function () {
+  document.querySelectorAll("div.trends").forEach(function (el) {
+    var kws = el.dataset.keywords.split("|").map(function (k) { return k.trim(); });
+    var geo = el.dataset.geo || "", time = el.dataset.time || "today 5-y";
+    var req = { comparisonItem: kws.map(function (k) { return { keyword: k, geo: geo, time: time }; }),
+                category: 0, property: "" };
+    var eq = "date=" + encodeURIComponent(time) + "&geo=" + encodeURIComponent(geo) +
+             "&q=" + encodeURIComponent(kws.join(","));
+    var src = "https://trends.google.com/trends/embed/explore/TIMESERIES?req=" +
+              encodeURIComponent(JSON.stringify(req)) + "&tz=300&eq=" + encodeURIComponent(eq);
+    var d = document.createElement("details"), sm = document.createElement("summary");
+    sm.textContent = el.dataset.title || kws.join(" vs "); d.appendChild(sm);
+    var body = document.createElement("div"); body.className = "trends-body"; d.appendChild(body);
+    d.addEventListener("toggle", function () {           // build the chart the first time it is opened
+      if (d.open && !body.firstChild) {
+        var f = document.createElement("iframe");
+        f.src = src; f.width = "100%"; f.height = 420; f.frameBorder = 0; f.scrolling = "no"; f.style.border = "0";
+        body.appendChild(f);
+        var a = document.createElement("a");
+        a.href = "https://trends.google.com/trends/explore?" + eq; a.target = "_blank"; a.rel = "noopener";
+        a.className = "trends-open"; a.textContent = "Open in Google Trends"; body.appendChild(a);
+      }
+    });
+    el.appendChild(d);
+  });
+})();
+</script>
+<section id="a-short-history-of-generative-ai" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="a-short-history-of-generative-ai"><span class="header-section-number">3.1</span> A short history of generative AI</h3>
+<ul>
+<li>2017: the <span class="more" data-note="'Attention Is All You Need', Vaswani et al., Google, 2017. Every model below is built on it.">transformer</span>.</li>
+<li>2018–2020: GPT-1, BERT, GPT-2, then GPT-3 with 175 billion parameters. Trained on text; it saw little code.</li>
+<li>2021: <a href="https://arxiv.org/abs/2502.19411" class="more" data-note="Chen et al., 2021, 'Evaluating Large Language Models Trained on Code'. GitHub Copilot is built on it. Models trained on code turned out better at step-by-step reasoning in general, not only at coding; see the survey arXiv 2502.19411.">Codex</a> and GitHub Copilot. Adding code to training data made models better at reasoning, not just at code. That is one reason “AI can code” arrived before “AI can reason”.</li>
+<li>November 30, 2022: ChatGPT. 100 million users in two months.</li>
+<li>2023: GPT-4 (March), Llama with open weights, Claude, Gemini (December).</li>
+<li>2024: GPT-4o, Claude 3, Gemini 1.5 with a million-token context, the first “reasoning” models (o1, September). Also the year <a href="https://mindyourdecisions.com/blog/2024/08/07/9-11-is-larger-than-9-9-according-to-ai/" class="more" data-note="July 2024. Asked 'which is larger, 9.11 or 9.9?', ChatGPT and Meta AI answered 9.11, treating the digits after the point as whole numbers. Gemini got it right. The error was inconsistent: about half the time.">ChatGPT said 9.11 is larger than 9.9</a>.</li>
+<li>2025: DeepSeek-R1 (January): open weights, a fraction of the cost. Agents and tool use everywhere. GPT-5 (August).</li>
+<li>2026: GPT-5.6, Claude 5, Gemini 3.6, DeepSeek V4, and <span class="more" data-note="Release trackers count more than 360 model releases so far in 2026.">hundreds more</span>. The model you use this semester will be replaced before you graduate; the statistics will not.</li>
+</ul>
+<p>The short version, for this course. For the long one, IBM has a good <a href="https://www.ibm.com/think/topics/history-of-artificial-intelligence">history of AI</a>.</p>
+</section>
+</section>
+<section id="ai-for-statistics-statistics-for-ai" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="ai-for-statistics-statistics-for-ai"><span class="header-section-number">4</span> AI for statistics, statistics for AI</h2>
+<p>Two directions, and this course runs both ways.</p>
+<ul>
+<li><p><strong>AI for statistics</strong> — the model as a tool in the statistician’s workflow.</p>
+<ul>
+<li>Writing and translating code: R ↔︎ Python, a loop → a vectorized version, a formula → a function (Section 2).</li>
+<li>Cleaning and extracting: messy text → a tidy table; <span class="more" data-note="You tell the model the exact shape of the answer you want (fields, types), and it returns data your code can use instead of prose.">structured output</span> instead of prose (Section 6).</li>
+<li>Designing and explaining: draft a simulation study, explain an error message, summarize a paper — then <em>you</em> verify.</li>
+<li>Learning: the <em>Ask AI</em> buttons in these notes, and the course tutor.</li>
+<li>Agents: an AI that runs a small analysis end to end, from data to report, while you watch each step. In class we replay <a href="https://agentlab.morphmind.ai/en/share/replay/bp7e9jff">one on MorphMind</a> (free tier, no payment required).</li>
+</ul>
+<p>Statistical agents you can try today:</p>
+<ul>
+<li><a href="https://help.openai.com/en/articles/8437071-data-analysis-with-chatgpt" class="more" data-note="Upload a CSV or Excel file; ChatGPT writes and runs Python in a sandbox and returns the code, tables, and charts.">ChatGPT</a>: upload a file, it writes and runs Python and shows you the code.</li>
+<li><a href="https://claude.com/blog/analysis-tool" class="more" data-note="Claude's analysis tool ran JavaScript in the chat; since November 2025 it is code execution: files, charts, multi-step workflows. Claude Code does the same in a terminal.">Claude</a>: code execution in the chat, or Claude Code in a terminal.</li>
+<li><a href="https://developers.googleblog.com/en/data-science-agent-in-colab-with-gemini/" class="more" data-note="Free in Google Colab: describe the goal in plain English and it writes a full notebook, from loading the data to plots and a model.">Gemini’s Data Science Agent in Colab</a>: describe the goal, get a whole notebook.</li>
+<li><a href="https://morphmind.ai" class="more" data-note="A team of specialist agents with a project-manager agent; every step shows its sources and can be corrected; sessions can be shared and replayed, like the one above.">MorphMind AgentLab</a>: a team of agents with receipts for every step.</li>
+<li>Open source: <a href="https://github.com/geekan/MetaGPT/blob/main/examples/di/README.md" class="more" data-note="Plans, writes, and runs code for a data task; arXiv 2402.18679.">MetaGPT’s Data Interpreter</a>, <a href="https://docs.kanaries.net/articles/pandas-ai" class="more" data-note="Chat with a data frame in plain English; it writes the pandas or SQL.">PandasAI</a>, and agent frameworks such as LangGraph, CrewAI, and the OpenAI Agents SDK.</li>
+<li>From R: <code>ellmer</code> with tool calling (Section 6) lets you build a small one yourself.</li>
+</ul></li>
+<li><p><strong>Statistics for AI</strong> — the model as an object of statistical study.</p>
+<ul>
+<li>An LLM is a <span class="more" data-note="Each word is drawn from a probability distribution over the vocabulary; temperature and top-p are knobs on that distribution.">sampler</span>: temperature and top-p are the same ideas as random-variate generation (Section 3).</li>
+<li>Evaluating a model is a simulation study: accuracy is an estimate, needs a confidence interval, and “how many test prompts?” is a sample-size question (Section 3).</li>
+<li>Bootstrap a benchmark score; test whether model A really beats model B (Section 4).</li>
+<li>Calibration, hallucination rates, and uncertainty for a black box (conformal prediction) — the statistician’s contribution to trustworthy AI (Section 6).</li>
+</ul></li>
+<li><p><strong>Statistics has an edge here.</strong> An LLM is a probability model: it generates text from a distribution and predicts the next word. Generating from a distribution, prediction, inference: these are the questions statistics has worked on for a century.</p></li>
+<li><p><strong>Then why are statisticians not playing a larger role in AI?</strong> Not for lack of ideas. What is missing is often the skills: large-scale computation, modern coding practice, text as data. This course is about closing that gap.</p></li>
+</ul>
+<p><span class="source">Reference: <em>An Overview of Large Language Models for Statisticians</em>, The American Statistician (2025), arXiv:2502.17814.</span></p>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">Give three concrete examples where statistical thinking (sampling, uncertainty, experimental design) is essential for building or evaluating large language models, and three where an LLM genuinely speeds up a statistician's daily work. For each, say what could go wrong if the statistician skipped verification.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=Give%20three%20concrete%20examples%20where%20statistical%20thinking%20%28sampling%2C%20uncertainty%2C%20experimental%20design%29%20is%20essential%20for%20building%20or%20evaluating%20large%20language%20models%2C%20and%20three%20where%20an%20LLM%20genuinely%20speeds%20up%20a%20statistician%27s%20daily%20work.%20For%20each%2C%20say%20what%20could%20go%20wrong%20if%20the%20statistician%20skipped%20verification." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=Give%20three%20concrete%20examples%20where%20statistical%20thinking%20%28sampling%2C%20uncertainty%2C%20experimental%20design%29%20is%20essential%20for%20building%20or%20evaluating%20large%20language%20models%2C%20and%20three%20where%20an%20LLM%20genuinely%20speeds%20up%20a%20statistician%27s%20daily%20work.%20For%20each%2C%20say%20what%20could%20go%20wrong%20if%20the%20statistician%20skipped%20verification." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=Give%20three%20concrete%20examples%20where%20statistical%20thinking%20%28sampling%2C%20uncertainty%2C%20experimental%20design%29%20is%20essential%20for%20building%20or%20evaluating%20large%20language%20models%2C%20and%20three%20where%20an%20LLM%20genuinely%20speeds%20up%20a%20statistician%27s%20daily%20work.%20For%20each%2C%20say%20what%20could%20go%20wrong%20if%20the%20statistician%20skipped%20verification." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="Give three concrete examples where statistical thinking (sampling, uncertainty, experimental design) is essential for building or evaluating large language models, and three where an LLM genuinely speeds up a statistician's daily work. For each, say what could go wrong if the statistician skipped verification." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+</section>
+<section id="why-learn-to-code-when-ai-can-code" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="why-learn-to-code-when-ai-can-code"><span class="header-section-number">5</span> Why learn to code when AI can code?</h2>
+<ul>
+<li><strong>Interviews have no AI in them.</strong>
+<ul>
+<li><a href="https://fortune.com/2025/07/21/billion-dollar-giant-anthropic-ai-ban-hiring-policy-change-job-seekers-interview-process" class="more" data-note="Anthropic, the company behind Claude, allows no AI tools in live interviews and has dropped candidates who used them. In 2025 it banned AI in written applications too, then allowed it for the essay parts only.">Anthropic bans it in live interviews</a> and has dropped candidates who used it.</li>
+<li><a href="https://fabrichq.ai/blogs/state-of-cheating-in-interviews-in-2026-tools-trends-and-prevention" class="more" data-note="Sundar Pichai, internal town hall, February 2025: some roles will interview in person again because of AI use in remote interviews.">Google is moving interviews back in person</a>.</li>
+<li>The by-hand blocks and the midterm here are the same test.</li>
+</ul></li>
+<li><strong>Many employers do not allow it.</strong>
+<ul>
+<li><a href="https://cbsnews.com/news/chatgpt-jpmorgan-chase-bars-workers-from-using-ai-tool" class="more" data-note="JPMorgan, Bank of America, Citi, Goldman Sachs, and Wells Fargo restricted ChatGPT in 2023; banks cannot send client data to an outside service.">The big banks</a>, <a href="https://tech.co/news/tech-companies-banning-generative-ai" class="more" data-note="May 2023, after engineers pasted internal source code into ChatGPT. Apple restricted it the same month.">Samsung</a>, and Apple restricted ChatGPT.</li>
+<li>Patient records, clinical trials, government work: the data cannot leave the building.</li>
+<li><a href="https://its.uiowa.edu/ai-guidelines-and-use-cases" class="more" data-note="ITS guidelines: Copilot Chat with your HawkID for university data, never a public chatbot; restricted data and student records never; a person checks every AI output before it is used.">At Iowa</a>: university data goes only into Copilot Chat with your HawkID, and a person checks every output.</li>
+</ul></li>
+<li><strong>AI code is often almost right. Almost is your job.</strong>
+<ul>
+<li><a href="https://survey.stackoverflow.co/2025/ai" class="more" data-note="Stack Overflow Developer Survey 2025: the top frustration is AI answers that are almost right; 45% say debugging AI code takes longer than writing it.">66% of developers</a> say their biggest problem is code that is almost right.</li>
+<li><a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" class="more" data-note="METR, July 2025: 16 experienced open-source developers, 246 real tasks, randomly assigned AI or no AI. 19% slower with AI, while believing they were 20% faster. One trial, small sample.">A randomized trial</a> found experienced developers 19% slower with AI, while they believed they were faster.</li>
+<li><a href="https://www.veracode.com/resources/analyst-reports/2025-genai-code-security-report/" class="more" data-note="Veracode 2025: 80 tasks, more than 100 models; newer and larger models were no better.">AI-written code picked the insecure option 45% of the time</a>.</li>
+<li>A wrong variance formula or an unset seed still runs. Only someone who can read the code will catch it.</li>
+</ul></li>
+<li><strong>Big models are expensive.</strong>
+<ul>
+<li><a href="https://zylo.com/blog/openai-api-pricing" class="more" data-note="Reported 2026: 84% of Uber's 5,000 engineers on an AI coding tool at $500-2,000 per engineer per month. Zylo, April 2026: the average organization spends $384,500 a year on the OpenAI API.">Uber’s engineers</a> ran up $500 to $2,000 a month each on AI coding tools.</li>
+<li><a href="https://www.forbes.com/sites/quickerbettertech/2025/05/18/business-tech-news-klarna-reverses-on-ai-says-customers-like-talking-to-people/" class="more" data-note="Klarna cut about 700 customer-service jobs for AI in 2024. May 2025: 'we focused too much on efficiency and cost'; hiring people again.">Klarna</a> replaced 700 support staff with AI, then hired people back.</li>
+<li>By 2026 the headline was <a href="https://fortune.com/2026/05/22/microsoft-ai-cost-problem-tokens-agents/" class="more" data-note="Axios, April 2026; Fortune, May 2026, on Microsoft's token costs; Forbes, July 2026: 'AI costs more than the people it replaced'.">“AI can cost more than the human workers”</a>.</li>
+<li><a href="https://arxiv.org/abs/2506.02153" class="more" data-note="'Small Language Models are the Future of Agentic AI', 2025: agents mostly do narrow, repetitive tasks; small models are cheaper and good enough, with a large model called only for the hard step.">NVIDIA</a> argues agents should run on small, specialized models. Someone has to build them. That is programming plus statistics.</li>
+</ul></li>
+<li><strong>You cannot supervise what you do not understand.</strong>
+<ul>
+<li>The job is moving from writing code to checking it.</li>
+<li><a href="https://fortune.com/2025/10/07/deloitte-ai-australia-government-report-hallucinations-technology-290000-refund" class="more" data-note="October 2025: a AU$440,000 report cited papers that do not exist and quoted a judge who never said it. Deloitte admitted using Azure OpenAI and refunded part of the fee.">Deloitte refunded the Australian government</a> for a report with invented citations.</li>
+<li><a href="https://thedailyrecord.com/2025/10/13/california-lawyer-ai-fake-citations-fine/" class="more" data-note="2025: $10,000 in California for 21 fake cases from ChatGPT; $31,100 in a federal case in Los Angeles; $6,000 in Indiana; a habeas filing with quotes invented by Claude.">Courts keep fining lawyers</a> for citing cases that do not exist.</li>
+<li>Statistics is the discipline of knowing when to trust an estimate. An AI answer is an estimate.</li>
+</ul></li>
+</ul>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">Find news from the past three months about companies restricting AI use at work or in job interviews. Give the company, what is restricted, the reason, and the date, with a source for each.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=Find%20news%20from%20the%20past%20three%20months%20about%20companies%20restricting%20AI%20use%20at%20work%20or%20in%20job%20interviews.%20Give%20the%20company%2C%20what%20is%20restricted%2C%20the%20reason%2C%20and%20the%20date%2C%20with%20a%20source%20for%20each.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=Find%20news%20from%20the%20past%20three%20months%20about%20companies%20restricting%20AI%20use%20at%20work%20or%20in%20job%20interviews.%20Give%20the%20company%2C%20what%20is%20restricted%2C%20the%20reason%2C%20and%20the%20date%2C%20with%20a%20source%20for%20each.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=Find%20news%20from%20the%20past%20three%20months%20about%20companies%20restricting%20AI%20use%20at%20work%20or%20in%20job%20interviews.%20Give%20the%20company%2C%20what%20is%20restricted%2C%20the%20reason%2C%20and%20the%20date%2C%20with%20a%20source%20for%20each.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="Find news from the past three months about companies restricting AI use at work or in job interviews. Give the company, what is restricted, the reason, and the date, with a source for each. Search the web for current information, and cite your sources with their dates." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+</section>
+<section id="goals-of-this-course-are-to-develop" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="goals-of-this-course-are-to-develop"><span class="header-section-number">6</span> Goals of this course are to develop</h2>
+<ul>
+<li>Intelligent use of appropriate computing tools.
+<ul>
+<li>R and Python; SAS, C, Fortran when needed.</li>
+<li>AI as a tool: chatbots, APIs, agents, and knowing when not to trust them.</li>
+</ul></li>
+<li>Use of software engineering techniques for scaling projects.
+<ul>
+<li>Version control: git and GitHub.</li>
+<li>Parallel computing.</li>
+</ul></li>
+<li>Understanding of important statistical computing algorithms.
+<ul>
+<li>Bisection search, Newton’s method, gradient descent.</li>
+<li>Bootstrap, cross-validation.</li>
+</ul></li>
+<li>Experience of computational intensive methods.
+<ul>
+<li>High-dimensional statistics.</li>
+<li>Machine learning methods.</li>
+</ul></li>
+<li>Ability to design and implement simulation studies.</li>
+<li>Communication of statistical ideas.
+<ul>
+<li>LaTeX, R Markdown, Quarto.</li>
+<li>Writing R packages.</li>
+</ul></li>
+</ul>
+</section>
+<section id="set-up-your-accounts" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="set-up-your-accounts"><span class="header-section-number">7</span> Set up your accounts</h2>
+<p><span class="mode"><i class="fa-solid fa-play" aria-label="play"></i> Run</span> — first, click <em>Run Code</em>. This runs in your browser; nothing to install.</p>
+<div class="cell">
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5tZWFuKHgpIn0=
+</script>
+</div>
+</div>
+<p>Do these this week; the notes assume them from Section 2 on.</p>
+<ol type="1">
+<li><p><strong>GitHub account</strong> — <a href="https://github.com/signup" class="uri">https://github.com/signup</a>. Add and verify your <code>@uiowa.edu</code> email under Settings → Emails.</p></li>
+<li><p><strong>GitHub Education</strong> (free Copilot and Pro-level Codespaces) — <a href="https://github.com/settings/education/benefits" class="uri">https://github.com/settings/education/benefits</a> → <em>Start an application</em>. Proof: a current student ID, class schedule, or enrollment letter; using the <code>@uiowa.edu</code> email speeds review. When approved, GitHub Copilot Student and Codespaces are activated on your account.</p></li>
+<li><p><strong>Test the Codespace</strong> — click <em>Open in Codespace</em> at the top of this page. The first start builds the course environment (a few minutes); later starts take about 30 seconds. Open <code>notes/run/s1p1_sumC.R</code>, put the cursor on line 3, press Cmd/Ctrl+Enter.</p></li>
+<li><p><strong>One chatbot login</strong> — ChatGPT, Claude, or Gemini; the free tier is enough. The <em>Ask AI</em> buttons in these notes open one of them with the question filled in.</p></li>
+<li><p><strong>A Gemini API key</strong> (free) — <a href="https://aistudio.google.com/apikey" class="uri">https://aistudio.google.com/apikey</a>. Used by the first API call in <a href="#sec-first-llm-call" class="quarto-xref">Section&nbsp;17</a>. Details in the box below.</p></li>
+<li><p><strong>OpenAI and Anthropic keys</strong> (optional, paid; $5 is enough for the course). Details below.</p></li>
+<li><p><strong>University systems</strong> — the department’s Linux servers <code>l-lnx2xy.stat.uiowa.edu</code> (HawkID, <code>ssh</code>; VPN from off campus; Tech Guide in Section 2); <a href="https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514939/Requesting+An+IDAS+Account">IDAS</a> for the midterm; <a href="https://research.its.uiowa.edu/our-services/computing-services/argon-high-performance-computing-hpc">Argon</a>, the campus cluster, if you want it (I request class access; for research ask your advisor).</p></li>
+<li><p><strong>MorphMind account</strong> (free) — <a href="https://morphmind.ai" class="uri">https://morphmind.ai</a>. The course tutor and the agent demos run there.</p></li>
+</ol>
+<p><span class="more" data-note="Keys leak most often through git commits and screenshots. If one leaks, delete it on the provider's page and create a new one.">Never paste an API key into a script, a notebook, or these notes. A key in a public repository is found and abused within minutes.</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Gemini API key, step by step (free)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Gemini API key, step by step (free)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Go to <a href="https://aistudio.google.com/apikey" class="uri">https://aistudio.google.com/apikey</a> and sign in with a Google account (your personal one is fine).</li>
+<li>Click <strong>Create API key</strong>. If it asks for a project, accept the default. Copy the key; it looks like <code>AIza...</code>.</li>
+<li>Store it on GitHub: profile picture → <strong>Settings</strong> → <strong>Codespaces</strong> → <strong>New secret</strong>. Name <code>GEMINI_API_KEY</code>, paste the key as the value, under <strong>Repository access</strong> pick the course repo, <strong>Add secret</strong>.</li>
+<li>Restart your Codespace (it only reads secrets at start). Check in R: <code>Sys.getenv("GEMINI_API_KEY")</code> should not be empty.</li>
+<li>Free tier: a few requests per minute and a daily cap, plenty for this course. If you hit the limit, wait a minute.</li>
+<li><code>HTTP 503 Service Unavailable</code> means Google’s servers are busy, not that your key is wrong. Retry, or pick another model: <code>models_google_gemini()</code> lists what your key can use; <code>chat_google_gemini(model = "gemini-3.7-flash")</code> chooses one. The Ollama models below never have this problem.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="OpenAI API key (paid)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>OpenAI API key (paid)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><a href="https://platform.openai.com" class="uri">https://platform.openai.com</a> → sign up (this is separate from a ChatGPT subscription).</li>
+<li><strong>Settings</strong> → <strong>Billing</strong> → add a payment method and buy $5 of credit. Nothing runs without credit.</li>
+<li><strong>API keys</strong> → <strong>Create new secret key</strong> → copy it now; it is shown once.</li>
+<li>Codespaces secret named <code>OPENAI_API_KEY</code>, same steps as above. Restart the Codespace.</li>
+<li>In R: <code>library(ellmer); chat_openai()$chat("Say hi.")</code>. A one-line answer costs a fraction of a cent.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Anthropic (Claude) API key (paid)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Anthropic (Claude) API key (paid)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><a href="https://console.anthropic.com" class="uri">https://console.anthropic.com</a> → sign up (separate from a Claude.ai subscription).</li>
+<li><strong>Billing</strong> → buy $5 of credit.</li>
+<li><strong>API Keys</strong> → <strong>Create Key</strong> → copy it now.</li>
+<li>Codespaces secret named <code>ANTHROPIC_API_KEY</code>. Restart the Codespace.</li>
+<li>In R: <code>library(ellmer); chat_anthropic()$chat("Say hi.")</code>.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Small models with no key: Ollama">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Small models with no key: Ollama
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>No key, no cost, works offline. The course Codespace already has Ollama with two models: <code>qwen2.5:0.5b</code> (Alibaba, 0.5 billion parameters, 0.4 GB) and <code>llama3.2:1b</code> (Meta, 1 billion, 1.3 GB). On your own computer, Ollama is one download.</p>
+<ol type="1">
+<li><p>On your laptop: install from <a href="https://ollama.com" class="uri">https://ollama.com</a> (Mac, Windows, Linux), then <code>ollama pull qwen2.5:0.5b</code> and <code>ollama pull llama3.2:1b</code> in a terminal. In the Codespace, skip this.</p></li>
+<li><p>From R, <code>ellmer</code> talks to a local model the same way it talks to Gemini. Only the function name changes; Ollama is a small server on your own machine.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>small  <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"qwen2.5:0.5b"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bigger <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"llama3.2:1b"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>small<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Which is larger, 9.11 or 9.9? Answer in one line."</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>bigger<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Which is larger, 9.11 or 9.9? Answer in one line."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/run/s1p1_ollama.R</code></span></div>
+<p>Ask the small one five times. It still gets this wrong some of the time; that is the 2024 story in <a href="#sec-ai-data-science" class="quarto-xref">Section&nbsp;3</a>, on a machine you control. The 1B model is slower and more often right. Bigger models need more memory than a Codespace has; on your laptop try <code>llama3.2</code> (3B).</p></li>
+<li><p>From Python: <code>import ollama; ollama.chat(model="qwen2.5:0.5b", messages=[{"role": "user", "content": "..."}])</code>.</p></li>
+<li><p>Also worth knowing: the R package <code>localLLM</code> loads a model inside R with no server at all. We will use it in the Tech Guide.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<section id="where-does-code-run" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="where-does-code-run"><span class="header-section-number">7.1</span> Where does code run?</h3>
+<ul>
+<li><strong>On this page.</strong> Most examples run in your browser. Click <em>Run Code</em>.</li>
+<li><strong>In a Codespace.</strong> Examples that need a compiler, an API key, or more memory have a <em>Run in Codespace</em> button. Same code, real machine.</li>
+</ul>
+</section>
+<section id="optional-install-on-your-own-laptop" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="optional-install-on-your-own-laptop"><span class="header-section-number">7.2</span> Optional: install on your own laptop</h3>
+<p>Not required for this course. If you want a local setup, use this one so we all match. Each item has a folded box with the steps, and an <em>Ask AI</em> button whose prompt asks for today’s instructions for your machine.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="R and RStudio (or Positron)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>R and RStudio (or Positron)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>R: <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a> → your operating system → the latest release. Mac: pick the Apple silicon build if your Mac is M1 or newer.</li>
+<li>RStudio: <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>. Or Positron, Posit’s newer editor for R and Python: <a href="https://positron.posit.co" class="uri">https://positron.posit.co</a>.</li>
+<li>Check: open RStudio, run <code>R.version.string</code>.</li>
+<li>Packages we use early: <code>install.packages(c("microbenchmark", "Rcpp", "ellmer"))</code>. Rcpp needs a compiler: Mac, <code>xcode-select --install</code>; Windows, Rtools from CRAN.</li>
+</ol>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">Give me step-by-step instructions, current as of today, to install R and RStudio on my computer, including the compiler needed for Rcpp (Xcode command line tools on macOS, Rtools on Windows). Ask me which operating system and version I have before answering, and end with a command I can run to confirm the install worked.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20install%20R%20and%20RStudio%20on%20my%20computer%2C%20including%20the%20compiler%20needed%20for%20Rcpp%20%28Xcode%20command%20line%20tools%20on%20macOS%2C%20Rtools%20on%20Windows%29.%20Ask%20me%20which%20operating%20system%20and%20version%20I%20have%20before%20answering%2C%20and%20end%20with%20a%20command%20I%20can%20run%20to%20confirm%20the%20install%20worked.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20install%20R%20and%20RStudio%20on%20my%20computer%2C%20including%20the%20compiler%20needed%20for%20Rcpp%20%28Xcode%20command%20line%20tools%20on%20macOS%2C%20Rtools%20on%20Windows%29.%20Ask%20me%20which%20operating%20system%20and%20version%20I%20have%20before%20answering%2C%20and%20end%20with%20a%20command%20I%20can%20run%20to%20confirm%20the%20install%20worked.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20install%20R%20and%20RStudio%20on%20my%20computer%2C%20including%20the%20compiler%20needed%20for%20Rcpp%20%28Xcode%20command%20line%20tools%20on%20macOS%2C%20Rtools%20on%20Windows%29.%20Ask%20me%20which%20operating%20system%20and%20version%20I%20have%20before%20answering%2C%20and%20end%20with%20a%20command%20I%20can%20run%20to%20confirm%20the%20install%20worked.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="Give me step-by-step instructions, current as of today, to install R and RStudio on my computer, including the compiler needed for Rcpp (Xcode command line tools on macOS, Rtools on Windows). Ask me which operating system and version I have before answering, and end with a command I can run to confirm the install worked. Search the web for current information, and cite your sources with their dates." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Python with uv">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Python with uv
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Install uv: <a href="https://docs.astral.sh/uv/getting-started/installation/" class="uri">https://docs.astral.sh/uv/getting-started/installation/</a> (one command for Mac, Linux, or Windows).</li>
+<li><code>uv python install 3.12</code></li>
+<li>In a project folder: <code>uv init</code>, then <code>uv add numpy pandas matplotlib jupyter google-genai</code>.</li>
+<li>Check: <code>uv run python -c "import numpy; print(numpy.__version__)"</code>.</li>
+</ol>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">Give me step-by-step instructions, current as of today, to install Python with uv on my computer and set up a project with numpy, pandas, matplotlib, and jupyter. Ask which operating system I use first. Explain in one sentence why uv instead of Anaconda. End with a command to confirm it works.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20install%20Python%20with%20uv%20on%20my%20computer%20and%20set%20up%20a%20project%20with%20numpy%2C%20pandas%2C%20matplotlib%2C%20and%20jupyter.%20Ask%20which%20operating%20system%20I%20use%20first.%20Explain%20in%20one%20sentence%20why%20uv%20instead%20of%20Anaconda.%20End%20with%20a%20command%20to%20confirm%20it%20works.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20install%20Python%20with%20uv%20on%20my%20computer%20and%20set%20up%20a%20project%20with%20numpy%2C%20pandas%2C%20matplotlib%2C%20and%20jupyter.%20Ask%20which%20operating%20system%20I%20use%20first.%20Explain%20in%20one%20sentence%20why%20uv%20instead%20of%20Anaconda.%20End%20with%20a%20command%20to%20confirm%20it%20works.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20install%20Python%20with%20uv%20on%20my%20computer%20and%20set%20up%20a%20project%20with%20numpy%2C%20pandas%2C%20matplotlib%2C%20and%20jupyter.%20Ask%20which%20operating%20system%20I%20use%20first.%20Explain%20in%20one%20sentence%20why%20uv%20instead%20of%20Anaconda.%20End%20with%20a%20command%20to%20confirm%20it%20works.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="Give me step-by-step instructions, current as of today, to install Python with uv on my computer and set up a project with numpy, pandas, matplotlib, and jupyter. Ask which operating system I use first. Explain in one sentence why uv instead of Anaconda. End with a command to confirm it works. Search the web for current information, and cite your sources with their dates." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="VS Code, Quarto, and Copilot">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>VS Code, Quarto, and Copilot
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>VS Code: <a href="https://code.visualstudio.com" class="uri">https://code.visualstudio.com</a>.</li>
+<li>Extensions (View → Extensions): Quarto, R, Python, Jupyter, GitHub Copilot.</li>
+<li>Quarto: <a href="https://quarto.org/docs/get-started/" class="uri">https://quarto.org/docs/get-started/</a>. Check: <code>quarto check</code> in a terminal.</li>
+<li>Sign in to GitHub inside VS Code so Copilot works (free with GitHub Education).</li>
+</ol>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">Give me step-by-step instructions, current as of today, to set up VS Code for R, Python, and Quarto, with GitHub Copilot signed in through a GitHub Education student account. Ask which operating system I use first.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20set%20up%20VS%20Code%20for%20R%2C%20Python%2C%20and%20Quarto%2C%20with%20GitHub%20Copilot%20signed%20in%20through%20a%20GitHub%20Education%20student%20account.%20Ask%20which%20operating%20system%20I%20use%20first.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20set%20up%20VS%20Code%20for%20R%2C%20Python%2C%20and%20Quarto%2C%20with%20GitHub%20Copilot%20signed%20in%20through%20a%20GitHub%20Education%20student%20account.%20Ask%20which%20operating%20system%20I%20use%20first.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20set%20up%20VS%20Code%20for%20R%2C%20Python%2C%20and%20Quarto%2C%20with%20GitHub%20Copilot%20signed%20in%20through%20a%20GitHub%20Education%20student%20account.%20Ask%20which%20operating%20system%20I%20use%20first.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="Give me step-by-step instructions, current as of today, to set up VS Code for R, Python, and Quarto, with GitHub Copilot signed in through a GitHub Education student account. Ask which operating system I use first. Search the web for current information, and cite your sources with their dates." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="git">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>git
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Mac: <code>xcode-select --install</code> in Terminal gives you git and a C compiler. Windows: <a href="https://git-scm.com/download/win" class="uri">https://git-scm.com/download/win</a>. Linux: <code>sudo apt install git</code>.</li>
+<li>Tell git who you are: <code>git config --global user.name "Your Name"</code> and <code>git config --global user.email "you@uiowa.edu"</code>.</li>
+<li>Check: <code>git --version</code>.</li>
+</ol>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">Give me step-by-step instructions, current as of today, to install git on my computer, set my name and email, and connect to GitHub with SSH keys. Ask which operating system I use first. End with a command that confirms GitHub recognizes my key.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20install%20git%20on%20my%20computer%2C%20set%20my%20name%20and%20email%2C%20and%20connect%20to%20GitHub%20with%20SSH%20keys.%20Ask%20which%20operating%20system%20I%20use%20first.%20End%20with%20a%20command%20that%20confirms%20GitHub%20recognizes%20my%20key.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20install%20git%20on%20my%20computer%2C%20set%20my%20name%20and%20email%2C%20and%20connect%20to%20GitHub%20with%20SSH%20keys.%20Ask%20which%20operating%20system%20I%20use%20first.%20End%20with%20a%20command%20that%20confirms%20GitHub%20recognizes%20my%20key.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=Give%20me%20step-by-step%20instructions%2C%20current%20as%20of%20today%2C%20to%20install%20git%20on%20my%20computer%2C%20set%20my%20name%20and%20email%2C%20and%20connect%20to%20GitHub%20with%20SSH%20keys.%20Ask%20which%20operating%20system%20I%20use%20first.%20End%20with%20a%20command%20that%20confirms%20GitHub%20recognizes%20my%20key.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="Give me step-by-step instructions, current as of today, to install git on my computer, set my name and email, and connect to GitHub with SSH keys. Ask which operating system I use first. End with a command that confirms GitHub recognizes my key. Search the web for current information, and cite your sources with their dates." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="applied-statistics" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="applied-statistics"><span class="header-section-number">8</span> Applied Statistics</h2>
+<p>Application of some statistical tools to analyze a practical problem.</p>
+<p>Data collection <span class="math inline">\(\to\)</span> modeling <span class="math inline">\(\to\)</span> decision making.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/s1/classification0.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</section>
+<section id="optimization" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="optimization"><span class="header-section-number">9</span> Optimization</h2>
+<p>Translate a conceptual problem into a computational problem.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/s1/classification.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+<p>Logistic regression: <span class="math display">\[
+P: \underset{\boldsymbol{\beta}}{\operatorname{min}}\left[-\sum_{i=1}^{n} y_{i} \mathbf{x}_{i}^{\prime} \boldsymbol{\beta}+\sum_{i=1}^{n} \log \left(1+e^{\mathbf{x}_{i}^{\prime} \boldsymbol{\beta}}\right)\right].
+\]</span></p>
+<ol type="1">
+<li>In this class, we may learn to call some general routines to solve Problem <span class="math inline">\(P\)</span> directly.</li>
+<li>We also want to develop and implement some algorithms specifically for solving Problem <span class="math inline">\(P\)</span>, in order to obtain
+<ul>
+<li>knowledge of the performance of different algorithms.</li>
+<li>deeper understanding of the statistical problem.</li>
+</ul></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/s1/log.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+<p><strong>An application.</strong> On January 28, 1986, the space shuttle Challenger broke apart 73 seconds after launch. The night before, engineers argued about the O-ring seals and the forecast of 31°F. Here are the 23 earlier launches: temperature at launch and how many of the six O-rings showed damage. Problem <span class="math inline">\(P\)</span> with one predictor.</p>
+<p><span class="mode"><i class="fa-solid fa-play" aria-label="play"></i> Run</span></p>
+<div class="cell">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoidGVtcCAgIDwtIGMoNTMsIDU3LCA1OCwgNjMsIDY2LCA2NywgNjcsIDY3LCA2OCwgNjksIDcwLCA3MCwgNzAsIDcwLCA3MiwgNzMsIDc1LCA3NSwgNzYsIDc2LCA3OCwgNzksIDgxKVxuZGFtYWdlIDwtIGMoIDUsICAxLCAgMSwgIDEsICAwLCAgMCwgIDAsICAwLCAgMCwgIDAsICAxLCAgMCwgIDEsICAwLCAgMCwgIDAsICAwLCAgMSwgIDAsICAwLCAgMCwgIDAsICAwKVxuZml0IDwtIGdsbShjYmluZChkYW1hZ2UsIDYgLSBkYW1hZ2UpIH4gdGVtcCwgZmFtaWx5ID0gYmlub21pYWwpXG5jb2VmKGZpdClcbnByZWRpY3QoZml0LCBkYXRhLmZyYW1lKHRlbXAgPSBjKDMxLCA1MywgNzApKSwgdHlwZSA9IFwicmVzcG9uc2VcIikgICAjIFAoYW4gTy1yaW5nIGZhaWxzKSJ9
+</script>
+</div>
+</div>
+<p><span class="source">Source: Dalal, Fowlkes, and Hoadley (1989), <em>Journal of the American Statistical Association</em>; data as in the R package <code>faraway</code>.</span></p>
+</section>
+<section id="demonstration-of-better-implementation" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="demonstration-of-better-implementation"><span class="header-section-number">10</span> Demonstration of better implementation</h2>
+<p>Two kinds of code block appear below. Blocks with a <strong>Run Code</strong> button run in your browser. Blocks that need a C++ compiler or a precise clock cannot run in a browser; a <strong>Run in Codespace</strong> button opens the same code in a real R.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — as on the slide:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">microbenchmark</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(x),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">^</span> <span class="fl">0.5</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/run/s1p1_microbenchmark.R</code></span></div>
+<ul>
+<li>By default, each expression was run 100 times.</li>
+<li>Unit: ns – 1 billionth of a second, which says 1 billion calls take a second.<br>
+microseconds (<span class="math inline">\(\mu\)</span>s): 1 millionth of a second;<br>
+milliseconds (ms): 1 thousandth of a second.</li>
+</ul>
+<p>The same comparison in your browser. The browser has no nanosecond clock, so the helper <code>timeit()</code> repeats each expression on a longer vector and reports the median wall-clock time in milliseconds: same ranking, different units.</p>
+<div class="cell" data-autorun="true" data-edit="false">
+<div>
+<div id="webr-3" class="exercise-cell">
+
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOmZhbHNlLCJldmFsIjp0cnVlfSwiY29kZSI6InRpbWVpdCA8LSBmdW5jdGlvbiguLi4sIHRpbWVzID0gMTApIHtcbiAgZXhwcnMgPC0gYXMubGlzdChzdWJzdGl0dXRlKGxpc3QoLi4uKSkpWy0xXVxuICBlbnYgPC0gcGFyZW50LmZyYW1lKClcbiAgb3V0IDwtIHQoc2FwcGx5KGV4cHJzLCBmdW5jdGlvbihlKSB7XG4gICAgZWwgPC0gcmVwbGljYXRlKHRpbWVzLCBzeXN0ZW0udGltZShldmFsKGUsIGVudikpW1tcImVsYXBzZWRcIl1dKVxuICAgIGMobWVkaWFuX21zID0gMTAwMCAqIG1lZGlhbihlbCksIG1pbl9tcyA9IDEwMDAgKiBtaW4oZWwpKVxuICB9KSlcbiAgcm93bmFtZXMob3V0KSA8LSBzYXBwbHkoZXhwcnMsIGZ1bmN0aW9uKGUpIHBhc3RlKGRlcGFyc2UoZSksIGNvbGxhcHNlID0gXCJcIikpXG4gIHJvdW5kKG91dCwgMilcbn0ifQ==
+</script>
+</div>
+</div>
+<p><span class="mode"><i class="fa-solid fa-play" aria-label="play"></i> Run</span></p>
+<div class="cell">
+<div>
+<div id="webr-4" class="exercise-cell">
+
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBydW5pZigxZTYpXG50aW1laXQoXG4gIHNxcnQoeCksXG4gIHggXiAwLjVcbikifQ==
+</script>
+</div>
+</div>
+<p><span class="mode"><i class="fa-solid fa-edit" aria-label="edit"></i> Edit</span> — change the vector length or add your own pair of expressions, then rerun.</p>
+<div class="cell">
+<div>
+<div id="webr-5" class="exercise-cell">
+
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBydW5pZigxZTYpXG50aW1laXQoXG4gIHggKiB4ICogeCxcbiAgeCBeIDMsXG4gIHggKiAwLjEsXG4gIHggLyAxMFxuKVxuXG54IDwtIG1hdHJpeCgyLCAxMDAwLCAxMDAwKVxudGltZWl0KFxuICBjb2xNZWFucyh4KSxcbiAgcm93TWVhbnMoeClcbikifQ==
+</script>
+</div>
+</div>
+<p><span class="mode"><i class="fa-solid fa-play" aria-label="play"></i> Run</span> — the same product, two ways to put the parentheses.</p>
+<div class="cell">
+<div>
+<div id="webr-6" class="exercise-cell">
+
+</div>
+<script type="webr-6-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiQTEgPC0gbWF0cml4KDIsIDEwMDAsIDEwMDApXG5BMiA8LSBtYXRyaXgoMiwgMTAwMCwgMTAwMClcbkEzIDwtIHJlcCgyLCAxMDAwKVxuXG5zeXN0ZW0udGltZShBMSAlKiUgQTIgJSolIEEzKVxuc3lzdGVtLnRpbWUoQTEgJSolIChBMiAlKiUgQTMpKSJ9
+</script>
+</div>
+</div>
+<p><strong>One more: <code>mean(x)</code> vs <code>sum(x) / length(x)</code>.</strong> Two ways to compute an average. Guess which is faster, then run it.</p>
+<div class="cell" data-autorun="true" data-edit="false">
+<div>
+<div id="pyodide-7" class="exercise-cell">
+
+</div>
+<script type="pyodide-7-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOmZhbHNlLCJldmFsIjp0cnVlfSwiY29kZSI6ImltcG9ydCBudW1weSBhcyBucCwgdGltZWl0XG5kZWYgdG0odGltZXM9NSwgKipmbnMpOlxuICAgIFwiXCJcInRtKCk6IHRoZSBQeXRob24gdHdpbiBvZiB0aW1laXQoKTsgbWVkaWFuIHdhbGwtY2xvY2sgdGltZSBpbiBtc1wiXCJcIlxuICAgIGZvciBuYW1lLCBmIGluIGZucy5pdGVtcygpOlxuICAgICAgICB0ID0gdGltZWl0LnJlcGVhdChmLCBudW1iZXI9MSwgcmVwZWF0PXRpbWVzKVxuICAgICAgICBwcmludChmXCJ7bmFtZTo+MTZzfTogezEwMDAqbnAubWVkaWFuKHQpOjkuMmZ9IG1zXCIpIn0=
+</script>
+</div>
+</div>
+<p><span class="mode"><i class="fa-solid fa-edit" aria-label="edit"></i> Edit</span></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div>
+<div id="webr-8" class="exercise-cell">
+
+</div>
+<script type="webr-8-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBydW5pZigxZTYpXG50aW1laXQobWVhbih4KSwgc3VtKHgpIC8gbGVuZ3RoKHgpKSJ9
+</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div>
+<div id="pyodide-9" class="exercise-cell">
+
+</div>
+<script type="pyodide-9-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA9IG5wLnJhbmRvbS5yYW5kKDFfMDAwXzAwMClcbnRtKG1lYW49bGFtYmRhOiB4Lm1lYW4oKSwgc3VtX292ZXJfbj1sYW1iZGE6IHguc3VtKCkgLyBsZW4oeCkpIn0=
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><code>mean()</code> is about twice as slow. It is not lazy; it makes two passes: a first average, then a correction using the deviations from it. The slower one is the more accurate one. Add up a million copies of 0.1 and see:</p>
+<p><span class="mode"><i class="fa-solid fa-play" aria-label="play"></i> Run</span></p>
+<div class="cell">
+<div>
+<div id="webr-10" class="exercise-cell">
+
+</div>
+<script type="webr-10-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSByZXAoMC4xLCAxZTYpXG5zIDwtIDBcbmZvciAodiBpbiB4KVxuICBzIDwtIHMgKyB2XG5jKGxvb3AgPSBzIC8gbGVuZ3RoKHgpIC0gMC4xLCBzdW1fb3Zlcl9uID0gc3VtKHgpIC8gbGVuZ3RoKHgpIC0gMC4xLCBtZWFuID0gbWVhbih4KSAtIDAuMSkifQ==
+</script>
+</div>
+</div>
+<p>The loop adds in plain double precision and drifts by about 1e-12; on some machines <code>sum()</code> does too. <code>mean()</code> comes back with exactly 0. More on floating point in Section 2; more speed tricks as we need them.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — a plain R loop vs C++ (through Rcpp) vs the built-in <code>sum()</code>. A browser cannot compile C++.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rcpp)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sumR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    total <span class="ot">&lt;-</span> total <span class="sc">+</span> x[i]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  total</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cppFunction</span>(<span class="st">'double sumC(NumericVector x){</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">  int n = x.size();</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  double total = 0;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">  for (int i=0; i &lt; n; i++) {</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">    total += x[i];</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">  return total;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">runif</span>(<span class="fl">1e3</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">microbenchmark</span>(<span class="fu">sum</span>(x), <span class="fu">sumC</span>(x), <span class="fu">sumR</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/run/s1p1_sumC.R</code></span></div>
+<p><span class="source">Source: <em>Advanced R</em>.</span></p>
+<p><span class="mode"><i class="fa-solid fa-hand-paper" aria-label="hand-paper"></i> By hand</span> — write <code>sumR()</code> yourself (a <code>for</code> loop that adds up the elements of <code>x</code>), then time it against the built-in <code>sum()</code>. Done when <code>all.equal()</code> returns <code>TRUE</code> and the timing table appears. No AI for this block.</p>
+<div class="cell">
+<div>
+<div id="webr-11" class="exercise-cell">
+
+</div>
+<script type="webr-11-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoic3VtUiA8LSBmdW5jdGlvbih4KSB7XG4gICMgeW91ciBjb2RlIGhlcmVcblxufVxuXG54IDwtIHJ1bmlmKDFlNSlcbmFsbC5lcXVhbChzdW1SKHgpLCBzdW0oeCkpXG50aW1laXQoc3VtKHgpLCBzdW1SKHgpKSJ9
+</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sumR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) total <span class="ot">&lt;-</span> total <span class="sc">+</span> x[i]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  total</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p><span class="mode"><i class="fa-solid fa-robot" aria-label="robot"></i> Vibe</span> — AI-assisted extension: turn the timing into a function of <code>n</code> and plot how the <code>x^0.5</code> vs <code>sqrt(x)</code> ratio changes with <code>n</code>. Starter file for Copilot: <a href="https://github.com/boxiang-wang/stat5400/blob/main/notes/vibe/s1p1_benchmark.R"><code>notes/vibe/s1p1_benchmark.R</code></a> (open it in the Codespace). Prefer no AI? Write it here.</p>
+<div class="cell">
+<div>
+<div id="webr-12" class="exercise-cell">
+
+</div>
+<script type="webr-12-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiYmVuY2hfcG93IDwtIGZ1bmN0aW9uKG4pIHtcbiAgIyByZXR1cm46IG1lZGlhbiB0aW1lIG9mIHheMC41XG4gICMgICAgICAgICAvIG1lZGlhbiB0aW1lIG9mIHNxcnQoeClcblxufVxuIyBuX2dyaWQgPC0gMTBeKDQ6Nik7IHJhdGlvcyA8LSBzYXBwbHkobl9ncmlkLCBiZW5jaF9wb3cpXG4jIHBsb3Qobl9ncmlkLCByYXRpb3MsIGxvZyA9IFwieFwiLCB0eXBlID0gXCJiXCIpIn0=
+</script>
+</div>
+</div>
+</section>
+<section id="types-of-computer-products" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="types-of-computer-products"><span class="header-section-number">11</span> Types of computer products</h2>
+<ul>
+<li><strong>Operating systems: make the computer itself work.</strong><br>
+e.g.&nbsp;Linux, Windows, Unix, MacOS…</li>
+<li><strong>Applications: perform specific tasks.</strong><br>
+e.g.&nbsp;Microsoft Word, Excel, S-Plus, R, SAS …</li>
+<li><strong>Commercial Systems.</strong>
+<ul>
+<li>code and lists of bugs are secret</li>
+<li>expensive</li>
+<li>require upgrading and relicensing</li>
+<li>Microsoft products, S-Plus, SAS, SPSS, Unix, etc.</li>
+</ul></li>
+<li><strong>Free Open Source systems.</strong>
+<ul>
+<li>revolution in software availability and function from the open source movement</li>
+<li>can see all code, change it, learn from it</li>
+<li>quality generally quite good</li>
+<li>more rapid updates</li>
+<li>most products have an active and helpful user news group</li>
+<li>generally lack some fancy features like extensive GUI</li>
+<li>Linux, LaTeX, R</li>
+</ul></li>
+</ul>
+<p><span class="source">Source: Frank Harrell (University of Virginia) lecture note.</span></p>
+</section>
+<section id="user-interfaces-graphical-vs-command-line" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="user-interfaces-graphical-vs-command-line"><span class="header-section-number">12</span> User interfaces: graphical vs command line</h2>
+<ul>
+<li><strong>graphical (GUI, mouse, menus)</strong>
+<ul>
+<li>easier to learn</li>
+<li>less flexible</li>
+<li>repetitive when the same tasks have to be repeated</li>
+<li>hard to document the exact steps taken</li>
+<li>hard to reproduce results</li>
+</ul></li>
+<li><strong>command line interfaces</strong>
+<ul>
+<li>harder to learn</li>
+<li>more flexible and powerful</li>
+<li>can save commands in scripts to replay when the same tasks have to be performed repeatedly</li>
+<li>can write generic commands to facilitate running different analyses with the same structure</li>
+</ul></li>
+</ul>
+</section>
+<section id="gui-vs-command-line-text-editor-sublime-vs-vim" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="gui-vs-command-line-text-editor-sublime-vs-vim"><span class="header-section-number">13</span> GUI vs command line: text editor: sublime vs vim</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/s1/vim.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">Is it still worth learning vim or another command-line editor in 2026, now that editors like VS Code have AI completion? Give the case for and against, for a statistician who mostly writes R and Python.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=Is%20it%20still%20worth%20learning%20vim%20or%20another%20command-line%20editor%20in%202026%2C%20now%20that%20editors%20like%20VS%20Code%20have%20AI%20completion%3F%20Give%20the%20case%20for%20and%20against%2C%20for%20a%20statistician%20who%20mostly%20writes%20R%20and%20Python." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=Is%20it%20still%20worth%20learning%20vim%20or%20another%20command-line%20editor%20in%202026%2C%20now%20that%20editors%20like%20VS%20Code%20have%20AI%20completion%3F%20Give%20the%20case%20for%20and%20against%2C%20for%20a%20statistician%20who%20mostly%20writes%20R%20and%20Python." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=Is%20it%20still%20worth%20learning%20vim%20or%20another%20command-line%20editor%20in%202026%2C%20now%20that%20editors%20like%20VS%20Code%20have%20AI%20completion%3F%20Give%20the%20case%20for%20and%20against%2C%20for%20a%20statistician%20who%20mostly%20writes%20R%20and%20Python." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="Is it still worth learning vim or another command-line editor in 2026, now that editors like VS Code have AI completion? Give the case for and against, for a statistician who mostly writes R and Python." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+</section>
+<section id="gui-vs-command-line-git-version-control" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="gui-vs-command-line-git-version-control"><span class="header-section-number">14</span> GUI vs command line: git (version control)</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/s1/git.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="gui-vs-command-line-remote-access-to-servers" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="gui-vs-command-line-remote-access-to-servers"><span class="header-section-number">15</span> GUI vs command line: remote access to servers</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/s1/ssh.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="r-vs-python" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="r-vs-python"><span class="header-section-number">16</span> R vs Python</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/s1/R_python.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p><strong>Where each language lives</strong> (checked Aug 2026):</p>
+<ul>
+<li><strong>Python</strong>: the AI ecosystem.
+<ul>
+<li>#1 on <a href="https://www.techrepublic.com/article/news-tiobe-august-2026-java-nears-c-plus-plus/" class="more" data-note="TIOBE index, Aug 2026: Python 18.5%, then C, C++, Java, C#, JavaScript, Visual Basic, SQL #8, R #9, Rust #10. MATLAB fell out of the top 20 for the first time in ten years.">TIOBE</a>.</li>
+<li>Used by 58% of developers in the Stack Overflow 2025 survey.</li>
+</ul></li>
+<li><strong>R</strong>: statistics and research.
+<ul>
+<li><a href="https://www.techrepublic.com/article/news-tiobe-august-2026-java-nears-c-plus-plus/" class="more" data-note="Up from #14 a year earlier.">#9 on TIOBE</a>.</li>
+<li>Taught in <a href="https://arxiv.org/pdf/2309.16961" class="more" data-note="Survey of DoE courses at U.S. universities, arXiv 2309.16961.">20 of 27 design-of-experiments courses</a> surveyed at U.S. universities.</li>
+<li>Articles citing R: about 1,000 in 2005, 62,000 in 2019.</li>
+<li>Exception: economics and business journals still run on Stata.</li>
+</ul></li>
+<li><strong>SAS</strong>: regulated pharma.
+<ul>
+<li>FDA has said since 2015 that it <a href="https://fda.report/media/109552/Statistical-Software-Clarifying-Statement-PDF.pdf" class="more" data-note="FDA Statistical Software Clarifying Statement, May 2015: 'FDA does not require use of any specific software for statistical analyses'; the software used must be documented with version and build.">does not require any specific software</a>. SAS stayed the default by habit.</li>
+<li><a href="https://posit.co/about/customer-stories/novo-nordisk" class="more" data-note="First fully R-based NDA submission to FDA, with R and SAS run in parallel to prove they agree; presented Sept 2024.">Novo Nordisk</a> and <a href="https://intuitionlabs.ai/articles/open-source-pharma-trends" class="more" data-note="R-based oncology trial filed with FDA, EMA, and China's NMPA.">Roche</a> have filed R-based submissions; the <a href="https://r-consortium.org/posts/submissions-wg-2026/" class="more" data-note="Pilots 1-5 reviewed by FDA, 2021-2026. Pilot 4 (Sept 2024) submitted a WebAssembly package; FDA reviewers found it easier than containers because it only needed a browser, the same technology as these notes.">R Consortium’s FDA pilots</a> have all been accepted.</li>
+<li>SAS is about to leave TIOBE’s top 30 for the first time. Knowing both is an edge in that industry.</li>
+</ul></li>
+<li><strong>Rust</strong>: the engine under the tools.
+<ul>
+<li>You will meet it without writing it: <a href="https://www.kdnuggets.com/python-project-setup-2026-uv-ruff-ty-polars" class="more" data-note="Dataframe library written in Rust, 10-30x faster than pandas on large data; used at JPMorgan, GitHub, Databricks.">Polars</a>, <code>uv</code>, and <code>ruff</code> are Rust inside, Python outside, the same way R uses C++ through Rcpp.</li>
+<li>#10 on TIOBE; the most admired language on Stack Overflow ten years running.</li>
+</ul></li>
+<li><strong>Julia</strong>: excellent for numerical work, real in scientific-computing groups.
+<ul>
+<li>Never a stable top-30 language; rarely in job postings. A specialty, not a foundation.</li>
+</ul></li>
+</ul>
+<div class="explore">
+<span class="explore-label">Ask AI:</span><span class="explore-prompt">For a statistics graduate student starting in 2026, which should come first, R or Python, and why? Consider statistical modeling, the AI ecosystem, and what employers in the U.S. ask for. Cite recent sources with dates.</span>
+<div class="explore-buttons">
+<a href="https://chatgpt.com/?q=For%20a%20statistics%20graduate%20student%20starting%20in%202026%2C%20which%20should%20come%20first%2C%20R%20or%20Python%2C%20and%20why%3F%20Consider%20statistical%20modeling%2C%20the%20AI%20ecosystem%2C%20and%20what%20employers%20in%20the%20U.S.%20ask%20for.%20Cite%20recent%20sources%20with%20dates.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">ChatGPT</a>
+<a href="https://claude.ai/new?q=For%20a%20statistics%20graduate%20student%20starting%20in%202026%2C%20which%20should%20come%20first%2C%20R%20or%20Python%2C%20and%20why%3F%20Consider%20statistical%20modeling%2C%20the%20AI%20ecosystem%2C%20and%20what%20employers%20in%20the%20U.S.%20ask%20for.%20Cite%20recent%20sources%20with%20dates.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Claude</a>
+<a href="https://www.perplexity.ai/search?q=For%20a%20statistics%20graduate%20student%20starting%20in%202026%2C%20which%20should%20come%20first%2C%20R%20or%20Python%2C%20and%20why%3F%20Consider%20statistical%20modeling%2C%20the%20AI%20ecosystem%2C%20and%20what%20employers%20in%20the%20U.S.%20ask%20for.%20Cite%20recent%20sources%20with%20dates.%20Search%20the%20web%20for%20current%20information%2C%20and%20cite%20your%20sources%20with%20their%20dates." target="_blank" rel="noopener">Perplexity</a>
+<button type="button" data-prompt="For a statistics graduate student starting in 2026, which should come first, R or Python, and why? Consider statistical modeling, the AI ecosystem, and what employers in the U.S. ask for. Cite recent sources with dates. Search the web for current information, and cite your sources with their dates." onclick="navigator.clipboard.writeText(this.dataset.prompt);this.textContent='Copied';setTimeout(()=>this.textContent='Copy prompt',1500)">Copy prompt</button>
+</div>
+</div>
+</section>
+<section id="sec-first-llm-call" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="sec-first-llm-call"><span class="header-section-number">17</span> LLM: chatbox vs API</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/s1/s1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>Three ways to use a model, in the order this course meets them:</p>
+<ul>
+<li><strong>Chatbox</strong> — a person talks to the model. You already do this. Good for questions, explanations, drafts.</li>
+<li><strong>API</strong> — a program talks to the model (Session 6). The answer comes back as data: you can loop over 1,000 prompts, set the temperature, ask for a table instead of prose.</li>
+<li><strong>Agent</strong> — the model calls tools and runs steps on its own, and you supervise (Session 19). The skill is no longer writing the answer; it is specifying the task and checking the work.</li>
+</ul>
+<section id="your-first-api-call" class="level3" data-number="17.1">
+<h3 data-number="17.1" class="anchored" data-anchor-id="your-first-api-call"><span class="header-section-number">17.1</span> Your first API call</h3>
+<p>The chatbox is a person talking to a model. The API is a <em>program</em> talking to a model: the same question, but the answer comes back as data your code can use. That is the door to everything in Section 6.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — R, with the <code>ellmer</code> package (needs your key):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">models_google_gemini</span>()                <span class="co"># which models your key can use; pick a "flash" one</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_google_gemini</span>(<span class="at">model =</span> <span class="st">"gemini-3.7-flash"</span>)   <span class="co"># reads GEMINI_API_KEY from the environment</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"In one sentence, what does a statistician do that a chatbot cannot?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/run/s1p1_llm.R</code></span></div>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — Python, with Google’s <code>google-genai</code> package:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google <span class="im">import</span> genai</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> genai.Client()               <span class="co"># reads GEMINI_API_KEY from the environment</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>interaction <span class="op">=</span> client.interactions.create(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gemini-3.7-flash"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span><span class="st">"In one sentence, what does a statistician do that a chatbot cannot?"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(interaction.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/run/s1p1_llm.py</code></span></div>
+<p>Three things to notice, all of which return in Section 6:</p>
+<ul>
+<li>The model is a <span class="more" data-note="Same idea as rnorm(): you pass arguments and get a value back. The value happens to be text.">function call</span> with arguments — here the model name and the prompt; later temperature, system instructions, and structured output.</li>
+<li>Run it twice and you get two different answers. An LLM is a <em>sampler</em>; Section 3 is about samplers.</li>
+<li>The answer is text, not truth!</li>
+</ul>
+</section>
+</section>
+<section id="before-next-class" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="before-next-class"><span class="header-section-number">18</span> Before next class</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Create a GitHub account and verify your <code>@uiowa.edu</code> email.</label></li>
+<li><label><input type="checkbox">Apply for GitHub Education.</label></li>
+<li><label><input type="checkbox">Open the course Codespace once and run <code>notes/run/s1p1_sumC.R</code>.</label></li>
+<li><label><input type="checkbox">Create a Gemini API key and store it as the <code>GEMINI_API_KEY</code> Codespaces secret.</label></li>
+<li><label><input type="checkbox">Run the two API examples above in the Codespace. Did the two answers differ?</label></li>
+</ul>
+<p>Questions about these notes? Later this semester the course tutor, built on <a href="https://morphmind.ai">MorphMind</a>, will answer them. Until then, the <em>Ask AI</em> buttons.</p>
+
+
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC42LjAvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyJdLCJyZXBvcyI6W119LCJyZW5kZXJfZGYiOiJkZWZhdWx0In0=
+</script>
+<script type="pyodide-data">
+eyJvcHRpb25zIjp7ImVudiI6eyJQTE9UTFlfUkVOREVSRVIiOiJwbG90bHlfbWltZXR5cGUifSwiaW5kZXhVUkwiOiJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvcHlvZGlkZS92MC4yOC4xL2Z1bGwvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsicHlvZGlkZV9odHRwIiwibWljcm9waXAiLCJpcHl0aG9uIiwibnVtcHkiLCJwYW5kYXMiXX19
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEyID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzExID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTkiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl85ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzkgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC04IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV84O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzggPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici04LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItOC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV84ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl84LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoicHlvZGlkZS03IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6Il9weW9kaWRlX3ZhbHVlXzcgPSB7XG4gIGNvbnN0IHsgaGlnaGxpZ2h0UHl0aG9uLCBiNjREZWNvZGV9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInB5b2RpZGUtNy1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXZhbHVhdGlvbiBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHtcbiAgICBpZDogXCJweW9kaWRlLTctY29udGVudHNcIixcbiAgICBlY2hvOiB0cnVlLFxuICAgIG91dHB1dDogdHJ1ZVxuICB9LCBibG9jay5hdHRyKTtcblxuICAvLyBFdmFsdWF0ZSB0aGUgcHJvdmlkZWQgUHl0aG9uIGNvZGVcbiAgY29uc3QgcmVzdWx0ID0gcHlvZGlkZU9qcy5wcm9jZXNzKHtjb2RlOiBibG9jay5jb2RlLCBvcHRpb25zfSwge30pO1xuXG4gIC8vIEVhcmx5IHlpZWxkIHdoaWxlIHdlIHdhaXQgZm9yIHRoZSBmaXJzdCBldmFsdWF0aW9uIGFuZCByZW5kZXJcbiAgaWYgKG9wdGlvbnMub3V0cHV0ICYmICEoXCI3XCIgaW4gcHlvZGlkZU9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHB5dGhvblwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRQeXRob24oYmxvY2suY29kZSkpO1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItZ3JvdyBzcGlubmVyLWdyb3ctc20gbS0yIHBvc2l0aW9uLWFic29sdXRlIHRvcC0wIGVuZC0wXCI7XG4gICAgICBwcmVFbGVtLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHByZUVsZW0pO1xuICAgIH0gZWxzZSB7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ib3JkZXIgc3Bpbm5lci1ib3JkZXItc21cIjtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICB9XG5cbiAgICB5aWVsZCBjb250YWluZXI7XG4gIH1cblxuICBweW9kaWRlT2pzLnJlbmRlcmVkT2pzW1wiN1wiXSA9IHRydWU7XG4gIHlpZWxkIGF3YWl0IHJlc3VsdDtcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV82ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl82LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl81ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici00IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNCA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici00LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzQgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8zID0ge1xuICBjb25zdCB7IGhpZ2hsaWdodFIsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV2YWx1YXRpb24gY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7XG4gICAgaWQ6IFwid2Vici0zLWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjNcIiBpbiB3ZWJST2pzLnJlbmRlcmVkT2pzKSkge1xuICAgIGNvbnN0IGNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG4gICAgY29uc3Qgc3Bpbm5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG5cbiAgICBpZiAob3B0aW9ucy5lY2hvKSB7XG4gICAgICAvLyBTaG93IG91dHB1dCBhcyBoaWdobGlnaHRlZCBzb3VyY2VcbiAgICAgIGNvbnN0IHByZUVsZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwicHJlXCIpO1xuICAgICAgY29udGFpbmVyLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZVwiO1xuICAgICAgcHJlRWxlbS5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGUgclwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRSKGJsb2NrLmNvZGUpKTtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWdyb3cgc3Bpbm5lci1ncm93LXNtIG0tMiBwb3NpdGlvbi1hYnNvbHV0ZSB0b3AtMCBlbmQtMFwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChwcmVFbGVtKTtcbiAgICB9IGVsc2Uge1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItYm9yZGVyIHNwaW5uZXItYm9yZGVyLXNtXCI7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgfVxuXG4gICAgeWllbGQgY29udGFpbmVyO1xuICB9XG5cbiAgd2ViUk9qcy5yZW5kZXJlZE9qc1tcIjNcIl0gPSB0cnVlO1xuICB5aWVsZCBhd2FpdCByZXN1bHQ7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMi1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTItY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMiwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzEgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ3ZWJST2pzID0ge1xuICBjb25zdCB7IFdlYlIsIENoYW5uZWxUeXBlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lLldlYlI7XG4gIGNvbnN0IHtcbiAgICBXZWJSRXZhbHVhdG9yLFxuICAgIFdlYlJFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBSLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGhcbiAgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc3RhdHVzQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLXN0YXR1c1wiKTtcbiAgY29uc3QgaW5kaWNhdG9yQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaW5kaWNhdG9yQ29udGFpbmVyLmNsYXNzTGlzdC5yZW1vdmUoXCJkLW5vbmVcIik7XG5cbiAgbGV0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpXG4gIHN0YXR1c1RleHQuY2xhc3NMaXN0ID0gXCJleGVyY2lzZS1sb2FkaW5nLWRldGFpbHNcIjtcbiAgc3RhdHVzVGV4dCA9IHN0YXR1c0NvbnRhaW5lci5hcHBlbmRDaGlsZChzdGF0dXNUZXh0KTtcbiAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbml0aWFsaXNlYDtcblxuICAvLyBIb2lzdCBpbmRpY2F0b3Igb3V0IGZyb20gZmluYWwgc2xpZGUgd2hlbiBydW5uaW5nIHVuZGVyIHJldmVhbFxuICBjb25zdCByZXZlYWxTdGF0dXMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCAuZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGlmIChyZXZlYWxTdGF0dXMpIHtcbiAgICByZXZlYWxTdGF0dXMucmVtb3ZlKCk7XG4gICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgPiAuc2xpZGVzXCIpLmFwcGVuZENoaWxkKHJldmVhbFN0YXR1cyk7XG4gIH1cblxuICAvLyBNYWtlIGFueSByZXZlYWwgc2xpZGVzIHdpdGggbGl2ZSBjZWxscyBzY3JvbGxhYmxlXG4gIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoXCIucmV2ZWFsIC5leGVyY2lzZS1jZWxsXCIpLmZvckVhY2goKGVsKSA9PiB7XG4gICAgZWwuY2xvc2VzdCgnc2VjdGlvbi5zbGlkZScpLmNsYXNzTGlzdC5hZGQoXCJzY3JvbGxhYmxlXCIpO1xuICB9KVxuXG4gIC8vIHdlYlIgc3VwcGxlbWVudGFsIGRhdGEgYW5kIG9wdGlvbnNcbiAgY29uc3QgZGF0YUNvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici1kYXRhXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZGF0YSA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGRhdGFDb250ZW50KSk7XG5cbiAgLy8gR3JhYiBsaXN0IG9mIHJlc291cmNlcyB0byBiZSBkb3dubG9hZGVkXG4gIGNvbnN0IGZpbGVzQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ2ZnMtZmlsZVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGZpbGVzID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZmlsZXNDb250ZW50KSk7XG5cbiAgLy8gSW5pdGlhbGlzZSB3ZWJSIGFuZCBzZXR1cCBmb3IgUiBjb2RlIGV2YWx1YXRpb25cbiAgbGV0IHdlYlJQcm9taXNlID0gKGFzeW5jICh3ZWJSKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyB3ZWJSYDtcbiAgICBhd2FpdCB3ZWJSLmluaXQoKTtcblxuICAgIC8vIEluc3RhbGwgcHJvdmlkZWQgbGlzdCBvZiBwYWNrYWdlc1xuICAgIC8vIEVuc3VyZSB3ZWJSIGRlZmF1bHQgcmVwbyBpcyBpbmNsdWRlZFxuICAgIGRhdGEucGFja2FnZXMucmVwb3MucHVzaChcImh0dHBzOi8vcmVwby5yLXdhc20ub3JnXCIpXG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gd2ViUi5ldmFsUlZvaWQoYFxuICAgICAgICB3ZWJyOjppbnN0YWxsKHBrZywgcmVwb3MgPSByZXBvcylcbiAgICAgICAgbGlicmFyeShwa2csIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICAgIGAsIHsgZW52OiB7XG4gICAgICAgIHBrZzogcGtnLFxuICAgICAgICByZXBvczogZGF0YS5wYWNrYWdlcy5yZXBvcyxcbiAgICAgIH19KTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICBjb25zdCBhbmFseXNpcyA9IGF3YWl0IHdlYlIuRlMuYW5hbHl6ZVBhdGgocGF0aCk7XG4gICAgICAgIGlmICghYW5hbHlzaXMuZXhpc3RzKSB7XG4gICAgICAgICAgdHJ5IHtcbiAgICAgICAgICAgIGF3YWl0IHdlYlIuRlMubWtkaXIocGF0aCk7XG4gICAgICAgICAgfSBjYXRjaCAoZSkge1xuICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yOiBcIiR7ZS5tZXNzYWdlfVwiLmApO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgcmV0dXJuIGF3YWl0IHdlYlIuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5zdGFsbGluZyB3ZWJSIHNoaW1zYDtcbiAgICBhd2FpdCB3ZWJSLmV2YWxSVm9pZChgd2Vicjo6c2hpbV9pbnN0YWxsKClgKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgV2ViUiBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBSKHdlYlIsIGRhdGEpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHdlYlI7XG4gIH0pKG5ldyBXZWJSKGRhdGEub3B0aW9ucykpO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCB3ZWJSID0gYXdhaXQgd2ViUlByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFdlYlJFdmFsdWF0b3Iod2ViUiwgY29udGV4dClcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBwcm9jZXNzLFxuICAgIHdlYlJQcm9taXNlLFxuICAgIHJlbmRlcmVkT2pzLFxuICB9O1xufVxuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtcHJlbHVkZSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InB5b2RpZGVPanMgPSB7XG4gIGNvbnN0IHtcbiAgICBQeW9kaWRlRXZhbHVhdG9yLFxuICAgIFB5b2RpZGVFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBQeXRob24sXG4gICAgc3RhcnRQeW9kaWRlV29ya2VyLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGgsXG4gIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHN0YXR1c0NvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1zdGF0dXNcIik7XG4gIGNvbnN0IGluZGljYXRvckNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGluZGljYXRvckNvbnRhaW5lci5jbGFzc0xpc3QucmVtb3ZlKFwiZC1ub25lXCIpO1xuXG4gIGxldCBzdGF0dXNUZXh0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKVxuICBzdGF0dXNUZXh0LmNsYXNzTGlzdCA9IFwiZXhlcmNpc2UtbG9hZGluZy1kZXRhaWxzXCI7XG4gIHN0YXR1c1RleHQgPSBzdGF0dXNDb250YWluZXIuYXBwZW5kQ2hpbGQoc3RhdHVzVGV4dCk7XG4gIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5pdGlhbGlzZWA7XG5cbiAgLy8gSG9pc3QgaW5kaWNhdG9yIG91dCBmcm9tIGZpbmFsIHNsaWRlIHdoZW4gcnVubmluZyB1bmRlciByZXZlYWxcbiAgY29uc3QgcmV2ZWFsU3RhdHVzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgLmV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpZiAocmV2ZWFsU3RhdHVzKSB7XG4gICAgcmV2ZWFsU3RhdHVzLnJlbW92ZSgpO1xuICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsID4gLnNsaWRlc1wiKS5hcHBlbmRDaGlsZChyZXZlYWxTdGF0dXMpO1xuICB9XG5cbiAgLy8gTWFrZSBhbnkgcmV2ZWFsIHNsaWRlcyB3aXRoIGxpdmUgY2VsbHMgc2Nyb2xsYWJsZVxuICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKFwiLnJldmVhbCAuZXhlcmNpc2UtY2VsbFwiKS5mb3JFYWNoKChlbCkgPT4ge1xuICAgIGVsLmNsb3Nlc3QoJ3NlY3Rpb24uc2xpZGUnKS5jbGFzc0xpc3QuYWRkKFwic2Nyb2xsYWJsZVwiKTtcbiAgfSlcblxuICAvLyBQeW9kaWRlIHN1cHBsZW1lbnRhbCBkYXRhIGFuZCBvcHRpb25zXG4gIGNvbnN0IGRhdGFDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInB5b2RpZGUtZGF0YVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGRhdGEgPSBKU09OLnBhcnNlKGI2NERlY29kZShkYXRhQ29udGVudCkpO1xuXG4gIC8vIEdyYWIgbGlzdCBvZiByZXNvdXJjZXMgdG8gYmUgZG93bmxvYWRlZFxuICBjb25zdCBmaWxlc0NvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwidmZzLWZpbGVcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBmaWxlcyA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGZpbGVzQ29udGVudCkpO1xuXG4gIGxldCBweW9kaWRlUHJvbWlzZSA9IChhc3luYyAoKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBQeW9kaWRlYDtcbiAgICBjb25zdCBweW9kaWRlID0gYXdhaXQgc3RhcnRQeW9kaWRlV29ya2VyKGRhdGEub3B0aW9ucyk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6IG1pY3JvcGlwYDtcbiAgICBhd2FpdCBweW9kaWRlLmxvYWRQYWNrYWdlKFwibWljcm9waXBcIik7XG4gICAgY29uc3QgbWljcm9waXAgPSBhd2FpdCBweW9kaWRlLnB5aW1wb3J0KFwibWljcm9waXBcIik7XG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gbWljcm9waXAuaW5zdGFsbChwa2cpO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuICAgIGF3YWl0IG1pY3JvcGlwLmRlc3Ryb3koKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICB0cnkge1xuICAgICAgICAgIGF3YWl0IHB5b2RpZGUuRlMubWtkaXIocGF0aCk7XG4gICAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgICBpZiAoZS5uYW1lICE9PSBcIkVycm5vRXJyb3JcIikgdGhyb3cgZTtcbiAgICAgICAgICBpZiAoZS5lcnJubyAhPT0gMjApIHtcbiAgICAgICAgICAgIGNvbnN0IGVycm9yVGV4dFB0ciA9IGF3YWl0IHB5b2RpZGUuX21vZHVsZS5fc3RyZXJyb3IoZS5lcnJubyk7XG4gICAgICAgICAgICBjb25zdCBlcnJvclRleHQgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuVVRGOFRvU3RyaW5nKGVycm9yVGV4dFB0cik7XG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYEZpbGVzeXN0ZW0gRXJyb3IgJHtlLmVycm5vfSBcIiR7ZXJyb3JUZXh0fVwiLmApO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgdHJ5IHtcbiAgICAgICAgcmV0dXJuIGF3YWl0IHB5b2RpZGUuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgaWYgKGUubmFtZSAhPT0gXCJFcnJub0Vycm9yXCIpIHRocm93IGU7XG4gICAgICAgIGNvbnN0IGVycm9yVGV4dFB0ciA9IGF3YWl0IHB5b2RpZGUuX21vZHVsZS5fc3RyZXJyb3IoZS5lcnJubyk7XG4gICAgICAgIGNvbnN0IGVycm9yVGV4dCA9IGF3YWl0IHB5b2RpZGUuX21vZHVsZS5VVEY4VG9TdHJpbmcoZXJyb3JUZXh0UHRyKTtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yICR7ZS5lcnJub30gXCIke2Vycm9yVGV4dH1cIi5gKTtcbiAgICAgIH1cbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgUHlvZGlkZSBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBQeXRob24ocHlvZGlkZSk7XG5cbiAgICBzdGF0dXNUZXh0LnJlbW92ZSgpO1xuICAgIGlmIChzdGF0dXNDb250YWluZXIuY2hpbGRyZW4ubGVuZ3RoID09IDApIHtcbiAgICAgIHN0YXR1c0NvbnRhaW5lci5wYXJlbnROb2RlLnJlbW92ZSgpO1xuICAgIH1cbiAgICByZXR1cm4gcHlvZGlkZTtcbiAgfSkoKS5jYXRjaCgoZXJyKSA9PiB7XG4gICAgc3RhdHVzVGV4dC5zdHlsZS5jb2xvciA9IFwidmFyKC0tZXhlcmNpc2UtZWRpdG9yLWhsLWVyLCAjQUQwMDAwKVwiO1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBlcnIubWVzc2FnZTtcbiAgICAvL2luZGljYXRvckNvbnRhaW5lci5xdWVyeVNlbGVjdG9yKFwiLnNwaW5uZXItZ3Jvd1wiKS5jbGFzc0xpc3QuYWRkKFwiZC1ub25lXCIpO1xuICAgIHRocm93IGVycjtcbiAgfSk7XG5cbiAgLy8gS2VlcCB0cmFjayBvZiBpbml0aWFsIE9KUyBibG9jayByZW5kZXJcbiAgY29uc3QgcmVuZGVyZWRPanMgPSB7fTtcblxuICBjb25zdCBwcm9jZXNzID0gYXN5bmMgKGNvbnRleHQsIGlucHV0cykgPT4ge1xuICAgIGNvbnN0IHB5b2RpZGUgPSBhd2FpdCBweW9kaWRlUHJvbWlzZTtcbiAgICBjb25zdCBldmFsdWF0b3IgPSBuZXcgUHlvZGlkZUV2YWx1YXRvcihweW9kaWRlLCBjb250ZXh0KTtcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBweW9kaWRlUHJvbWlzZSxcbiAgICByZW5kZXJlZE9qcyxcbiAgICBwcm9jZXNzLFxuICB9O1xufVxuIn1dfQ==
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../notes";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
