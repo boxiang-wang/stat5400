@@ -286,7 +286,8 @@ No key, no cost, works offline. The course Codespace already has Ollama with two
 
     Ask the small one five times. It still gets this wrong some of the time; that is the 2024 story in @sec-ai-data-science, on a machine you control. The 1B model is slower and more often right. Bigger models need more memory than a Codespace has; on your laptop try `llama3.2` (3B).
 3.  From Python: `import ollama; ollama.chat(model="qwen2.5:0.5b", messages=[{"role": "user", "content": "..."}])`.
-4.  Also worth knowing: the R package `localLLM` loads a model inside R with no server at all. We will use it in the Tech Guide.
+4.  If `chat_ollama()` says it cannot find a running Ollama, the server did not start: type `ollama serve &` in the terminal, wait three seconds, try again.
+5.  Also worth knowing: the R package `localLLM` loads a model inside R with no server at all. We will use it in the Tech Guide.
 :::
 
 ### Where does code run?

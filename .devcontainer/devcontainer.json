@@ -37,6 +37,7 @@
   },
   // every start: make sure the Ollama server is up
   "postStartCommand": "bash .devcontainer/start-ollama.sh",
+  "postAttachCommand": "bash .devcontainer/start-ollama.sh",
   "customizations": {
     "vscode": {
       "extensions": [
