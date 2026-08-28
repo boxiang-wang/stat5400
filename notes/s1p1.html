@@ -656,6 +656,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 <div class="codespace"><span class="codespace-file">file: <code>notes/run/s1p1_ollama.R</code></span></div>
 <p>Ask the small one five times. It still gets this wrong some of the time; that is the 2024 story in <a href="#sec-ai-data-science" class="quarto-xref">Section&nbsp;3</a>, on a machine you control. The 1B model is slower and more often right. Bigger models need more memory than a Codespace has; on your laptop try <code>llama3.2</code> (3B).</p></li>
 <li><p>From Python: <code>import ollama; ollama.chat(model="qwen2.5:0.5b", messages=[{"role": "user", "content": "..."}])</code>.</p></li>
+<li><p>If <code>chat_ollama()</code> says it cannot find a running Ollama, the server did not start: type <code>ollama serve &amp;</code> in the terminal, wait three seconds, try again.</p></li>
 <li><p>Also worth knowing: the R package <code>localLLM</code> loads a model inside R with no server at all. We will use it in the Tech Guide.</p></li>
 </ol>
 </div>
