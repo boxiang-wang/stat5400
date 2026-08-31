@@ -6,11 +6,13 @@ project:
   output-dir: _site
   render:
     - "*.qmd"
-    - "notes/*.qmd"
+    - "notes/*/*.qmd"
   resources:
     - "syllabus.pdf"
-    - "notes/code/*"
-    - "notes/*.pdf"
+    - "notes/*/code/*"
+    - "notes/*/*.pdf"
+    - "notes/*/data/*"
+    - "data/*"
 
 website:
   title: "STAT 5400"
@@ -26,9 +28,12 @@ website:
     search: true
     contents:
       - index.qmd
-      - section: "Lecture Notes"
+      - section: "Section 1: Introduction"
         contents:
-          - auto: "notes/*.qmd"
+          - auto: "notes/section1/*.qmd"
+      - section: "Section 2: R and Python Basics"
+        contents:
+          - auto: "notes/section2/*.qmd"
 
 format:
   live-html:

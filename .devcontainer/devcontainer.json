@@ -50,7 +50,7 @@
     },
     "codespaces": {
       // files opened automatically when the Codespace starts
-      "openFiles": ["notes/run/README.md"]
+      "openFiles": ["notes/README.md"]
     }
   }
 }

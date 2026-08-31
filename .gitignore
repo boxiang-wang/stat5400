@@ -2,3 +2,7 @@
 /_site/
 *_files/
 **/*.quarto_ipynb
+.DS_Store
+.Rhistory
+notes/**/*.aux
+notes/**/*.log

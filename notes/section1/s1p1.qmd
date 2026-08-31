@@ -16,7 +16,7 @@ pyodide:
     - pandas
 ---
 
-{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+{{< include ../../_extensions/r-wasm/live/_knitr.qmd >}}
 
 ::: {.content-visible when-format="html"}
 ::: {.page-buttons}
@@ -125,7 +125,7 @@ Read the two O\*NET lists again: both start with **mathematics and critical thin
 :::
 
 ::: {.content-visible unless-format="html"}
-![](img/s1/g1.png){width="55%" fig-align="center"}
+![](img/g1.png){width="55%" fig-align="center"}
 :::
 
 ### A short history of generative AI
@@ -233,7 +233,7 @@ Do these this week; the notes assume them from Section 2 on.
 
 1.  **GitHub account** --- <https://github.com/signup>. Add and verify your `@uiowa.edu` email under Settings → Emails.
 2.  **GitHub Education** (free Copilot and Pro-level Codespaces) --- <https://github.com/settings/education/benefits> → *Start an application*. Proof: a current student ID, class schedule, or enrollment letter; using the `@uiowa.edu` email speeds review. When approved, GitHub Copilot Student and Codespaces are activated on your account.
-3.  **Test the Codespace** --- click *Open in Codespace* at the top of this page. The first start builds the course environment (a few minutes); later starts take about 30 seconds. Open `notes/run/s1p1_sumC.R`, put the cursor on line 3, press Cmd/Ctrl+Enter.
+3.  **Test the Codespace** --- click *Open in Codespace* at the top of this page. The first start builds the course environment (a few minutes); later starts take about 30 seconds. Open `notes/section1/run/s1p1_sumC.R`, put the cursor on line 3, press Cmd/Ctrl+Enter.
 4.  **One chatbot login** --- ChatGPT, Claude, or Gemini; the free tier is enough. The *Ask AI* buttons in these notes open one of them with the question filled in.
 5.  **A Gemini API key** (free) --- <https://aistudio.google.com/apikey>. Used by the first API call in @sec-first-llm-call. Details in the box below.
 6.  **OpenAI and Anthropic keys** (optional, paid; $5 is enough for the course). Details below.
@@ -282,7 +282,7 @@ No key, no cost, works offline. The course Codespace already has Ollama with two
     bigger$chat("Which is larger, 9.11 or 9.9? Answer in one line.")
     ```
 
-    {{< codespace "notes/run/s1p1_ollama.R" >}}
+    {{< codespace "notes/section1/run/s1p1_ollama.R" >}}
 
     Ask the small one five times. It still gets this wrong some of the time; that is the 2024 story in @sec-ai-data-science, on a machine you control. The 1B model is slower and more often right. Bigger models need more memory than a Codespace has; on your laptop try `llama3.2` (3B).
 3.  From Python: `import ollama; ollama.chat(model="qwen2.5:0.5b", messages=[{"role": "user", "content": "..."}])`.
@@ -340,13 +340,13 @@ Application of some statistical tools to analyze a practical problem.
 
 Data collection $\to$ modeling $\to$ decision making.
 
-![](img/s1/classification0.png){width="70%" fig-align="center"}
+![](img/classification0.png){width="70%" fig-align="center"}
 
 ## Optimization
 
 Translate a conceptual problem into a computational problem.
 
-![](img/s1/classification.png){width="70%" fig-align="center"}
+![](img/classification.png){width="70%" fig-align="center"}
 
 Logistic regression:
 $$
@@ -358,7 +358,7 @@ $$
     -   knowledge of the performance of different algorithms.
     -   deeper understanding of the statistical problem.
 
-![](img/s1/log.png){width="50%" fig-align="center"}
+![](img/log.png){width="50%" fig-align="center"}
 
 **An application.** On January 28, 1986, the space shuttle Challenger broke apart 73 seconds after launch. The night before, engineers argued about the O-ring seals and the forecast of 31°F. Here are the 23 earlier launches: temperature at launch and how many of the six O-rings showed damage. Problem $P$ with one predictor.
 
@@ -391,7 +391,7 @@ microbenchmark(
 )
 ```
 
-{{< codespace "notes/run/s1p1_microbenchmark.R" >}}
+{{< codespace "notes/section1/run/s1p1_microbenchmark.R" >}}
 
 -   By default, each expression was run 100 times.
 -   Unit: ns -- 1 billionth of a second, which says 1 billion calls take a second.\
@@ -525,7 +525,7 @@ x = runif(1e3)
 microbenchmark(sum(x), sumC(x), sumR(x))
 ```
 
-{{< codespace "notes/run/s1p1_sumC.R" >}}
+{{< codespace "notes/section1/run/s1p1_sumC.R" >}}
 
 [Source: *Advanced R*.]{.source}
 
@@ -552,7 +552,7 @@ sumR <- function(x) {
 ```
 :::
 
-[{{< fa robot >}} Vibe]{.mode} — AI-assisted extension: turn the timing into a function of `n` and plot how the `x^0.5` vs `sqrt(x)` ratio changes with `n`. Starter file for Copilot: [`notes/vibe/s1p1_benchmark.R`](https://github.com/boxiang-wang/stat5400/blob/main/notes/vibe/s1p1_benchmark.R) (open it in the Codespace). Prefer no AI? Write it here.
+[{{< fa robot >}} Vibe]{.mode} — AI-assisted extension: turn the timing into a function of `n` and plot how the `x^0.5` vs `sqrt(x)` ratio changes with `n`. Starter file for Copilot: [`notes/section1/vibe/s1p1_benchmark.R`](https://github.com/boxiang-wang/stat5400/blob/main/notes/section1/vibe/s1p1_benchmark.R) (open it in the Codespace). Prefer no AI? Write it here.
 
 ```{webr}
 bench_pow <- function(n) {
@@ -602,21 +602,21 @@ bench_pow <- function(n) {
 
 ## GUI vs command line: text editor: sublime vs vim
 
-![](img/s1/vim.png){width="80%" fig-align="center"}
+![](img/vim.png){width="80%" fig-align="center"}
 
 {{< explore "Is it still worth learning vim or another command-line editor in 2026, now that editors like VS Code have AI completion? Give the case for and against, for a statistician who mostly writes R and Python." >}}
 
 ## GUI vs command line: git (version control)
 
-![](img/s1/git.png){width="80%" fig-align="center"}
+![](img/git.png){width="80%" fig-align="center"}
 
 ## GUI vs command line: remote access to servers
 
-![](img/s1/ssh.png){width="80%" fig-align="center"}
+![](img/ssh.png){width="80%" fig-align="center"}
 
 ## R vs Python
 
-![](img/s1/R_python.png){width="80%" fig-align="center"}
+![](img/R_python.png){width="80%" fig-align="center"}
 
 **Where each language lives** (checked Aug 2026):
 
@@ -642,7 +642,7 @@ bench_pow <- function(n) {
 
 ## LLM: chatbox vs API {#sec-first-llm-call}
 
-![](img/s1/s1.png){width="80%" fig-align="center"}
+![](img/s1.png){width="80%" fig-align="center"}
 
 Three ways to use a model, in the order this course meets them:
 
@@ -663,7 +663,7 @@ chat <- chat_google_gemini(model = "gemini-3.7-flash")   # reads GEMINI_API_KEY 
 chat$chat("In one sentence, what does a statistician do that a chatbot cannot?")
 ```
 
-{{< codespace "notes/run/s1p1_llm.R" >}}
+{{< codespace "notes/section1/run/s1p1_llm.R" >}}
 
 {{< codespace-pill >}} --- Python, with Google's `google-genai` package:
 
@@ -677,7 +677,7 @@ interaction = client.interactions.create(
 print(interaction.output_text)
 ```
 
-{{< codespace "notes/run/s1p1_llm.py" >}}
+{{< codespace "notes/section1/run/s1p1_llm.py" >}}
 
 Three things to notice, all of which return in Section 6:
 
@@ -689,7 +689,7 @@ Three things to notice, all of which return in Section 6:
 
 - [ ] Create a GitHub account and verify your `@uiowa.edu` email.
 - [ ] Apply for GitHub Education.
-- [ ] Open the course Codespace once and run `notes/run/s1p1_sumC.R`.
+- [ ] Open the course Codespace once and run `notes/section1/run/s1p1_sumC.R`.
 - [ ] Create a Gemini API key and store it as the `GEMINI_API_KEY` Codespaces secret.
 - [ ] Register a free account at [MorphMind](https://morphmind.ai).
 - [ ] Run the two API examples above in the Codespace. Did the two answers differ?
