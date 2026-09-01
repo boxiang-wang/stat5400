@@ -69,17 +69,6 @@ A3 <- rep(2, 1000)
 system.time(A1 %*% A2 %*% A3)
 system.time(A1 %*% (A2 %*% A3))
 
-# Edit
-x <- runif(1e6)
-timeit(mean(x), sum(x) / length(x))
-
-# Run
-x <- rep(0.1, 1e6)
-s <- 0
-for (v in x)
-  s <- s + v
-c(loop = s / length(x) - 0.1, sum_over_n = sum(x) / length(x) - 0.1, mean = mean(x) - 0.1)
-
 library(Rcpp)
 library(microbenchmark)
 sumR <- function(x) {
