@@ -12,12 +12,12 @@ sqrt(2 * pi)
 
 print("Hello 5400!")
 
-# Run
+# Predict
 0.1 + 0.2 == 0.3
 all.equal(0.1 + 0.2, 0.3)
 .Machine$double.eps
 
-# Run
+# Predict
 1:3 + 1:2
 1:4 + 1:2
 
@@ -58,7 +58,7 @@ a3 <- c(T, F, TRUE, FALSE) # ALWAYS spell T and F.
 class(a3); typeof(a3) # semicolons not recommended.
 as.numeric(a3)
 
-# Run
+# Predict
 T <- FALSE
 c(T, TRUE)
 rm(T)     # put things back
@@ -117,7 +117,7 @@ levels(Cars$Country)
 
 boxplot(Cars$MPG ~ Cars$Country)
 
-# Run
+# Predict
 f <- factor(c("10", "9", "8"))
 as.numeric(f)
 

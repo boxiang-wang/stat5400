@@ -109,7 +109,7 @@ sqrt(2 * pi)
 print("Hello 5400!")
 ```
 
-[{{< fa play >}} Run]{.mode} --- say the answer out loud before you run it.
+[{{< fa lightbulb >}} Predict]{.mode} --- say the answer out loud before you run it.
 
 ```{webr}
 0.1 + 0.2 == 0.3
@@ -123,7 +123,7 @@ all.equal(0.1 + 0.2, 0.3)
 `.Machine$double.eps` is the smallest number that still makes a difference when added to 1. On almost every machine it is `2.220446e-16`.
 :::
 
-[{{< fa play >}} Run]{.mode} --- one of these two lines warns you. Predict which, and why.
+[{{< fa lightbulb >}} Predict]{.mode} --- one of these two lines warns you. Which one, and why?
 
 ```{webr}
 1:3 + 1:2
@@ -224,7 +224,7 @@ class(a3); typeof(a3) # semicolons not recommended.
 as.numeric(a3)
 ```
 
-[{{< fa play >}} Run]{.mode} --- this is why the comment above says to spell them out.
+[{{< fa lightbulb >}} Predict]{.mode} --- what does the second line give? This is why the comment above says to spell `T` and `F` out.
 
 ```{webr}
 T <- FALSE
@@ -343,7 +343,7 @@ levels(Cars$Country)
 boxplot(Cars$MPG ~ Cars$Country)
 ```
 
-[{{< fa play >}} Run]{.mode} --- a factor that looks like numbers. Predict the second line before running.
+[{{< fa lightbulb >}} Predict]{.mode} --- a factor that looks like numbers. What does the second line give?
 
 ```{webr}
 f <- factor(c("10", "9", "8"))
