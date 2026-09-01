@@ -1,0 +1,21 @@
+
+Datafile Name: Cars 
+Datafile Subjects: Consumer , Engineering 
+Story Names: Clustering Cars , Fuel Efficient Buick Wagon , Measuring Fuel 
+Efficiency 
+Reference: Henderson, H. V. and Velleman, P. F. (1981), "Building Regression 
+Models Interactively." Biometrics, 37, 391-411. Data originally collected from 
+Consumer Reports. 
+Authorization: Contact Consumer Reports 
+Description: Measurements on 38 1978-79 model automobiles. The gas mileage in 
+miles per gallon as measured by Consumers' Union on a test track. Other values 
+as reported by automobile manufacturer. 
+Number of cases: 38 
+Variable Names: 
+  Country: Nationality of manufacturer (eg. U.S., Japan) 
+  Car: Car name (Make and model) 
+  MPG: Miles per gallon, a measure of gas mileage 
+  Drive_Ratio: Drive ratio of the automobile 
+  Horsepower: Horsepower 
+  Displacement: Displacement of the car (in cubic inches) 
+  Cylinder: Number of cylinders 

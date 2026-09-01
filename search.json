@@ -1,230 +1,62 @@
 [
   {
-    "objectID": "notes/s1p1.html",
-    "href": "notes/s1p1.html",
-    "title": "STAT:5400 Section 1.1 — Introduction",
+    "objectID": "notes/section2/s2p1.html",
+    "href": "notes/section2/s2p1.html",
+    "title": "STAT:5400 Section 2.1 — A First Look at R",
     "section": "",
-    "text": "PDF  Open in Codespace\n\nAll code on this page, in one file:  R  Python  Rmd  ipynb",
+    "text": "PDF  Open in Codespace\n\nAll code on this page, in one file:  R  Rmd\nEvery code block on this page runs in your browser. Click Run Code, change the code, run it again. The whole page shares one R session, so run the blocks in order.",
     "crumbs": [
       "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
+      "Section 2: R and Python Basics",
+      "STAT:5400 Section 2.1 — A First Look at R"
     ]
   },
   {
-    "objectID": "notes/s1p1.html#why-statistics-data-science",
-    "href": "notes/s1p1.html#why-statistics-data-science",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "1 Why statistics & data science?",
-    "text": "1 Why statistics & data science?\n\n2009: “I keep saying that the sexy job in the next 10 years will be statisticians. And I’m not kidding.”\nHal Varian, Chief Economist at Google\n2012: “Data Scientist: The Sexiest Job of the 21st Century”, Harvard Business Review.\n2022: “Is Data Scientist Still the Sexiest Job of the 21st Century?”, Harvard Business Review.\n\nThe U.S. Bureau of Labor Statistics predicts data science will see more growth than almost any other field between now and 2029. Data scientist jobs are projected to grow +36% (2023–2033), with over 20,000 openings per year.\nIn 2024, the median pay was $112,590. The median salary for an experienced data scientist in California is approaching $200,000.\nData Scientist is #6 Best STEM Job and #4 Best Technology Job.\n\n2023–2025: the question changes. Nobody has written the next “sexiest job” piece; the discussion is now whether AI changes the job. A 2023 essay argued the title is “being challenged by AI”; a 2025 essay called it “the rise, fall, and evolution” of the job.\n2026: the numbers say the job kept growing. BLS projects data-scientist employment +34% over 2024–2034, about 23,400 openings a year; for statisticians, growth “much faster than average” as well.\n\n\nAsk AI:What are the current job outlook and median pay for data scientists and statisticians in the U.S.? Use the latest Bureau of Labor Statistics Occupational Outlook figures, and compare them with the 2023–2033 projection of +36% growth and the 2024 median pay of $112,590.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
+    "objectID": "notes/section2/s2p1.html#a-first-look-at-r",
+    "href": "notes/section2/s2p1.html#a-first-look-at-r",
+    "title": "STAT:5400 Section 2.1 — A First Look at R",
+    "section": "1 A First Look at R",
+    "text": "1 A First Look at R\n\n1.1 An implementation of S language\n\nS language was developed at AT&T-Bell Labs; first version 1976.\nS-Plus is a commercial version of S (begin in 1987), sold and supported by Insightful Corp.\n\n\n\n\n\n\n\nNoteWhat S-Plus offered\n\n\n\n\n\nBottom line. S-Plus was the paid product built on S. R is the free implementation that replaced it in practice.\n\nGUI.\nMany formats supported for graphics export and data input/output.\nRuns on Windows, UNIX, Linux (not Macintosh).\n\n\n\n\n\n\n1.2 R\n\nInternational team of statisticians started developing R in early 1990’s.\n\nTo provide free and open source alternative to S-Plus.\nTo provide S implementation on Linux (not supported by S-Plus then); your code can be replicated by users on Windows, Unix, Linux, Mac…\n\nEasy to download and install from web sites.\nUser-contributed packages expand capabilities and provide support for cutting edge research.\nAn active community.\nFacilitate communicating your results: knitr, r markdown, shiny.\nSupport of calling high-performance languages: C, C++, Fortran… some connection with Python and Matlab.\nOn the other hand, R itself is not very fast and efficient in using memory. Users’ coding is sometimes not elegant.\n\n\nAsk AI:S-Plus was the commercial product. It had the funding, a graphical interface, and company support. R was free and started later. Why did R win? Give the main reasons, and say roughly when the balance tipped.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n1.3 What R is\n\n“An integrated suite of software facilities for data manipulation, calculation, and graphics display”\n(An Introduction to R, Venables, Ripley, and the R Core team).\nThe goal of STAT 5400 regarding R:\n\nGet familiar with fundamentals of R: data types, operations, object systems.\nHave extensive hands-on experiences of doing statistical analysis using R, with some touch on modern features in R.\nUse profiling to find computational bottlenecks and improve by writing a more elegant R code or resorting to C and Fortran.\n\n\n\n\n1.4 Reference\nThe Art of R Programming: A Tour of Statistical Software Design.\nBy Norman Matloff.\n\n\n\n\n\nAdvanced R.\nBy Hadley Wickham (COPSS Presidents’ Award 2019).\n\n\n\n\n\n\n\n1.5 Reading in data from external files\n\nDownload Cars.dat from https://raw.githubusercontent.com/boxiang-wang/stat5400/main/data/Cars.dat.\nUse a text editor to look at this file. Note that the separators between columns are tabs (You can tell because the cursor jumps) and that the decimal point in numbers is indicated by periods.\nWe need to read this file into an object in R to analyze it. R has several functions that read in data files in different formats.\nWe will use R’s built-in help facility to figure out which one to use.\n\nOn this page the file is already next to the notes, as data/Cars.dat, so the blocks below can read it.\n\n\n\n\n\n\n\n1.6 Basic operation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Predict — say the answer out loud before you run it.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteWhy FALSE?\n\n\n\n\n\nBottom line. 0.1, 0.2 and 0.3 cannot be written exactly in binary, so the sum is off by about 5.6e-17. Never compare two computed numbers with ==. Use all.equal(), which allows a tolerance of about 1.5e-8 by default.\n.Machine$double.eps is the smallest number that still makes a difference when added to 1. On almost every machine it is 2.220446e-16.\n\n\n\n Predict — one of these two lines warns you. Which one, and why?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteWhich one warns?\n\n\n\n\n\nThe first one warns; the second is silent. Both recycle the shorter vector. R warns only when the longer length is not a multiple of the shorter one: 1:3 + 1:2 gives 2 4 4 with longer object length is not a multiple of shorter object length, while 1:4 + 1:2 gives 2 4 4 6 and says nothing.\nSo the warning is not “you recycled”. It is “your recycling did not come out even”. The silent case is the one to watch.\n\n\n\nRead the data and look at its structure. Run this block first — the blocks below use Cars.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.7 Data frames\nThe object Cars is a data frame.\n\n\n\n\n\n\n\n\nData frame:\n\nSpecial kind of object.\nLike a table of data.\n\nRow for each observation.\nColumn for each variable.\n\nVariables (columns) can be of different data types:\n\nNumeric, character, factors.",
     "crumbs": [
       "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
+      "Section 2: R and Python Basics",
+      "STAT:5400 Section 2.1 — A First Look at R"
     ]
   },
   {
-    "objectID": "notes/s1p1.html#data-science",
-    "href": "notes/s1p1.html#data-science",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "2 Data Science",
-    "text": "2 Data Science\n\nThe science of data science focuses on the computation and inference for the data-driven analysis from the interdisciplinary perspectives.\nThe term data science is believed to be credited to Jeff Wu, Georgia Tech.\nStatistical endeavors:\n\nApplied statistics and data analysis\nDevelopment of statistical methods and software\nResearch in statistical theory\n\nComputing essential to all of statistical endeavors.\n\nComputational intensive methods.\nEfficiency facilitate modern statistical research.\nLarge-scale data pipelines; GPU/TPU-accelerated algorithms.",
+    "objectID": "notes/section2/s2p1.html#data-structures",
+    "href": "notes/section2/s2p1.html#data-structures",
+    "title": "STAT:5400 Section 2.1 — A First Look at R",
+    "section": "2 Data Structures",
+    "text": "2 Data Structures\n\n2.1 A question regarding proficiency test\nDear Dr. Boxiang,\nFor the second question in the proficiency test, we’re asked to create an array containing 10 rows and 6 columns.\nIs this equivalent to creating a matrix or a data.frame in r?\nDr. Boxiang’s answer: not really.\nSee the table from Wickham’s book:\n\n\n\n\nHomogeneous\nHeterogeneous\n\n\n\n\n1-dim\nAtomic vector\nList\n\n\n2-dim\nMatrix\nData frame\n\n\n\\(n\\)-dim\nArray\n\n\n\n\n\n\n2.2 Vectors\nAtomic vector: same type — integer, double, logical, character.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Predict — what does the second line give? This is why the comment above says to spell T and F out.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteWhat just happened?\n\n\n\n\n\nT is an ordinary variable; TRUE is not. T and F start out as shortcuts for TRUE and FALSE, but nothing stops you, a colleague, or a package from assigning to them. TRUE and FALSE are reserved words and cannot be reassigned.\nSo if (x == T) can silently mean the opposite of what you wrote. rm(T) deletes your version and uncovers the original.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteGoing further: class, typeof, and mode\n\n\n\n\n\n Three questions that sound the same and are not. typeof() gives how the value is stored, class() gives what R dispatches methods on, and mode() is the older S-era grouping.\n1     class numeric     typeof double      mode numeric\n1L    class integer     typeof integer     mode numeric\nTRUE  class logical     typeof logical     mode logical\n\"a\"   class character   typeof character   mode character\nThe line that catches people is the first: a plain 1 is stored as a double, but its class is numeric. That is why is.integer(1) is FALSE while is.integer(1L) is TRUE, and why 1:3 (integer) and c(1, 2, 3) (double) are not the same vector.\n\n\n\n\n\n2.3 Lists\nThe element of a list can be of different types.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.4 Three properties of vectors and lists\n\nName:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLength:\n\n\n\n\n\n\n\n\n\n\nAttributes:\n\n\n\n\n\n\n\n\n\n\n\n2.5 Factors\nImportant use of attributes — factors.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIn the Cars data, Country is the natural factor. Since R 4.0, read.delim keeps text as character, so make the factor yourself.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Predict — a factor that looks like numbers. What does the second line give?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteGoing further: never call as.numeric on a factor\n\n\n\n\n\n You get 1 3 2, not 10 9 8. A factor stores small integer codes plus a table of levels. as.numeric() hands back the codes, not the labels.\nThe levels are sorted as text, so they come out \"10\" \"8\" \"9\" — \"10\" sorts before \"8\" because \"1\" comes before \"8\". The codes then follow that order.\nThe safe idiom goes through the labels:\nas.numeric(as.character(f))   # 10 9 8\nTwo more worth knowing. factor(x, levels = ...) sets the order yourself, which is how you control the order of boxes in the plot above. And after subsetting, unused levels stay behind: droplevels() removes them.\n\n\n\n\n\n2.6 Matrices and arrays\n\nVector \\(+\\) attribute(dim) \\(=\\) array.\nTwo-dimensional array = matrix.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.7 Data frames\n\nMost common way to store data in R.\nBehave like a two-dimensional list.\n\n\n\n\n\n\n\n\n\nOld R (before 4.0) converted strings to factors when creating data frames; you had to write stringsAsFactors = FALSE to keep them as text. Since R 4.0 that is the default, so the two blocks now agree.\n\n\n\n\n\n\n\n\n\nAsk AI:What changed in R version 4.0 and later that a beginner would actually notice? Name each change, the version it landed in, and the release date, and say what code would behave differently before and after.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteGoing further: a data frame is a list\n\n\n\n\n\n A data frame is a list of equal-length columns, wearing a two-dimensional coat. That is why is.list(Cars) above is TRUE.\nIt explains several things at once. length(Cars) is 8, the number of columns, not the number of rows. Anything that works on a list works here, so sapply(Cars, class) gives the type of every column in one line. And Cars[1] returns a one-column data frame while Cars[[1]] returns the column itself — the same [ versus [[ rule as any other list.\nThe only thing the coat adds is the requirement that every column has the same length.\n\n\n\n\n\n2.8 Summary of data structure\n\nThree properties of a vector or a list are type, length, and attributes.\nThe four common types of atomic vectors are integer, double, logical, and character (strings).\nThe elements of a list and a data frame can be of any type. The elements of an atomic vector and a matrix must be of the same type.",
     "crumbs": [
       "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
+      "Section 2: R and Python Basics",
+      "STAT:5400 Section 2.1 — A First Look at R"
     ]
   },
   {
-    "objectID": "notes/s1p1.html#sec-ai-data-science",
-    "href": "notes/s1p1.html#sec-ai-data-science",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "3 Data science: skills and jobs",
-    "text": "3 Data science: skills and jobs\n\nCore skill set.\n\nStatistics: modeling, inference, experimental design, uncertainty quantification\nComputing: Python/R, data engineering, GPU-accelerated methods, versioning\nCommunication: domain knowledge, visualization, storytelling, ethics\n\n\nWhat employers ask for (checked Aug 2026):\n\nStatistician — O*NET, U.S. Department of Labor, 15-2041: top skills mathematics, critical thinking, reading, listening, speaking; tools employers list: Python, R, SAS, SPSS, Tableau, Excel.\nData scientist — O*NET, 15-2051: top skills mathematics, critical thinking, active learning, speaking; tools: Python, SQL, Git, Spark, TensorFlow/PyTorch, AWS, Tableau.\nData-scientist job postings — 827 U.S. postings, 2025–26: machine learning 69%, Python 57%, R 33%, SQL 30%, NLP 19% (5% a year earlier); a graduate degree in 54% (PhD 24%, master’s 30%).\nWhat is rising — LinkedIn Skills on the Rise 2026: AI literacy, data-driven decision making, data storytelling, data governance and responsible AI. Indeed: 45% of data & analytics postings now mention AI.\nWhat people use — Stack Overflow Developer Survey 2025: Python 58%, SQL 59%, R 5%; 84% use or plan to use AI tools, 33% trust the answers.\nLive listings: Glassdoor, data scientist · BLS, data scientists · BLS, statisticians.\n\nRead the two O*NET lists again: both start with mathematics and critical thinking; the tools come after. Your degree is the first part. This course is the second: Python, R, SQL, Git, and the habit of checking.\n\nAsk AI:What are the key skills employers want from a statistician or a data scientist in 2026? Cite sources with dates.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\nAsk AI:What should a modern statistical computing course for statistics master's students look like in 2026? List the topics, the tools, and where AI fits.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n\n\n\n\n3.1 A short history of generative AI\n\n2017: the transformer.\n2018–2020: GPT-1, BERT, GPT-2, then GPT-3 with 175 billion parameters. Trained on text; it saw little code.\n2021: Codex and GitHub Copilot. Adding code to training data made models better at reasoning, not just at code. That is one reason “AI can code” arrived before “AI can reason”.\nNovember 30, 2022: ChatGPT. 100 million users in two months.\n2023: GPT-4 (March), Llama with open weights, Claude, Gemini (December).\n2024: GPT-4o, Claude 3, Gemini 1.5 with a million-token context, the first “reasoning” models (o1, September). Also the year ChatGPT said 9.11 is larger than 9.9.\n2025: DeepSeek-R1 (January): open weights, a fraction of the cost. Agents and tool use everywhere. GPT-5 (August).\n2026: GPT-5.6, Claude 5, Gemini 3.6, DeepSeek V4, and hundreds more. The model you use this semester will be replaced before you graduate; the statistics will not.\n\nThe short version, for this course. For the long one, IBM has a good history of AI.",
+    "objectID": "notes/section2/s2p1.html#subsetting",
+    "href": "notes/section2/s2p1.html#subsetting",
+    "title": "STAT:5400 Section 2.1 — A First Look at R",
+    "section": "3 Subsetting",
+    "text": "3 Subsetting\n\n3.1 Subsetting a vector\n\nAsk AI:List five corner cases of R's `[` operator that surprise experienced users, and for each give the exact output R prints. Include at least one case that is silent rather than an error. I will run every one of them to check you.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\nPositive integers:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNegative integers:\n\n\n\n\n\n\n\n\n\n\nLogical vectors:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacters:\n\n\n\n\n\n\n\n\n\n By hand — a chatbot was asked what v[c(TRUE, FALSE)] returns. Its answer is in the comments, and one claim in it is wrong. Run the block and check it against R. Done when you can say how many elements come back, and why. No AI for this block.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteSolution\n\n\n\n\n\nThree elements come back, not one: 5 15 25. The index is shorter than v, so R recycles it to TRUE FALSE TRUE FALSE TRUE FALSE. Nothing is “ignored”, which is the part the chatbot got wrong.\nRecycling does not need the lengths to divide evenly. Change v to 1:7 * 5 and the same index returns elements 1, 3, 5, and 7, with no warning.\n\n\n\n\n\n3.2 Subsetting a list\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteGoing further: two corners of [[\n\n\n\n\n\n [[ with a vector digs down, it does not pick several. For a nested list, l[[c(2, 1)]] means “element 2, then element 1 inside that” — one step per number. To pick several elements, use [.\nYou cannot mix positive and negative indices. x[c(-1, 2)] is an error, only 0’s may be mixed with negative subscripts, because R cannot tell whether you meant to keep or to drop. Pick one direction.\n\n\n\nIf a list x is a train carrying objects, then x[1] is a train of car 1 and x[[1]] is the objects in car 1 — @RLangTip.\n\n\n3.3 Words on the drop option\n\nFactor (drops excluded levels by drop=TRUE):\n\n\n\n\n\n\n\n\n\n\nMatrix (drops dimension whose length is one):\n\n\n\n\n\n\n\n\n\nThe next block is meant to fail: a[, 1] is no longer a matrix.",
     "crumbs": [
       "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
+      "Section 2: R and Python Basics",
+      "STAT:5400 Section 2.1 — A First Look at R"
     ]
   },
   {
-    "objectID": "notes/s1p1.html#ai-for-statistics-statistics-for-ai",
-    "href": "notes/s1p1.html#ai-for-statistics-statistics-for-ai",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "4 AI for statistics, statistics for AI",
-    "text": "4 AI for statistics, statistics for AI\nTwo directions, and this course runs both ways.\n\nAI for statistics — the model as a tool in the statistician’s workflow.\n\nWriting and translating code: R ↔︎ Python, a loop → a vectorized version, a formula → a function (Section 2).\nCleaning and extracting: messy text → a tidy table; structured output instead of prose (Section 6).\nDesigning and explaining: draft a simulation study, explain an error message, summarize a paper — then you verify.\nLearning: the Ask AI buttons in these notes, and the course tutor.\nAgents: an AI that runs a small analysis end to end, from data to report, while you watch each step. In class we replay one on MorphMind (free tier, no payment required).\n\nStatistical agents you can try today:\n\nChatGPT: upload a file, it writes and runs Python and shows you the code.\nClaude: code execution in the chat, or Claude Code in a terminal.\nGemini’s Data Science Agent in Colab: describe the goal, get a whole notebook.\nMorphMind AgentLab: a team of agents with receipts for every step.\nOpen source: MetaGPT’s Data Interpreter, PandasAI, and agent frameworks such as LangGraph, CrewAI, and the OpenAI Agents SDK.\nFrom R: ellmer with tool calling (Section 6) lets you build a small one yourself.\n\nStatistics for AI — the model as an object of statistical study.\n\nAn LLM is a sampler: temperature and top-p are the same ideas as random-variate generation (Section 3).\nEvaluating a model is a simulation study: accuracy is an estimate, needs a confidence interval, and “how many test prompts?” is a sample-size question (Section 3).\nBootstrap a benchmark score; test whether model A really beats model B (Section 4).\nCalibration, hallucination rates, and uncertainty for a black box (conformal prediction) — the statistician’s contribution to trustworthy AI (Section 6).\n\nStatistics has an edge here. An LLM is a probability model: it generates text from a distribution and predicts the next word. Generating from a distribution, prediction, inference: these are the questions statistics has worked on for a century.\nThen why are statisticians not playing a larger role in AI? Not for lack of ideas. What is missing is often the skills: large-scale computation, modern coding practice, text as data. This course is about closing that gap.\n\nReference: An Overview of Large Language Models for Statisticians, The American Statistician (2025), arXiv:2502.17814.\n\nAsk AI:Give three concrete examples where statistical thinking (sampling, uncertainty, experimental design) is essential for building or evaluating large language models, and three where an LLM genuinely speeds up a statistician's daily work. For each, say what could go wrong if the statistician skipped verification.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
+    "objectID": "notes/section2/s2p1.html#a-simple-statistical-analysis",
+    "href": "notes/section2/s2p1.html#a-simple-statistical-analysis",
+    "title": "STAT:5400 Section 2.1 — A First Look at R",
+    "section": "4 A Simple Statistical Analysis",
+    "text": "4 A Simple Statistical Analysis\n\n4.1 Subsetting rows and columns of a data frame\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n4.2 One-sample t-test\n\nAsk AI:State the assumptions behind a one-sample t-test, and for each one give the R code that checks it on a data frame column. Then say what you would do instead when each assumption fails. I will run your checks on the Cars data in front of me.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\nTry help(t.test) first.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n4.3 Two-sample t-test",
     "crumbs": [
       "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#why-learn-to-code-when-ai-can-code",
-    "href": "notes/s1p1.html#why-learn-to-code-when-ai-can-code",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "5 Why learn to code when AI can code?",
-    "text": "5 Why learn to code when AI can code?\n\nInterviews have no AI in them.\n\nAnthropic bans it in live interviews and has dropped candidates who used it.\nGoogle is moving interviews back in person.\nThe by-hand blocks and the midterm here are the same test.\n\nMany employers do not allow it.\n\nThe big banks, Samsung, and Apple restricted ChatGPT.\nPatient records, clinical trials, government work: the data cannot leave the building.\nAt Iowa: university data goes only into Copilot Chat with your HawkID, and a person checks every output.\n\nAI code is often almost right. Almost is your job.\n\n66% of developers say their biggest problem is code that is almost right.\nA randomized trial found experienced developers 19% slower with AI, while they believed they were faster.\nAI-written code picked the insecure option 45% of the time.\nA wrong variance formula or an unset seed still runs. Only someone who can read the code will catch it.\n\nBig models are expensive.\n\nUber’s engineers ran up $500 to $2,000 a month each on AI coding tools.\nKlarna replaced 700 support staff with AI, then hired people back.\nBy 2026 the headline was “AI can cost more than the human workers”.\nNVIDIA argues agents should run on small, specialized models. Someone has to build them. That is programming plus statistics.\n\nYou cannot supervise what you do not understand.\n\nThe job is moving from writing code to checking it.\nDeloitte refunded the Australian government for a report with invented citations.\nCourts keep fining lawyers for citing cases that do not exist.\nStatistics is the discipline of knowing when to trust an estimate. An AI answer is an estimate.\n\n\n\nAsk AI:Find news from the past three months about companies restricting AI use at work or in job interviews. Give the company, what is restricted, the reason, and the date, with a source for each.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#goals-of-this-course-are-to-develop",
-    "href": "notes/s1p1.html#goals-of-this-course-are-to-develop",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "6 Goals of this course are to develop",
-    "text": "6 Goals of this course are to develop\n\nIntelligent use of appropriate computing tools.\n\nR and Python; SAS, C, Fortran when needed.\nAI as a tool: chatbots, APIs, agents, and knowing when not to trust them.\n\nUse of software engineering techniques for scaling projects.\n\nVersion control: git and GitHub.\nParallel computing.\n\nUnderstanding of important statistical computing algorithms.\n\nBisection search, Newton’s method, gradient descent.\nBootstrap, cross-validation.\n\nExperience of computational intensive methods.\n\nHigh-dimensional statistics.\nMachine learning methods.\n\nAbility to design and implement simulation studies.\nCommunication of statistical ideas.\n\nLaTeX, R Markdown, Quarto.\nWriting R packages.",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#set-up-your-accounts",
-    "href": "notes/s1p1.html#set-up-your-accounts",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "7 Set up your accounts",
-    "text": "7 Set up your accounts\n Run — first, click Run Code. This runs in your browser; nothing to install.\n\n\n\n\n\n\n\n\nDo these this week; the notes assume them from Section 2 on.\n\nGitHub account — https://github.com/signup. Add and verify your @uiowa.edu email under Settings → Emails.\nGitHub Education (free Copilot and Pro-level Codespaces) — https://github.com/settings/education/benefits → Start an application. Proof: a current student ID, class schedule, or enrollment letter; using the @uiowa.edu email speeds review. When approved, GitHub Copilot Student and Codespaces are activated on your account.\nTest the Codespace — click Open in Codespace at the top of this page. The first start builds the course environment (a few minutes); later starts take about 30 seconds. Open notes/run/s1p1_sumC.R, put the cursor on line 3, press Cmd/Ctrl+Enter.\nOne chatbot login — ChatGPT, Claude, or Gemini; the free tier is enough. The Ask AI buttons in these notes open one of them with the question filled in.\nA Gemini API key (free) — https://aistudio.google.com/apikey. Used by the first API call in Section 17. Details in the box below.\nOpenAI and Anthropic keys (optional, paid; $5 is enough for the course). Details below.\nUniversity systems — the department’s Linux servers l-lnx2xy.stat.uiowa.edu (HawkID, ssh; VPN from off campus; Tech Guide in Section 2); IDAS for the midterm; Argon, the campus cluster, if you want it (I request class access; for research ask your advisor).\nMorphMind account (free) — https://morphmind.ai. The course tutor and the agent demos run there.\n\nNever paste an API key into a script, a notebook, or these notes. A key in a public repository is found and abused within minutes.\n\n\n\n\n\n\nNoteGemini API key, step by step (free)\n\n\n\n\n\n\nGo to https://aistudio.google.com/apikey and sign in with a Google account (your personal one is fine).\nClick Create API key. If it asks for a project, accept the default. Copy the key; it looks like AIza....\nStore it on GitHub: profile picture → Settings → Codespaces → New secret. Name GEMINI_API_KEY, paste the key as the value, under Repository access pick the course repo, Add secret.\nRestart your Codespace (it only reads secrets at start). Check in R: Sys.getenv(\"GEMINI_API_KEY\") should not be empty.\nFree tier: a few requests per minute and a daily cap, plenty for this course. If you hit the limit, wait a minute.\nHTTP 503 Service Unavailable means Google’s servers are busy, not that your key is wrong. Retry, or pick another model: models_google_gemini() lists what your key can use; chat_google_gemini(model = \"gemini-3.7-flash\") chooses one. The Ollama models below never have this problem.\n\n\n\n\n\n\n\n\n\n\nNoteOpenAI API key (paid)\n\n\n\n\n\n\nhttps://platform.openai.com → sign up (this is separate from a ChatGPT subscription).\nSettings → Billing → add a payment method and buy $5 of credit. Nothing runs without credit.\nAPI keys → Create new secret key → copy it now; it is shown once.\nCodespaces secret named OPENAI_API_KEY, same steps as above. Restart the Codespace.\nIn R: library(ellmer); chat_openai()$chat(\"Say hi.\"). A one-line answer costs a fraction of a cent.\n\n\n\n\n\n\n\n\n\n\nNoteAnthropic (Claude) API key (paid)\n\n\n\n\n\n\nhttps://console.anthropic.com → sign up (separate from a Claude.ai subscription).\nBilling → buy $5 of credit.\nAPI Keys → Create Key → copy it now.\nCodespaces secret named ANTHROPIC_API_KEY. Restart the Codespace.\nIn R: library(ellmer); chat_anthropic()$chat(\"Say hi.\").\n\n\n\n\n\n\n\n\n\n\nNoteSmall models with no key: Ollama\n\n\n\n\n\nNo key, no cost, works offline. The course Codespace already has Ollama with two models: qwen2.5:0.5b (Alibaba, 0.5 billion parameters, 0.4 GB) and llama3.2:1b (Meta, 1 billion, 1.3 GB). On your own computer, Ollama is one download.\n\nOn your laptop: install from https://ollama.com (Mac, Windows, Linux), then ollama pull qwen2.5:0.5b and ollama pull llama3.2:1b in a terminal. In the Codespace, skip this.\nFrom R, ellmer talks to a local model the same way it talks to Gemini. Only the function name changes; Ollama is a small server on your own machine.\nlibrary(ellmer)\nsmall  &lt;- chat_ollama(model = \"qwen2.5:0.5b\")\nbigger &lt;- chat_ollama(model = \"llama3.2:1b\")\nsmall$chat(\"Which is larger, 9.11 or 9.9? Answer in one line.\")\nbigger$chat(\"Which is larger, 9.11 or 9.9? Answer in one line.\")\nfile: notes/run/s1p1_ollama.R\nAsk the small one five times. It still gets this wrong some of the time; that is the 2024 story in Section 3, on a machine you control. The 1B model is slower and more often right. Bigger models need more memory than a Codespace has; on your laptop try llama3.2 (3B).\nFrom Python: import ollama; ollama.chat(model=\"qwen2.5:0.5b\", messages=[{\"role\": \"user\", \"content\": \"...\"}]).\nIf chat_ollama() says it cannot find a running Ollama, the server did not start: type ollama serve & in the terminal, wait three seconds, try again.\nAlso worth knowing: the R package localLLM loads a model inside R with no server at all. We will use it in the Tech Guide.\n\n\n\n\n\n7.1 Where does code run?\n\nOn this page. Most examples run in your browser. Click Run Code.\nIn a Codespace. Examples that need a compiler, an API key, or more memory have a Run in Codespace button. Same code, real machine.\n\n\n\n7.2 Optional: install on your own laptop\nNot required for this course. If you want a local setup, use this one so we all match. Each item has a folded box with the steps, and an Ask AI button whose prompt asks for today’s instructions for your machine.\n\n\n\n\n\n\nNoteR and RStudio (or Positron)\n\n\n\n\n\n\nR: https://cran.r-project.org → your operating system → the latest release. Mac: pick the Apple silicon build if your Mac is M1 or newer.\nRStudio: https://posit.co/download/rstudio-desktop/. Or Positron, Posit’s newer editor for R and Python: https://positron.posit.co.\nCheck: open RStudio, run R.version.string.\nPackages we use early: install.packages(c(\"microbenchmark\", \"Rcpp\", \"ellmer\")). Rcpp needs a compiler: Mac, xcode-select --install; Windows, Rtools from CRAN.\n\n\nAsk AI:Give me step-by-step instructions, current as of today, to install R and RStudio on my computer, including the compiler needed for Rcpp (Xcode command line tools on macOS, Rtools on Windows). Ask me which operating system and version I have before answering, and end with a command I can run to confirm the install worked.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n\n\n\n\n\n\n\nNotePython with uv\n\n\n\n\n\n\nInstall uv: https://docs.astral.sh/uv/getting-started/installation/ (one command for Mac, Linux, or Windows).\nuv python install 3.12\nIn a project folder: uv init, then uv add numpy pandas matplotlib jupyter google-genai.\nCheck: uv run python -c \"import numpy; print(numpy.__version__)\".\n\n\nAsk AI:Give me step-by-step instructions, current as of today, to install Python with uv on my computer and set up a project with numpy, pandas, matplotlib, and jupyter. Ask which operating system I use first. Explain in one sentence why uv instead of Anaconda. End with a command to confirm it works.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n\n\n\n\n\n\n\nNoteVS Code, Quarto, and Copilot\n\n\n\n\n\n\nVS Code: https://code.visualstudio.com.\nExtensions (View → Extensions): Quarto, R, Python, Jupyter, GitHub Copilot.\nQuarto: https://quarto.org/docs/get-started/. Check: quarto check in a terminal.\nSign in to GitHub inside VS Code so Copilot works (free with GitHub Education).\n\n\nAsk AI:Give me step-by-step instructions, current as of today, to set up VS Code for R, Python, and Quarto, with GitHub Copilot signed in through a GitHub Education student account. Ask which operating system I use first.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n\n\n\n\n\n\n\nNotegit\n\n\n\n\n\n\nMac: xcode-select --install in Terminal gives you git and a C compiler. Windows: https://git-scm.com/download/win. Linux: sudo apt install git.\nTell git who you are: git config --global user.name \"Your Name\" and git config --global user.email \"you@uiowa.edu\".\nCheck: git --version.\n\n\nAsk AI:Give me step-by-step instructions, current as of today, to install git on my computer, set my name and email, and connect to GitHub with SSH keys. Ask which operating system I use first. End with a command that confirms GitHub recognizes my key.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#applied-statistics",
-    "href": "notes/s1p1.html#applied-statistics",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "8 Applied Statistics",
-    "text": "8 Applied Statistics\nApplication of some statistical tools to analyze a practical problem.\nData collection \\(\\to\\) modeling \\(\\to\\) decision making.",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#optimization",
-    "href": "notes/s1p1.html#optimization",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "9 Optimization",
-    "text": "9 Optimization\nTranslate a conceptual problem into a computational problem.\n\n\n\n\n\nLogistic regression: \\[\nP: \\underset{\\boldsymbol{\\beta}}{\\operatorname{min}}\\left[-\\sum_{i=1}^{n} y_{i} \\mathbf{x}_{i}^{\\prime} \\boldsymbol{\\beta}+\\sum_{i=1}^{n} \\log \\left(1+e^{\\mathbf{x}_{i}^{\\prime} \\boldsymbol{\\beta}}\\right)\\right].\n\\]\n\nIn this class, we may learn to call some general routines to solve Problem \\(P\\) directly.\nWe also want to develop and implement some algorithms specifically for solving Problem \\(P\\), in order to obtain\n\nknowledge of the performance of different algorithms.\ndeeper understanding of the statistical problem.\n\n\n\n\n\n\n\nAn application. On January 28, 1986, the space shuttle Challenger broke apart 73 seconds after launch. The night before, engineers argued about the O-ring seals and the forecast of 31°F. Here are the 23 earlier launches: temperature at launch and how many of the six O-rings showed damage. Problem \\(P\\) with one predictor.\n Run\n\n\n\n\n\n\n\n\nSource: Dalal, Fowlkes, and Hoadley (1989), Journal of the American Statistical Association; data as in the R package faraway.",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#demonstration-of-better-implementation",
-    "href": "notes/s1p1.html#demonstration-of-better-implementation",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "10 Demonstration of better implementation",
-    "text": "10 Demonstration of better implementation\nTwo kinds of code block appear below. Blocks with a Run Code button run in your browser. Blocks that need a C++ compiler or a precise clock cannot run in a browser; a Run in Codespace button opens the same code in a real R.\n Run in Codespace — as on the slide:\n\nlibrary(microbenchmark)\n\nx &lt;- runif(100)\nmicrobenchmark(\n  sqrt(x),\n  x ^ 0.5\n)\n\nfile: notes/run/s1p1_microbenchmark.R\n\nBy default, each expression was run 100 times.\nUnit: ns – 1 billionth of a second, which says 1 billion calls take a second.\nmicroseconds (\\(\\mu\\)s): 1 millionth of a second;\nmilliseconds (ms): 1 thousandth of a second.\n\nThe same comparison in your browser. The browser has no nanosecond clock, so the helper timeit() repeats each expression on a longer vector and reports the median wall-clock time in milliseconds: same ranking, different units.\n\n\n\n\n\n\n\n\n Run\n\n\n\n\n\n\n\n\n Edit — change the vector length or add your own pair of expressions, then rerun.\n\n\n\n\n\n\n\n\n Run — the same product, two ways to put the parentheses.\n\n\n\n\n\n\n\n\nOne more: mean(x) vs sum(x) / length(x). Two ways to compute an average. Guess which is faster, then run it.\n\n\n\n\n\n\n\n\n Edit\n\nRPython\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nmean() is about twice as slow. It is not lazy; it makes two passes: a first average, then a correction using the deviations from it. The slower one is the more accurate one. Add up a million copies of 0.1 and see:\n Run\n\n\n\n\n\n\n\n\nThe loop adds in plain double precision and drifts by about 1e-12; on some machines sum() does too. mean() comes back with exactly 0. More on floating point in Section 2; more speed tricks as we need them.\n Run in Codespace — a plain R loop vs C++ (through Rcpp) vs the built-in sum(). A browser cannot compile C++.\n\nlibrary(Rcpp)\nlibrary(microbenchmark)\nsumR &lt;- function(x) {\n  total &lt;- 0\n  for (i in seq_along(x)) \n    total &lt;- total + x[i]\n  total\n}\ncppFunction('double sumC(NumericVector x){\n  int n = x.size();\n  double total = 0;\n  for (int i=0; i &lt; n; i++) {\n    total += x[i];\n  }\n  return total;\n}')\nx = runif(1e3)\nmicrobenchmark(sum(x), sumC(x), sumR(x))\n\nfile: notes/run/s1p1_sumC.R\nSource: Advanced R.\n By hand — write sumR() yourself (a for loop that adds up the elements of x), then time it against the built-in sum(). Done when all.equal() returns TRUE and the timing table appears. No AI for this block.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteSolution\n\n\n\n\n\nsumR &lt;- function(x) {\n  total &lt;- 0\n  for (i in seq_along(x)) total &lt;- total + x[i]\n  total\n}\n\n\n\n Vibe — AI-assisted extension: turn the timing into a function of n and plot how the x^0.5 vs sqrt(x) ratio changes with n. Starter file for Copilot: notes/vibe/s1p1_benchmark.R (open it in the Codespace). Prefer no AI? Write it here.",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#types-of-computer-products",
-    "href": "notes/s1p1.html#types-of-computer-products",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "11 Types of computer products",
-    "text": "11 Types of computer products\n\nOperating systems: make the computer itself work.\ne.g. Linux, Windows, Unix, MacOS…\nApplications: perform specific tasks.\ne.g. Microsoft Word, Excel, S-Plus, R, SAS …\nCommercial Systems.\n\ncode and lists of bugs are secret\nexpensive\nrequire upgrading and relicensing\nMicrosoft products, S-Plus, SAS, SPSS, Unix, etc.\n\nFree Open Source systems.\n\nrevolution in software availability and function from the open source movement\ncan see all code, change it, learn from it\nquality generally quite good\nmore rapid updates\nmost products have an active and helpful user news group\ngenerally lack some fancy features like extensive GUI\nLinux, LaTeX, R\n\n\nSource: Frank Harrell (University of Virginia) lecture note.",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#user-interfaces-graphical-vs-command-line",
-    "href": "notes/s1p1.html#user-interfaces-graphical-vs-command-line",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "12 User interfaces: graphical vs command line",
-    "text": "12 User interfaces: graphical vs command line\n\ngraphical (GUI, mouse, menus)\n\neasier to learn\nless flexible\nrepetitive when the same tasks have to be repeated\nhard to document the exact steps taken\nhard to reproduce results\n\ncommand line interfaces\n\nharder to learn\nmore flexible and powerful\ncan save commands in scripts to replay when the same tasks have to be performed repeatedly\ncan write generic commands to facilitate running different analyses with the same structure",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#gui-vs-command-line-text-editor-sublime-vs-vim",
-    "href": "notes/s1p1.html#gui-vs-command-line-text-editor-sublime-vs-vim",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "13 GUI vs command line: text editor: sublime vs vim",
-    "text": "13 GUI vs command line: text editor: sublime vs vim\n\n\n\n\n\n\nAsk AI:Is it still worth learning vim or another command-line editor in 2026, now that editors like VS Code have AI completion? Give the case for and against, for a statistician who mostly writes R and Python.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#gui-vs-command-line-git-version-control",
-    "href": "notes/s1p1.html#gui-vs-command-line-git-version-control",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "14 GUI vs command line: git (version control)",
-    "text": "14 GUI vs command line: git (version control)",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#gui-vs-command-line-remote-access-to-servers",
-    "href": "notes/s1p1.html#gui-vs-command-line-remote-access-to-servers",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "15 GUI vs command line: remote access to servers",
-    "text": "15 GUI vs command line: remote access to servers",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#r-vs-python",
-    "href": "notes/s1p1.html#r-vs-python",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "16 R vs Python",
-    "text": "16 R vs Python\n\n\n\n\n\nWhere each language lives (checked Aug 2026):\n\nPython: the AI ecosystem.\n\n#1 on TIOBE.\nUsed by 58% of developers in the Stack Overflow 2025 survey.\n\nR: statistics and research.\n\n#9 on TIOBE.\nTaught in 20 of 27 design-of-experiments courses surveyed at U.S. universities.\nArticles citing R: about 1,000 in 2005, 62,000 in 2019.\nException: economics and business journals still run on Stata.\n\nSAS: regulated pharma.\n\nFDA has said since 2015 that it does not require any specific software. SAS stayed the default by habit.\nNovo Nordisk and Roche have filed R-based submissions; the R Consortium’s FDA pilots have all been accepted.\nSAS is about to leave TIOBE’s top 30 for the first time. Knowing both is an edge in that industry.\n\nRust: the engine under the tools.\n\nYou will meet it without writing it: Polars, uv, and ruff are Rust inside, Python outside, the same way R uses C++ through Rcpp.\n#10 on TIOBE; the most admired language on Stack Overflow ten years running.\n\nJulia: excellent for numerical work, real in scientific-computing groups.\n\nNever a stable top-30 language; rarely in job postings. A specialty, not a foundation.\n\n\n\nAsk AI:For a statistics graduate student starting in 2026, which should come first, R or Python, and why? Consider statistical modeling, the AI ecosystem, and what employers in the U.S. ask for. Cite recent sources with dates.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#sec-first-llm-call",
-    "href": "notes/s1p1.html#sec-first-llm-call",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "17 LLM: chatbox vs API",
-    "text": "17 LLM: chatbox vs API\n\n\n\n\n\nThree ways to use a model, in the order this course meets them:\n\nChatbox — a person talks to the model. You already do this. Good for questions, explanations, drafts.\nAPI — a program talks to the model (Session 6). The answer comes back as data: you can loop over 1,000 prompts, set the temperature, ask for a table instead of prose.\nAgent — the model calls tools and runs steps on its own, and you supervise (Session 19). The skill is no longer writing the answer; it is specifying the task and checking the work.\n\n\n17.1 Your first API call\nThe chatbox is a person talking to a model. The API is a program talking to a model: the same question, but the answer comes back as data your code can use. That is the door to everything in Section 6.\n Run in Codespace — R, with the ellmer package (needs your key):\nlibrary(ellmer)\nmodels_google_gemini()                # which models your key can use; pick a \"flash\" one\nchat &lt;- chat_google_gemini(model = \"gemini-3.7-flash\")   # reads GEMINI_API_KEY from the environment\nchat$chat(\"In one sentence, what does a statistician do that a chatbot cannot?\")\nfile: notes/run/s1p1_llm.R\n Run in Codespace — Python, with Google’s google-genai package:\nfrom google import genai\nclient = genai.Client()               # reads GEMINI_API_KEY from the environment\ninteraction = client.interactions.create(\n    model=\"gemini-3.7-flash\",\n    input=\"In one sentence, what does a statistician do that a chatbot cannot?\"\n)\nprint(interaction.output_text)\nfile: notes/run/s1p1_llm.py\nThree things to notice, all of which return in Section 6:\n\nThe model is a function call with arguments — here the model name and the prompt; later temperature, system instructions, and structured output.\nRun it twice and you get two different answers. An LLM is a sampler; Section 3 is about samplers.\nThe answer is text, not truth!",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
-    ]
-  },
-  {
-    "objectID": "notes/s1p1.html#before-next-class",
-    "href": "notes/s1p1.html#before-next-class",
-    "title": "STAT:5400 Section 1.1 — Introduction",
-    "section": "18 Before next class",
-    "text": "18 Before next class\n\nCreate a GitHub account and verify your @uiowa.edu email.\nApply for GitHub Education.\nOpen the course Codespace once and run notes/run/s1p1_sumC.R.\nCreate a Gemini API key and store it as the GEMINI_API_KEY Codespaces secret.\nRegister a free account at MorphMind.\nRun the two API examples above in the Codespace. Did the two answers differ?\n\nQuestions about these notes? Later this semester the course tutor, built on MorphMind, will answer them. Until then, the Ask AI buttons.",
-    "crumbs": [
-      "Home",
-      "Lecture Notes",
-      "STAT:5400 Section 1.1 — Introduction"
+      "Section 2: R and Python Basics",
+      "STAT:5400 Section 2.1 — A First Look at R"
     ]
   },
   {
@@ -236,6 +68,234 @@
     "crumbs": [
       "Home",
       "STAT 5400 — Computing in Statistics"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html",
+    "href": "notes/section1/s1p1.html",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "",
+    "text": "PDF  Open in Codespace\n\nAll code on this page, in one file:  R  Python  Rmd  ipynb",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#why-statistics-data-science",
+    "href": "notes/section1/s1p1.html#why-statistics-data-science",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "1 Why statistics & data science?",
+    "text": "1 Why statistics & data science?\n\n2009: “I keep saying that the sexy job in the next 10 years will be statisticians. And I’m not kidding.”\nHal Varian, Chief Economist at Google\n2012: “Data Scientist: The Sexiest Job of the 21st Century”, Harvard Business Review.\n2022: “Is Data Scientist Still the Sexiest Job of the 21st Century?”, Harvard Business Review.\n\nThe U.S. Bureau of Labor Statistics predicts data science will see more growth than almost any other field between now and 2029. Data scientist jobs are projected to grow +36% (2023–2033), with over 20,000 openings per year.\nIn 2024, the median pay was $112,590. The median salary for an experienced data scientist in California is approaching $200,000.\nData Scientist is #6 Best STEM Job and #4 Best Technology Job.\n\n2023–2025: the question changes. Nobody has written the next “sexiest job” piece; the discussion is now whether AI changes the job. A 2023 essay argued the title is “being challenged by AI”; a 2025 essay called it “the rise, fall, and evolution” of the job.\n2026: the numbers say the job kept growing. BLS projects data-scientist employment +34% over 2024–2034, about 23,400 openings a year; for statisticians, growth “much faster than average” as well.\n\n\nAsk AI:What are the current job outlook and median pay for data scientists and statisticians in the U.S.? Use the latest Bureau of Labor Statistics Occupational Outlook figures, and compare them with the 2023–2033 projection of +36% growth and the 2024 median pay of $112,590.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#data-science",
+    "href": "notes/section1/s1p1.html#data-science",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "2 Data Science",
+    "text": "2 Data Science\n\nThe science of data science focuses on the computation and inference for the data-driven analysis from the interdisciplinary perspectives.\nThe term data science is believed to be credited to Jeff Wu, Georgia Tech.\nStatistical endeavors:\n\nApplied statistics and data analysis\nDevelopment of statistical methods and software\nResearch in statistical theory\n\nComputing essential to all of statistical endeavors.\n\nComputational intensive methods.\nEfficiency facilitate modern statistical research.\nLarge-scale data pipelines; GPU/TPU-accelerated algorithms.",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#sec-ai-data-science",
+    "href": "notes/section1/s1p1.html#sec-ai-data-science",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "3 Data science: skills and jobs",
+    "text": "3 Data science: skills and jobs\n\nCore skill set.\n\nStatistics: modeling, inference, experimental design, uncertainty quantification\nComputing: Python/R, data engineering, GPU-accelerated methods, versioning\nCommunication: domain knowledge, visualization, storytelling, ethics\n\n\nWhat employers ask for (checked Aug 2026):\n\nStatistician — O*NET, U.S. Department of Labor, 15-2041: top skills mathematics, critical thinking, reading, listening, speaking; tools employers list: Python, R, SAS, SPSS, Tableau, Excel.\nData scientist — O*NET, 15-2051: top skills mathematics, critical thinking, active learning, speaking; tools: Python, SQL, Git, Spark, TensorFlow/PyTorch, AWS, Tableau.\nData-scientist job postings — 827 U.S. postings, 2025–26: machine learning 69%, Python 57%, R 33%, SQL 30%, NLP 19% (5% a year earlier); a graduate degree in 54% (PhD 24%, master’s 30%).\nWhat is rising — LinkedIn Skills on the Rise 2026: AI literacy, data-driven decision making, data storytelling, data governance and responsible AI. Indeed: 45% of data & analytics postings now mention AI.\nWhat people use — Stack Overflow Developer Survey 2025: Python 58%, SQL 59%, R 5%; 84% use or plan to use AI tools, 33% trust the answers.\nLive listings: Glassdoor, data scientist · BLS, data scientists · BLS, statisticians.\n\nRead the two O*NET lists again: both start with mathematics and critical thinking; the tools come after. Your degree is the first part. This course is the second: Python, R, SQL, Git, and the habit of checking.\n\nAsk AI:What are the key skills employers want from a statistician or a data scientist in 2026? Cite sources with dates.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\nAsk AI:What should a modern statistical computing course for statistics master's students look like in 2026? List the topics, the tools, and where AI fits.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n\n\n\n\n3.1 A short history of generative AI\n\n2017: the transformer.\n2018–2020: GPT-1, BERT, GPT-2, then GPT-3 with 175 billion parameters. Trained on text; it saw little code.\n2021: Codex and GitHub Copilot. Adding code to training data made models better at reasoning, not just at code. That is one reason “AI can code” arrived before “AI can reason”.\nNovember 30, 2022: ChatGPT. 100 million users in two months.\n2023: GPT-4 (March), Llama with open weights, Claude, Gemini (December).\n2024: GPT-4o, Claude 3, Gemini 1.5 with a million-token context, the first “reasoning” models (o1, September). Also the year ChatGPT said 9.11 is larger than 9.9.\n2025: DeepSeek-R1 (January): open weights, a fraction of the cost. Agents and tool use everywhere. GPT-5 (August).\n2026: GPT-5.6, Claude 5, Gemini 3.6, DeepSeek V4, and hundreds more. The model you use this semester will be replaced before you graduate; the statistics will not.\n\nThe short version, for this course. For the long one, IBM has a good history of AI.",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#ai-for-statistics-statistics-for-ai",
+    "href": "notes/section1/s1p1.html#ai-for-statistics-statistics-for-ai",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "4 AI for statistics, statistics for AI",
+    "text": "4 AI for statistics, statistics for AI\nTwo directions, and this course runs both ways.\n\nAI for statistics — the model as a tool in the statistician’s workflow.\n\nWriting and translating code: R ↔︎ Python, a loop → a vectorized version, a formula → a function (Section 2).\nCleaning and extracting: messy text → a tidy table; structured output instead of prose (Section 6).\nDesigning and explaining: draft a simulation study, explain an error message, summarize a paper — then you verify.\nLearning: the Ask AI buttons in these notes, and the course tutor.\nAgents: an AI that runs a small analysis end to end, from data to report, while you watch each step. In class we replay one on MorphMind (free tier, no payment required).\n\nStatistical agents you can try today:\n\nChatGPT: upload a file, it writes and runs Python and shows you the code.\nClaude: code execution in the chat, or Claude Code in a terminal.\nGemini’s Data Science Agent in Colab: describe the goal, get a whole notebook.\nMorphMind AgentLab: a team of agents with receipts for every step.\nOpen source: MetaGPT’s Data Interpreter, PandasAI, and agent frameworks such as LangGraph, CrewAI, and the OpenAI Agents SDK.\nFrom R: ellmer with tool calling (Section 6) lets you build a small one yourself.\n\nStatistics for AI — the model as an object of statistical study.\n\nAn LLM is a sampler: temperature and top-p are the same ideas as random-variate generation (Section 3).\nEvaluating a model is a simulation study: accuracy is an estimate, needs a confidence interval, and “how many test prompts?” is a sample-size question (Section 3).\nBootstrap a benchmark score; test whether model A really beats model B (Section 4).\nCalibration, hallucination rates, and uncertainty for a black box (conformal prediction) — the statistician’s contribution to trustworthy AI (Section 6).\n\nStatistics has an edge here. An LLM is a probability model: it generates text from a distribution and predicts the next word. Generating from a distribution, prediction, inference: these are the questions statistics has worked on for a century.\nThen why are statisticians not playing a larger role in AI? Not for lack of ideas. What is missing is often the skills: large-scale computation, modern coding practice, text as data. This course is about closing that gap.\n\nReference: An Overview of Large Language Models for Statisticians, The American Statistician (2025), arXiv:2502.17814.\n\nAsk AI:Give three concrete examples where statistical thinking (sampling, uncertainty, experimental design) is essential for building or evaluating large language models, and three where an LLM genuinely speeds up a statistician's daily work. For each, say what could go wrong if the statistician skipped verification.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#why-learn-to-code-when-ai-can-code",
+    "href": "notes/section1/s1p1.html#why-learn-to-code-when-ai-can-code",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "5 Why learn to code when AI can code?",
+    "text": "5 Why learn to code when AI can code?\n\nInterviews have no AI in them.\n\nAnthropic bans it in live interviews and has dropped candidates who used it.\nGoogle is moving interviews back in person.\nThe by-hand blocks and the midterm here are the same test.\n\nMany employers do not allow it.\n\nThe big banks, Samsung, and Apple restricted ChatGPT.\nPatient records, clinical trials, government work: the data cannot leave the building.\nAt Iowa: university data goes only into Copilot Chat with your HawkID, and a person checks every output.\n\nAI code is often almost right. Almost is your job.\n\n66% of developers say their biggest problem is code that is almost right.\nA randomized trial found experienced developers 19% slower with AI, while they believed they were faster.\nAI-written code picked the insecure option 45% of the time.\nA wrong variance formula or an unset seed still runs. Only someone who can read the code will catch it.\n\nBig models are expensive.\n\nUber’s engineers ran up $500 to $2,000 a month each on AI coding tools.\nKlarna replaced 700 support staff with AI, then hired people back.\nBy 2026 the headline was “AI can cost more than the human workers”.\nNVIDIA argues agents should run on small, specialized models. Someone has to build them. That is programming plus statistics.\n\nYou cannot supervise what you do not understand.\n\nThe job is moving from writing code to checking it.\nDeloitte refunded the Australian government for a report with invented citations.\nCourts keep fining lawyers for citing cases that do not exist.\nStatistics is the discipline of knowing when to trust an estimate. An AI answer is an estimate.\n\n\n\nAsk AI:Find news from the past three months about companies restricting AI use at work or in job interviews. Give the company, what is restricted, the reason, and the date, with a source for each.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#goals-of-this-course-are-to-develop",
+    "href": "notes/section1/s1p1.html#goals-of-this-course-are-to-develop",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "6 Goals of this course are to develop",
+    "text": "6 Goals of this course are to develop\n\nIntelligent use of appropriate computing tools.\n\nR and Python; SAS, C, Fortran when needed.\nAI as a tool: chatbots, APIs, agents, and knowing when not to trust them.\n\nUse of software engineering techniques for scaling projects.\n\nVersion control: git and GitHub.\nParallel computing.\n\nUnderstanding of important statistical computing algorithms.\n\nBisection search, Newton’s method, gradient descent.\nBootstrap, cross-validation.\n\nExperience of computational intensive methods.\n\nHigh-dimensional statistics.\nMachine learning methods.\n\nAbility to design and implement simulation studies.\nCommunication of statistical ideas.\n\nLaTeX, R Markdown, Quarto.\nWriting R packages.",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#set-up-your-accounts",
+    "href": "notes/section1/s1p1.html#set-up-your-accounts",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "7 Set up your accounts",
+    "text": "7 Set up your accounts\n Run — first, click Run Code. This runs in your browser; nothing to install.\n\n\n\n\n\n\n\n\nDo these this week; the notes assume them from Section 2 on.\n\nGitHub account — https://github.com/signup. Add and verify your @uiowa.edu email under Settings → Emails.\nGitHub Education (free Copilot and Pro-level Codespaces) — https://github.com/settings/education/benefits → Start an application. Proof: a current student ID, class schedule, or enrollment letter; using the @uiowa.edu email speeds review. When approved, GitHub Copilot Student and Codespaces are activated on your account.\nTest the Codespace — click Open in Codespace at the top of this page. The first start builds the course environment (a few minutes); later starts take about 30 seconds. Open notes/section1/run/s1p1_sumC.R, put the cursor on line 3, press Cmd/Ctrl+Enter.\nOne chatbot login — ChatGPT, Claude, or Gemini; the free tier is enough. The Ask AI buttons in these notes open one of them with the question filled in.\nA Gemini API key (free) — https://aistudio.google.com/apikey. Used by the first API call in Section 17. Details in the box below.\nOpenAI and Anthropic keys (optional, paid; $5 is enough for the course). Details below.\nUniversity systems — the department’s Linux servers l-lnx2xy.stat.uiowa.edu (HawkID, ssh; VPN from off campus; Tech Guide in Section 2); IDAS for the midterm; Argon, the campus cluster, if you want it (I request class access; for research ask your advisor).\nMorphMind account (free) — https://morphmind.ai. The course tutor and the agent demos run there.\n\nNever paste an API key into a script, a notebook, or these notes. A key in a public repository is found and abused within minutes.\n\n\n\n\n\n\nNoteGemini API key, step by step (free)\n\n\n\n\n\n\nGo to https://aistudio.google.com/apikey and sign in with a Google account (your personal one is fine).\nClick Create API key. If it asks for a project, accept the default. Copy the key; it looks like AIza....\nStore it on GitHub: profile picture → Settings → Codespaces → New secret. Name GEMINI_API_KEY, paste the key as the value, under Repository access pick the course repo, Add secret.\nRestart your Codespace (it only reads secrets at start). Check in R: Sys.getenv(\"GEMINI_API_KEY\") should not be empty.\nFree tier: a few requests per minute and a daily cap, plenty for this course. If you hit the limit, wait a minute.\nHTTP 503 Service Unavailable means Google’s servers are busy, not that your key is wrong. Retry, or pick another model: models_google_gemini() lists what your key can use; chat_google_gemini(model = \"gemini-3.7-flash\") chooses one. The Ollama models below never have this problem.\n\n\n\n\n\n\n\n\n\n\nNoteOpenAI API key (paid)\n\n\n\n\n\n\nhttps://platform.openai.com → sign up (this is separate from a ChatGPT subscription).\nSettings → Billing → add a payment method and buy $5 of credit. Nothing runs without credit.\nAPI keys → Create new secret key → copy it now; it is shown once.\nCodespaces secret named OPENAI_API_KEY, same steps as above. Restart the Codespace.\nIn R: library(ellmer); chat_openai()$chat(\"Say hi.\"). A one-line answer costs a fraction of a cent.\n\n\n\n\n\n\n\n\n\n\nNoteAnthropic (Claude) API key (paid)\n\n\n\n\n\n\nhttps://console.anthropic.com → sign up (separate from a Claude.ai subscription).\nBilling → buy $5 of credit.\nAPI Keys → Create Key → copy it now.\nCodespaces secret named ANTHROPIC_API_KEY. Restart the Codespace.\nIn R: library(ellmer); chat_anthropic()$chat(\"Say hi.\").\n\n\n\n\n\n\n\n\n\n\nNoteSmall models with no key: Ollama\n\n\n\n\n\nNo key, no cost, works offline. The course Codespace already has Ollama with two models: qwen2.5:0.5b (Alibaba, 0.5 billion parameters, 0.4 GB) and llama3.2:1b (Meta, 1 billion, 1.3 GB). On your own computer, Ollama is one download.\n\nOn your laptop: install from https://ollama.com (Mac, Windows, Linux), then ollama pull qwen2.5:0.5b and ollama pull llama3.2:1b in a terminal. In the Codespace, skip this.\nFrom R, ellmer talks to a local model the same way it talks to Gemini. Only the function name changes; Ollama is a small server on your own machine.\nlibrary(ellmer)\nsmall  &lt;- chat_ollama(model = \"qwen2.5:0.5b\")\nbigger &lt;- chat_ollama(model = \"llama3.2:1b\")\nsmall$chat(\"Which is larger, 9.11 or 9.9? Answer in one line.\")\nbigger$chat(\"Which is larger, 9.11 or 9.9? Answer in one line.\")\nfile: notes/section1/run/s1p1_ollama.R\nAsk the small one five times. It still gets this wrong some of the time; that is the 2024 story in Section 3, on a machine you control. The 1B model is slower and more often right. Bigger models need more memory than a Codespace has; on your laptop try llama3.2 (3B).\nFrom Python: import ollama; ollama.chat(model=\"qwen2.5:0.5b\", messages=[{\"role\": \"user\", \"content\": \"...\"}]).\nIf chat_ollama() says it cannot find a running Ollama, the server did not start: type ollama serve & in the terminal, wait three seconds, try again.\nAlso worth knowing: the R package localLLM loads a model inside R with no server at all. We will use it in the Tech Guide.\n\n\n\n\n\n7.1 Where does code run?\n\nOn this page. Most examples run in your browser. Click Run Code.\nIn a Codespace. Examples that need a compiler, an API key, or more memory have a Run in Codespace button. Same code, real machine.\n\n\n\n7.2 Optional: install on your own laptop\nNot required for this course. If you want a local setup, use this one so we all match. Each item has a folded box with the steps, and an Ask AI button whose prompt asks for today’s instructions for your machine.\n\n\n\n\n\n\nNoteR and RStudio (or Positron)\n\n\n\n\n\n\nR: https://cran.r-project.org → your operating system → the latest release. Mac: pick the Apple silicon build if your Mac is M1 or newer.\nRStudio: https://posit.co/download/rstudio-desktop/. Or Positron, Posit’s newer editor for R and Python: https://positron.posit.co.\nCheck: open RStudio, run R.version.string.\nPackages we use early: install.packages(c(\"microbenchmark\", \"Rcpp\", \"ellmer\")). Rcpp needs a compiler: Mac, xcode-select --install; Windows, Rtools from CRAN.\n\n\nAsk AI:Give me step-by-step instructions, current as of today, to install R and RStudio on my computer, including the compiler needed for Rcpp (Xcode command line tools on macOS, Rtools on Windows). Ask me which operating system and version I have before answering, and end with a command I can run to confirm the install worked.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n\n\n\n\n\n\n\nNotePython with uv\n\n\n\n\n\n\nInstall uv: https://docs.astral.sh/uv/getting-started/installation/ (one command for Mac, Linux, or Windows).\nuv python install 3.12\nIn a project folder: uv init, then uv add numpy pandas matplotlib jupyter google-genai.\nCheck: uv run python -c \"import numpy; print(numpy.__version__)\".\n\n\nAsk AI:Give me step-by-step instructions, current as of today, to install Python with uv on my computer and set up a project with numpy, pandas, matplotlib, and jupyter. Ask which operating system I use first. Explain in one sentence why uv instead of Anaconda. End with a command to confirm it works.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n\n\n\n\n\n\n\nNoteVS Code, Quarto, and Copilot\n\n\n\n\n\n\nVS Code: https://code.visualstudio.com.\nExtensions (View → Extensions): Quarto, R, Python, Jupyter, GitHub Copilot.\nQuarto: https://quarto.org/docs/get-started/. Check: quarto check in a terminal.\nSign in to GitHub inside VS Code so Copilot works (free with GitHub Education).\n\n\nAsk AI:Give me step-by-step instructions, current as of today, to set up VS Code for R, Python, and Quarto, with GitHub Copilot signed in through a GitHub Education student account. Ask which operating system I use first.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt\n\n\n\n\n\n\n\n\n\n\n\nNotegit\n\n\n\n\n\n\nMac: xcode-select --install in Terminal gives you git and a C compiler. Windows: https://git-scm.com/download/win. Linux: sudo apt install git.\nTell git who you are: git config --global user.name \"Your Name\" and git config --global user.email \"you@uiowa.edu\".\nCheck: git --version.\n\n\nAsk AI:Give me step-by-step instructions, current as of today, to install git on my computer, set my name and email, and connect to GitHub with SSH keys. Ask which operating system I use first. End with a command that confirms GitHub recognizes my key.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#applied-statistics",
+    "href": "notes/section1/s1p1.html#applied-statistics",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "8 Applied Statistics",
+    "text": "8 Applied Statistics\nApplication of some statistical tools to analyze a practical problem.\nData collection \\(\\to\\) modeling \\(\\to\\) decision making.",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#optimization",
+    "href": "notes/section1/s1p1.html#optimization",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "9 Optimization",
+    "text": "9 Optimization\nTranslate a conceptual problem into a computational problem.\n\n\n\n\n\nLogistic regression: \\[\nP: \\underset{\\boldsymbol{\\beta}}{\\operatorname{min}}\\left[-\\sum_{i=1}^{n} y_{i} \\mathbf{x}_{i}^{\\prime} \\boldsymbol{\\beta}+\\sum_{i=1}^{n} \\log \\left(1+e^{\\mathbf{x}_{i}^{\\prime} \\boldsymbol{\\beta}}\\right)\\right].\n\\]\n\nIn this class, we may learn to call some general routines to solve Problem \\(P\\) directly.\nWe also want to develop and implement some algorithms specifically for solving Problem \\(P\\), in order to obtain\n\nknowledge of the performance of different algorithms.\ndeeper understanding of the statistical problem.\n\n\n\n\n\n\n\nAn application. On January 28, 1986, the space shuttle Challenger broke apart 73 seconds after launch. The night before, engineers argued about the O-ring seals and the forecast of 31°F. Here are the 23 earlier launches: temperature at launch and how many of the six O-rings showed damage. Problem \\(P\\) with one predictor.\n Run\n\n\n\n\n\n\n\n\nSource: Dalal, Fowlkes, and Hoadley (1989), Journal of the American Statistical Association; data as in the R package faraway.",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#demonstration-of-better-implementation",
+    "href": "notes/section1/s1p1.html#demonstration-of-better-implementation",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "10 Demonstration of better implementation",
+    "text": "10 Demonstration of better implementation\nTwo kinds of code block appear below. Blocks with a Run Code button run in your browser. Blocks that need a C++ compiler or a precise clock cannot run in a browser; a Run in Codespace button opens the same code in a real R.\n Run in Codespace — as on the slide:\n\nlibrary(microbenchmark)\n\nx &lt;- runif(100)\nmicrobenchmark(\n  sqrt(x),\n  x ^ 0.5\n)\n\nfile: notes/section1/run/s1p1_microbenchmark.R\n\nBy default, each expression was run 100 times.\nUnit: ns – 1 billionth of a second, which says 1 billion calls take a second.\nmicroseconds (\\(\\mu\\)s): 1 millionth of a second;\nmilliseconds (ms): 1 thousandth of a second.\n\nThe same comparison in your browser. The browser has no nanosecond clock, so the helper timeit() repeats each expression on a longer vector and reports the median wall-clock time in milliseconds: same ranking, different units.\n\n\n\n\n\n\n\n\n Run\n\n\n\n\n\n\n\n\n Edit — change the vector length or add your own pair of expressions, then rerun.\n\n\n\n\n\n\n\n\n Run — the same product, two ways to put the parentheses.\n\n\n\n\n\n\n\n\n Run in Codespace — a plain R loop vs C++ (through Rcpp) vs the built-in sum(). A browser cannot compile C++.\n\nlibrary(Rcpp)\nlibrary(microbenchmark)\nsumR &lt;- function(x) {\n  total &lt;- 0\n  for (i in seq_along(x)) \n    total &lt;- total + x[i]\n  total\n}\ncppFunction('double sumC(NumericVector x){\n  int n = x.size();\n  double total = 0;\n  for (int i=0; i &lt; n; i++) {\n    total += x[i];\n  }\n  return total;\n}')\nx = runif(1e3)\nmicrobenchmark(sum(x), sumC(x), sumR(x))\n\nfile: notes/section1/run/s1p1_sumC.R\nSource: Advanced R.\n By hand — write sumR() yourself (a for loop that adds up the elements of x), then time it against the built-in sum(). Done when all.equal() returns TRUE and the timing table appears. No AI for this block.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteSolution\n\n\n\n\n\nsumR &lt;- function(x) {\n  total &lt;- 0\n  for (i in seq_along(x)) total &lt;- total + x[i]\n  total\n}\n\n\n\n Vibe — AI-assisted extension: turn the timing into a function of n and plot how the x^0.5 vs sqrt(x) ratio changes with n. Starter file for Copilot: notes/section1/vibe/s1p1_benchmark.R (open it in the Codespace). Prefer no AI? Write it here.",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#types-of-computer-products",
+    "href": "notes/section1/s1p1.html#types-of-computer-products",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "11 Types of computer products",
+    "text": "11 Types of computer products\n\nOperating systems: make the computer itself work.\ne.g. Linux, Windows, Unix, MacOS…\nApplications: perform specific tasks.\ne.g. Microsoft Word, Excel, S-Plus, R, SAS …\nCommercial Systems.\n\ncode and lists of bugs are secret\nexpensive\nrequire upgrading and relicensing\nMicrosoft products, S-Plus, SAS, SPSS, Unix, etc.\n\nFree Open Source systems.\n\nrevolution in software availability and function from the open source movement\ncan see all code, change it, learn from it\nquality generally quite good\nmore rapid updates\nmost products have an active and helpful user news group\ngenerally lack some fancy features like extensive GUI\nLinux, LaTeX, R\n\n\nSource: Frank Harrell (University of Virginia) lecture note.",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#user-interfaces-graphical-vs-command-line",
+    "href": "notes/section1/s1p1.html#user-interfaces-graphical-vs-command-line",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "12 User interfaces: graphical vs command line",
+    "text": "12 User interfaces: graphical vs command line\n\ngraphical (GUI, mouse, menus)\n\neasier to learn\nless flexible\nrepetitive when the same tasks have to be repeated\nhard to document the exact steps taken\nhard to reproduce results\n\ncommand line interfaces\n\nharder to learn\nmore flexible and powerful\ncan save commands in scripts to replay when the same tasks have to be performed repeatedly\ncan write generic commands to facilitate running different analyses with the same structure",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#gui-vs-command-line-text-editor-sublime-vs-vim",
+    "href": "notes/section1/s1p1.html#gui-vs-command-line-text-editor-sublime-vs-vim",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "13 GUI vs command line: text editor: sublime vs vim",
+    "text": "13 GUI vs command line: text editor: sublime vs vim\n\n\n\n\n\n\nAsk AI:Is it still worth learning vim or another command-line editor in 2026, now that editors like VS Code have AI completion? Give the case for and against, for a statistician who mostly writes R and Python.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#gui-vs-command-line-git-version-control",
+    "href": "notes/section1/s1p1.html#gui-vs-command-line-git-version-control",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "14 GUI vs command line: git (version control)",
+    "text": "14 GUI vs command line: git (version control)",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#gui-vs-command-line-remote-access-to-servers",
+    "href": "notes/section1/s1p1.html#gui-vs-command-line-remote-access-to-servers",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "15 GUI vs command line: remote access to servers",
+    "text": "15 GUI vs command line: remote access to servers",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#r-vs-python",
+    "href": "notes/section1/s1p1.html#r-vs-python",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "16 R vs Python",
+    "text": "16 R vs Python\n\n\n\n\n\nWhere each language lives (checked Aug 2026):\n\nPython: the AI ecosystem.\n\n#1 on TIOBE.\nUsed by 58% of developers in the Stack Overflow 2025 survey.\n\nR: statistics and research.\n\n#9 on TIOBE.\nTaught in 20 of 27 design-of-experiments courses surveyed at U.S. universities.\nArticles citing R: about 1,000 in 2005, 62,000 in 2019.\nException: economics and business journals still run on Stata.\n\nSAS: regulated pharma.\n\nFDA has said since 2015 that it does not require any specific software. SAS stayed the default by habit.\nNovo Nordisk and Roche have filed R-based submissions; the R Consortium’s FDA pilots have all been accepted.\nSAS is about to leave TIOBE’s top 30 for the first time. Knowing both is an edge in that industry.\n\nRust: the engine under the tools.\n\nYou will meet it without writing it: Polars, uv, and ruff are Rust inside, Python outside, the same way R uses C++ through Rcpp.\n#10 on TIOBE; the most admired language on Stack Overflow ten years running.\n\nJulia: excellent for numerical work, real in scientific-computing groups.\n\nNever a stable top-30 language; rarely in job postings. A specialty, not a foundation.\n\n\n\nAsk AI:For a statistics graduate student starting in 2026, which should come first, R or Python, and why? Consider statistical modeling, the AI ecosystem, and what employers in the U.S. ask for. Cite recent sources with dates.\n\nChatGPT\nClaude\nPerplexity\nCopy prompt",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#sec-first-llm-call",
+    "href": "notes/section1/s1p1.html#sec-first-llm-call",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "17 LLM: chatbox vs API",
+    "text": "17 LLM: chatbox vs API\n\n\n\n\n\nThree ways to use a model, in the order this course meets them:\n\nChatbox — a person talks to the model. You already do this. Good for questions, explanations, drafts.\nAPI — a program talks to the model (Session 6). The answer comes back as data: you can loop over 1,000 prompts, set the temperature, ask for a table instead of prose.\nAgent — the model calls tools and runs steps on its own, and you supervise (Session 19). The skill is no longer writing the answer; it is specifying the task and checking the work.\n\n\n17.1 Your first API call\nThe chatbox is a person talking to a model. The API is a program talking to a model: the same question, but the answer comes back as data your code can use. That is the door to everything in Section 6.\n Run in Codespace — R, with the ellmer package (needs your key):\nlibrary(ellmer)\nmodels_google_gemini()                # which models your key can use; pick a \"flash\" one\nchat &lt;- chat_google_gemini(model = \"gemini-3.7-flash\")   # reads GEMINI_API_KEY from the environment\nchat$chat(\"In one sentence, what does a statistician do that a chatbot cannot?\")\nfile: notes/section1/run/s1p1_llm.R\n Run in Codespace — Python, with Google’s google-genai package:\nfrom google import genai\nclient = genai.Client()               # reads GEMINI_API_KEY from the environment\ninteraction = client.interactions.create(\n    model=\"gemini-3.7-flash\",\n    input=\"In one sentence, what does a statistician do that a chatbot cannot?\"\n)\nprint(interaction.output_text)\nfile: notes/section1/run/s1p1_llm.py\nThree things to notice, all of which return in Section 6:\n\nThe model is a function call with arguments — here the model name and the prompt; later temperature, system instructions, and structured output.\nRun it twice and you get two different answers. An LLM is a sampler; Section 3 is about samplers.\nThe answer is text, not truth!",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
+    ]
+  },
+  {
+    "objectID": "notes/section1/s1p1.html#before-next-class",
+    "href": "notes/section1/s1p1.html#before-next-class",
+    "title": "STAT:5400 Section 1.1 — Introduction",
+    "section": "18 Before next class",
+    "text": "18 Before next class\n\nCreate a GitHub account and verify your @uiowa.edu email.\nApply for GitHub Education.\nOpen the course Codespace once and run notes/section1/run/s1p1_sumC.R.\nCreate a Gemini API key and store it as the GEMINI_API_KEY Codespaces secret.\nRegister a free account at MorphMind.\nRun the two API examples above in the Codespace. Did the two answers differ?\n\nQuestions about these notes? Later this semester the course tutor, built on MorphMind, will answer them. Until then, the Ask AI buttons.",
+    "crumbs": [
+      "Home",
+      "Section 1: Introduction",
+      "STAT:5400 Section 1.1 — Introduction"
     ]
   }
 ]

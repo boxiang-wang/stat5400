@@ -1,32 +1,25 @@
----
-title: "STAT:5400 Section 1.1 — Introduction"
-output: html_document
----
+# STAT:5400 Section 1.1 — Introduction
+# Code from the lecture notes; no output, no solutions.
 
 ## 7 Set up your accounts
 
-*Run*
-
-```{r}
+# Run
 x <- rnorm(100)
 mean(x)
-```
+
 
 ## 9 Optimization
 
-*Run*
-
-```{r}
+# Run
 temp   <- c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70, 70, 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81)
 damage <- c( 5,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0)
 fit <- glm(cbind(damage, 6 - damage) ~ temp, family = binomial)
 coef(fit)
 predict(fit, data.frame(temp = c(31, 53, 70)), type = "response")   # P(an O-ring fails)
-```
+
 
 ## 10 Demonstration of better implementation
 
-```{r}
 library(microbenchmark)
 
 x <- runif(100)
@@ -34,9 +27,7 @@ microbenchmark(
   sqrt(x),
   x ^ 0.5
 )
-```
 
-```{r}
 timeit <- function(..., times = 10) {
   exprs <- as.list(substitute(list(...)))[-1]
   env <- parent.frame()
@@ -47,21 +38,15 @@ timeit <- function(..., times = 10) {
   rownames(out) <- sapply(exprs, function(e) paste(deparse(e), collapse = ""))
   round(out, 2)
 }
-```
 
-*Run*
-
-```{r}
+# Run
 x <- runif(1e6)
 timeit(
   sqrt(x),
   x ^ 0.5
 )
-```
 
-*Edit*
-
-```{r}
+# Edit
 x <- runif(1e6)
 timeit(
   x * x * x,
@@ -75,37 +60,15 @@ timeit(
   colMeans(x),
   rowMeans(x)
 )
-```
 
-*Run*
-
-```{r}
+# Run
 A1 <- matrix(2, 1000, 1000)
 A2 <- matrix(2, 1000, 1000)
 A3 <- rep(2, 1000)
 
 system.time(A1 %*% A2 %*% A3)
 system.time(A1 %*% (A2 %*% A3))
-```
 
-*Edit*
-
-```{r}
-x <- runif(1e6)
-timeit(mean(x), sum(x) / length(x))
-```
-
-*Run*
-
-```{r}
-x <- rep(0.1, 1e6)
-s <- 0
-for (v in x)
-  s <- s + v
-c(loop = s / length(x) - 0.1, sum_over_n = sum(x) / length(x) - 0.1, mean = mean(x) - 0.1)
-```
-
-```{r}
 library(Rcpp)
 library(microbenchmark)
 sumR <- function(x) {
@@ -124,11 +87,8 @@ cppFunction('double sumC(NumericVector x){
 }')
 x = runif(1e3)
 microbenchmark(sum(x), sumC(x), sumR(x))
-```
 
-*By hand*
-
-```{r}
+# By hand
 sumR <- function(x) {
   # your code here
 
@@ -137,11 +97,8 @@ sumR <- function(x) {
 x <- runif(1e5)
 all.equal(sumR(x), sum(x))
 timeit(sum(x), sumR(x))
-```
 
-*Vibe*
-
-```{r}
+# Vibe
 bench_pow <- function(n) {
   # return: median time of x^0.5
   #         / median time of sqrt(x)
@@ -149,13 +106,11 @@ bench_pow <- function(n) {
 }
 # n_grid <- 10^(4:6); ratios <- sapply(n_grid, bench_pow)
 # plot(n_grid, ratios, log = "x", type = "b")
-```
 
-### 17.1 Your first API call
 
-```{r}
+## 17.1 Your first API call
+
 library(ellmer)
 models_google_gemini()                # which models your key can use; pick a "flash" one
 chat <- chat_google_gemini(model = "gemini-3.7-flash")   # reads GEMINI_API_KEY from the environment
 chat$chat("In one sentence, what does a statistician do that a chatbot cannot?")
-```
