@@ -1,0 +1,166 @@
+# STAT:5400 Section 2.2 — A First Look at Python
+# Code from the lecture notes; no output, no solutions.
+
+## 1.4 Hello 5400!
+
+print(paste("Hello", "5400!"))
+
+
+## 1.5 Basic operations in R
+
+1 + 1
+exp(-2)
+sqrt(2 * pi)
+
+2 / 0
+3 / 2 * 3
+
+
+## 1.7 Integers and floats
+
+3 / 2 * 3
+3L / 2L * 3L
+
+
+## 2.1 Reading the data
+
+Cars <- read.delim("data/Cars.dat")
+#  <- is assignment operator
+str(Cars)
+
+
+## 2.3 The first rows
+
+# show the first two rows
+head(Cars, 2)
+
+
+## 2.4 Summaries
+
+summary(Cars[, c("Country", "MPG")])
+
+
+## 2.5 All pairs
+
+plot(Cars)
+
+
+## 2.6 Data frames
+
+class(Cars)
+
+
+## 2.7 Vectors
+
+class(1L)
+class(1)
+class(TRUE)
+class("TRUE")
+
+print(!TRUE)
+class(complex(1, 1, -1))
+
+
+## 2.8 Vectors and lists
+
+x = c(5, 4, 0, 0)
+x
+
+y = c("Hello", "5400")
+y
+c(y, "!")
+
+# By hand
+# The same two lines in R, for comparison.
+a <- c(1, 2, 3)
+b <- a
+b[4] <- 4
+a
+
+z = list("word" = c("Hello", "5400"), "sign" = "!")
+z$"word"
+z$"sign"
+
+
+## 2.9 Matrices and arrays
+
+a <- matrix(1:6, ncol = 3, nrow = 2, byrow = FALSE)
+a
+
+b <- c(1, 2, 3)
+a %*% b
+
+
+## 2.10 The library `Numpy`
+
+1:4 * 3
+
+
+## 3.1 Subsetting a vector
+
+x = 1:5 * 3
+x[1:2]
+
+x[seq(1, 5, 2)]
+x[c(1, 3)]
+
+# By hand
+# Chatbot: "A logical index shorter than the vector is padded with FALSE, so
+# only the first element is kept. R and Python both behave this way."
+v <- 1:6 * 5
+v[c(TRUE, FALSE)]
+
+# The same idea in R, for comparison.
+a <- c(1, 2, 3, 4, 5)
+b <- a[1:2]
+b[1] <- 99
+a
+
+
+## 3.2 Subsetting a matrix
+
+a = matrix(1:8, 2, 4)
+a[1, ]
+a[, 1]
+
+colMeans(a)
+rowMeans(a)
+
+
+## 4.1 Selecting columns
+
+head(Cars[, c("Country", "MPG", "Weight")])
+
+
+## 4.2 Selecting rows
+
+US_Cars = Cars[Cars$Country == "U.S.", ]
+head(US_Cars[, c("Country", "MPG")], 5)
+
+
+## 4.3 Counts and summaries
+
+table(Cars$Country)
+summary(Cars[Cars$Country == "U.S.", "MPG"])
+summary(Cars[Cars$Country == "Japan", "MPG"])
+
+
+## 4.4 Histograms
+
+hist(Cars[Cars$Country == "U.S.", "MPG"])
+
+
+## 4.5 The package `Matplotlib`
+
+hist(Cars[Cars$Country == "Japan", "MPG"])
+
+
+## 4.6 One-sample t-test
+
+t.test(US_Cars[, "MPG"], mu = 20)
+
+
+## 4.7 Two-sample t-test
+
+JPN_Cars = Cars[Cars$Country == "Japan", ]
+t.test(US_Cars[, "MPG"], JPN_Cars[, "MPG"])

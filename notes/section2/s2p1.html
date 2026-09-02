@@ -244,6 +244,12 @@ window.Quarto = {
  <span class="menu-text">STAT:5400 Section 2.1 — A First Look at R</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section2/s2p2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 2.2 — A First Look at Python</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -389,23 +395,13 @@ By Hadley Wickham (<a href="https://imstat.org/2019/09/02/copss-presidents-award
 </figure>
 </div>
 </section>
-<section id="reading-in-data-from-external-files" class="level3" data-number="1.5">
-<h3 data-number="1.5" class="anchored" data-anchor-id="reading-in-data-from-external-files"><span class="header-section-number">1.5</span> Reading in data from external files</h3>
-<ul>
-<li>Download <code>Cars.dat</code> from <a href="https://raw.githubusercontent.com/boxiang-wang/stat5400/main/data/Cars.dat" class="uri">https://raw.githubusercontent.com/boxiang-wang/stat5400/main/data/Cars.dat</a>.</li>
-<li>Use a text editor to look at this file. Note that the separators between columns are tabs (You can tell because the cursor jumps) and that the decimal point in numbers is indicated by periods.</li>
-<li>We need to read this file into an <code>object</code> in R to analyze it. R has several functions that read in data files in different formats.</li>
-<li>We will use R’s built-in help facility to figure out which one to use.</li>
-</ul>
-<p>On this page the file is already next to the notes, as <code>data/Cars.dat</code>, so the blocks below can read it.</p>
+<section id="basic-operation" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="basic-operation"><span class="header-section-number">1.5</span> Basic operation</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/Rscreen.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
-</section>
-<section id="basic-operation" class="level3" data-number="1.6">
-<h3 data-number="1.6" class="anchored" data-anchor-id="basic-operation"><span class="header-section-number">1.6</span> Basic operation</h3>
 <div class="cell">
 <div>
 <div id="webr-1" class="exercise-cell">
@@ -492,7 +488,16 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiMTozICsgMToyXG4xOjQgKyAx
 </div>
 </div>
 </div>
-<p>Read the data and look at its structure. <strong>Run this block first</strong> — the blocks below use <code>Cars</code>.</p>
+</section>
+<section id="reading-in-data-from-external-files" class="level3" data-number="1.6">
+<h3 data-number="1.6" class="anchored" data-anchor-id="reading-in-data-from-external-files"><span class="header-section-number">1.6</span> Reading in data from external files</h3>
+<ul>
+<li>Download <code>Cars.dat</code> from <a href="https://raw.githubusercontent.com/boxiang-wang/stat5400/main/data/Cars.dat" class="uri">https://raw.githubusercontent.com/boxiang-wang/stat5400/main/data/Cars.dat</a>.</li>
+<li>Use a text editor to look at this file. Note that the separators between columns are tabs (You can tell because the cursor jumps) and that the decimal point in numbers is indicated by periods.</li>
+<li>We need to read this file into an <code>object</code> in R to analyze it. R has several functions that read in data files in different formats.</li>
+<li>We will use R’s built-in help facility to figure out which one to use.</li>
+</ul>
+<p>On this page the file is already next to the notes, as <code>data/Cars.dat</code>. <strong>Run this block first</strong> — everything after it uses <code>Cars</code>.</p>
 <div class="cell">
 <div>
 <div id="webr-6" class="exercise-cell">
@@ -576,6 +581,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiY2xhc3MoQ2FycykifQ==
 <h2 data-number="2" class="anchored" data-anchor-id="data-structures"><span class="header-section-number">2</span> Data Structures</h2>
 <section id="a-question-regarding-proficiency-test" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="a-question-regarding-proficiency-test"><span class="header-section-number">2.1</span> A question regarding proficiency test</h3>
+<p>Incoming graduate students used to take a <a href="data/proficiency.pdf">programming proficiency test</a> before the semester started. We no longer give it, but the two questions are still a good warm-up. The email below is about question 2.</p>
 <p><em>Dear Dr.&nbsp;Boxiang,</em></p>
 <p><em>For the second question in the proficiency test, we’re asked to create an array containing 10 rows and 6 columns.</em></p>
 <p><em>Is this equivalent to creating a matrix or a data.frame in r?</em></p>
@@ -734,6 +740,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibDIgPC0gbGlzdChsaXN0KCks
 </script>
 </div>
 </div>
+<p>This is a <span class="more" data-note="A Russian nesting doll: open it and there is a smaller doll inside, and another inside that one.">Matryoshka doll</span>!</p>
 </section>
 <section id="three-properties-of-vectors-and-lists" class="level3" data-number="2.4">
 <h3 data-number="2.4" class="anchored" data-anchor-id="three-properties-of-vectors-and-lists"><span class="header-section-number">2.4</span> Three properties of vectors and lists</h3>

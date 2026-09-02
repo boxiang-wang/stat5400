@@ -1,7 +1,7 @@
 # STAT:5400 Section 2.1 — A First Look at R
 # Code from the lecture notes; no output, no solutions.
 
-## 1.6 Basic operation
+## 1.5 Basic operation
 
 1 + 1
 exp(-2)
@@ -20,6 +20,9 @@ all.equal(0.1 + 0.2, 0.3)
 # Predict
 1:3 + 1:2
 1:4 + 1:2
+
+
+## 1.6 Reading in data from external files
 
 Cars <- read.delim("data/Cars.dat")
 #  <- is assignment operator
