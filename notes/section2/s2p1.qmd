@@ -81,18 +81,9 @@ By Hadley Wickham ([COPSS Presidents' Award 2019](https://imstat.org/2019/09/02/
 
 ![](img/advR.jpg){width="30%" fig-align="center"}
 
-### Reading in data from external files
-
--   Download `Cars.dat` from <https://raw.githubusercontent.com/boxiang-wang/stat5400/main/data/Cars.dat>.
--   Use a text editor to look at this file. Note that the separators between columns are tabs (You can tell because the cursor jumps) and that the decimal point in numbers is indicated by periods.
--   We need to read this file into an `object` in R to analyze it. R has several functions that read in data files in different formats.
--   We will use R's built-in help facility to figure out which one to use.
-
-On this page the file is already next to the notes, as `data/Cars.dat`, so the blocks below can read it.
+### Basic operation
 
 ![](img/Rscreen.png){width="85%" fig-align="center"}
-
-### Basic operation
 
 ```{webr}
 1 + 1
@@ -136,7 +127,14 @@ all.equal(0.1 + 0.2, 0.3)
 So the warning is not "you recycled". It is "your recycling did not come out even". The silent case is the one to watch.
 :::
 
-Read the data and look at its structure. **Run this block first** — the blocks below use `Cars`.
+### Reading in data from external files
+
+-   Download `Cars.dat` from <https://raw.githubusercontent.com/boxiang-wang/stat5400/main/data/Cars.dat>.
+-   Use a text editor to look at this file. Note that the separators between columns are tabs (You can tell because the cursor jumps) and that the decimal point in numbers is indicated by periods.
+-   We need to read this file into an `object` in R to analyze it. R has several functions that read in data files in different formats.
+-   We will use R's built-in help facility to figure out which one to use.
+
+On this page the file is already next to the notes, as `data/Cars.dat`. **Run this block first** — everything after it uses `Cars`.
 
 ```{webr}
 Cars <- read.delim("data/Cars.dat")
@@ -182,6 +180,8 @@ Data frame:
 ## Data Structures
 
 ### A question regarding proficiency test
+
+Incoming graduate students used to take a [programming proficiency test](data/proficiency.pdf) before the semester started. We no longer give it, but the two questions are still a good warm-up. The email below is about question 2.
 
 *Dear Dr. Boxiang,*
 
@@ -277,6 +277,8 @@ unlist(l1)
 l2 <- list(list(), list(list()))
 str(l2)
 ```
+
+This is a [Matryoshka doll]{.more note="A Russian nesting doll: open it and there is a smaller doll inside, and another inside that one."}!
 
 ### Three properties of vectors and lists
 
