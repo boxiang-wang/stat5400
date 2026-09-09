@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://boxiang-wang.github.io/stat5400/notes/section2/s2p2.html</loc>
-    <lastmod>2026-09-02T21:51:55.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://boxiang-wang.github.io/stat5400/notes/section1/s1p1.html</loc>
-    <lastmod>2026-09-02T21:51:54.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://boxiang-wang.github.io/stat5400/index.html</loc>
-    <lastmod>2026-09-02T21:51:52.000Z</lastmod>
+    <loc>https://boxiang-wang.github.io/stat5400/notes/section2/s2p3.html</loc>
+    <lastmod>2026-09-09T21:06:06.000Z</lastmod>
   </url>
   <url>
     <loc>https://boxiang-wang.github.io/stat5400/notes/section2/s2p1.html</loc>
-    <lastmod>2026-09-02T21:51:55.000Z</lastmod>
+    <lastmod>2026-09-09T21:06:06.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://boxiang-wang.github.io/stat5400/index.html</loc>
+    <lastmod>2026-09-09T21:06:05.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://boxiang-wang.github.io/stat5400/notes/section1/s1p1.html</loc>
+    <lastmod>2026-09-09T21:06:05.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://boxiang-wang.github.io/stat5400/notes/section2/s2p2.html</loc>
+    <lastmod>2026-09-09T21:06:06.000Z</lastmod>
   </url>
 </urlset>
