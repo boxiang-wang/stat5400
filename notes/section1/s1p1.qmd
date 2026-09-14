@@ -143,7 +143,7 @@ Two directions, and this course runs both ways.
 
 -   **AI for statistics** --- the model as a tool in the statistician's workflow.
     -   Writing and translating code: R ↔ Python, a loop → a vectorized version, a formula → a function (Section 2).
-    -   Cleaning and extracting: messy text → a tidy table; [structured output]{.more note="You tell the model the exact shape of the answer you want (fields, types), and it returns data your code can use instead of prose."} instead of prose (Section 6).
+    -   Cleaning and extracting: messy text → a tidy table; [structured output]{.more note="You tell the model the exact shape of the answer you want (fields, types), and it returns data your code can use instead of prose."} instead of prose (Section 2.4).
     -   Designing and explaining: draft a simulation study, explain an error message, summarize a paper --- then *you* verify.
     -   Learning: the *Ask AI* buttons in these notes, and the course tutor.
     -   Agents: an AI that runs a small analysis end to end, from data to report, while you watch each step. In class we replay [one on MorphMind](https://agentlab.morphmind.ai/en/share/replay/bp7e9jff) (free tier, no payment required).
@@ -155,7 +155,7 @@ Two directions, and this course runs both ways.
     -   [Gemini's Data Science Agent in Colab](https://developers.googleblog.com/en/data-science-agent-in-colab-with-gemini/){.more note="Free in Google Colab: describe the goal in plain English and it writes a full notebook, from loading the data to plots and a model."}: describe the goal, get a whole notebook.
     -   [MorphMind AgentLab](https://morphmind.ai){.more note="A team of specialist agents with a project-manager agent; every step shows its sources and can be corrected; sessions can be shared and replayed, like the one above."}: a team of agents with receipts for every step.
     -   Open source: [MetaGPT's Data Interpreter](https://github.com/geekan/MetaGPT/blob/main/examples/di/README.md){.more note="Plans, writes, and runs code for a data task; arXiv 2402.18679."}, [PandasAI](https://docs.kanaries.net/articles/pandas-ai){.more note="Chat with a data frame in plain English; it writes the pandas or SQL."}, and agent frameworks such as LangGraph, CrewAI, and the OpenAI Agents SDK.
-    -   From R: `ellmer` with tool calling (Section 6) lets you build a small one yourself.
+    -   From R: `ellmer` with tool calling (Section 2.4) lets you build a small one yourself.
 -   **Statistics for AI** --- the model as an object of statistical study.
     -   An LLM is a [sampler]{.more note="Each word is drawn from a probability distribution over the vocabulary; temperature and top-p are knobs on that distribution."}: temperature and top-p are the same ideas as random-variate generation (Section 3).
     -   Evaluating a model is a simulation study: accuracy is an estimate, needs a confidence interval, and "how many test prompts?" is a sample-size question (Section 3).
@@ -601,7 +601,7 @@ Three ways to use a model, in the order this course meets them:
 
 ### Your first API call
 
-The chatbox is a person talking to a model. The API is a *program* talking to a model: the same question, but the answer comes back as data your code can use. That is the door to everything in Section 6.
+The chatbox is a person talking to a model. The API is a *program* talking to a model: the same question, but the answer comes back as data your code can use. That is the door to everything in Section 2.4.
 
 {{< codespace-pill >}} --- R, with the `ellmer` package (needs your key):
 
@@ -628,7 +628,7 @@ print(interaction.output_text)
 
 {{< codespace "notes/section1/run/s1p1_llm.py" >}}
 
-Three things to notice, all of which return in Section 6:
+Three things to notice, all of which return in Section 2.4:
 
 -   The model is a [function call]{.more note="Same idea as rnorm(): you pass arguments and get a value back. The value happens to be text."} with arguments --- here the model name and the prompt; later temperature, system instructions, and structured output.
 -   Run it twice and you get two different answers. An LLM is a *sampler*; Section 3 is about samplers.

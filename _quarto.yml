@@ -31,7 +31,7 @@ website:
       - section: "Section 1: Introduction"
         contents:
           - auto: "notes/section1/*.qmd"
-      - section: "Section 2: R and Python Basics"
+      - section: "Section 2: R, Python, and APIs"
         contents:
           - auto: "notes/section2/*.qmd"
 
