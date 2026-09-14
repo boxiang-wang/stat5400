@@ -232,7 +232,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Section 2: R and Python Basics</span></a>
+ <span class="menu-text">Section 2: R, Python, and APIs</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -254,6 +254,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../notes/section2/s2p3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">STAT:5400 Section 2.3 — Functions, Loops, and Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section2/s2p4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 2.4 — LLM APIs and Prompting</span></a>
   </div>
 </li>
       </ul>
@@ -453,7 +459,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <li><p><strong>AI for statistics</strong> — the model as a tool in the statistician’s workflow.</p>
 <ul>
 <li>Writing and translating code: R ↔︎ Python, a loop → a vectorized version, a formula → a function (Section 2).</li>
-<li>Cleaning and extracting: messy text → a tidy table; <span class="more" data-note="You tell the model the exact shape of the answer you want (fields, types), and it returns data your code can use instead of prose.">structured output</span> instead of prose (Section 6).</li>
+<li>Cleaning and extracting: messy text → a tidy table; <span class="more" data-note="You tell the model the exact shape of the answer you want (fields, types), and it returns data your code can use instead of prose.">structured output</span> instead of prose (Section 2.4).</li>
 <li>Designing and explaining: draft a simulation study, explain an error message, summarize a paper — then <em>you</em> verify.</li>
 <li>Learning: the <em>Ask AI</em> buttons in these notes, and the course tutor.</li>
 <li>Agents: an AI that runs a small analysis end to end, from data to report, while you watch each step. In class we replay <a href="https://agentlab.morphmind.ai/en/share/replay/bp7e9jff">one on MorphMind</a> (free tier, no payment required).</li>
@@ -465,7 +471,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <li><a href="https://developers.googleblog.com/en/data-science-agent-in-colab-with-gemini/" class="more" data-note="Free in Google Colab: describe the goal in plain English and it writes a full notebook, from loading the data to plots and a model.">Gemini’s Data Science Agent in Colab</a>: describe the goal, get a whole notebook.</li>
 <li><a href="https://morphmind.ai" class="more" data-note="A team of specialist agents with a project-manager agent; every step shows its sources and can be corrected; sessions can be shared and replayed, like the one above.">MorphMind AgentLab</a>: a team of agents with receipts for every step.</li>
 <li>Open source: <a href="https://github.com/geekan/MetaGPT/blob/main/examples/di/README.md" class="more" data-note="Plans, writes, and runs code for a data task; arXiv 2402.18679.">MetaGPT’s Data Interpreter</a>, <a href="https://docs.kanaries.net/articles/pandas-ai" class="more" data-note="Chat with a data frame in plain English; it writes the pandas or SQL.">PandasAI</a>, and agent frameworks such as LangGraph, CrewAI, and the OpenAI Agents SDK.</li>
-<li>From R: <code>ellmer</code> with tool calling (Section 6) lets you build a small one yourself.</li>
+<li>From R: <code>ellmer</code> with tool calling (Section 2.4) lets you build a small one yourself.</li>
 </ul></li>
 <li><p><strong>Statistics for AI</strong> — the model as an object of statistical study.</p>
 <ul>
@@ -1139,7 +1145,7 @@ e.g.&nbsp;Microsoft Word, Excel, S-Plus, R, SAS …</li>
 </ul>
 <section id="your-first-api-call" class="level3" data-number="17.1">
 <h3 data-number="17.1" class="anchored" data-anchor-id="your-first-api-call"><span class="header-section-number">17.1</span> Your first API call</h3>
-<p>The chatbox is a person talking to a model. The API is a <em>program</em> talking to a model: the same question, but the answer comes back as data your code can use. That is the door to everything in Section 6.</p>
+<p>The chatbox is a person talking to a model. The API is a <em>program</em> talking to a model: the same question, but the answer comes back as data your code can use. That is the door to everything in Section 2.4.</p>
 <p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — R, with the <code>ellmer</code> package (needs your key):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">models_google_gemini</span>()                <span class="co"># which models your key can use; pick a "flash" one</span></span>
@@ -1155,7 +1161,7 @@ e.g.&nbsp;Microsoft Word, Excel, S-Plus, R, SAS …</li>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(interaction.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section1/run/s1p1_llm.py</code></span></div>
-<p>Three things to notice, all of which return in Section 6:</p>
+<p>Three things to notice, all of which return in Section 2.4:</p>
 <ul>
 <li>The model is a <span class="more" data-note="Same idea as rnorm(): you pass arguments and get a value back. The value happens to be text.">function call</span> with arguments — here the model name and the prompt; later temperature, system instructions, and structured output.</li>
 <li>Run it twice and you get two different answers. An LLM is a <em>sampler</em>; Section 3 is about samplers.</li>
