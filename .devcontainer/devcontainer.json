@@ -17,7 +17,7 @@
     },
     // R packages used in the notes (binary installs, fast)
     "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
-      "packages": "Rcpp,microbenchmark,languageserver,knitr,rmarkdown,ellmer",
+      "packages": "Rcpp,microbenchmark,languageserver,knitr,rmarkdown,ellmer,ggplot2,jsonlite",
       "installSystemRequirements": true
     },
     // Python
@@ -32,7 +32,7 @@
   // postCreate runs once at build: Python packages, then Ollama with two small models (about 1.7 GB; see setup-ollama.sh).
   // The two run independently, so one failing does not block the other.
   "postCreateCommand": {
-    "python": "pip install --user numpy pandas matplotlib jupyter google-genai ollama",
+    "python": "pip install --user numpy pandas matplotlib scipy statsmodels plotnine jupyter google-genai ollama openai anthropic python-dotenv pydantic",
     "ollama": "bash .devcontainer/setup-ollama.sh"
   },
   // every start: make sure the Ollama server is up

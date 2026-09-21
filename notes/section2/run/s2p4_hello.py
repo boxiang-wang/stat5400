@@ -38,12 +38,3 @@ r4 = client.responses.create(
     input=[{"role": "user", "content": "What is the name of the university I just mentioned?"}],
     store=True)
 print(r4.output_text)
-
-# Another provider, same code: only the address and the model name change.
-if os.environ.get("COURSE_MODEL_URL"):
-    course = OpenAI(base_url=os.environ["COURSE_MODEL_URL"],
-                    api_key=os.environ.get("COURSE_MODEL_KEY", "none"))
-    resp = course.responses.create(
-        model=os.environ["COURSE_MODEL"],
-        input="Give me 3 distributions in the exponential family.")
-    print(resp.output_text)

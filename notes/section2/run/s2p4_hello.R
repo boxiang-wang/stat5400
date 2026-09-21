@@ -22,11 +22,3 @@ chat3$get_tokens()
 # The small local model needs no key and runs inside the Codespace.
 local <- chat_ollama(model = "llama3.2:1b")
 local$chat("Give me 3 distributions in the exponential family.")
-
-if (nzchar(Sys.getenv("COURSE_MODEL_URL"))) {
-  course <- chat_openai_compatible(
-    base_url = Sys.getenv("COURSE_MODEL_URL"),
-    model    = Sys.getenv("COURSE_MODEL"),
-    api_key  = Sys.getenv("COURSE_MODEL_KEY", "none"))
-  course$chat("Give me 3 distributions in the exponential family.")
-}

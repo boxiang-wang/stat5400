@@ -1,13 +1,34 @@
-# STAT:5400 Section 2.4 — LLM APIs and Prompting
-# Code from the lecture notes; no output, no solutions.
+# STAT 5400 - Section 2.4 - LLM APIs and Prompting
+# All the Python code from the page, set up for IDAS.
+# Page: https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html
+#
+# Before you start
+# 1. Start the class models once per session. In a Terminal, type:
+#      source ~/classFiles/notes/section2/run/s2p4_idas_models.sh
+# 2. For the OpenAI parts, put your API key in the file ~/.Renviron (the same file R uses):
+#      OPENAI_API_KEY=your-openai-key
+#    Never type a key into this file.
+# 3. Run it all with:
+#      python ~/classFiles/notes/section2/run/s2p4_idas.py
+#    It takes a few minutes. The OpenAI calls use gpt-5-nano and cost a fraction of a cent.
+
+import os, sys
+sys.path.append(os.path.expanduser("~/classdata/models/python"))   # the class copy of openai
+from openai import OpenAI
+
+# Read your keys from ~/.Renviron: one NAME=value per line
+renviron = os.path.expanduser("~/.Renviron")
+if os.path.exists(renviron):
+    for line in open(renviron):
+        name, _, value = line.strip().partition("=")
+        if name and not name.startswith("#"):
+            os.environ.setdefault(name, value.strip('"\''))
+
+client = OpenAI()                                                        # OpenAI, reads OPENAI_API_KEY
+local = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")   # the class models on IDAS
 
 ## 3.1 Hello world
 
-from dotenv import load_dotenv
-from openai import OpenAI
-load_dotenv()
-
-client = OpenAI()
 response = client.responses.create(
     model="gpt-5-nano",
     input=[{"role": "user", "content":
@@ -33,8 +54,6 @@ print(r2.output_text)     # it does not know
 
 
 ## 3.3 The same code, an open-weight model
-
-local = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
 resp = local.chat.completions.create(
     model="llama3.2:1b",                         # 1 billion parameters
@@ -160,7 +179,6 @@ print(resp.output_parsed.label, resp.output_parsed.p_value)
 ## 6.2 Watch a small model fail, then fix it
 
 import json
-local = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
 TOOLS = [{"type": "function", "function": {
     "name": "larger",
@@ -182,7 +200,7 @@ for c in r.choices[0].message.tool_calls or []:
 ## 6.3 A two-tool example
 
 import json, pandas as pd
-Cars = pd.read_csv("notes/section2/data/Cars.dat", sep="\t")
+Cars = pd.read_csv(os.path.expanduser("~/classFiles/notes/section2/data/Cars.dat"), sep="\t")
 
 TOOLS = [
   {"type": "function", "name": "column_names",

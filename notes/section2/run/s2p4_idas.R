@@ -1,52 +1,51 @@
----
-title: "STAT:5400 Section 2.4 — LLM APIs and Prompting"
-output: html_document
----
+# STAT 5400 - Section 2.4 - LLM APIs and Prompting
+# All the R code from the page, set up for IDAS.
+# Page: https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html
+#
+# Before you start
+# 1. Start the class models once per session. In a Terminal, type:
+#      source ~/classFiles/notes/section2/run/s2p4_idas_models.sh
+# 2. For the OpenAI parts, put your API key in the file ~/.Renviron, then restart R
+#    (Session > Restart R):
+#      OPENAI_API_KEY=your-openai-key
+#    Never type a key into this file.
+# 3. Run one section at a time: select the lines and press Ctrl+Enter.
+#    The OpenAI calls use gpt-5-nano and cost a fraction of a cent in total.
+#    The 4B model in 3.3 takes up to a minute to answer.
 
-### 2.3 What a token costs
+.libPaths(c("~/classdata/models/R", .libPaths()))   # the class copy of ellmer
+library(ellmer)
 
-```{r}
+## 2.2 What a token costs
+
 prompt <- "Explain what a p-value means in one sentence for a beginner."
 
 words  <- length(strsplit(prompt, "\\s+")[[1]])
 tokens <- round(words / 0.75)
 c(words = words, approx_tokens = tokens)
-```
 
-*Edit*
-
-```{r}
+# Edit
 price_per_million <- 0.15     # dollars, input tokens; check the current page
 calls             <- 500
 
 round(tokens * calls / 1e6 * price_per_million, 4)
-```
 
-```{r}
 book_tokens <- 745 * 500 / 0.75   # pages, words per page, words per token
 book_tokens
-```
 
-```{r}
 # dollars per million input tokens, September 2026; these change often
 per_million <- c(nano = 0.05, pro = 30.00)
 
 round(book_tokens / 1e6 * per_million, 2)
-```
 
-### 3.1 Hello world
 
-```{r}
-library(ellmer)
+## 3.1 Hello world
 
 chat <- chat_openai(model = "gpt-5-nano")
 chat$chat("Write a one-sentence bedtime story about a unicorn.")
-```
 
-### 3.2 No memory by default
 
-```{r}
-library(ellmer)
+## 3.2 No memory by default
 
 first <- chat_openai(model = "gpt-5-nano")    # reads OPENAI_API_KEY
 first$chat("Write a paragraph about the Department of Statistics and
@@ -63,24 +62,21 @@ same$chat("What is the name of the university I just mentioned?")
 # same <- chat_anthropic()
 # same$chat("Write two sentences about the University of Iowa.")
 # same$chat("What is the name of the university I just mentioned?")
-```
 
-### 3.3 The same code, an open-weight model
 
-```{r}
+## 3.3 The same code, an open-weight model
+
 small <- chat_ollama(model = "llama3.2:1b")      # 1 billion parameters
 small$chat("Give me 3 distributions in the exponential family.")
 
 bigger <- chat_ollama(model = "qwen3.5:4b",      # 4 billion parameters, IDAS only
   api_args = list(reasoning_effort = "none"))    # skip the thinking step
 bigger$chat("Give me 3 distributions in the exponential family.")
-```
 
-### 4.2 Roles
 
-*Predict*
+## 4.2 Roles
 
-```{r}
+# Predict
 chat_a <- chat_openai(model = "gpt-5-nano",
   system_prompt = "You are a concise tutor.")
 chat_a$chat("X follows a Uniform(0, 1). What is its variance?")
@@ -89,28 +85,24 @@ chat_b <- chat_openai(model = "gpt-5-nano",
   system_prompt = paste("You are a responsible tutor. Help your student",
                         "but don't tell them the exact answers."))
 chat_b$chat("X follows a Uniform(0, 1). What is its variance?")
-```
 
-### 4.3 Conversation state
 
-```{r}
+## 4.3 Conversation state
+
 chat <- chat_openai(model = "gpt-5-nano")
 chat$set_turns(list(
   UserTurn("knock knock."),
   AssistantTurn("Who's there?")))
 chat$chat("Felix")
-```
 
-```{r}
 chat <- chat_openai(model = "gpt-5-nano")
 chat$chat("Tell me a joke about statistics.")
 chat$chat("Tell me another.")
 chat$get_turns()    # every turn so far: user, assistant, user, assistant
-```
 
-### 5.1 Ask for a type, not a string
 
-```{r}
+## 5.1 Ask for a type, not a string
+
 review <- type_object(
   label     = type_enum("One of Supported, Unsupported, Unclear.",
                         c("Supported", "Unsupported", "Unclear")),
@@ -121,12 +113,9 @@ chat <- chat_openai(model = "gpt-5-nano")
 chat$chat_structured(
   "This study proves the two groups differ (p = 0.20).",
   type = review)
-```
 
-### 6.2 Watch a small model fail, then fix it
 
-```{r}
-library(ellmer)
+## 6.2 Watch a small model fail, then fix it
 
 # no tool: the model answers from text alone
 bare <- chat_ollama(model = "llama3.2:1b")
@@ -146,13 +135,11 @@ armed$register_tools(list(
                         b = type_number("Second number.")))))
 armed$on_tool_request(function(req) cat("-> ", req@name, deparse1(req@arguments), "\n"))
 armed$chat("Which is larger, 9.9 or 9.11?")
-```
 
-### 6.3 A two-tool example
 
-```{r}
-library(ellmer)
-Cars <- read.delim("notes/section2/data/Cars.dat")
+## 6.3 A two-tool example
+
+Cars <- read.delim("~/classFiles/notes/section2/data/Cars.dat")
 
 column_names <- function() paste(names(Cars), collapse = ", ")
 column_mean  <- function(column) mean(Cars[[column]])
@@ -172,4 +159,3 @@ chat$on_tool_request(function(req)
   cat("-> ", req@name, deparse1(req@arguments), "\n"))
 
 chat$chat("What is the average weight of these cars?")
-```

@@ -21,6 +21,9 @@ Mac) to run it in the R console, or select all and run.
 - `section2/run/s2p4_hello.R`, `section2/run/s2p4_hello.py` — Section 2.4, first LLM API call; statelessness; a second provider
 - `section2/run/s2p4_prompt.R`, `section2/run/s2p4_prompt.py` — Section 2.4, roles, few-shot claim labelling, structured output
 - `section2/run/s2p4_tools.R`, `section2/run/s2p4_tools.py` — Section 2.4, two tools and the tool-calling loop on the cars data
+- `section2/run/s2p4_idas.R`, `section2/run/s2p4_idas.py` — Section 2.4, all the code from the page, set up for IDAS (built from `code/s2p4.*`; rebuild when the page changes)
+- `section2/run/s2p4_idas_models.sh` — IDAS: start Ollama with the class models in `classdata/models` (run with `source`)
+- `section2/run/s2p4_idas_own_models.sh` — IDAS: download Ollama and one model into your own home folder (run with `source`)
 - `section2/run/s2p3_quadratic.py` — Section 2.3, the same solver as a Python module (for `import`)
 - `section2/run/s2p3_microbenchmark.R` — Section 2.3, timing three factorial implementations
 - `section2/run/s2p3_ggplot.R` — Section 2.3, the ggplot2 example (ggplot2 is not in the browser session)
