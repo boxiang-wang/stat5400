@@ -16,7 +16,7 @@ response = client.responses.create(
 print(response.output_text)
 
 
-## 3.2 No memory by default
+## 3.2 The model does not remember earlier calls
 
 r1 = client.responses.create(
     model="gpt-5-nano",
@@ -32,7 +32,7 @@ r2 = client.responses.create(
 print(r2.output_text)     # it does not know
 
 
-## 3.3 The same code, an open-weight model
+## 3.3 Open-weight models
 
 local = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 

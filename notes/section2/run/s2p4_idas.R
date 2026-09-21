@@ -45,7 +45,7 @@ chat <- chat_openai(model = "gpt-5-nano")
 chat$chat("Write a one-sentence bedtime story about a unicorn.")
 
 
-## 3.2 No memory by default
+## 3.2 The model does not remember earlier calls
 
 first <- chat_openai(model = "gpt-5-nano")    # reads OPENAI_API_KEY
 first$chat("Write a paragraph about the Department of Statistics and
@@ -64,7 +64,7 @@ same$chat("What is the name of the university I just mentioned?")
 # same$chat("What is the name of the university I just mentioned?")
 
 
-## 3.3 The same code, an open-weight model
+## 3.3 Open-weight models
 
 small <- chat_ollama(model = "llama3.2:1b")      # 1 billion parameters
 small$chat("Give me 3 distributions in the exponential family.")

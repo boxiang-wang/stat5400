@@ -46,14 +46,14 @@ university's JupyterHub service. Several open-weight models are installed there 
 
 ### History and evolution
 
--   [**1966 to 1996, rules and early neural networks.**]{style="color:#b8860b"} [ELIZA](https://doi.org/10.1145/365153.365168){.quiet} (1966) was a chatbot built from hand-written rules. [Recurrent neural networks](https://doi.org/10.1207/s15516709cog1402_1){.quiet} (1980s and 1990s) read text one word at a time.
--   [**1997 to 2012, better memory.**]{style="color:#b8860b"} [LSTM](https://doi.org/10.1162/neco.1997.9.8.1735){.quiet} (1997) let a network keep information over longer stretches of text.
--   [**2013 to 2017, embeddings and the Transformer.**]{style="color:#b8860b"} [Word2Vec](https://arxiv.org/abs/1301.3781){.quiet} (2013) turned words into vectors. The [Transformer](https://arxiv.org/abs/1706.03762){.quiet} (2017) became the core architecture of nearly every modern model.
--   [**2018 to 2021, pretraining at scale.**]{style="color:#b8860b"} [BERT](https://arxiv.org/abs/1810.04805){.quiet} (Google, 2018); [GPT-1](https://openai.com/index/language-unsupervised/){.quiet} to GPT-3 (OpenAI, 2018 to 2020). [GPT-3](https://arxiv.org/abs/2005.14165){.quiet} showed that a large enough model can learn a task from a few examples in the prompt.
--   [**2022 to 2023, chatbots.**]{style="color:#b8860b"} [ChatGPT](https://openai.com/index/chatgpt/){.quiet} (November 2022) brought prompt-based use to everyone. [GPT-4](https://arxiv.org/abs/2303.08774){.quiet} and Anthropic's [Claude](https://www.anthropic.com/news/introducing-claude){.quiet} followed in March 2023, Google's [Gemini](https://arxiv.org/abs/2312.11805){.quiet} in December. Meta's [LLaMA](https://arxiv.org/abs/2302.13971){.quiet} (February 2023) and [Mistral 7B](https://arxiv.org/abs/2310.06825){.quiet} (September 2023) made strong models free to download, shared through [Hugging Face](https://huggingface.co/models){.quiet}.
--   [**2024 onward, multimodal.**]{style="color:#b8860b"} Gemini was built to read text, images, audio, and video from the start. [GPT-4o](https://openai.com/index/hello-gpt-4o/){.quiet} (2024) added real-time voice; [Claude](https://www.anthropic.com/news/claude-3-family){.quiet} reads images and PDFs. Image and video generators such as [Stable Diffusion](https://arxiv.org/abs/2112.10752){.quiet} (2022) and [Sora](https://openai.com/index/sora/){.quiet} (2024) use related ideas.
--   [**2024 onward, reasoning.**]{style="color:#b8860b"} [OpenAI o1](https://openai.com/index/learning-to-reason-with-llms/){.quiet} (September 2024) was trained to think before answering. [DeepSeek-R1](https://arxiv.org/abs/2501.12948){.quiet} (January 2025) came close with open weights and a much lower reported training cost.
--   [**2025 onward, agents and open weights.**]{style="color:#b8860b"} Models now run tools and code on their own: [Claude Code](https://code.claude.com/docs/){.quiet} and [OpenAI Codex](https://developers.openai.com/codex/){.quiet} (2025), Section 7. Many of the strongest open-weight models now come from Chinese labs: [Qwen](https://github.com/QwenLM){.quiet} (Alibaba), [DeepSeek](https://www.deepseek.com/){.quiet}, and [Kimi](https://github.com/MoonshotAI/Kimi-K2){.quiet} (Moonshot AI).
+-   [**1966 to 1996, rules and early neural networks.**]{style="color:#b8860b"} [ELIZA](https://doi.org/10.1145/365153.365168) (1966) was a chatbot built from hand-written rules. [Recurrent neural networks](https://doi.org/10.1207/s15516709cog1402_1) (1980s and 1990s) read text one word at a time.
+-   [**1997 to 2012, better memory.**]{style="color:#b8860b"} [LSTM](https://doi.org/10.1162/neco.1997.9.8.1735) (1997) let a network keep information over longer stretches of text.
+-   [**2013 to 2017, embeddings and the Transformer.**]{style="color:#b8860b"} [Word2Vec](https://arxiv.org/abs/1301.3781) (2013) turned words into vectors. The [Transformer](https://arxiv.org/abs/1706.03762) (2017) became the core architecture of nearly every modern model.
+-   [**2018 to 2021, pretraining at scale.**]{style="color:#b8860b"} [BERT](https://arxiv.org/abs/1810.04805) (Google, 2018); [GPT-1](https://openai.com/index/language-unsupervised/) to GPT-3 (OpenAI, 2018 to 2020). [GPT-3](https://arxiv.org/abs/2005.14165) showed that a large enough model can learn a task from a few examples in the prompt.
+-   [**2022 to 2023, chatbots.**]{style="color:#b8860b"} [ChatGPT](https://openai.com/index/chatgpt/) (November 2022) brought prompt-based use to everyone. [GPT-4](https://arxiv.org/abs/2303.08774) and Anthropic's [Claude](https://www.anthropic.com/news/introducing-claude) followed in March 2023, Google's [Gemini](https://arxiv.org/abs/2312.11805) in December. Meta's [LLaMA](https://arxiv.org/abs/2302.13971) (February 2023) and [Mistral 7B](https://arxiv.org/abs/2310.06825) (September 2023) made strong models free to download, shared through [Hugging Face](https://huggingface.co/models).
+-   [**2024 onward, multimodal.**]{style="color:#b8860b"} Gemini was built to read text, images, audio, and video from the start. [GPT-4o](https://openai.com/index/hello-gpt-4o/) (2024) added real-time voice; [Claude](https://www.anthropic.com/news/claude-3-family) reads images and PDFs. Image and video generators such as [Stable Diffusion](https://arxiv.org/abs/2112.10752) (2022) and [Sora](https://openai.com/index/sora/) (2024) use related ideas.
+-   [**2024 onward, reasoning.**]{style="color:#b8860b"} [OpenAI o1](https://openai.com/index/learning-to-reason-with-llms/) (September 2024) was trained to think before answering. [DeepSeek-R1](https://arxiv.org/abs/2501.12948) (January 2025) came close with open weights and a much lower reported training cost.
+-   [**2025 onward, agents and open weights.**]{style="color:#b8860b"} Models now run tools and code on their own: [Claude Code](https://code.claude.com/docs/) and [OpenAI Codex](https://developers.openai.com/codex/) (2025), Section 7. Many of the strongest open-weight models now come from Chinese labs: [Qwen](https://github.com/QwenLM) (Alibaba), [DeepSeek](https://www.deepseek.com/), and [Kimi](https://github.com/MoonshotAI/Kimi-K2) (Moonshot AI).
 
 [Source: adapted from GeeksforGeeks, *History and Evolution of LLMs*, <https://www.geeksforgeeks.org/blogs/history-and-evolution-of-llms/>, with entries after 2022 added from the providers' announcements.]{.source}
 
@@ -72,47 +72,6 @@ university's JupyterHub service. Several open-weight models are installed there 
 
 -   Read the prices: <https://platform.openai.com/docs/pricing>.
 -   Set a hard budget limit on the account. Do it today, not after the first surprise.
-
-### Setting up IDAS
-
-STAT:5400 students can run every code block on this page on [IDAS](https://its.uiowa.edu/idas).
-Do step 1 once. Do step 2 each time you start a new IDAS session.
-
-1.  **Save your OpenAI key.** Do this once, either in the R console or in a terminal on IDAS.
-    The first line adds a fake key to the file `~/.Renviron`. The second opens the file: replace
-    the fake key with your own and save. R reads this file when it starts, and the IDAS Python
-    file reads it too.
-
-    In the R console:
-
-    ```{.r}
-    cat("OPENAI_API_KEY=sk-fake-replace-with-your-key\n", file = "~/.Renviron", append = TRUE)
-    file.edit("~/.Renviron")          # replace the fake key with your own, then save
-    Sys.chmod("~/.Renviron", "600")   # only you can read the file
-    ```
-
-    Or in a terminal:
-
-    ```bash
-    echo 'OPENAI_API_KEY=sk-fake-replace-with-your-key' >> ~/.Renviron
-    nano ~/.Renviron        # replace the fake key with your own; Ctrl+O saves, Ctrl+X exits
-    chmod 600 ~/.Renviron   # only you can read the file
-    ```
-
-    Then restart R (Session > Restart R). After the restart,
-    `nzchar(Sys.getenv("OPENAI_API_KEY"))` returns `TRUE` if the key is set.
-
-2.  **Start the class models.** Open a terminal on IDAS and type the line below. It starts
-    Ollama with the open-weight models installed for the class, then lists them. Type `source`,
-    not `bash`, or the `ollama` command is not found afterwards.
-
-    ```bash
-    source ~/classFiles/notes/section2/run/s2p4_idas_models.sh
-    ```
-
-3.  **Run the code.** All the code on this page is in two files in your `classFiles` folder. Open
-    `notes/section2/run/s2p4_idas.R` in RStudio and run it one section at a time. For Python,
-    type `python ~/classFiles/notes/section2/run/s2p4_idas.py` in the terminal.
 
 ### What a token costs
 
@@ -162,6 +121,47 @@ The rule from Section 1.1 still holds. A key is a password. It lives in the envi
 in a file you can see. Read it with `Sys.getenv("OPENAI_API_KEY")` in R or `os.environ` in
 Python, and never print it.
 
+### Setting up IDAS
+
+STAT:5400 students can run every code block on this page on [IDAS](https://its.uiowa.edu/idas).
+Do step 1 once. Do step 2 each time you start a new IDAS session.
+
+1.  **Save your OpenAI key.** Do this once, either in the R console or in a terminal on IDAS.
+    The first line adds a fake key to the file `~/.Renviron`. The second opens the file: replace
+    the fake key with your own and save. R reads this file when it starts, and the IDAS Python
+    file reads it too.
+
+    In the R console:
+
+    ```{.r}
+    cat("OPENAI_API_KEY=sk-fake-replace-with-your-key\n", file = "~/.Renviron", append = TRUE)
+    file.edit("~/.Renviron")          # replace the fake key with your own, then save
+    Sys.chmod("~/.Renviron", "600")   # only you can read the file
+    ```
+
+    Or in a terminal:
+
+    ```bash
+    echo 'OPENAI_API_KEY=sk-fake-replace-with-your-key' >> ~/.Renviron
+    nano ~/.Renviron        # replace the fake key with your own; Ctrl+O saves, Ctrl+X exits
+    chmod 600 ~/.Renviron   # only you can read the file
+    ```
+
+    Then restart R (Session > Restart R). After the restart,
+    `nzchar(Sys.getenv("OPENAI_API_KEY"))` returns `TRUE` if the key is set.
+
+2.  **Start the class models.** Open a terminal on IDAS and type the line below. It starts
+    Ollama with the open-weight models installed for the class, then lists them. Type `source`,
+    not `bash`, or the `ollama` command is not found afterwards.
+
+    ```bash
+    source ~/classFiles/notes/section2/run/s2p4_idas_models.sh
+    ```
+
+3.  **Run the code.** All the code on this page is in two files in your `classFiles` folder. Open
+    `notes/section2/run/s2p4_idas.R` in RStudio and run it one section at a time. For Python,
+    type `python ~/classFiles/notes/section2/run/s2p4_idas.py` in the terminal.
+
 ## Your First Call
 
 ### Hello world
@@ -206,7 +206,7 @@ print(response.output_text)
 Run it twice. The two answers differ, because the model samples. We come back to why in
 Section 3.1.
 
-### No memory by default
+### The model does not remember earlier calls
 
 -   By default, every request is [**stateless**]{style="color:#b8860b"}: it starts from nothing, and the model sees only what you send in that request. It does not remember your earlier calls.
 -   Ask about "the university I just mentioned" in a second, separate call, and it has no idea.
@@ -262,7 +262,7 @@ print(r2.output_text)     # it does not know
 -   `ellmer` does this for you: a `chat` object keeps the turns and resends them.
 -   Every LLM API works like this, not only OpenAI. The last lines of the R code, commented out, run the same test with Claude.
 
-### The same code, an open-weight model
+### Open-weight models
 
 Most providers accept the OpenAI format, so only the address and the model name change. That
 includes open-weight models that you run yourself, through
@@ -324,19 +324,196 @@ A small local model is also useful for testing your code. It costs nothing and n
 
 [**Prompt engineering**]{style="color:#b8860b"} means writing instructions clear enough that the
 model does what you need, reliably. The output is random, so this is part art and part science.
-Nine rules carry most of the weight.
+The seven rules below follow the current guides from OpenAI and Anthropic. Open each one for a
+bad and a better example.
 
-1.  Use the latest model.
-2.  Put the instruction at the beginning, and separate instruction from context with `###` or `"""`.
-3.  Be specific about context, outcome, length, format, and style.
-4.  Show the desired output format with an example.
-5.  Start zero-shot, then few-shot, then fine-tune. In that order.
-6.  Cut vague adjectives.
-7.  Say what to do instead of what not to do.
-8.  For code, use leading words to nudge the model toward a pattern.
-9.  Ask the model to write the prompt for you, then edit it.
+1.  Be clear and specific. Say who the answer is for, how long it should be, and what form it should take.
 
-[Source: OpenAI prompt guide, <https://platform.openai.com/docs/guides/prompt-engineering>; Liu et al. (2021), <https://arxiv.org/pdf/2107.13586>]{.source}
+    ::: {.callout-note collapse="true" title="Bad and better"}
+    **If a colleague with no background would be confused by your prompt, the model will be too.**
+
+    Bad:
+
+    ```
+    Explain the bootstrap. Keep it fairly short but somewhat detailed.
+    ```
+
+    Better:
+
+    ```
+    Explain the nonparametric bootstrap to a first-year statistics graduate student,
+    in at most 150 words, as three bullet points, and end with one line of R code
+    that resamples a vector.
+    ```
+
+    Words like short, detailed, or clear cannot be checked. A number of words, a number of bullet points, and a named reader can.
+    :::
+
+2.  Give context, and say why an instruction matters.
+
+    ::: {.callout-note collapse="true" title="Bad and better"}
+    **With the reason, the model can also handle cases your instruction did not mention.**
+
+    Bad:
+
+    ```
+    Do not use the word "significant".
+    ```
+
+    Better:
+
+    ```
+    The readers are doctors, who read "significant" as "clinically important".
+    When you mean the result of a test, write "statistically significant at the
+    5% level" instead.
+    ```
+    :::
+
+3.  Separate the parts of a long prompt, and put the question last.
+
+    ::: {.callout-note collapse="true" title="Bad and better"}
+    **Use Markdown headings or tags to mark the instructions, the examples, and the data. With a long document, put the document first and the question after it.**
+
+    Bad:
+
+    ```
+    Summarize the main finding and list any statistical problems.
+    Here is the paper: <forty pages pasted here, with nothing marking where they end>
+    ```
+
+    Better:
+
+    ```
+    <paper>
+    ... forty pages ...
+    </paper>
+
+    Summarize the main finding of the paper above in two sentences. Then list any
+    statistical problems you see, each with the page where it appears.
+    ```
+
+    Anthropic reports that putting the question after a long document can improve answers by up to 30 percent. The few-shot classifier below uses the same structure: headings for the parts, and tags around each example.
+    :::
+
+4.  Say what to do, including what to do when the model does not know.
+
+    ::: {.callout-note collapse="true" title="Bad and better"}
+    **A list of things to avoid leaves the model guessing what you want.**
+
+    Bad:
+
+    ```
+    You are a tutor. Do not give the answer. Do not make things up.
+    ```
+
+    Better:
+
+    ```
+    You are a tutor. Explain the idea behind the answer in at most 100 words,
+    then ask the student what they would try next. If the question needs
+    information you do not have, say so and ask for it.
+    ```
+
+    Allowing the model to say it does not know is one of the simplest ways to reduce made-up answers.
+    :::
+
+5.  Start without examples. Add a few if needed, and fine-tune last.
+
+    ::: {.callout-note collapse="true" title="Bad and better"}
+    **Try the cheap step first, and move on only when it fails.**
+
+    Bad:
+
+    ```
+    Collect 500 labeled claims and fine-tune a model, before trying a prompt.
+    ```
+
+    Better:
+
+    ```
+    Zero-shot: Label this claim as Supported, Unsupported, or Unclear: "..."
+    Few-shot:  the same instruction, plus three to five varied, labeled examples
+               (as in the few-shot classifier below)
+    Fine-tune: only if few-shot still fails on many claims
+    ```
+
+    Reasoning models often need no examples at all. Fine-tuning is done outside the chat: you send the provider hundreds of labeled examples, and it trains a new version of the model for you. It costs time and money, so it comes last.
+    :::
+
+6.  Let a reasoning model do its own thinking.
+
+    ::: {.callout-note collapse="true" title="Bad and better"}
+    **A reasoning model already thinks before it answers. Writing out the steps for it can make the answer worse, not better.**
+
+    Bad:
+
+    ```
+    Think step by step. First write down the density, then compute E(X), then
+    E(X^2), then check every step twice. What is the variance of a Uniform(0, 1)
+    random variable?
+    ```
+
+    Better:
+
+    ```
+    What is the variance of a Uniform(0, 1) random variable? Give the answer and
+    one sentence of explanation.
+    ```
+
+    For a harder problem, raise the reasoning effort in the API call, as [`/effort`](#chat-api-and-coding-agents) does for coding agents, instead of adding steps to the prompt. Asking for steps can still help older models and small open-weight models.
+    :::
+
+7.  Test the prompt on many examples, not one.
+
+    ::: {.callout-note collapse="true" title="Bad and better"}
+    **The output is random, so one good answer proves little. Measure the prompt the way you would measure any method.**
+
+    Bad:
+
+    ```
+    Try the prompt on one claim. The label looks right, so use it.
+    ```
+
+    Better:
+
+    ```
+    Write 20 claims whose labels you are sure of. Run prompt A and prompt B on all
+    20, three times each, and compare the proportion of correct labels.
+    ```
+
+    The proportion correct is an estimate with its own standard error. With 20 claims, a difference of one or two correct labels may be noise.
+    :::
+
+Two more habits help.
+
+-   **Choose a recent model.** A newer small model is often better, and cheaper, than an older one: `gpt-5-nano` (2025) costs $0.05 per million input tokens, and `gpt-3.5-turbo` (2023) costs $0.50.
+-   **Ask the model to draft the prompt, then edit it.** Describe the task to a chatbot and ask it to write the prompt. Then read the result sentence by sentence, and fix anything that is not what you mean.
+
+::: {.callout-note collapse="true" title="How to ask a model to write a prompt"}
+**Describe the task, say what the answer must look like, and let the model ask you questions first.**
+
+To draft a new prompt, send something like this to ChatGPT or Claude:
+
+{{< explore "I need a prompt for a language model. The task: label a short statistical claim as Supported, Unsupported, or Unclear, using only the evidence in the claim. The answer must be a single word. First ask me up to three questions about anything that is unclear. Then write the prompt, with headings for Identity, Instructions, and Examples." >}}
+
+To improve a prompt you already have:
+
+```
+Here is my prompt:
+<paste your prompt here>
+
+It sometimes answers with a full sentence instead of one word. Tell me which
+phrases to add or delete to fix this, then give the revised prompt.
+```
+
+The providers also have tools for this: OpenAI's
+[prompt optimizer](https://platform.openai.com/chat/edit?optimize=true) in its Playground (log in
+first), and Anthropic's
+[metaprompt notebook](https://github.com/anthropics/claude-cookbooks/blob/main/misc/metaprompt.ipynb),
+which writes a first draft of a prompt for Claude.
+:::
+
+[Source: OpenAI, *Prompt engineering* <https://developers.openai.com/api/docs/guides/prompt-engineering> and *Reasoning best practices* <https://developers.openai.com/api/docs/guides/reasoning-best-practices>; Anthropic, *Prompting best practices* <https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices>; checked September 2026.]{.source}
 
 ### Roles
 
@@ -399,7 +576,7 @@ for system in ["you are a concise tutor.",
 
 ### Conversation state
 
-By default, the model keeps nothing between requests, as we saw [above](#no-memory-by-default).
+By default, the model keeps nothing between requests, as we saw [above](#the-model-does-not-remember-earlier-calls).
 To continue a conversation, the model has to see the earlier messages again. There are three
 ways to do this.
 
@@ -561,10 +738,48 @@ paragraph where you asked for one word.
 
 ### Sampling controls
 
-The model produces a probability for every token in its vocabulary, then draws one.
+At each step the model gives every token $i$ in its vocabulary a score $z_i$, called a
+[**logit**]{style="color:#b8860b"}. It turns the scores into probabilities and draws the next
+token from them: one multinomial trial with $V$ categories, where $V$ is the size of the
+vocabulary.
 
--   [**Temperature**]{style="color:#b8860b"} controls how random that draw is. At 0 the model always takes the highest-probability token, which is called greedy decoding. As it rises, the distribution flattens.
--   [**Top-p**]{style="color:#b8860b"}, or nucleus sampling, keeps the smallest set of tokens whose probabilities add to `p`, then draws from those.
+[**Temperature**]{style="color:#b8860b"} $T > 0$ divides every logit before the softmax:
+
+$$
+p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
+\qquad
+\log \frac{p_i(T)}{p_j(T)} = \frac{z_i - z_j}{T}.
+$$
+
+-   Temperature divides every log odds by $T$.
+-   $T = 1$ gives the model's own distribution.
+-   As $T \to 0$, all the probability moves to the largest $z_i$, so the model always takes the most likely token. This is called greedy decoding.
+-   As $T \to \infty$, the distribution becomes uniform.
+
+[**Top-p**]{style="color:#b8860b"}, or nucleus sampling, removes the long tail. Sort the
+probabilities, $p_{(1)} \ge p_{(2)} \ge \cdots$, keep the smallest $k$ with
+$p_{(1)} + \cdots + p_{(k)} \ge p$, rescale those $k$ probabilities to sum to 1, and draw from
+them.
+
+An example. The text so far is
+
+> The p-value is 0.03, so at the 5% level we ___ the null hypothesis.
+
+A real vocabulary has tens of thousands of tokens. Suppose only three have logits worth
+showing:
+
+| Next word | Logit $z_i$ | $T = 0.5$ | $T = 1$ | $T = 2$ |
+|:----------|:-----------:|:---------:|:-------:|:-------:|
+| reject    | 2           | 0.867     | 0.665   | 0.506   |
+| accept    | 1           | 0.117     | 0.245   | 0.307   |
+| retain    | 0           | 0.016     | 0.090   | 0.186   |
+
+-   Only "reject" is correct. At $T = 2$, the model gives a wrong conclusion about half the time.
+-   With $T = 1$ and top-p $= 0.9$, the model keeps "reject" and "accept", because $0.665 + 0.245 = 0.910 \ge 0.9$. After rescaling they have probabilities 0.731 and 0.269, and "retain" can no longer be drawn.
+-   Top-p did not remove the wrong word "accept". It only cuts the tail. When a task has one right answer, use a low temperature.
+
+Section 3.1 simulates draws like this one.
+
 -   Rules of thumb: temperature 0.2 with top-p 0.95 for coherent output; 0.9 and 0.99 for creative output; 0 when the task has one right answer.
 -   Both extremes can produce a repetition loop. Too low and the model returns to the same text; too high and a random word leads back to a previous state.
 

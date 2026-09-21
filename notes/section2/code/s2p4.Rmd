@@ -3,7 +3,7 @@ title: "STAT:5400 Section 2.4 — LLM APIs and Prompting"
 output: html_document
 ---
 
-### 2.3 What a token costs
+### 2.2 What a token costs
 
 ```{r}
 prompt <- "Explain what a p-value means in one sentence for a beginner."
@@ -43,7 +43,7 @@ chat <- chat_openai(model = "gpt-5-nano")
 chat$chat("Write a one-sentence bedtime story about a unicorn.")
 ```
 
-### 3.2 No memory by default
+### 3.2 The model does not remember earlier calls
 
 ```{r}
 library(ellmer)
@@ -65,7 +65,7 @@ same$chat("What is the name of the university I just mentioned?")
 # same$chat("What is the name of the university I just mentioned?")
 ```
 
-### 3.3 The same code, an open-weight model
+### 3.3 Open-weight models
 
 ```{r}
 small <- chat_ollama(model = "llama3.2:1b")      # 1 billion parameters
