@@ -16,7 +16,7 @@ response = client.responses.create(
 print(response.output_text)
 
 
-## 3.2 The model has no memory
+## 3.2 No memory by default
 
 r1 = client.responses.create(
     model="gpt-5-nano",
@@ -35,8 +35,15 @@ print(r2.output_text)     # it does not know
 ## 3.3 The same code, an open-weight model
 
 local = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+
 resp = local.chat.completions.create(
-    model="llama3.2:1b",
+    model="llama3.2:1b",                         # 1 billion parameters
+    messages=[{"role": "user",
+               "content": "Give me 3 distributions in the exponential family."}])
+print(resp.choices[0].message.content)
+
+resp = local.chat.completions.create(
+    model="qwen3.5:4b", reasoning_effort="none", # IDAS only; skip the thinking step
     messages=[{"role": "user",
                "content": "Give me 3 distributions in the exponential family."}])
 print(resp.choices[0].message.content)
@@ -63,6 +70,26 @@ response = client.responses.create(
            {"role": "assistant", "content": "Who's there?"},
            {"role": "user",      "content": "Felix"}])
 print(response.output_text)
+
+history = [{"role": "user", "content": "Tell me a joke about statistics."}]
+response = client.responses.create(model="gpt-5-nano", input=history)
+print(response.output_text)
+
+history.append({"role": "assistant", "content": response.output_text})   # add to the end
+history.append({"role": "user", "content": "Tell me another."})
+response = client.responses.create(model="gpt-5-nano", input=history)
+print(response.output_text)
+
+response = client.responses.create(
+    model="gpt-5-nano",
+    input="Tell me a joke about statistics.")
+print(response.output_text)
+
+second = client.responses.create(
+    model="gpt-5-nano",
+    previous_response_id=response.id,    # the ID of the last reply
+    input="Explain why this is funny.")
+print(second.output_text)
 
 
 ## 4.4 Few-shot learning
@@ -148,7 +175,8 @@ msgs = [{"role": "system", "content": "Use the tool to compare numbers."},
 r = local.chat.completions.create(model="llama3.2:1b", messages=msgs, tools=TOOLS)
 for c in r.choices[0].message.tool_calls or []:
     args = json.loads(c.function.arguments)
-    print("->", c.function.name, args, "=>", max(args["a"], args["b"]))
+    a, b = float(args["a"]), float(args["b"])   # small models sometimes send "9.9" as text
+    print("->", c.function.name, args, "=>", max(a, b))
 
 
 ## 6.3 A two-tool example

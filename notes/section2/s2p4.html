@@ -292,36 +292,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 All code on this page, in one file: <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p4.R" target="_blank" rel="noopener"><i class="fa-brands fa-r-project"></i> R</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p4.py" target="_blank" rel="noopener"><i class="fa-brands fa-python"></i> Python</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p4.Rmd" target="_blank" rel="noopener"><i class="fa-brands fa-markdown"></i> Rmd</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p4.ipynb" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i> ipynb</a>
 </div>
 </div>
-<p>Most of this page cannot run in the browser. A model lives on someone else’s computer, and reaching it takes a network connection and a key. Those blocks carry a <a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> button and open in the Codespace, where your key is already set.</p>
+<p>Most of this page cannot run in the browser, because calling a language model needs a network connection and an API key. Those blocks carry a <a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> button and open in the Codespace, where your key is already set and two small open-weight models are installed.</p>
+<p>STAT:5400 students at Iowa can also run the code on <a href="https://its.uiowa.edu/idas">IDAS</a>, the university’s JupyterHub service. Several open-weight models are installed there for the class: <code>qwen3:0.6b</code>, <code>llama3.2:1b</code>, <code>phi4-mini</code>, <code>qwen3:4b</code>, and <code>qwen3.5:4b</code>. See <a href="#setting-up-idas">Setting up IDAS</a> before you start.</p>
 <section id="what-a-language-model-is" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="what-a-language-model-is"><span class="header-section-number">1</span> What a Language Model Is</h2>
 <section id="the-one-sentence-version" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="the-one-sentence-version"><span class="header-section-number">1.1</span> The one-sentence version</h3>
 <ul>
 <li>A <span style="color:#b8860b"><strong>large language model</strong></span> writes text one <span class="more" data-note="A token is a word piece. Common words are one token; rare words split into several. One token is about 0.75 words on average.">token</span> at a time, each token chosen using everything written before it. That has not changed.</li>
-<li><span style="color:#b8860b"><strong>Pretraining</strong></span> is exactly that task: predict the next token, over a very large amount of text.</li>
+<li><span style="color:#b8860b"><strong>Pretraining</strong></span> trains the model from scratch on one task: predict the next token, over a very large amount of text.</li>
 <li><span style="color:#b8860b"><strong>Reasoning models</strong></span> add reinforcement learning after pretraining, rewarded for correct answers rather than for matching text. They think in hidden tokens before replying, which you pay for but never see.</li>
 <li>Modern models are built on the <span style="color:#b8860b"><strong>Transformer</strong></span> architecture, introduced in 2017.</li>
-<li>A broader sense of the term includes models that also handle images, audio, and video.</li>
+<li>Most current models are also <span style="color:#b8860b"><strong>multimodal</strong></span>: they read images, audio, and video as well as text, and some generate them.</li>
 </ul>
 <p><span class="source">Source: Vaswani et al., <em>Attention Is All You Need</em>, 2017. <a href="https://arxiv.org/abs/1706.03762" class="uri">https://arxiv.org/abs/1706.03762</a></span></p>
 </section>
 <section id="history-and-evolution" class="level3" data-number="1.2">
 <h3 data-number="1.2" class="anchored" data-anchor-id="history-and-evolution"><span class="header-section-number">1.2</span> History and evolution</h3>
 <ul>
-<li><span style="color:#b8860b"><strong>Early neural sequence models.</strong></span> ELIZA (1966); recurrent neural networks (1990s).</li>
-<li><span style="color:#b8860b"><strong>1997 to 2010, better memory.</strong></span> LSTM (1997) handled longer dependencies in text. Toolkits such as Stanford CoreNLP standardized NLP pipelines.</li>
-<li><span style="color:#b8860b"><strong>2011 to 2017, deep learning and the Transformer.</strong></span> Word2Vec (2013) gave efficient word embeddings. The Transformer (2017) became the core architecture of nearly every modern model.</li>
-<li><span style="color:#b8860b"><strong>2018 onward, foundation models and chatbots.</strong></span> BERT (2018); the GPT series (2018 to 2024); ChatGPT (2022) brought prompt-based use to everyone. Hugging Face and LLaMA made models easier to share and run.</li>
+<li><span style="color:#b8860b"><strong>1966 to 1996, rules and early neural networks.</strong></span> <a href="https://doi.org/10.1145/365153.365168" class="quiet">ELIZA</a> (1966) was a chatbot built from hand-written rules. <a href="https://doi.org/10.1207/s15516709cog1402_1" class="quiet">Recurrent neural networks</a> (1980s and 1990s) read text one word at a time.</li>
+<li><span style="color:#b8860b"><strong>1997 to 2012, better memory.</strong></span> <a href="https://doi.org/10.1162/neco.1997.9.8.1735" class="quiet">LSTM</a> (1997) let a network keep information over longer stretches of text.</li>
+<li><span style="color:#b8860b"><strong>2013 to 2017, embeddings and the Transformer.</strong></span> <a href="https://arxiv.org/abs/1301.3781" class="quiet">Word2Vec</a> (2013) turned words into vectors. The <a href="https://arxiv.org/abs/1706.03762" class="quiet">Transformer</a> (2017) became the core architecture of nearly every modern model.</li>
+<li><span style="color:#b8860b"><strong>2018 to 2021, pretraining at scale.</strong></span> <a href="https://arxiv.org/abs/1810.04805" class="quiet">BERT</a> (Google, 2018); <a href="https://openai.com/index/language-unsupervised/" class="quiet">GPT-1</a> to GPT-3 (OpenAI, 2018 to 2020). <a href="https://arxiv.org/abs/2005.14165" class="quiet">GPT-3</a> showed that a large enough model can learn a task from a few examples in the prompt.</li>
+<li><span style="color:#b8860b"><strong>2022 to 2023, chatbots.</strong></span> <a href="https://openai.com/index/chatgpt/" class="quiet">ChatGPT</a> (November 2022) brought prompt-based use to everyone. <a href="https://arxiv.org/abs/2303.08774" class="quiet">GPT-4</a> and Anthropic’s <a href="https://www.anthropic.com/news/introducing-claude" class="quiet">Claude</a> followed in March 2023, Google’s <a href="https://arxiv.org/abs/2312.11805" class="quiet">Gemini</a> in December. Meta’s <a href="https://arxiv.org/abs/2302.13971" class="quiet">LLaMA</a> (February 2023) and <a href="https://arxiv.org/abs/2310.06825" class="quiet">Mistral 7B</a> (September 2023) made strong models free to download, shared through <a href="https://huggingface.co/models" class="quiet">Hugging Face</a>.</li>
+<li><span style="color:#b8860b"><strong>2024 onward, multimodal.</strong></span> Gemini was built to read text, images, audio, and video from the start. <a href="https://openai.com/index/hello-gpt-4o/" class="quiet">GPT-4o</a> (2024) added real-time voice; <a href="https://www.anthropic.com/news/claude-3-family" class="quiet">Claude</a> reads images and PDFs. Image and video generators such as <a href="https://arxiv.org/abs/2112.10752" class="quiet">Stable Diffusion</a> (2022) and <a href="https://openai.com/index/sora/" class="quiet">Sora</a> (2024) use related ideas.</li>
+<li><span style="color:#b8860b"><strong>2024 onward, reasoning.</strong></span> <a href="https://openai.com/index/learning-to-reason-with-llms/" class="quiet">OpenAI o1</a> (September 2024) was trained to think before answering. <a href="https://arxiv.org/abs/2501.12948" class="quiet">DeepSeek-R1</a> (January 2025) came close with open weights and a much lower reported training cost.</li>
+<li><span style="color:#b8860b"><strong>2025 onward, agents and open weights.</strong></span> Models now run tools and code on their own: <a href="https://code.claude.com/docs/" class="quiet">Claude Code</a> and <a href="https://developers.openai.com/codex/" class="quiet">OpenAI Codex</a> (2025), Section 7. Many of the strongest open-weight models now come from Chinese labs: <a href="https://github.com/QwenLM" class="quiet">Qwen</a> (Alibaba), <a href="https://www.deepseek.com/" class="quiet">DeepSeek</a>, and <a href="https://github.com/MoonshotAI/Kimi-K2" class="quiet">Kimi</a> (Moonshot AI).</li>
 </ul>
-<p><span class="source">Source: GeeksforGeeks, <em>History and Evolution of LLMs</em>. <a href="https://www.geeksforgeeks.org/blogs/history-and-evolution-of-llms/" class="uri">https://www.geeksforgeeks.org/blogs/history-and-evolution-of-llms/</a></span></p>
+<p><span class="source">Source: adapted from GeeksforGeeks, <em>History and Evolution of LLMs</em>, <a href="https://www.geeksforgeeks.org/blogs/history-and-evolution-of-llms/" class="uri">https://www.geeksforgeeks.org/blogs/history-and-evolution-of-llms/</a>, with entries after 2022 added from the providers’ announcements.</span></p>
 </section>
 <section id="two-ways-a-model-reaches-you" class="level3" data-number="1.3">
 <h3 data-number="1.3" class="anchored" data-anchor-id="two-ways-a-model-reaches-you"><span class="header-section-number">1.3</span> Two ways a model reaches you</h3>
 <ul>
-<li><span style="color:#b8860b"><strong>Closed weights.</strong></span> You call an API and never see the weights. <a href="https://platform.openai.com/docs/overview">OpenAI GPT</a>, <a href="https://gemini.google.com/">Google Gemini</a>, <a href="https://claude.ai/">Anthropic Claude</a>.</li>
-<li><span style="color:#b8860b"><strong>Open weights.</strong></span> You can download, run, and fine-tune the model yourself, subject to its licence. <a href="https://www.llama.com/">Meta Llama</a>, <a href="https://mistral.ai/">Mistral</a>, <a href="https://qwen.ai/home">Qwen</a>.</li>
-<li>The code in this course is written so that the two are interchangeable: the same call works against a hosted model, against the course model, or against a model running on your own machine.</li>
+<li><span style="color:#b8860b"><strong>Closed weights.</strong></span> You call an API and never see the weights. <a href="https://platform.openai.com/docs/overview">OpenAI GPT</a>, <a href="https://claude.ai/">Anthropic Claude</a>, <a href="https://gemini.google.com/">Google Gemini</a>, <a href="https://grok.com/">xAI Grok</a>.</li>
+<li><span style="color:#b8860b"><strong>Open weights.</strong></span> You can download, run, and fine-tune the model yourself, subject to its <span class="more" data-note="Most labs release the trained weights but not the training data or the full training code, so open weights is a narrower claim than open source. Licences differ: some allow any use, others limit commercial use.">licence</span>. <a href="https://www.llama.com/">Meta Llama</a>, <a href="https://ai.google.dev/gemma">Google Gemma</a>, <a href="https://mistral.ai/">Mistral</a>, <a href="https://qwen.ai/home">Alibaba Qwen</a>, <a href="https://www.deepseek.com/">DeepSeek</a>, <a href="https://github.com/MoonshotAI/Kimi-K2">Moonshot Kimi</a>, <a href="https://github.com/openai/gpt-oss">OpenAI gpt-oss</a>.</li>
+<li>Some companies do both: Google has Gemini and Gemma; OpenAI has GPT and <a href="https://github.com/openai/gpt-oss">gpt-oss</a>.</li>
+<li>The largest open-weight models need a cluster of GPUs. Their small versions run on a laptop, or on IDAS.</li>
 </ul>
 </section>
 </section>
@@ -335,13 +341,31 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <li>Set a hard budget limit on the account. Do it today, not after the first surprise.</li>
 </ul>
 </section>
-<section id="what-a-token-costs" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="what-a-token-costs"><span class="header-section-number">2.2</span> What a token costs</h3>
+<section id="setting-up-idas" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="setting-up-idas"><span class="header-section-number">2.2</span> Setting up IDAS</h3>
+<p>STAT:5400 students can run every code block on this page on <a href="https://its.uiowa.edu/idas">IDAS</a>. Do step 1 once. Do step 2 each time you start a new IDAS session.</p>
+<ol type="1">
+<li><p><strong>Save your OpenAI key.</strong> Do this once, either in the R console or in a terminal on IDAS. The first line adds a fake key to the file <code>~/.Renviron</code>. The second opens the file: replace the fake key with your own and save. R reads this file when it starts, and the IDAS Python file reads it too.</p>
+<p>In the R console:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"OPENAI_API_KEY=sk-fake-replace-with-your-key</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">file =</span> <span class="st">"~/.Renviron"</span>, <span class="at">append =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">file.edit</span>(<span class="st">"~/.Renviron"</span>)          <span class="co"># replace the fake key with your own, then save</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.chmod</span>(<span class="st">"~/.Renviron"</span>, <span class="st">"600"</span>)   <span class="co"># only you can read the file</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or in a terminal:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'OPENAI_API_KEY=sk-fake-replace-with-your-key'</span> <span class="op">&gt;&gt;</span> ~/.Renviron</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.Renviron        <span class="co"># replace the fake key with your own; Ctrl+O saves, Ctrl+X exits</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.Renviron   <span class="co"># only you can read the file</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then restart R (Session &gt; Restart R). After the restart, <code>nzchar(Sys.getenv("OPENAI_API_KEY"))</code> returns <code>TRUE</code> if the key is set.</p></li>
+<li><p><strong>Start the class models.</strong> Open a terminal on IDAS and type the line below. It starts Ollama with the open-weight models installed for the class, then lists them. Type <code>source</code>, not <code>bash</code>, or the <code>ollama</code> command is not found afterwards.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/classFiles/notes/section2/run/s2p4_idas_models.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Run the code.</strong> All the code on this page is in two files in your <code>classFiles</code> folder. Open <code>notes/section2/run/s2p4_idas.R</code> in RStudio and run it one section at a time. For Python, type <code>python ~/classFiles/notes/section2/run/s2p4_idas.py</code> in the terminal.</p></li>
+</ol>
+</section>
+<section id="what-a-token-costs" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="what-a-token-costs"><span class="header-section-number">2.3</span> What a token costs</h3>
 <ul>
 <li>Billing is per <span style="color:#b8860b"><strong>token</strong></span>, counted on both what you send and what comes back.</li>
 <li>One token is roughly 0.75 words. One million tokens is about 3000 double-spaced pages.</li>
 </ul>
-<p>This block runs here, because arithmetic needs no network.</p>
 <div class="cell">
 <div>
 <div id="webr-1" class="exercise-cell">
@@ -403,26 +427,26 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Write a one-sentence bedtime story about a unicorn."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Write a one-sentence bedtime story about a unicorn."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_hello.R</code></span></div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.responses.create(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>:</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Write a one-sentence bedtime story about a unicorn."</span>}],</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.responses.create(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Write a one-sentence bedtime story about a unicorn."</span>}],</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_hello.py</code></span></div>
 </div>
@@ -430,11 +454,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 </div>
 <p>Run it twice. The two answers differ, because the model samples. We come back to why in Section 3.1.</p>
 </section>
-<section id="the-model-has-no-memory" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="the-model-has-no-memory"><span class="header-section-number">3.2</span> The model has no memory</h3>
+<section id="no-memory-by-default" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="no-memory-by-default"><span class="header-section-number">3.2</span> No memory by default</h3>
 <ul>
-<li>Every request is <span style="color:#b8860b"><strong>stateless</strong></span>. The model sees only what you send in that request.</li>
-<li>Ask about “the university I just mentioned” in a second, separate call and it has no idea.</li>
+<li>By default, every request is <span style="color:#b8860b"><strong>stateless</strong></span>: it starts from nothing, and the model sees only what you send in that request. It does not remember your earlier calls.</li>
+<li>Ask about “the university I just mentioned” in a second, separate call, and it has no idea.</li>
 </ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Python</a></li></ul>
@@ -442,34 +466,39 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p>Two <code>chat</code> objects are two separate conversations. One <code>chat</code> object is a memory.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>first <span class="ot">&lt;-</span> <span class="fu">chat_anthropic</span>()          <span class="co"># reads ANTHROPIC_API_KEY</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>first<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Write a paragraph about the Department of Statistics and</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">            Actuarial Science at the University of Iowa."</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>second <span class="ot">&lt;-</span> <span class="fu">chat_anthropic</span>()         <span class="co"># a brand new conversation</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>second<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"What is the name of the university I just mentioned?"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>same <span class="ot">&lt;-</span> <span class="fu">chat_anthropic</span>()</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>same<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Write two sentences about the University of Iowa."</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>same<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"What is the name of the university I just mentioned?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>first <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>)    <span class="co"># reads OPENAI_API_KEY</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>first<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Write a paragraph about the Department of Statistics and</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">            Actuarial Science at the University of Iowa."</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>second <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>)   <span class="co"># a brand new conversation</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>second<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"What is the name of the university I just mentioned?"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>same <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>same<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Write two sentences about the University of Iowa."</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>same<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"What is the name of the university I just mentioned?"</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># The same test with Claude. Only the function changes, and it needs ANTHROPIC_API_KEY.</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># same &lt;- chat_anthropic()</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># same$chat("Write two sentences about the University of Iowa.")</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># same$chat("What is the name of the university I just mentioned?")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>r1 <span class="op">=</span> client.responses.create(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>:</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Write a paragraph about the Department of Statistics and Actuarial "</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Science at the University of Iowa."</span>}])</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r1.output_text)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> client.responses.create(</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>:</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"What's the name of the university that I just mentioned?"</span>}])</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r2.output_text)     <span class="co"># it does not know</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>r1 <span class="op">=</span> client.responses.create(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Write a paragraph about the Department of Statistics and Actuarial "</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Science at the University of Iowa."</span>}])</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r1.output_text)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> client.responses.create(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>:</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"What's the name of the university that I just mentioned?"</span>}])</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r2.output_text)     <span class="co"># it does not know</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -477,41 +506,55 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <ul>
 <li>A conversation is something <em>you</em> build, by sending the history back every time.</li>
 <li><code>ellmer</code> does this for you: a <code>chat</code> object keeps the turns and resends them.</li>
-<li>Two providers, same behaviour. The statelessness is not a quirk of one company.</li>
+<li>Every LLM API works like this, not only OpenAI. The last lines of the R code, commented out, run the same test with Claude.</li>
 </ul>
 </section>
 <section id="the-same-code-an-open-weight-model" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="the-same-code-an-open-weight-model"><span class="header-section-number">3.3</span> The same code, an open-weight model</h3>
-<p>Most providers speak the OpenAI format, so only the address and the model name change. That includes open-weight models you run yourself. Your Codespace already has two small ones through Ollama, and they need no key and cost nothing.</p>
+<p>Most providers accept the OpenAI format, so only the address and the model name change. That includes open-weight models that you run yourself, through <a href="https://ollama.com/" class="more" data-note="A program that runs open-weight models on your own computer and answers at a local address, in the same format the OpenAI library uses.">Ollama</a>. They need no key and cost nothing.</p>
+<ul>
+<li><strong>On IDAS</strong>, start the class models first, as in <a href="#setting-up-idas">Setting up IDAS</a>.</li>
+<li><strong>In the Codespace</strong>, <code>llama3.2:1b</code> is already installed.</li>
+</ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>local <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"llama3.2:1b"</span>)   <span class="co"># open weights, on this machine</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>local<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Give me 3 distributions in the exponential family."</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>course <span class="ot">&lt;-</span> <span class="fu">chat_openai_compatible</span>(             <span class="co"># the course model on IDAS</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_url =</span> <span class="fu">Sys.getenv</span>(<span class="st">"COURSE_MODEL_URL"</span>),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">model    =</span> <span class="fu">Sys.getenv</span>(<span class="st">"COURSE_MODEL"</span>),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">api_key  =</span> <span class="fu">Sys.getenv</span>(<span class="st">"COURSE_MODEL_KEY"</span>))</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>course<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Give me 3 distributions in the exponential family."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>small <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"llama3.2:1b"</span>)      <span class="co"># 1 billion parameters</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>small<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Give me 3 distributions in the exponential family."</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>bigger <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"qwen3.5:4b"</span>,      <span class="co"># 4 billion parameters, IDAS only</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">api_args =</span> <span class="fu">list</span>(<span class="at">reasoning_effort =</span> <span class="st">"none"</span>))    <span class="co"># skip the thinking step</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>bigger<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Give me 3 distributions in the exponential family."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>local <span class="op">=</span> OpenAI(base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>, api_key<span class="op">=</span><span class="st">"ollama"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> local.chat.completions.create(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>               <span class="st">"content"</span>: <span class="st">"Give me 3 distributions in the exponential family."</span>}])</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.choices[<span class="dv">0</span>].message.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>local <span class="op">=</span> OpenAI(base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>, api_key<span class="op">=</span><span class="st">"ollama"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> local.chat.completions.create(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:1b"</span>,                         <span class="co"># 1 billion parameters</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"content"</span>: <span class="st">"Give me 3 distributions in the exponential family."</span>}])</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.choices[<span class="dv">0</span>].message.content)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> local.chat.completions.create(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"qwen3.5:4b"</span>, reasoning_effort<span class="op">=</span><span class="st">"none"</span>, <span class="co"># IDAS only; skip the thinking step</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>               <span class="st">"content"</span>: <span class="st">"Give me 3 distributions in the exponential family."</span>}])</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.choices[<span class="dv">0</span>].message.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 </div>
-<p>Compare the three answers. A one-billion-parameter model on your own machine is visibly worse than a hosted one, and that gap is the thing you are paying for.</p>
-<p>The small local model is also the fastest way to debug your own code. If your script works against it, the problem was never the network or the key.</p>
+<ul>
+<li><code>base_url</code> says where to send the request. In R, <code>chat_ollama()</code> already knows the address.</li>
+<li><code>api_key="ollama"</code> is a placeholder. The local server ignores it, but the library needs something there.</li>
+<li><code>reasoning_effort = "none"</code> turns off the thinking step. On a CPU, thinking can take several minutes.</li>
+</ul>
+<p>Compare the answers with the hosted model in <a href="#hello-world">Hello world</a>. On IDAS, the 1B model answers in a few seconds and is often wrong. The 4B model takes up to a minute and usually names the right distributions, but it can still write a formula wrong. A hosted model is faster and better, and that gap is the thing you are paying for.</p>
+<p>A small local model is also useful for testing your code. It costs nothing and needs no key, so get your script working with it first, then switch to a hosted model.</p>
 </section>
 </section>
 <section id="prompting" class="level2" data-number="4">
@@ -534,7 +577,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 </section>
 <section id="roles" class="level3" data-number="4.2">
 <h3 data-number="4.2" class="anchored" data-anchor-id="roles"><span class="header-section-number">4.2</span> Roles</h3>
-<p>A message carries a role, and the roles form a chain of command. The highest level is not yours.</p>
+<p>A message carries a role, and the roles form a chain of command.</p>
 <ul>
 <li><span style="color:#b8860b"><strong>platform</strong></span>: the provider’s own rules. You cannot override them, which is why a prompt telling the model to ignore its safety rules does not work.</li>
 <li><span style="color:#b8860b"><strong>developer</strong></span>: your instructions. Sent as the <code>instructions</code> argument, or as a message with role <code>developer</code>.</li>
@@ -564,28 +607,28 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>chat_a <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="st">"You are a concise tutor."</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>chat_a<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"X follows a Uniform(0, 1). What is its variance?"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>chat_b <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">paste</span>(<span class="st">"You are a responsible tutor. Help your student"</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"but don't tell them the exact answers."</span>))</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>chat_b<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"X follows a Uniform(0, 1). What is its variance?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>chat_a <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="st">"You are a concise tutor."</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>chat_a<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"X follows a Uniform(0, 1). What is its variance?"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>chat_b <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="fu">paste</span>(<span class="st">"You are a responsible tutor. Help your student"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"but don't tell them the exact answers."</span>))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>chat_b<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"X follows a Uniform(0, 1). What is its variance?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_prompt.R</code></span></div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> system <span class="kw">in</span> [<span class="st">"you are a concise tutor."</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>               <span class="st">"you are a responsible tutor. Help your student "</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>               <span class="st">"but don't tell them the exact answers."</span>]:</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.responses.create(</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"developer"</span>, <span class="st">"content"</span>: system},</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>               {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>:</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">"X follows a uniform (0, 1). What is its variance?"</span>}])</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response.output_text, <span class="st">"</span><span class="ch">\n</span><span class="st">---"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> system <span class="kw">in</span> [<span class="st">"you are a concise tutor."</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>               <span class="st">"you are a responsible tutor. Help your student "</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>               <span class="st">"but don't tell them the exact answers."</span>]:</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.responses.create(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"developer"</span>, <span class="st">"content"</span>: system},</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>               {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>:</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                <span class="st">"X follows a uniform (0, 1). What is its variance?"</span>}])</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response.output_text, <span class="st">"</span><span class="ch">\n</span><span class="st">---"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_prompt.py</code></span></div>
 </div>
@@ -594,20 +637,73 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 </section>
 <section id="conversation-state" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="conversation-state"><span class="header-section-number">4.3</span> Conversation state</h3>
-<p>Three ways to give a stateless model a memory.</p>
-<ol type="1">
-<li><span style="color:#b8860b"><strong>Pass the previous messages yourself</strong></span>, as a list with roles.</li>
-<li><span style="color:#b8860b"><strong>Append each reply to a history list</strong></span> and send the whole list next time.</li>
-<li><span style="color:#b8860b"><strong>Let the provider store it</strong></span>, with <code>previous_response_id</code> in Python or a <code>chat</code> object in <code>ellmer</code>.</li>
-</ol>
+<p>By default, the model keeps nothing between requests, as we saw <a href="#no-memory-by-default">above</a>. To continue a conversation, the model has to see the earlier messages again. There are three ways to do this.</p>
+<p><span style="color:#b8860b"><strong>1. Pass the previous messages yourself.</strong></span> Write the earlier turns into the request, each with its role. The model answers as if the conversation had really happened.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.responses.create(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>,      <span class="st">"content"</span>: <span class="st">"knock knock."</span>},</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>           {<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: <span class="st">"Who's there?"</span>},</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>           {<span class="st">"role"</span>: <span class="st">"user"</span>,      <span class="st">"content"</span>: <span class="st">"Felix"</span>}])</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">set_turns</span>(<span class="fu">list</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">UserTurn</span>(<span class="st">"knock knock."</span>),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">AssistantTurn</span>(<span class="st">"Who's there?"</span>)))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Felix"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.responses.create(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>,      <span class="st">"content"</span>: <span class="st">"knock knock."</span>},</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           {<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: <span class="st">"Who's there?"</span>},</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>           {<span class="st">"role"</span>: <span class="st">"user"</span>,      <span class="st">"content"</span>: <span class="st">"Felix"</span>}])</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p><span style="color:#b8860b"><strong>2. Keep a history and resend it.</strong></span> Keep every message in a list. After each reply, add the reply and your next question to the list, then send the whole list again.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<p>A <code>chat</code> object does this for you. It keeps the history on your computer and resends all of it with each new message.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Tell me a joke about statistics."</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Tell me another."</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">get_turns</span>()    <span class="co"># every turn so far: user, assistant, user, assistant</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Tell me a joke about statistics."</span>}]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.responses.create(model<span class="op">=</span><span class="st">"gpt-5-nano"</span>, <span class="bu">input</span><span class="op">=</span>history)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.output_text)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>history.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: response.output_text})   <span class="co"># add to the end</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>history.append({<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Tell me another."</span>})</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.responses.create(model<span class="op">=</span><span class="st">"gpt-5-nano"</span>, <span class="bu">input</span><span class="op">=</span>history)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<p><span style="color:#b8860b"><strong>3. Let the provider keep it.</strong></span> OpenAI can store the conversation on its servers. You send only the new message and the ID of the last reply. You still pay for the earlier messages, because the model reads them again.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.responses.create(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span><span class="st">"Tell me a joke about statistics."</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.output_text)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>second <span class="op">=</span> client.responses.create(</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    previous_response_id<span class="op">=</span>response.<span class="bu">id</span>,    <span class="co"># the ID of the last reply</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span><span class="st">"Explain why this is funny."</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(second.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This is an OpenAI feature. <code>ellmer</code> has no counterpart, because its <code>chat</code> object always resends the history (way 2).</p>
 <div class="callout callout-style-default callout-note callout-titled" title="The context window">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -636,50 +732,50 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <p><span class="source">Source: Brown et al.&nbsp;(2020), <em>Language Models are Few-Shot Learners</em>. <a href="https://arxiv.org/pdf/2005.14165" class="uri">https://arxiv.org/pdf/2005.14165</a></span></p>
 <p>A classifier for statistical claims, built entirely out of three examples:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>INSTRUCTIONS <span class="op">=</span> <span class="st">"""# Identity</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">You are a helpful assistant that labels short statistical claims as</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">Supported, Unsupported, or Unclear based on the evidence provided.</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st"># Instructions</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">* Only output a single word, with no additional formatting or commentary.</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">* Your response must be one of "Supported", "Unsupported", or "Unclear".</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st"># Examples</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;stat_claim id="example-1"&gt;</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="st">The new drug lowered systolic blood pressure</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="st">(mean difference -5.2 mmHg, 95% CI -8.1 to -2.3, p=0.001).</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/stat_claim&gt;</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;assistant_response id="example-1"&gt;Supported&lt;/assistant_response&gt;</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;stat_claim id="example-2"&gt;</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="st">This study proves the two groups are different</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="st">(mean difference 1.1, 95% CI -0.6 to 2.8, p=0.20).</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/stat_claim&gt;</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;assistant_response id="example-2"&gt;Unsupported&lt;/assistant_response&gt;</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;stat_claim id="example-3"&gt;</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="st">The treatment improved outcomes, but only a trend was observed (p=0.07).</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/stat_claim&gt;</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;assistant_response id="example-3"&gt;Unclear&lt;/assistant_response&gt;</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>ALLOWED <span class="op">=</span> {<span class="st">"Supported"</span>, <span class="st">"Unsupported"</span>, <span class="st">"Unclear"</span>}</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> label_claim(claim):</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    resp <span class="op">=</span> client.responses.create(model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>                                   instructions<span class="op">=</span>INSTRUCTIONS, <span class="bu">input</span><span class="op">=</span>claim)</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> (resp.output_text <span class="kw">or</span> <span class="st">""</span>).strip().split()[<span class="dv">0</span>].strip(<span class="st">'"</span><span class="ch">\'</span><span class="st">,.;:'</span>)</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> label <span class="kw">not</span> <span class="kw">in</span> ALLOWED:</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unexpected label </span><span class="sc">{</span>label<span class="sc">!r}</span><span class="ss">"</span>)</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> label</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> [<span class="st">"We can conclude there is no effect because p=0.40."</span>,</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>          <span class="st">"The results show a significant increase (95% CI 0.1 to 0.4)."</span>,</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>          <span class="st">"The intervention might help, but the CI crosses zero (95% CI -0.2 to 0.3)."</span>]:</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(label_claim(c))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>INSTRUCTIONS <span class="op">=</span> <span class="st">"""# Identity</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">You are a helpful assistant that labels short statistical claims as</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="st">Supported, Unsupported, or Unclear based on the evidence provided.</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st"># Instructions</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="st">* Only output a single word, with no additional formatting or commentary.</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="st">* Your response must be one of "Supported", "Unsupported", or "Unclear".</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="st"># Examples</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;stat_claim id="example-1"&gt;</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="st">The new drug lowered systolic blood pressure</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="st">(mean difference -5.2 mmHg, 95% CI -8.1 to -2.3, p=0.001).</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/stat_claim&gt;</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;assistant_response id="example-1"&gt;Supported&lt;/assistant_response&gt;</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;stat_claim id="example-2"&gt;</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="st">This study proves the two groups are different</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="st">(mean difference 1.1, 95% CI -0.6 to 2.8, p=0.20).</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/stat_claim&gt;</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;assistant_response id="example-2"&gt;Unsupported&lt;/assistant_response&gt;</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;stat_claim id="example-3"&gt;</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="st">The treatment improved outcomes, but only a trend was observed (p=0.07).</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/stat_claim&gt;</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;assistant_response id="example-3"&gt;Unclear&lt;/assistant_response&gt;</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>ALLOWED <span class="op">=</span> {<span class="st">"Supported"</span>, <span class="st">"Unsupported"</span>, <span class="st">"Unclear"</span>}</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> label_claim(claim):</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>    resp <span class="op">=</span> client.responses.create(model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>                                   instructions<span class="op">=</span>INSTRUCTIONS, <span class="bu">input</span><span class="op">=</span>claim)</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> (resp.output_text <span class="kw">or</span> <span class="st">""</span>).strip().split()[<span class="dv">0</span>].strip(<span class="st">'"</span><span class="ch">\'</span><span class="st">,.;:'</span>)</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> label <span class="kw">not</span> <span class="kw">in</span> ALLOWED:</span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unexpected label </span><span class="sc">{</span>label<span class="sc">!r}</span><span class="ss">"</span>)</span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> label</span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> [<span class="st">"We can conclude there is no effect because p=0.40."</span>,</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>          <span class="st">"The results show a significant increase (95% CI 0.1 to 0.4)."</span>,</span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>          <span class="st">"The intervention might help, but the CI crosses zero (95% CI -0.2 to 0.3)."</span>]:</span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(label_claim(c))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The function does not trust the reply. It checks that the word is one of the three allowed labels, and raises an error if it is not. A model can return anything, including a polite paragraph where you asked for one word.</p>
 </section>
@@ -715,42 +811,42 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <section id="ask-for-a-type-not-a-string" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="ask-for-a-type-not-a-string"><span class="header-section-number">5.1</span> Ask for a type, not a string</h3>
 <ul>
-<li>A model returns text. Text is the wrong thing to hand to <code>lm</code> or to a plot.</li>
-<li>Both interfaces let you state a <span style="color:#b8860b"><strong>schema</strong></span> up front, and return an object that matches it.</li>
-<li>This replaces the check-the-string code in the few-shot example above.</li>
+<li>A model always replies with text. To pass its answer to <code>lm</code> or to a plot, you need numbers and columns, not a paragraph.</li>
+<li>Both <code>ellmer</code> and the OpenAI library let you describe the shape you want, called a <span style="color:#b8860b"><strong>schema</strong></span>, and they return data in that shape.</li>
+<li>With a schema, you no longer need the checking code from the few-shot example above.</li>
 </ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Python</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
-<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>review <span class="ot">&lt;-</span> <span class="fu">type_object</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">label     =</span> <span class="fu">type_enum</span>(<span class="st">"One of Supported, Unsupported, Unclear."</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">c</span>(<span class="st">"Supported"</span>, <span class="st">"Unsupported"</span>, <span class="st">"Unclear"</span>)),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">reason    =</span> <span class="fu">type_string</span>(<span class="st">"One short sentence."</span>),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_value   =</span> <span class="fu">type_number</span>(<span class="st">"The p-value mentioned, or -1 if none."</span>))</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat_structured</span>(</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"This study proves the two groups differ (p = 0.20)."</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> review)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>review <span class="ot">&lt;-</span> <span class="fu">type_object</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">label     =</span> <span class="fu">type_enum</span>(<span class="st">"One of Supported, Unsupported, Unclear."</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">c</span>(<span class="st">"Supported"</span>, <span class="st">"Unsupported"</span>, <span class="st">"Unclear"</span>)),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">reason    =</span> <span class="fu">type_string</span>(<span class="st">"One short sentence."</span>),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_value   =</span> <span class="fu">type_number</span>(<span class="st">"The p-value mentioned, or -1 if none."</span>))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat_structured</span>(</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"This study proves the two groups differ (p = 0.20)."</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> review)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Literal</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Review(BaseModel):</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    label: Literal[<span class="st">"Supported"</span>, <span class="st">"Unsupported"</span>, <span class="st">"Unclear"</span>]</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    reason: <span class="bu">str</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    p_value: <span class="bu">float</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> client.responses.parse(</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span><span class="st">"This study proves the two groups differ (p = 0.20)."</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    text_format<span class="op">=</span>Review)</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.output_parsed.label, resp.output_parsed.p_value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Literal</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Review(BaseModel):</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    label: Literal[<span class="st">"Supported"</span>, <span class="st">"Unsupported"</span>, <span class="st">"Unclear"</span>]</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    reason: <span class="bu">str</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    p_value: <span class="bu">float</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> client.responses.parse(</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span><span class="st">"This study proves the two groups differ (p = 0.20)."</span>,</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    text_format<span class="op">=</span>Review)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.output_parsed.label, resp.output_parsed.p_value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -777,50 +873,54 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <section id="watch-a-small-model-fail-then-fix-it" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="watch-a-small-model-fail-then-fix-it"><span class="header-section-number">6.2</span> Watch a small model fail, then fix it</h3>
 <p>In 2024 chatbots were widely reported to answer that 9.11 is larger than 9.9. Small models still do it. They are reading the digits the way a version number is read, not the way a number is read.</p>
-<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — needs a model. Use the open-weight one already in your Codespace.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> or IDAS — needs a local model. Run it a few times: <code>llama3.2:1b</code> is wrong about half the time, and not always in the same way.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Python</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
-<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># no tool: the model answers from text alone</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>bare <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"llama3.2:1b"</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>bare<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Which is larger, 9.9 or 9.11? Answer with just the number."</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># one tool: now the comparison happens in R</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>larger <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) <span class="cf">if</span> (a <span class="sc">&gt;</span> b) a <span class="cf">else</span> <span class="cf">if</span> (b <span class="sc">&gt;</span> a) b <span class="cf">else</span> <span class="st">"equal"</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>armed <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"llama3.2:1b"</span>,</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="st">"Use the tool to compare numbers. Never compare them yourself."</span>)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>armed<span class="sc">$</span><span class="fu">register_tools</span>(<span class="fu">list</span>(</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tool</span>(larger, <span class="st">"Return the larger of two numbers."</span>,</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">arguments =</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">type_number</span>(<span class="st">"First number."</span>),</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">b =</span> <span class="fu">type_number</span>(<span class="st">"Second number."</span>)))))</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>armed<span class="sc">$</span><span class="fu">on_tool_request</span>(<span class="cf">function</span>(req) <span class="fu">cat</span>(<span class="st">"-&gt; "</span>, req<span class="sc">@</span>name, <span class="fu">deparse1</span>(req<span class="sc">@</span>arguments), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>armed<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Which is larger, 9.9 or 9.11?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># no tool: the model answers from text alone</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>bare <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"llama3.2:1b"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>bare<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Which is larger, 9.9 or 9.11? Answer with just the number."</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># one tool: now the comparison happens in R</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>larger <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(a); b <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(b)         <span class="co"># small models sometimes send "9.9" as text</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (a <span class="sc">&gt;</span> b) a <span class="cf">else</span> <span class="cf">if</span> (b <span class="sc">&gt;</span> a) b <span class="cf">else</span> <span class="st">"equal"</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>armed <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"llama3.2:1b"</span>,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="st">"Use the tool to compare numbers. Never compare them yourself."</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>armed<span class="sc">$</span><span class="fu">register_tools</span>(<span class="fu">list</span>(</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tool</span>(larger, <span class="st">"Return the larger of two numbers."</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">arguments =</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">type_number</span>(<span class="st">"First number."</span>),</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">b =</span> <span class="fu">type_number</span>(<span class="st">"Second number."</span>)))))</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>armed<span class="sc">$</span><span class="fu">on_tool_request</span>(<span class="cf">function</span>(req) <span class="fu">cat</span>(<span class="st">"-&gt; "</span>, req<span class="sc">@</span>name, <span class="fu">deparse1</span>(req<span class="sc">@</span>arguments), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>armed<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Which is larger, 9.9 or 9.11?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>local <span class="op">=</span> OpenAI(base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>, api_key<span class="op">=</span><span class="st">"ollama"</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>TOOLS <span class="op">=</span> [{<span class="st">"type"</span>: <span class="st">"function"</span>, <span class="st">"function"</span>: {</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"name"</span>: <span class="st">"larger"</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"description"</span>: <span class="st">"Return the larger of two numbers."</span>,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"parameters"</span>: {<span class="st">"type"</span>: <span class="st">"object"</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"properties"</span>: {<span class="st">"a"</span>: {<span class="st">"type"</span>: <span class="st">"number"</span>}, <span class="st">"b"</span>: {<span class="st">"type"</span>: <span class="st">"number"</span>}},</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"required"</span>: [<span class="st">"a"</span>, <span class="st">"b"</span>]}}}]</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>msgs <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"Use the tool to compare numbers."</span>},</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Which is larger, 9.9 or 9.11?"</span>}]</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> local.chat.completions.create(model<span class="op">=</span><span class="st">"llama3.2:1b"</span>, messages<span class="op">=</span>msgs, tools<span class="op">=</span>TOOLS)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> r.choices[<span class="dv">0</span>].message.tool_calls <span class="kw">or</span> []:</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> json.loads(c.function.arguments)</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-&gt;"</span>, c.function.name, args, <span class="st">"=&gt;"</span>, <span class="bu">max</span>(args[<span class="st">"a"</span>], args[<span class="st">"b"</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>local <span class="op">=</span> OpenAI(base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>, api_key<span class="op">=</span><span class="st">"ollama"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>TOOLS <span class="op">=</span> [{<span class="st">"type"</span>: <span class="st">"function"</span>, <span class="st">"function"</span>: {</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"name"</span>: <span class="st">"larger"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"description"</span>: <span class="st">"Return the larger of two numbers."</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"parameters"</span>: {<span class="st">"type"</span>: <span class="st">"object"</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"properties"</span>: {<span class="st">"a"</span>: {<span class="st">"type"</span>: <span class="st">"number"</span>}, <span class="st">"b"</span>: {<span class="st">"type"</span>: <span class="st">"number"</span>}},</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"required"</span>: [<span class="st">"a"</span>, <span class="st">"b"</span>]}}}]</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>msgs <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"Use the tool to compare numbers."</span>},</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Which is larger, 9.9 or 9.11?"</span>}]</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> local.chat.completions.create(model<span class="op">=</span><span class="st">"llama3.2:1b"</span>, messages<span class="op">=</span>msgs, tools<span class="op">=</span>TOOLS)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> c <span class="kw">in</span> r.choices[<span class="dv">0</span>].message.tool_calls <span class="kw">or</span> []:</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> json.loads(c.function.arguments)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    a, b <span class="op">=</span> <span class="bu">float</span>(args[<span class="st">"a"</span>]), <span class="bu">float</span>(args[<span class="st">"b"</span>])   <span class="co"># small models sometimes send "9.9" as text</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-&gt;"</span>, c.function.name, args, <span class="st">"=&gt;"</span>, <span class="bu">max</span>(a, b))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -853,7 +953,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>One-billion-parameter models are unreliable at tool calling. If yours answers without calling <code>larger</code>, that is the model, not your code. Point the same script at the course model or at <code>gpt-5-nano</code> and it will call the tool every time. Use the small one to see the mechanics, and a larger one when you need it to work.</p>
+<p>One-billion-parameter models are unreliable at tool calling. If yours answers without calling <code>larger</code>, or sends the wrong numbers, that is the model, not your code. The line that prints the tool request shows you exactly which numbers it sent. In our tests on IDAS, <code>qwen3.5:4b</code> called the tool correctly every time. Use the small model to see the mechanics, and a larger one when you need it to work.</p>
 </div>
 </div>
 </section>
@@ -862,70 +962,70 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <p>The question is “what is the average weight of these cars?”. The model does not know the column names, so it has to look before it can compute.</p>
 <p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — needs a model.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Python</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
-<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Cars <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"notes/section2/data/Cars.dat"</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>column_names <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">paste</span>(<span class="fu">names</span>(Cars), <span class="at">collapse =</span> <span class="st">", "</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>column_mean  <span class="ot">&lt;-</span> <span class="cf">function</span>(column) <span class="fu">mean</span>(Cars[[column]])</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="st">"Use the tools to compute. Never guess a number."</span>)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">register_tools</span>(<span class="fu">list</span>(</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tool</span>(column_names,</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>       <span class="st">"List the column names of the cars data set. Call this first if unsure."</span>,</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">arguments =</span> <span class="fu">list</span>()),</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tool</span>(column_mean,</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>       <span class="st">"Return the mean of one numeric column of the cars data set."</span>,</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">arguments =</span> <span class="fu">list</span>(<span class="at">column =</span> <span class="fu">type_string</span>(<span class="st">"Exact column name."</span>)))))</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">on_tool_request</span>(<span class="cf">function</span>(req)</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"-&gt; "</span>, req<span class="sc">@</span>name, <span class="fu">deparse1</span>(req<span class="sc">@</span>arguments), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"What is the average weight of these cars?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>Cars <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"notes/section2/data/Cars.dat"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>column_names <span class="ot">&lt;-</span> <span class="cf">function</span>() <span class="fu">paste</span>(<span class="fu">names</span>(Cars), <span class="at">collapse =</span> <span class="st">", "</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>column_mean  <span class="ot">&lt;-</span> <span class="cf">function</span>(column) <span class="fu">mean</span>(Cars[[column]])</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_openai</span>(<span class="at">model =</span> <span class="st">"gpt-5-nano"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">system_prompt =</span> <span class="st">"Use the tools to compute. Never guess a number."</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">register_tools</span>(<span class="fu">list</span>(</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tool</span>(column_names,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>       <span class="st">"List the column names of the cars data set. Call this first if unsure."</span>,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">arguments =</span> <span class="fu">list</span>()),</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tool</span>(column_mean,</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>       <span class="st">"Return the mean of one numeric column of the cars data set."</span>,</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">arguments =</span> <span class="fu">list</span>(<span class="at">column =</span> <span class="fu">type_string</span>(<span class="st">"Exact column name."</span>)))))</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">on_tool_request</span>(<span class="cf">function</span>(req)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"-&gt; "</span>, req<span class="sc">@</span>name, <span class="fu">deparse1</span>(req<span class="sc">@</span>arguments), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"What is the average weight of these cars?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_tools.R</code></span></div>
 </div>
-<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json, pandas <span class="im">as</span> pd</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Cars <span class="op">=</span> pd.read_csv(<span class="st">"notes/section2/data/Cars.dat"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>TOOLS <span class="op">=</span> [</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  {<span class="st">"type"</span>: <span class="st">"function"</span>, <span class="st">"name"</span>: <span class="st">"column_names"</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>   <span class="st">"description"</span>: <span class="st">"List the column names of the cars data set."</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">"parameters"</span>: {<span class="st">"type"</span>: <span class="st">"object"</span>, <span class="st">"properties"</span>: {},</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"required"</span>: [], <span class="st">"additionalProperties"</span>: <span class="va">False</span>},</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>   <span class="st">"strict"</span>: <span class="va">True</span>},</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  {<span class="st">"type"</span>: <span class="st">"function"</span>, <span class="st">"name"</span>: <span class="st">"column_mean"</span>,</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>   <span class="st">"description"</span>: <span class="st">"Return the mean of one numeric column of the cars data set."</span>,</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>   <span class="st">"parameters"</span>: {<span class="st">"type"</span>: <span class="st">"object"</span>,</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"properties"</span>: {<span class="st">"column"</span>: {<span class="st">"type"</span>: <span class="st">"string"</span>}},</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"required"</span>: [<span class="st">"column"</span>], <span class="st">"additionalProperties"</span>: <span class="va">False</span>},</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>   <span class="st">"strict"</span>: <span class="va">True</span>},</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> call_tool(name, args):</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="op">==</span> <span class="st">"column_names"</span>: <span class="cf">return</span> <span class="st">", "</span>.join(Cars.columns)</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="op">==</span> <span class="st">"column_mean"</span>:  <span class="cf">return</span> <span class="bu">float</span>(Cars[args[<span class="st">"column"</span>]].mean())</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"What is the average weight of these cars?"</span>}]</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    resp <span class="op">=</span> client.responses.create(model<span class="op">=</span><span class="st">"gpt-5-nano"</span>, <span class="bu">input</span><span class="op">=</span>messages,</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>                                   tools<span class="op">=</span>TOOLS, parallel_tool_calls<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">+=</span> resp.output</span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    calls <span class="op">=</span> [o <span class="cf">for</span> o <span class="kw">in</span> resp.output <span class="cf">if</span> o.<span class="bu">type</span> <span class="op">==</span> <span class="st">"function_call"</span>]</span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> calls:</span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(resp.output_text)<span class="op">;</span> <span class="cf">break</span></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> calls:</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> call_tool(c.name, json.loads(c.arguments <span class="kw">or</span> <span class="st">"</span><span class="sc">{}</span><span class="st">"</span>))</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"-&gt;"</span>, c.name, c.arguments, <span class="st">"=&gt;"</span>, result)</span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>        messages.append({<span class="st">"type"</span>: <span class="st">"function_call_output"</span>,</span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"call_id"</span>: c.call_id, <span class="st">"output"</span>: json.dumps(result)})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json, pandas <span class="im">as</span> pd</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Cars <span class="op">=</span> pd.read_csv(<span class="st">"notes/section2/data/Cars.dat"</span>, sep<span class="op">=</span><span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>TOOLS <span class="op">=</span> [</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  {<span class="st">"type"</span>: <span class="st">"function"</span>, <span class="st">"name"</span>: <span class="st">"column_names"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>   <span class="st">"description"</span>: <span class="st">"List the column names of the cars data set."</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">"parameters"</span>: {<span class="st">"type"</span>: <span class="st">"object"</span>, <span class="st">"properties"</span>: {},</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"required"</span>: [], <span class="st">"additionalProperties"</span>: <span class="va">False</span>},</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>   <span class="st">"strict"</span>: <span class="va">True</span>},</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  {<span class="st">"type"</span>: <span class="st">"function"</span>, <span class="st">"name"</span>: <span class="st">"column_mean"</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>   <span class="st">"description"</span>: <span class="st">"Return the mean of one numeric column of the cars data set."</span>,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>   <span class="st">"parameters"</span>: {<span class="st">"type"</span>: <span class="st">"object"</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"properties"</span>: {<span class="st">"column"</span>: {<span class="st">"type"</span>: <span class="st">"string"</span>}},</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"required"</span>: [<span class="st">"column"</span>], <span class="st">"additionalProperties"</span>: <span class="va">False</span>},</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>   <span class="st">"strict"</span>: <span class="va">True</span>},</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> call_tool(name, args):</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="op">==</span> <span class="st">"column_names"</span>: <span class="cf">return</span> <span class="st">", "</span>.join(Cars.columns)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="op">==</span> <span class="st">"column_mean"</span>:  <span class="cf">return</span> <span class="bu">float</span>(Cars[args[<span class="st">"column"</span>]].mean())</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"What is the average weight of these cars?"</span>}]</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    resp <span class="op">=</span> client.responses.create(model<span class="op">=</span><span class="st">"gpt-5-nano"</span>, <span class="bu">input</span><span class="op">=</span>messages,</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>                                   tools<span class="op">=</span>TOOLS, parallel_tool_calls<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">+=</span> resp.output</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    calls <span class="op">=</span> [o <span class="cf">for</span> o <span class="kw">in</span> resp.output <span class="cf">if</span> o.<span class="bu">type</span> <span class="op">==</span> <span class="st">"function_call"</span>]</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> calls:</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(resp.output_text)<span class="op">;</span> <span class="cf">break</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> calls:</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> call_tool(c.name, json.loads(c.arguments <span class="kw">or</span> <span class="st">"</span><span class="sc">{}</span><span class="st">"</span>))</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"-&gt;"</span>, c.name, c.arguments, <span class="st">"=&gt;"</span>, result)</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>        messages.append({<span class="st">"type"</span>: <span class="st">"function_call_output"</span>,</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"call_id"</span>: c.call_id, <span class="st">"output"</span>: json.dumps(result)})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_tools.py</code></span></div>
 </div>
@@ -981,11 +1081,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <section id="installing-codex-and-claude-code" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="installing-codex-and-claude-code"><span class="header-section-number">7.2</span> Installing Codex and Claude Code</h3>
 <p>Both are command-line programs. One line installs either one and puts the command on your PATH, so you can type it from any folder.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Claude Code</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Codex</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://chatgpt.com/codex/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Claude Code</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Codex</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://chatgpt.com/codex/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>If you already use Node, <code>npm install -g @anthropic-ai/claude-code</code> and <code>npm install -g @openai/codex</code> do the same job. The installers above carry their own runtime, so Node is not required.</li>
 <li>Check it worked with <code>claude --version</code> or <code>codex --version</code>. If the shell says command not found, open a new terminal. If it still fails, the install folder is not on your PATH, and you add it in <code>~/.zshrc</code> or <code>~/.bashrc</code>.</li>
@@ -996,31 +1096,31 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <section id="let-the-agent-set-it-up" class="level3" data-number="7.3">
 <h3 data-number="7.3" class="anchored" data-anchor-id="let-the-agent-set-it-up"><span class="header-section-number">7.3</span> Let the agent set it up</h3>
 <p>Set up git before you start an agent, every time. Make it a habit.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/my-analysis    <span class="co"># the folder you want to work in</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span>                       <span class="co"># or: codex</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/my-analysis    <span class="co"># the folder you want to work in</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span>                       <span class="co"># or: codex</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="mode"><i class="fa-solid fa-robot" aria-label="robot"></i> Vibe</span> — once it starts, ask for something like this.</p>
 <pre><code>Initialize a git repository here. Write a .gitignore for a project that
 uses both R and Python, excluding .env, .Rhistory, .Rproj.user,
 __pycache__, and rendered output. Then make the first commit.</code></pre>
 <p>Now check it yourself, before you believe any of it.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span>          <span class="co"># exactly one commit?</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status                 <span class="co"># working tree clean?</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> .gitignore             <span class="co"># is .env actually in there?</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> ls-files <span class="kw">|</span> <span class="fu">grep</span> .env   <span class="co"># nothing should come back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span>          <span class="co"># exactly one commit?</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status                 <span class="co"># working tree clean?</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> .gitignore             <span class="co"># is .env actually in there?</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> ls-files <span class="kw">|</span> <span class="fu">grep</span> .env   <span class="co"># nothing should come back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>That last line is the one that matters. If a <code>.env</code> file was committed, the agent has just put a key into your history, and deleting the file later does not remove it. Done when you can say what it committed, what it left out, and how you know.</p>
 </section>
 <section id="chat-api-and-coding-agents" class="level3" data-number="7.4">
 <h3 data-number="7.4" class="anchored" data-anchor-id="chat-api-and-coding-agents"><span class="header-section-number">7.4</span> Chat, API, and coding agents</h3>
 <p>Three ways to reach the same model, and they are not interchangeable.</p>
 <ul>
-<li><p><span style="color:#b8860b"><strong>Chat.</strong></span> You type into a web page. Fast, and nothing about it is reproducible.</p></li>
-<li><p><span style="color:#b8860b"><strong>API.</strong></span> You write the call inside a script that can be rerun, versioned, and read by someone else. That is this page.</p></li>
+<li><p><span style="color:#b8860b"><strong>Chat.</strong></span> You type into a web page.</p></li>
+<li><p><span style="color:#b8860b"><strong>API.</strong></span> You write the call inside a script that can be rerun, versioned, and read by someone else.</p></li>
 <li><p><span style="color:#b8860b"><strong>Coding agent.</strong></span> The model runs the loop on your machine. It reads your files, writes new ones, runs commands, reads the errors, and tries again. <a href="https://developers.openai.com/codex/">OpenAI Codex</a> and <a href="https://code.claude.com/docs/">Anthropic Claude Code</a> are the two common ones. <a href="https://docs.github.com/copilot">Copilot</a> in the Codespace is a lighter version of the same idea.</p></li>
-<li><p>The difference that matters: with the API you own the loop, and with a coding agent the loop owns your files.</p></li>
-<li><p>All three keep a transcript. That transcript is the only reason anyone can check the work afterwards, and reading one is what Section 7 is about.</p></li>
+<li><p>The main difference is who is in control. With the API, your script decides every step. A coding agent decides the steps itself, and it changes your files directly.</p></li>
+<li><p>All three leave a record you can check later. A chat can be saved or shared as a web page. With the API, your script and its output are the record. A coding agent keeps a transcript of every step, and Section 7 is about reading one.</p></li>
 <li><p>In this course: coding agents are welcome on <span class="mode"><i class="fa-solid fa-robot" aria-label="robot"></i> Vibe</span> blocks, not on <span class="mode"><i class="fa-solid fa-hand-paper" aria-label="hand-paper"></i> By hand</span> blocks, and whatever they write, you run and check yourself.</p></li>
 </ul>
-<p>You drive both from a terminal. You type ordinary English most of the time, and <span style="color:#b8860b"><strong>slash commands</strong></span> when you want to steer the tool itself. Type <code>/</code> alone to see the list for your version, because it changes often. Five are worth knowing on day one.</p>
+<p>You use both from a terminal. Most of the time you type ordinary English. To control the tool itself, for example to switch models or start over, you type a <span style="color:#b8860b"><strong>slash command</strong></span>. Type <code>/</code> alone to see the list for your version, because it changes often. Six are worth knowing on day one.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -1093,24 +1193,17 @@ __pycache__, and rendered output. Then make the first commit.</code></pre>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>A real task outlives one sitting. Three commands and one file handle it.</strong></p>
+<p><strong>A real task often takes more than one session. Three commands and one file help you carry it over.</strong></p>
 <ul>
 <li><code>/compact</code> replaces a long conversation with a summary and keeps going. Reach for it when the session slows down or the context fills up.</li>
 <li><code>/resume</code> reopens an earlier session. At the shell, <code>--continue</code> reopens the last one.</li>
 <li><code>/export</code> writes the whole transcript to a text file.</li>
 </ul>
-<p>The file is the part that lasts. Session history sits on one machine and does not follow you to another, so anything worth keeping belongs in the repository: the memory file for the instructions, an exported transcript for the record of what actually happened.</p>
+<p>Session history is saved only on the machine where you ran it, and it does not follow you to another computer. Keep what matters in the repository instead: the memory file holds your instructions, and an exported transcript records what the agent actually did.</p>
 <p>This is the same argument as <code>set.seed</code>. A result nobody can get back to is not a result.</p>
 </div>
 </div>
 </div>
-</section>
-<section id="what-comes-next" class="level3" data-number="7.5">
-<h3 data-number="7.5" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">7.5</span> What comes next</h3>
-<ul>
-<li>Section 7 turns this loop into an agent: several tools, several steps, and a receipt of everything it did.</li>
-<li>The question that matters for a statistician is not whether the model can call a tool. It is whether you can check what it did afterwards.</li>
-</ul>
 
 
 <script type="webr-data">
