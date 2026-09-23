@@ -1,0 +1,385 @@
+# STAT:5400 Section 3.1 — Random Number Generators
+# Code from the lecture notes; no output, no solutions.
+
+## 2.1 Draw from the uniform distribution
+
+(u <- runif(1))
+
+
+## 2.2 Set seed
+
+set.seed(5400)
+(u <- runif(1))
+
+set.seed(5400)
+length(.Random.seed)
+head(.Random.seed)
+
+
+## 2.3 Generate $U \sim \mathrm{Unif}(1, 5)$
+
+# Predict
+set.seed(5400)
+(u1 <- runif(1, 1, 5))
+
+set.seed(5400)
+(u2 <- runif(1) * 4 + 1)
+
+help(runif)
+
+
+## 2.5 Generating many uniforms
+
+set.seed(5400)
+(ulist <- runif(5, 1, 5))
+
+set.seed(5400)
+ulist <- rep(NA, 5)
+for (i in seq(5)) {
+  ulist[i] <- runif(1, 1, 5)
+}
+ulist
+
+
+## 2.7 Mean and variance of uniform distribution
+
+set.seed(5400)
+# generate U1, U2, ..., U100
+ulist <- runif(100, 0, 1)
+
+# population mean is 1/2
+mean(ulist)
+
+# population variance is 1/12 = 0.0833
+var(ulist)
+
+
+## 2.10 The probability integral transform, seen
+
+par(mfrow = c(1, 2))
+X <- runif(1000, 2, 5)
+hist(punif(X, 2, 5), main = "Uniform CDF")
+X <- rnorm(1000)
+hist(pnorm(X), main = "Normal CDF")
+
+
+## 2.12 Q-Q plot (quantile-quantile plot)
+
+set.seed(5400)
+ulist <- runif(1000, 0, 1)
+plot(qunif(ppoints(1000)), sort(ulist),
+  xlab = "Theoretical Quantiles",
+  ylab = "Sample Quantiles", main = "Q-Q plot")
+abline(0, 1)
+
+
+## 3.1 Drawing from Bernoulli distribution
+
+# Generate Bern(0.4)
+Y <- as.numeric(runif(1) < 0.4)
+Y
+
+set.seed(5400)
+# Generate Y1, ..., Y100 ~ Bern(0.4)
+Ylist <- as.numeric(runif(100) < 0.4)
+
+# population mean is 0.4
+mean(Ylist)
+
+# population variance is 0.4 * 0.6 = 0.24
+var(Ylist)
+
+
+## 3.2 Drawing from Binomial distribution
+
+set.seed(5400)
+# Generate X ~ Bin(100, 0.4)
+X <- sum(runif(100) < 0.4)
+X
+
+rbinom(1, 100, 0.4)
+# rbinom(n, size, prob).
+# n is the number of observations.
+# size is the number of trials.
+
+
+## 4.2 Drawing from exponential distribution
+
+set.seed(5400)
+# Generate X1, ..., X1000 ~ exp(2)
+Ulist <- runif(1000, 0, 1)
+Xlist <- -2 * log(Ulist)
+Xlist[1:3]
+
+mean(Xlist)
+var(Xlist)
+
+
+## 4.3 Histogram against the density
+
+# By hand
+par(mfrow = c(1, 2))
+hist(Xlist)
+xs <- seq(0.001, 12, len = 200)
+plot(xs, dexp(xs, rate = 1),        # <- change this line
+  type = "l", ylim = c(0, 1),
+  xlab = "X", main = "exp(2)", ylab = "f(x)")
+
+
+## 4.4 Q-Q plot for the exponential
+
+# By hand
+probs <- ppoints(1000)
+plot(probs, probs,                  # <- change this line
+  xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
+  main = "Q-Q plot for exponential distribution")
+abline(0, 1)
+
+
+## 4.5 The `rexp` function in R
+
+set.seed(5400)
+Xlist <- rexp(1000, rate = 1/2)
+Xlist[1:3]
+
+mean(Xlist)
+var(Xlist)
+
+# Predict
+set.seed(5400)
+head(-2 * log(runif(3)))
+set.seed(5400)
+head(rexp(3, rate = 1/2))
+
+
+## 4.6 Drawing from the standard Cauchy distribution
+
+set.seed(5400)
+# Generate X1, ..., X1000 ~ Cauchy
+Ulist <- runif(1000, 0, 1)
+Xlist <- tan(pi * (Ulist - 0.5))
+
+par(mfrow = c(1, 2))
+hist(Xlist)
+xs <- seq(-10, 10, len = 200)
+plot(xs, dcauchy(xs), type = "l", ylim = c(0, 1),
+  xlab = "X", main = "PDF of Cauchy distribution", ylab = "f(x)")
+
+# By hand
+probs <- ppoints(1000)
+plot(probs, probs,                  # <- change this line
+  xlab = "Theoretical Quantiles",
+  ylab = "Sample Quantiles",
+  main = "Q-Q plot for Cauchy distribution")
+abline(0, 1)
+
+
+## 4.7 Cauchy and $t$
+
+set.seed(5400)
+mean(rcauchy(10000))
+mean(rcauchy(10000))
+mean(rcauchy(10000))
+
+
+## 4.8 Sampling the next word
+
+words <- c("reject", "accept", "retain")
+p <- c(0.665, 0.245, 0.090)
+
+set.seed(5400)
+u <- runif(1)
+words[findInterval(u, cumsum(p)) + 1]   # one uniform, one word
+
+# 10,000 draws: the frequencies match p
+u <- runif(10000)
+table(words[findInterval(u, cumsum(p)) + 1]) / 10000
+
+
+## 5.2 Accept/reject sampling (cont'd)
+
+set.seed(5400)
+n <- 2000    # total samples
+# Each row is a pair of V1 and V2. n rows in total.
+dat <- matrix(runif(n * 2, -1, 1), n, 2)
+# Accept if V_1^2 + V_2^2 <= 1.
+accept <- (dat[, 1]^2 + dat[, 2]^2) <= 1
+
+mean(accept)   # which is about pi/4
+pi / 4
+
+# Accepted pairs of V1 and V2
+V <- dat[accept, ]
+# Rejected pairs of V1 and V2
+V_out <- dat[!accept, ]
+
+# draw a circle
+theta <- seq(0, 2 * pi, len = 1000)
+plot(cbind(sin(theta), cos(theta)),
+  type = "l", xlab = "x", ylab = "y")
+points(V, pch = 2, col = "blue")      # Accepted pairs
+points(V_out, pch = 1, col = "red")   # Rejected pairs
+
+c_bound <- optimize(function(x) dnorm(x) / dcauchy(x),
+                    c(-3, 3), maximum = TRUE)$objective
+c_bound
+
+xs <- seq(-6, 6, length = 400)
+plot(xs, c_bound * dcauchy(xs), type = "n",
+  xlab = "x", ylab = "density", ylim = c(0, 0.52))
+polygon(c(xs, rev(xs)),
+  c(c_bound * dcauchy(xs), rev(dnorm(xs))),
+  col = "gray90", border = NA)          # rejected
+lines(xs, c_bound * dcauchy(xs), lwd = 2, col = "#b8860b")
+lines(xs, dnorm(xs), lwd = 2)
+legend("topright", bty = "n", lwd = 2,
+  col = c("#b8860b", "black"),
+  legend = c("c g(x), Cauchy envelope", "f(x), standard normal"))
+
+set.seed(5400)
+n <- 1e4
+Y <- rcauchy(n)
+U <- runif(n)
+keep <- U <= dnorm(Y) / (c_bound * dcauchy(Y))
+
+mean(keep)      # close to 1 / c_bound
+1 / c_bound
+
+X <- Y[keep]
+hist(X, breaks = 40, freq = FALSE, main = "", xlab = "x")
+curve(dnorm(x), add = TRUE, lwd = 2)
+
+
+## 6.2 Polar method for the standard normal
+
+# an OK code
+Rsq <- V[, 1]^2 + V[, 2]^2
+m <- sqrt(-(2 * log(Rsq)) / (Rsq))
+X <- m * V
+
+# a better code
+Rsq <- V[, 1]^2 + V[, 2]^2
+Rsq <- Rsq + .Machine$double.xmin
+m <- sqrt(-(2 * log(Rsq)) / (Rsq))
+X <- m * V
+
+
+## 6.3 Checking the normals
+
+par(mfrow = c(2, 2))
+# histograms
+hist(X[, 1], main = "Histogram of X1")
+hist(X[, 2], main = "Histogram of X2")
+# Q-Q plots
+probs <- ppoints(NROW(X))
+plot(qnorm(probs), sort(X[, 1]),
+  xlab = "Theoretical Quantiles",
+  ylab = "Sample Quantiles", main = "Q-Q plot for X1")
+abline(0, 1)
+plot(qnorm(probs), sort(X[, 2]),
+  xlab = "Theoretical Quantiles",
+  ylab = "Sample Quantiles", main = "Q-Q plot for X2")
+abline(0, 1)
+
+
+## 6.4 Q-Q plot for $\mathrm{N}(\mu, \sigma^2)$
+
+newX <- X[, 1] * 2 + 4
+dat_quant <- sort(newX)
+thr_quant <- qnorm(ppoints(length(newX)))
+plot(thr_quant, dat_quant,
+  xlab = "Theoretical Quantiles",
+  ylab = "Sample Quantiles",
+  main = "Q-Q plot for X ~ N(4, 2)")
+abline(a = 4, b = 2) # a = intercept; b = slope
+
+
+## 6.5 `qqnorm` and `qqline`
+
+qqnorm(newX)
+qqline(newX)
+
+
+## 6.6 What R actually uses
+
+set.seed(5400)
+qnorm(runif(1))
+
+set.seed(5400)
+rnorm(1)
+
+
+## 6.7 Standard Cauchy, again
+
+Y <- V[, 1] / V[, 2]
+summary(Y)
+
+
+## 6.8 $\chi_v^2$ distribution
+
+set.seed(5400)
+Zlist <- rnorm(10)
+Y <- sum(Zlist^2)
+Y
+
+
+## 6.9 Student's $t$ distribution
+
+curve(dnorm(x, 0, 1), xlim = c(-3, 3),
+  main = "Normal and t",
+  xlab = "X", ylab = "f(x)", lwd = 3, lty = 1)
+curve(dt(x, 1), xlim = c(-3, 3), add = TRUE, lty = 2, col = "red")
+curve(dt(x, 2), xlim = c(-3, 3), add = TRUE, lty = 3, col = "blue")
+curve(dt(x, 5), xlim = c(-3, 3), add = TRUE, lty = 4, col = "green")
+abline(h = 0)
+legend("topright",
+  c("normal", "t(1)", "t(2)", "t(5)"),
+  lty = 1:4,
+  col = c("black", "red", "blue", "green"))
+
+
+## 7.4 Generate one copy from $\mathrm{N}_p(\boldsymbol{\mu}, \boldsymbol{\Sigma})$
+
+set.seed(5400)
+# sample size and dimension
+n <- 1000
+p <- 5
+# var-covariance matrix
+Sigma <- matrix(0.5, p, p)
+diag(Sigma) <- 1
+mu <- seq(p)   # mean vector
+
+# eigen-decomposition
+eig <- eigen(Sigma)
+Sigma.sqrt <- eig$vectors %*%
+  tcrossprod(diag(sqrt(eig$values)), eig$vectors)
+
+Z <- rnorm(p)
+X <- mu + Sigma.sqrt %*% Z
+X
+
+
+## 7.5 Generate multiple copies from $\mathrm{N}_p(\boldsymbol{\mu}, \boldsymbol{\Sigma})$
+
+set.seed(5400)
+# each row of Z is from N(0, 1)
+Z <- matrix(rnorm(n * p), n, p)
+# each row of X is from N(mu, Sigma)
+X <- tcrossprod(rep(1, n), mu) + Z %*% Sigma.sqrt
+
+(Xbar <- colMeans(X))
+
+(S <- cov(X))
+
+
+## 7.6 R library `mvtnorm`
+
+set.seed(5400)
+Z <- rnorm(p)
+X <- mu + Sigma.sqrt %*% Z
+X[1:2]
+
+set.seed(5400)
+library(mvtnorm)
+X <- rmvnorm(n = 1, mean = mu, sigma = Sigma)
+X[1:2]
