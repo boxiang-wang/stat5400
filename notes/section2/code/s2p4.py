@@ -3,11 +3,9 @@
 
 ## 3.1 Hello world
 
-from dotenv import load_dotenv
 from openai import OpenAI
-load_dotenv()
 
-client = OpenAI()
+client = OpenAI()          # reads OPENAI_API_KEY from the environment
 response = client.responses.create(
     model="gpt-5-nano",
     input=[{"role": "user", "content":
@@ -16,23 +14,7 @@ response = client.responses.create(
 print(response.output_text)
 
 
-## 3.2 The model does not remember earlier calls
-
-r1 = client.responses.create(
-    model="gpt-5-nano",
-    input=[{"role": "user", "content":
-            "Write a paragraph about the Department of Statistics and Actuarial "
-            "Science at the University of Iowa."}])
-print(r1.output_text)
-
-r2 = client.responses.create(
-    model="gpt-5-nano",
-    input=[{"role": "user", "content":
-            "What's the name of the university that I just mentioned?"}])
-print(r2.output_text)     # it does not know
-
-
-## 3.3 Open-weight models
+## 3.2 Open-weight models
 
 local = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
@@ -62,7 +44,23 @@ for system in ["you are a concise tutor.",
     print(response.output_text, "\n---")
 
 
-## 4.3 Conversation state
+## 4.3 The model does not remember earlier calls
+
+r1 = client.responses.create(
+    model="gpt-5-nano",
+    input=[{"role": "user", "content":
+            "Write a paragraph about the Department of Statistics and Actuarial "
+            "Science at the University of Iowa."}])
+print(r1.output_text)
+
+r2 = client.responses.create(
+    model="gpt-5-nano",
+    input=[{"role": "user", "content":
+            "What's the name of the university that I just mentioned?"}])
+print(r2.output_text)     # it does not know
+
+
+## 4.4 Conversation state
 
 response = client.responses.create(
     model="gpt-5-nano",
@@ -92,7 +90,7 @@ second = client.responses.create(
 print(second.output_text)
 
 
-## 4.4 Few-shot learning
+## 4.5 Few-shot learning
 
 INSTRUCTIONS = """# Identity
 
@@ -162,6 +160,10 @@ print(resp.output_parsed.label, resp.output_parsed.p_value)
 import json
 local = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
+def larger(a, b):
+    a, b = float(a), float(b)          # small models sometimes send "9.9" as text
+    return max(a, b)
+
 TOOLS = [{"type": "function", "function": {
     "name": "larger",
     "description": "Return the larger of two numbers.",
@@ -172,11 +174,20 @@ TOOLS = [{"type": "function", "function": {
 msgs = [{"role": "system", "content": "Use the tool to compare numbers."},
         {"role": "user", "content": "Which is larger, 9.9 or 9.11?"}]
 
-r = local.chat.completions.create(model="llama3.2:1b", messages=msgs, tools=TOOLS)
-for c in r.choices[0].message.tool_calls or []:
-    args = json.loads(c.function.arguments)
-    a, b = float(args["a"]), float(args["b"])   # small models sometimes send "9.9" as text
-    print("->", c.function.name, args, "=>", max(a, b))
+# steps 1 and 2: send the question with the tool, and read the model's request
+reply = local.chat.completions.create(model="llama3.2:1b", messages=msgs, tools=TOOLS)
+msgs.append(reply.choices[0].message)
+
+# step 3: run the function and send its result back
+for call in reply.choices[0].message.tool_calls or []:
+    args = json.loads(call.function.arguments)
+    print("->", call.function.name, args)
+    msgs.append({"role": "tool", "tool_call_id": call.id,
+                 "content": str(larger(**args))})
+
+# step 4: the model answers, using the result
+final = local.chat.completions.create(model="llama3.2:1b", messages=msgs, tools=TOOLS)
+print(final.choices[0].message.content)
 
 
 ## 6.3 A two-tool example
@@ -199,12 +210,18 @@ TOOLS = [
 ]
 
 def call_tool(name, args):
-    if name == "column_names": return ", ".join(Cars.columns)
-    if name == "column_mean":  return float(Cars[args["column"]].mean())
+    if name == "column_names":
+        return ", ".join(Cars.columns)
+    if name == "column_mean":
+        column = args["column"]
+        if column not in Cars.columns:
+            return f"There is no column named {column}."    # the model reads this and retries
+        return float(Cars[column].mean())
 
 messages = [{"role": "user", "content": "What is the average weight of these cars?"}]
 for step in range(5):
     resp = client.responses.create(model="gpt-5-nano", input=messages,
+                                   instructions="Use the tools to compute. Never guess a number.",
                                    tools=TOOLS, parallel_tool_calls=False)
     messages += resp.output
     calls = [o for o in resp.output if o.type == "function_call"]
