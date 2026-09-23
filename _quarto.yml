@@ -34,6 +34,9 @@ website:
       - section: "Section 2: R, Python, and APIs"
         contents:
           - auto: "notes/section2/*.qmd"
+      - section: "Section 3: Simulation and Inference"
+        contents:
+          - auto: "notes/section3/*.qmd"
 
 format:
   live-html:

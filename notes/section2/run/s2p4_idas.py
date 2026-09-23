@@ -14,6 +14,7 @@
 
 import os, sys
 sys.path.insert(0, os.path.expanduser("~/classdata/models/python"))   # class packages first
+sys.modules.pop("typing_extensions", None)                             # forget the old system copy
 from openai import OpenAI
 
 # Read your keys from ~/.Renviron: one NAME=value per line

@@ -156,6 +156,7 @@ Do step 1 once. Do step 2 each time you start a new IDAS session.
     ```{.python}
     import sys, os, getpass
     sys.path.insert(0, os.path.expanduser("~/classdata/models/python"))   # class packages first
+    sys.modules.pop("typing_extensions", None)                             # forget the old system copy
     from openai import OpenAI
 
     os.environ["OPENAI_API_KEY"] = getpass.getpass("OpenAI key: ")
