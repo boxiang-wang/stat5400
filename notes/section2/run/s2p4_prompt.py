@@ -1,10 +1,8 @@
 # STAT 5400 - Section 2.4 - roles, few-shot prompting, and structured output (Python, openai)
-from dotenv import load_dotenv
 from openai import OpenAI
 from pydantic import BaseModel
 from typing import Literal
 
-load_dotenv()
 client = OpenAI()
 
 # ---- roles: the system message outranks the user's question ----
@@ -49,7 +47,6 @@ The treatment improved outcomes, but only a trend was observed (p=0.07).
 
 ALLOWED = {"Supported", "Unsupported", "Unclear"}
 
-
 def label_claim(claim):
     resp = client.responses.create(model="gpt-5-nano", instructions=INSTRUCTIONS, input=claim)
     label = (resp.output_text or "").strip().split()[0].strip('"\',.;:')
@@ -57,19 +54,16 @@ def label_claim(claim):
         raise ValueError(f"Unexpected label {label!r}")
     return label
 
-
 for c in ["We can conclude there is no effect because p=0.40.",
           "The results show a significant increase (95% CI 0.1 to 0.4).",
           "The intervention might help, but the CI crosses zero (95% CI -0.2 to 0.3)."]:
     print(label_claim(c))
-
 
 # ---- structured output: a schema instead of string parsing ----
 class Review(BaseModel):
     label: Literal["Supported", "Unsupported", "Unclear"]
     reason: str
     p_value: float
-
 
 resp = client.responses.parse(
     model="gpt-5-nano",

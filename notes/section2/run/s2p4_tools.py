@@ -2,10 +2,8 @@
 # Two tools, one question. The model must look up the column names before it can compute.
 import json
 import pandas as pd
-from dotenv import load_dotenv
 from openai import OpenAI
 
-load_dotenv()
 client = OpenAI()
 Cars = pd.read_csv("notes/section2/data/Cars.dat", sep="\t")
 
@@ -23,19 +21,21 @@ TOOLS = [
      "strict": True},
 ]
 
-
 def call_tool(name, args):
     if name == "column_names":
         return ", ".join(Cars.columns)
     if name == "column_mean":
-        return float(Cars[args["column"]].mean())
+        column = args["column"]
+        if column not in Cars.columns:
+            return f"There is no column named {column}."    # the model reads this and retries
+        return float(Cars[column].mean())
     raise ValueError(f"Unknown tool: {name}")
-
 
 messages = [{"role": "user", "content": "What is the average weight of these cars?"}]
 
 for step in range(5):
     resp = client.responses.create(model="gpt-5-nano", input=messages,
+                                   instructions="Use the tools to compute. Never guess a number.",
                                    tools=TOOLS, parallel_tool_calls=False)
     messages += resp.output
     calls = [o for o in resp.output if o.type == "function_call"]

@@ -45,26 +45,7 @@ chat <- chat_openai(model = "gpt-5-nano")
 chat$chat("Write a one-sentence bedtime story about a unicorn.")
 
 
-## 3.2 The model does not remember earlier calls
-
-first <- chat_openai(model = "gpt-5-nano")    # reads OPENAI_API_KEY
-first$chat("Write a paragraph about the Department of Statistics and
-            Actuarial Science at the University of Iowa.")
-
-second <- chat_openai(model = "gpt-5-nano")   # a brand new conversation
-second$chat("What is the name of the university I just mentioned?")
-
-same <- chat_openai(model = "gpt-5-nano")
-same$chat("Write two sentences about the University of Iowa.")
-same$chat("What is the name of the university I just mentioned?")
-
-# The same test with Claude. Only the function changes, and it needs ANTHROPIC_API_KEY.
-# same <- chat_anthropic()
-# same$chat("Write two sentences about the University of Iowa.")
-# same$chat("What is the name of the university I just mentioned?")
-
-
-## 3.3 Open-weight models
+## 3.2 Open-weight models
 
 small <- chat_ollama(model = "llama3.2:1b")      # 1 billion parameters
 small$chat("Give me 3 distributions in the exponential family.")
@@ -87,7 +68,26 @@ chat_b <- chat_openai(model = "gpt-5-nano",
 chat_b$chat("X follows a Uniform(0, 1). What is its variance?")
 
 
-## 4.3 Conversation state
+## 4.3 The model does not remember earlier calls
+
+first <- chat_openai(model = "gpt-5-nano")    # reads OPENAI_API_KEY
+first$chat("Write a paragraph about the Department of Statistics and
+            Actuarial Science at the University of Iowa.")
+
+second <- chat_openai(model = "gpt-5-nano")   # a brand new conversation
+second$chat("What is the name of the university I just mentioned?")
+
+same <- chat_openai(model = "gpt-5-nano")
+same$chat("Write two sentences about the University of Iowa.")
+same$chat("What is the name of the university I just mentioned?")
+
+# The same test with Claude. Only the function changes, and it needs ANTHROPIC_API_KEY.
+# same <- chat_anthropic()
+# same$chat("Write two sentences about the University of Iowa.")
+# same$chat("What is the name of the university I just mentioned?")
+
+
+## 4.4 Conversation state
 
 chat <- chat_openai(model = "gpt-5-nano")
 chat$set_turns(list(

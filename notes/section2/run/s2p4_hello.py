@@ -1,10 +1,8 @@
 # STAT 5400 - Section 2.4 - your first LLM API call (Python, openai)
 # The key is a Codespaces secret. Never write it in this file.
 import os
-from dotenv import load_dotenv
 from openai import OpenAI
 
-load_dotenv()
 client = OpenAI()
 
 response = client.responses.create(
