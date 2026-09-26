@@ -1,6 +1,47 @@
 # STAT:5400 Section 2.4 — LLM APIs and Prompting
 # Code from the lecture notes; no output, no solutions.
 
+# Check the OpenAI key, and on IDAS use the class copy of the openai package
+import os, sys, urllib.request
+if os.path.isdir(os.path.expanduser("~/classdata/models/python")):          # on IDAS
+    sys.path.insert(0, os.path.expanduser("~/classdata/models/python"))     # class packages first
+    sys.modules.pop("typing_extensions", None)                              # forget the old system copy
+renviron = os.path.expanduser("~/.Renviron")                                # read the key from the file R uses
+if os.path.exists(renviron):
+    for line in open(renviron):
+        name, _, value = line.strip().partition("=")
+        if name and not name.startswith("#") and value:
+            os.environ.setdefault(name, value.strip("\"'"))
+help_url = "https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html#setting-up-idas"
+if not os.environ.get("OPENAI_API_KEY"):
+    print("No OpenAI key found. How to set it up:", help_url)
+else:
+    try:
+        urllib.request.urlopen(urllib.request.Request("https://api.openai.com/v1/models",
+            headers={"Authorization": "Bearer " + os.environ["OPENAI_API_KEY"]}), timeout=10)
+    except OSError:
+        print("Your OpenAI key did not work. Check it, or see:", help_url)
+
+# Start the Ollama server if it is not running yet (needed once per IDAS session)
+import os, shutil, subprocess, time, urllib.request
+def ollama_up():
+    try:
+        urllib.request.urlopen("http://localhost:11434/api/version", timeout=2)
+        return True
+    except OSError:
+        return False
+if not ollama_up():
+    if os.path.isdir(os.path.expanduser("~/classdata/models")):   # on IDAS: use the class copy of Ollama and its models
+        os.environ["PATH"] = os.path.expanduser("~/classdata/models/ollama/bin:") + os.environ["PATH"]
+        os.environ["OLLAMA_MODELS"] = os.path.expanduser("~/classdata/models/library")
+        os.environ["OLLAMA_NOPRUNE"] = "1"
+    if shutil.which("ollama"):                                     # skip if Ollama is not installed
+        subprocess.Popen("nohup ollama serve > ~/ollama.log 2>&1 &", shell=True)   # start it in the background
+        for i in range(30):
+            if ollama_up(): break
+            time.sleep(1)
+
+
 ## 3.1 Hello world
 
 from openai import OpenAI
