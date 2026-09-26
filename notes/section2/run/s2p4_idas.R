@@ -3,15 +3,37 @@
 # Page: https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html
 #
 # Before you start
-# 1. Start the class models once per session. In a Terminal, type:
-#      source ~/classFiles/notes/section2/run/s2p4_idas_models.sh
-# 2. For the OpenAI parts, put your API key in the file ~/.Renviron, then restart R
-#    (Session > Restart R):
+# 1. Nothing to start by hand: the block below starts the class models if they are not running.
+# 2. For the OpenAI parts, put your API key in the file ~/.Renviron.
+#    The first block tells you if the key is missing or wrong. The line in the file is:
 #      OPENAI_API_KEY=your-openai-key
 #    Never type a key into this file.
 # 3. Run one section at a time: select the lines and press Ctrl+Enter.
 #    The OpenAI calls use gpt-5-nano and cost a fraction of a cent in total.
 #    The 4B model in 3.3 takes up to a minute to answer.
+
+# Check the OpenAI key (reads ~/.Renviron again, so no restart is needed after you add the key)
+if (file.exists("~/.Renviron")) readRenviron("~/.Renviron")
+help_url <- "https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html#setting-up-idas"
+if (!nzchar(Sys.getenv("OPENAI_API_KEY"))) {
+  message("No OpenAI key found. How to set it up: ", help_url)
+} else if (inherits(try(suppressWarnings(readLines(url("https://api.openai.com/v1/models",
+             headers = c(Authorization = paste("Bearer", Sys.getenv("OPENAI_API_KEY")))))), silent = TRUE), "try-error")) {
+  message("Your OpenAI key did not work. Check it, or see: ", help_url)
+}
+
+# Start the Ollama server if it is not running yet (needed once per IDAS session)
+ollama_up <- function() !inherits(try(suppressWarnings(readLines("http://localhost:11434/api/version")), silent = TRUE), "try-error")
+if (!ollama_up()) {
+  if (dir.exists("~/classdata/models")) {             # on IDAS: use the class copy of Ollama and its models
+    Sys.setenv(PATH = paste0(path.expand("~/classdata/models/ollama/bin:"), Sys.getenv("PATH")),
+               OLLAMA_MODELS = path.expand("~/classdata/models/library"), OLLAMA_NOPRUNE = "1")
+  }
+  if (nzchar(Sys.which("ollama"))) {                  # skip if Ollama is not installed
+    system("nohup ollama serve > ~/ollama.log 2>&1 &")  # start it in the background
+    for (i in 1:30) if (ollama_up()) break else Sys.sleep(1)
+  }
+}
 
 .libPaths(c("~/classdata/models/R", .libPaths()))   # the class copy of ellmer
 library(ellmer)

@@ -1,4 +1,14 @@
 # STAT 5400 - Section 2.4 - roles, few-shot prompting, and structured output (R, ellmer)
+# Check the OpenAI key (reads ~/.Renviron again, so no restart is needed after you add the key)
+if (file.exists("~/.Renviron")) readRenviron("~/.Renviron")
+help_url <- "https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html#setting-up-idas"
+if (!nzchar(Sys.getenv("OPENAI_API_KEY"))) {
+  message("No OpenAI key found. How to set it up: ", help_url)
+} else if (inherits(try(suppressWarnings(readLines(url("https://api.openai.com/v1/models",
+             headers = c(Authorization = paste("Bearer", Sys.getenv("OPENAI_API_KEY")))))), silent = TRUE), "try-error")) {
+  message("Your OpenAI key did not work. Check it, or see: ", help_url)
+}
+
 library(ellmer)
 
 # ---- roles: the system prompt outranks the user's question ----

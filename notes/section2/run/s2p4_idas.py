@@ -3,27 +3,56 @@
 # Page: https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html
 #
 # Before you start
-# 1. Start the class models once per session. In a Terminal, type:
-#      source ~/classFiles/notes/section2/run/s2p4_idas_models.sh
-# 2. For the OpenAI parts, put your API key in the file ~/.Renviron (the same file R uses):
+# 1. Nothing to start by hand: the block below starts the class models if they are not running.
+# 2. For the OpenAI parts, put your API key in the file ~/.Renviron (the same file R uses).
+#    The first block tells you if the key is missing or wrong. The line in the file is:
 #      OPENAI_API_KEY=your-openai-key
 #    Never type a key into this file.
 # 3. Run it all with:
 #      python ~/classFiles/notes/section2/run/s2p4_idas.py
 #    It takes a few minutes. The OpenAI calls use gpt-5-nano and cost a fraction of a cent.
 
-import os, sys
-sys.path.insert(0, os.path.expanduser("~/classdata/models/python"))   # class packages first
-sys.modules.pop("typing_extensions", None)                             # forget the old system copy
-from openai import OpenAI
-
-# Read your keys from ~/.Renviron: one NAME=value per line
-renviron = os.path.expanduser("~/.Renviron")
+# Check the OpenAI key, and on IDAS use the class copy of the openai package
+import os, sys, urllib.request
+if os.path.isdir(os.path.expanduser("~/classdata/models/python")):          # on IDAS
+    sys.path.insert(0, os.path.expanduser("~/classdata/models/python"))     # class packages first
+    sys.modules.pop("typing_extensions", None)                              # forget the old system copy
+renviron = os.path.expanduser("~/.Renviron")                                # read the key from the file R uses
 if os.path.exists(renviron):
     for line in open(renviron):
         name, _, value = line.strip().partition("=")
-        if name and not name.startswith("#"):
-            os.environ.setdefault(name, value.strip('"\''))
+        if name and not name.startswith("#") and value:
+            os.environ.setdefault(name, value.strip("\"'"))
+help_url = "https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html#setting-up-idas"
+if not os.environ.get("OPENAI_API_KEY"):
+    print("No OpenAI key found. How to set it up:", help_url)
+else:
+    try:
+        urllib.request.urlopen(urllib.request.Request("https://api.openai.com/v1/models",
+            headers={"Authorization": "Bearer " + os.environ["OPENAI_API_KEY"]}), timeout=10)
+    except OSError:
+        print("Your OpenAI key did not work. Check it, or see:", help_url)
+
+# Start the Ollama server if it is not running yet (needed once per IDAS session)
+import os, shutil, subprocess, time, urllib.request
+def ollama_up():
+    try:
+        urllib.request.urlopen("http://localhost:11434/api/version", timeout=2)
+        return True
+    except OSError:
+        return False
+if not ollama_up():
+    if os.path.isdir(os.path.expanduser("~/classdata/models")):   # on IDAS: use the class copy of Ollama and its models
+        os.environ["PATH"] = os.path.expanduser("~/classdata/models/ollama/bin:") + os.environ["PATH"]
+        os.environ["OLLAMA_MODELS"] = os.path.expanduser("~/classdata/models/library")
+        os.environ["OLLAMA_NOPRUNE"] = "1"
+    if shutil.which("ollama"):                                     # skip if Ollama is not installed
+        subprocess.Popen("nohup ollama serve > ~/ollama.log 2>&1 &", shell=True)   # start it in the background
+        for i in range(30):
+            if ollama_up(): break
+            time.sleep(1)
+
+from openai import OpenAI
 
 client = OpenAI()                                                        # OpenAI, reads OPENAI_API_KEY
 local = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")   # the class models on IDAS

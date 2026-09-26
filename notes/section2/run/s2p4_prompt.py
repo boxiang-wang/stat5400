@@ -1,4 +1,25 @@
 # STAT 5400 - Section 2.4 - roles, few-shot prompting, and structured output (Python, openai)
+# Check the OpenAI key, and on IDAS use the class copy of the openai package
+import os, sys, urllib.request
+if os.path.isdir(os.path.expanduser("~/classdata/models/python")):          # on IDAS
+    sys.path.insert(0, os.path.expanduser("~/classdata/models/python"))     # class packages first
+    sys.modules.pop("typing_extensions", None)                              # forget the old system copy
+renviron = os.path.expanduser("~/.Renviron")                                # read the key from the file R uses
+if os.path.exists(renviron):
+    for line in open(renviron):
+        name, _, value = line.strip().partition("=")
+        if name and not name.startswith("#") and value:
+            os.environ.setdefault(name, value.strip("\"'"))
+help_url = "https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html#setting-up-idas"
+if not os.environ.get("OPENAI_API_KEY"):
+    print("No OpenAI key found. How to set it up:", help_url)
+else:
+    try:
+        urllib.request.urlopen(urllib.request.Request("https://api.openai.com/v1/models",
+            headers={"Authorization": "Bearer " + os.environ["OPENAI_API_KEY"]}), timeout=10)
+    except OSError:
+        print("Your OpenAI key did not work. Check it, or see:", help_url)
+
 from openai import OpenAI
 from pydantic import BaseModel
 from typing import Literal

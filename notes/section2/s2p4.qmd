@@ -124,60 +124,39 @@ Python, and never print it.
 ### Setting up IDAS
 
 STAT:5400 students can run every code block on this page on [IDAS](https://its.uiowa.edu/idas).
-Do step 1 once. Do step 2 each time you start a new IDAS session.
+Do step 1 once. After that, step 2 is all you do.
 
 1.  **Save your OpenAI key.** Do this once, either in the R console or in a terminal on IDAS.
-    The first line adds a fake key to the file `~/.Renviron`. The second opens the file: replace
-    the fake key with your own and save. R reads this file when it starts, and the IDAS Python
-    file reads it too.
+    The first line adds a fake key to the file `~/.Renviron`. The last line opens the file:
+    replace the fake key with your own and save. R and Python both read this file.
 
     In the R console:
 
     ```{.r}
     cat("OPENAI_API_KEY=sk-fake-replace-with-your-key\n", file = "~/.Renviron", append = TRUE)
-    file.edit("~/.Renviron")          # replace the fake key with your own, then save
     Sys.chmod("~/.Renviron", "600")   # only you can read the file
+    file.edit("~/.Renviron")          # replace the fake key with your own, then save
     ```
 
     Or in a terminal:
 
     ```bash
     echo 'OPENAI_API_KEY=sk-fake-replace-with-your-key' >> ~/.Renviron
-    nano ~/.Renviron        # replace the fake key with your own; Ctrl+O saves, Ctrl+X exits
     chmod 600 ~/.Renviron   # only you can read the file
+    nano ~/.Renviron        # replace the fake key with your own; Ctrl+O saves, Ctrl+X exits
     ```
 
-    Then restart R (Session > Restart R). After the restart,
-    `nzchar(Sys.getenv("OPENAI_API_KEY"))` returns `TRUE` if the key is set.
+2.  **Run the code.** All the code on this page is in your `classFiles` folder:
+    `notes/section2/run/s2p4_idas.R` for RStudio, `notes/section2/run/s2p4_idas.py` for a
+    terminal, and `notes/section2/code/s2p4.ipynb` for Jupyter. First run the setup lines at the
+    top of the file, above the first section title (in the notebook, the first two code cells). They:
 
-    In a Jupyter notebook, nothing reads that file for you, and the notebook does not find the
-    class copy of `openai` by itself. Start the notebook with this cell:
+    -   it starts the class models, if they are not running yet;
+    -   it reads your key from `~/.Renviron`, so you do not need to restart R;
+    -   it prints a message with a link back to this section if your key is missing or wrong.
 
-    ```{.python}
-    import sys, os, getpass
-    sys.path.insert(0, os.path.expanduser("~/classdata/models/python"))   # class packages first
-    sys.modules.pop("typing_extensions", None)                             # forget the old system copy
-    from openai import OpenAI
-
-    os.environ["OPENAI_API_KEY"] = getpass.getpass("OpenAI key: ")
-    client = OpenAI()
-    ```
-
-    The key then lives in memory only, and is never saved inside the notebook. The file
-    `s2p4_idas.py` needs none of this: it reads `~/.Renviron` and finds the class packages
-    itself.
-
-2.  **Start the class models.** Open a terminal on IDAS and type the line below. It starts
-    Ollama with the open-weight models installed for the class, then lists them. Type `source`,
-    not `bash`, or the `ollama` command is not found afterwards.
-
-    ```bash
-    source ~/classFiles/notes/section2/run/s2p4_idas_models.sh
-    ```
-
-3.  **Run the code.** All the code on this page is in two files in your `classFiles` folder. Open
-    `notes/section2/run/s2p4_idas.R` in RStudio and run it one section at a time. For Python,
-    type `python ~/classFiles/notes/section2/run/s2p4_idas.py` in the terminal.
+    If they print nothing, you are ready. In your own notebook, copy the first two code cells of
+    `s2p4.ipynb` to the top.
 
 ## Your First Call
 
@@ -228,7 +207,7 @@ includes open-weight models that you run yourself, through
 [Ollama](https://ollama.com/){.more note="A program that runs open-weight models on your own computer and answers at a local address, in the same format the OpenAI library uses."}.
 They need no key and cost nothing.
 
--   **On IDAS**, start the class models first, as in [Setting up IDAS](#setting-up-idas).
+-   **On IDAS**, the setup lines at the top of each code file start the class models; see [Setting up IDAS](#setting-up-idas).
 -   **In the Codespace**, `llama3.2:1b` is already installed.
 
 ::: {.panel-tabset}
