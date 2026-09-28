@@ -57,9 +57,6 @@ prod(r)   # must be c/a = 1
 
 ## 1.5 Putting a function in its own file
 
-source("quadratic.R")
-QuadraticSolver(2, 4, 1)
-
 argumts <- list(aval=2, bval=4, cval=1)
 do.call(QuadraticSolver, argumts)
 
@@ -166,21 +163,34 @@ object.size(seq(5400))
 
 ## 2.3 The `apply` family of functions in R
 
+timeit <- function(..., times = 10) {
+  exprs <- as.list(substitute(list(...)))[-1]
+  env <- parent.frame()
+  out <- t(sapply(exprs, function(e) {
+    el <- replicate(times, system.time(eval(e, env))[["elapsed"]])
+    c(median_ms = 1000 * median(el), min_ms = 1000 * min(el))
+  }))
+  rownames(out) <- sapply(exprs, function(e) paste(deparse(e), collapse = ""))
+  round(out, 2)
+}
+
 # By hand
 # Chatbot: "Use apply(A, 2, mean). apply is vectorised, so it runs at C
 # speed and is much faster than writing the loop yourself. colMeans is
 # just a convenience wrapper around apply."
 A <- matrix(1:1000000, 1000, 1000)
-system.time(apply(A, 2, mean))
-system.time(colMeans(A))
+timeit(
+  apply(A, 2, mean),
+  colMeans(A)
+)
 
 A <- matrix(1:1000000, 1000, 1000)
 
-system.time(apply(A, 2, mean))
+timeit(apply(A, 2, mean))
 
-system.time(for(i in 1:1000) mean(A[,i]))
+timeit(for(i in 1:1000) mean(A[,i]))
 
-system.time(colMeans(A))
+timeit(colMeans(A))
 
 
 ## 2.4 `lapply` and `sapply`
@@ -214,11 +224,32 @@ factorial(170)
 factorial(171)
 prod(1:171)
 
+# By hand
 # how deep R lets calls nest before it stops
 getOption("expressions")
 
 
 ## 2.7 Timing the three versions
+
+MyFactorial1 <- function(nseq) {
+  return(sapply(nseq, factorial))
+}
+
+MyFactorial2 <- function(nseq) {
+  return(sapply(nseq,
+    function(x) Reduce('*', seq(x))))
+}
+
+MyFactorial1(c(5, 8, 10))
+MyFactorial2(c(5, 8, 10))
+
+timeit(
+  replicate(1000, factorial(c(5, 8, 10))),
+  replicate(1000, MyFactorial1(c(5, 8, 10))),
+  replicate(1000, MyFactorial2(c(5, 8, 10)))
+)
+
+library(microbenchmark)
 
 MyFactorial1 <- function(nseq) {
   return(sapply(nseq, factorial))
@@ -277,7 +308,7 @@ boxplot(Population ~ div, data=statedf)
 dev.off()
 
 
-## 5.7 Example of high-level function: Plot
+## 5.7 Example of high-level function: plot
 
 plot(statedf[,"div"], cex.axis=0.75,
   main="Number of States per Division")
@@ -314,7 +345,7 @@ plot(Area, Population)
 lines(lowess(Population ~ Area))
 lines(lowess(Population ~ Area, f=0.25), lty=2)
 legend(400000, 15000,
-  legend=c("f=2/3","f=1/14"), lty=1:2)
+  legend=c("f=2/3","f=0.25"), lty=1:2)
 detach(statedf)
 
 

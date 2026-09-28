@@ -147,7 +147,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -286,9 +286,7 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -338,19 +336,20 @@ window.Quarto = {
 All code on this page, in one file: <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section1/code/s1p1.R" target="_blank" rel="noopener"><i class="fa-brands fa-r-project"></i> R</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section1/code/s1p1.py" target="_blank" rel="noopener"><i class="fa-brands fa-python"></i> Python</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section1/code/s1p1.Rmd" target="_blank" rel="noopener"><i class="fa-brands fa-markdown"></i> Rmd</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section1/code/s1p1.ipynb" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i> ipynb</a>
 </div>
 </div>
+<p><em>Updated Sep 26, 2026: wording edits, the Codex link, and two section references.</em></p>
 <section id="why-statistics-data-science" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="why-statistics-data-science"><span class="header-section-number">1</span> Why statistics &amp; data science?</h2>
 <ul>
-<li><p>2009: “<em>I keep saying that the <span style="color:#0072B2">sexy</span> job in the next 10 years will be statisticians. And I’m not kidding.</em>”</p>
+<li><p>2009: “<em>I keep saying that the <span class="term">sexy</span> job in the next 10 years will be statisticians. And I’m not kidding.</em>”</p>
 <p><a href="http://www.nytimes.com/2009/08/06/technology/06stats.html" class="more" data-note="Varian was Google's chief economist when he said this; the interview was about the coming flood of free, abundant data and the scarcity of people who could make sense of it.">Hal Varian</a>, Chief Economist at Google</p></li>
-<li><p>2012: <a href="https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century">“Data Scientist: The <span style="color:#0072B2">Sexiest</span> Job of the 21st Century”</a>, Harvard Business Review.</p></li>
+<li><p>2012: <a href="https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century">“Data Scientist: The <span class="term">Sexiest</span> Job of the 21st Century”</a>, Harvard Business Review.</p></li>
 <li><p>2022: <a href="https://hbr.org/2022/07/is-data-scientist-still-the-sexiest-job-of-the-21st-century">“Is Data Scientist Still the Sexiest Job of the 21st Century?”</a>, Harvard Business Review.</p>
 <ul>
-<li>The U.S. Bureau of Labor Statistics predicts data science will see more growth than almost any other field between now and 2029. Data scientist jobs are projected to grow <strong>+36%</strong> (2023–2033), with over 20,000 openings per year.</li>
+<li>Data scientist jobs are projected to grow <strong>+36%</strong> (2023–2033), with over 20,000 openings per year.</li>
 <li>In 2024, the <a href="https://www.bls.gov/ooh/math/data-scientists.htm">median pay was $112,590</a>. The median salary for an experienced data scientist in California is approaching $200,000.</li>
 <li>Data Scientist is <a href="https://money.usnews.com/careers/best-jobs/rankings/best-stem-jobs">#6 <em>Best STEM Job</em></a> and <a href="https://money.usnews.com/careers/best-jobs/data-scientist">#4 <em>Best Technology Job</em></a>.</li>
 </ul></li>
-<li><p>2023–2025: the question changes. Nobody has written the next “sexiest job” piece; the discussion is now whether AI changes the job. <a href="https://www.linkedin.com/pulse/do-data-scientists-still-hold-worlds-sexiest-stephen-deangelis" class="more" data-note="Stephen DeAngelis, 'Do Data Scientists Still Hold the World's Sexiest Positions?', LinkedIn, Oct 2023: AI lets business specialists do analysis without code; data scientists stay essential for model accuracy and new methods.">A 2023 essay</a> argued the title is “being challenged by AI”; <a href="https://medium.com/data-science-collective/data-science-the-rise-fall-and-evolution-of-the-sexiest-job-of-the-21st-century-ad03d2a86fb9" class="more" data-note="'Data Science: The Rise, Fall, and Evolution of the Sexiest Job of the 21st Century', Medium, 2025: the hype cooled from its early-2010s peak, and the role split into analyst, engineer, and scientist tracks.">a 2025 essay</a> called it “the rise, fall, and evolution” of the job.</p></li>
+<li><p>2023–2025: the question changes. The discussion moved to whether AI changes the job. <a href="https://www.linkedin.com/pulse/do-data-scientists-still-hold-worlds-sexiest-stephen-deangelis" class="more" data-note="Stephen DeAngelis, 'Do Data Scientists Still Hold the World's Sexiest Positions?', LinkedIn, Oct 2023: AI lets business specialists do analysis without code; data scientists stay essential for model accuracy and new methods.">A 2023 essay</a> argued the title is “being challenged by AI”; <a href="https://medium.com/data-science-collective/data-science-the-rise-fall-and-evolution-of-the-sexiest-job-of-the-21st-century-ad03d2a86fb9">a 2025 essay</a> called it “the rise, fall, and evolution” of the job: the hype cooled, and the role split into analyst, engineer, and scientist tracks.</p></li>
 <li><p>2026: the numbers say the job kept growing. <a href="https://www.bls.gov/ooh/math/data-scientists.htm">BLS projects</a> data-scientist employment <strong>+34%</strong> over 2024–2034, about 23,400 openings a year; <a href="https://www.bls.gov/ooh/math/mathematicians-and-statisticians.htm">for statisticians</a>, growth “much faster than average” as well.</p></li>
 </ul>
 <div class="explore">
@@ -364,9 +363,9 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 </div>
 </section>
 <section id="data-science" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="data-science"><span class="header-section-number">2</span> Data Science</h2>
+<h2 data-number="2" class="anchored" data-anchor-id="data-science"><span class="header-section-number">2</span> Data science</h2>
 <ul>
-<li>The science of data science focuses on the <span style="color:#b8860b">computation</span> and <span style="color:#b8860b">inference</span> for the <span style="color:black"><strong>data-driven analysis</strong></span> from the <span style="color:#b8860b">interdisciplinary perspectives</span>.</li>
+<li>Data science uses <span class="term">computation</span> and <span class="term">inference</span> to analyze data from many fields.</li>
 <li>The term <strong>data science</strong> is believed to be credited to <a href="https://www.isye.gatech.edu/users/jeff-wu" class="more" data-note="C. F. Jeff Wu, now Professor Emeritus at Georgia Tech. His 1997 inaugural lecture at the University of Michigan was titled 'Statistics = Data Science?' and argued that statistics should be renamed data science.">Jeff Wu</a>, Georgia Tech.</li>
 <li>Statistical endeavors:
 <ul>
@@ -374,10 +373,10 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <li>Development of statistical methods and software</li>
 <li>Research in statistical theory</li>
 </ul></li>
-<li>Computing essential to all of statistical endeavors.
+<li>Computing is essential to all statistical work.
 <ul>
-<li>Computational intensive methods.</li>
-<li>Efficiency facilitate modern statistical research.</li>
+<li>Computationally intensive methods.</li>
+<li>Efficient computing makes modern statistical research possible.</li>
 <li>Large-scale data pipelines; GPU/TPU-accelerated algorithms.</li>
 </ul></li>
 </ul>
@@ -394,14 +393,14 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 </ul>
 <p><strong>What employers ask for</strong> (checked Aug 2026):</p>
 <ul>
-<li><strong>Statistician</strong> — <a href="https://www.onetonline.org/link/summary/15-2041.00" class="more" data-note="O*NET is the Department of Labor's occupation database, built from surveys of people in the job. Statisticians: median pay $105,650 (2025), 32,200 employed (2024), growth 'much faster than average' through 2034.">O*NET, U.S. Department of Labor, 15-2041</a>: top skills <em>mathematics, critical thinking, reading, listening, speaking</em>; tools employers list: <strong>Python, R</strong>, SAS, SPSS, Tableau, Excel.</li>
-<li><strong>Data scientist</strong> — <a href="https://www.onetonline.org/link/summary/15-2051.00" class="more" data-note="Data scientists: median pay $120,230 (2025), 245,900 employed (2024), growth 'much faster than average' through 2034.">O*NET, 15-2051</a>: top skills <em>mathematics, critical thinking, active learning, speaking</em>; tools: <strong>Python, SQL</strong>, Git, Spark, TensorFlow/PyTorch, AWS, Tableau.</li>
-<li><strong>Data-scientist job postings</strong> — <a href="https://365datascience.com/career-advice/data-scientist-job-market/" class="more" data-note="365 Data Science, 'Data Scientist Job Market 2026': 1,000 postings collected from Monster, 827 kept after cleaning. Percent of postings that name the skill.">827 U.S. postings, 2025–26</a>: machine learning 69%, <strong>Python 57%, R 33%, SQL 30%</strong>, NLP 19% (5% a year earlier); a graduate degree in 54% (PhD 24%, master’s 30%).</li>
-<li><strong>What is rising</strong> — <a href="https://news.linkedin.com/2026/Skills-on-the-rise-2026" class="more" data-note="LinkedIn, Feb 2026, from members adding skills and getting hired, Dec 2024 to Nov 2025. Postings asking for AI literacy grew more than 70% in a year.">LinkedIn <em>Skills on the Rise 2026</em></a>: AI literacy, data-driven decision making, data storytelling, data governance and responsible AI. <a href="https://hiringlab.indeed.com/2026/01/22/january-labor-market-update-jobs-mentioning-ai-are-growing-amid-broader-hiring-weakness/" class="more" data-note="Indeed Hiring Lab, Jan 2026: 45% of data &amp; analytics postings mention AI, the highest share of any field; 4.2% of all U.S. postings.">Indeed</a>: 45% of data &amp; analytics postings now mention AI.</li>
-<li><strong>What people use</strong> — <a href="https://survey.stackoverflow.co/2025/technology" class="more" data-note="About 49,000 developers, all fields, not only data science; R is small there because most respondents are software developers.">Stack Overflow Developer Survey 2025</a>: Python 58%, SQL 59%, R 5%; 84% use or plan to use AI tools, 33% trust the answers.</li>
+<li><strong>Statistician</strong>, <a href="https://www.onetonline.org/link/summary/15-2041.00" class="more" data-note="O*NET is the Department of Labor's occupation database, built from surveys of people in the job. Statisticians: median pay $105,650 (2025), 32,200 employed (2024), growth 'much faster than average' through 2034.">O*NET, U.S. Department of Labor, 15-2041</a>: top skills <em>mathematics, critical thinking, reading, listening, speaking</em>; tools employers list: <strong>Python, R</strong>, SAS, SPSS, Tableau, Excel.</li>
+<li><strong>Data scientist</strong>, <a href="https://www.onetonline.org/link/summary/15-2051.00" class="more" data-note="Data scientists: median pay $120,230 (2025), 245,900 employed (2024), growth 'much faster than average' through 2034.">O*NET, 15-2051</a>: top skills <em>mathematics, critical thinking, active learning, speaking</em>; tools: <strong>Python, SQL</strong>, Git, Spark, TensorFlow/PyTorch, AWS, Tableau.</li>
+<li><strong>Data-scientist job postings</strong>, <a href="https://365datascience.com/career-advice/data-scientist-job-market/" class="more" data-note="365 Data Science, 'Data Scientist Job Market 2026': 1,000 postings collected from Monster, 827 kept after cleaning. Percent of postings that name the skill.">827 U.S. postings, 2025–26</a>: machine learning 69%, <strong>Python 57%, R 33%, SQL 30%</strong>, NLP 19% (5% a year earlier); a graduate degree in 54% (PhD 24%, master’s 30%).</li>
+<li><strong>What is rising</strong>, <a href="https://news.linkedin.com/2026/Skills-on-the-rise-2026" class="more" data-note="LinkedIn, Feb 2026, from members adding skills and getting hired, Dec 2024 to Nov 2025. Postings asking for AI literacy grew more than 70% in a year.">LinkedIn <em>Skills on the Rise 2026</em></a>: AI literacy, data-driven decision making, data storytelling, data governance and responsible AI. <a href="https://hiringlab.indeed.com/2026/01/22/january-labor-market-update-jobs-mentioning-ai-are-growing-amid-broader-hiring-weakness/">Indeed Hiring Lab, Jan 2026</a>: 45% of data &amp; analytics postings now mention AI, the highest share of any field.</li>
+<li><strong>What people use</strong>, <a href="https://survey.stackoverflow.co/2025/technology" class="more" data-note="About 49,000 developers, all fields, not only data science; R is small there because most respondents are software developers.">Stack Overflow Developer Survey 2025</a>: Python 58%, SQL 59%, R 5%; 84% use or plan to use AI tools, 33% trust the answers.</li>
 <li>Live listings: <a href="https://www.glassdoor.com/Job/us-data-scientist-jobs-SRCH_IL.0,2_IN1_KO3,17.htm">Glassdoor, data scientist</a> · <a href="https://www.bls.gov/ooh/math/data-scientists.htm">BLS, data scientists</a> · <a href="https://www.bls.gov/ooh/math/mathematicians-and-statisticians.htm">BLS, statisticians</a>.</li>
 </ul>
-<p>Read the two O*NET lists again: both start with <strong>mathematics and critical thinking</strong>; the tools come after. Your degree is the first part. This course is the second: <strong>Python, R, SQL, Git</strong>, and the habit of checking.</p>
+<p>Both O*NET lists start with <strong>mathematics and critical thinking</strong>; the tools come second. This course teaches the tools: <strong>Python, R, SQL, Git</strong>, and checking your results.</p>
 <div class="explore">
 <span class="explore-label">Ask AI:</span><span class="explore-prompt">What are the key skills employers want from a statistician or a data scientist in 2026? Cite sources with dates.</span>
 <div class="explore-buttons">
@@ -459,25 +458,25 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <ul>
 <li>2017: the <span class="more" data-note="'Attention Is All You Need', Vaswani et al., Google, 2017. Every model below is built on it.">transformer</span>.</li>
 <li>2018–2020: GPT-1, BERT, GPT-2, then GPT-3 with 175 billion parameters. Trained on text; it saw little code.</li>
-<li>2021: <a href="https://arxiv.org/abs/2502.19411" class="more" data-note="Chen et al., 2021, 'Evaluating Large Language Models Trained on Code'. GitHub Copilot is built on it. Models trained on code turned out better at step-by-step reasoning in general, not only at coding; see the survey arXiv 2502.19411.">Codex</a> and GitHub Copilot. Adding code to training data made models better at reasoning, not just at code. That is one reason “AI can code” arrived before “AI can reason”.</li>
+<li>2021: <a href="https://arxiv.org/abs/2107.03374" class="more" data-note="Chen et al., 2021, 'Evaluating Large Language Models Trained on Code'. GitHub Copilot is built on it. Models trained on code turned out better at step-by-step reasoning in general, not only at coding; see the survey arXiv 2502.19411.">Codex</a> and GitHub Copilot. Studies suggest that code in the training data also helped general reasoning.</li>
 <li>November 30, 2022: ChatGPT. 100 million users in two months.</li>
 <li>2023: GPT-4 (March), Llama with open weights, Claude, Gemini (December).</li>
 <li>2024: GPT-4o, Claude 3, Gemini 1.5 with a million-token context, the first “reasoning” models (o1, September). Also the year <a href="https://mindyourdecisions.com/blog/2024/08/07/9-11-is-larger-than-9-9-according-to-ai/" class="more" data-note="July 2024. Asked 'which is larger, 9.11 or 9.9?', ChatGPT and Meta AI answered 9.11, treating the digits after the point as whole numbers. Gemini got it right. The error was inconsistent: about half the time.">ChatGPT said 9.11 is larger than 9.9</a>.</li>
 <li>2025: DeepSeek-R1 (January): open weights, a fraction of the cost. Agents and tool use everywhere. GPT-5 (August).</li>
-<li>2026: GPT-5.6, Claude 5, Gemini 3.6, DeepSeek V4, and <span class="more" data-note="Release trackers count more than 360 model releases so far in 2026.">hundreds more</span>. The model you use this semester will be replaced before you graduate; the statistics will not.</li>
+<li>2026: GPT-5.6, Claude 5, Gemini 3.6, DeepSeek V4, and <span class="more" data-note="Release trackers count more than 360 model releases so far in 2026.">hundreds more</span>.</li>
 </ul>
-<p>The short version, for this course. For the long one, IBM has a good <a href="https://www.ibm.com/think/topics/history-of-artificial-intelligence">history of AI</a>.</p>
+<p>This is a short history. For a longer one, see IBM’s <a href="https://www.ibm.com/think/topics/history-of-artificial-intelligence">history of AI</a>.</p>
 </section>
 </section>
 <section id="ai-for-statistics-statistics-for-ai" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="ai-for-statistics-statistics-for-ai"><span class="header-section-number">4</span> AI for statistics, statistics for AI</h2>
-<p>Two directions, and this course runs both ways.</p>
+<p>This course covers both directions.</p>
 <ul>
-<li><p><strong>AI for statistics</strong> — the model as a tool in the statistician’s workflow.</p>
+<li><p><strong>AI for statistics:</strong> the model as a tool in the statistician’s workflow.</p>
 <ul>
 <li>Writing and translating code: R ↔︎ Python, a loop → a vectorized version, a formula → a function (Section 2).</li>
 <li>Cleaning and extracting: messy text → a tidy table; <span class="more" data-note="You tell the model the exact shape of the answer you want (fields, types), and it returns data your code can use instead of prose.">structured output</span> instead of prose (Section 2.4).</li>
-<li>Designing and explaining: draft a simulation study, explain an error message, summarize a paper — then <em>you</em> verify.</li>
+<li>Designing and explaining: draft a simulation study, explain an error message, summarize a paper. Then <em>you</em> verify.</li>
 <li>Learning: the <em>Ask AI</em> buttons in these notes, and the course tutor.</li>
 <li>Agents: an AI that runs a small analysis end to end, from data to report, while you watch each step. In class we replay <a href="https://agentlab.morphmind.ai/en/share/replay/bp7e9jff">one on MorphMind</a> (free tier, no payment required).</li>
 </ul>
@@ -486,19 +485,19 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <li><a href="https://help.openai.com/en/articles/8437071-data-analysis-with-chatgpt" class="more" data-note="Upload a CSV or Excel file; ChatGPT writes and runs Python in a sandbox and returns the code, tables, and charts.">ChatGPT</a>: upload a file, it writes and runs Python and shows you the code.</li>
 <li><a href="https://claude.com/blog/analysis-tool" class="more" data-note="Claude's analysis tool ran JavaScript in the chat; since November 2025 it is code execution: files, charts, multi-step workflows. Claude Code does the same in a terminal.">Claude</a>: code execution in the chat, or Claude Code in a terminal.</li>
 <li><a href="https://developers.googleblog.com/en/data-science-agent-in-colab-with-gemini/" class="more" data-note="Free in Google Colab: describe the goal in plain English and it writes a full notebook, from loading the data to plots and a model.">Gemini’s Data Science Agent in Colab</a>: describe the goal, get a whole notebook.</li>
-<li><a href="https://morphmind.ai" class="more" data-note="A team of specialist agents with a project-manager agent; every step shows its sources and can be corrected; sessions can be shared and replayed, like the one above.">MorphMind AgentLab</a>: a team of agents with receipts for every step.</li>
-<li>Open source: <a href="https://github.com/geekan/MetaGPT/blob/main/examples/di/README.md" class="more" data-note="Plans, writes, and runs code for a data task; arXiv 2402.18679.">MetaGPT’s Data Interpreter</a>, <a href="https://docs.kanaries.net/articles/pandas-ai" class="more" data-note="Chat with a data frame in plain English; it writes the pandas or SQL.">PandasAI</a>, and agent frameworks such as LangGraph, CrewAI, and the OpenAI Agents SDK.</li>
+<li><a href="https://morphmind.ai" class="more" data-note="A team of specialist agents with a project-manager agent; every step shows its sources and can be corrected; sessions can be shared and replayed, like the one above.">MorphMind AgentLab</a>: a team of agents that shows its sources for every step.</li>
+<li>Open source: <a href="https://github.com/geekan/MetaGPT/blob/main/examples/di/README.md" class="more" data-note="Plans, writes, and runs code for a data task; arXiv 2402.18679.">MetaGPT’s Data Interpreter</a>, <a href="https://docs.kanaries.net/articles/pandas-ai">PandasAI</a> (chat with a data frame in plain English; it writes the pandas or SQL), and agent frameworks such as LangGraph, CrewAI, and the OpenAI Agents SDK.</li>
 <li>From R: <code>ellmer</code> with tool calling (Section 2.4) lets you build a small one yourself.</li>
 </ul></li>
-<li><p><strong>Statistics for AI</strong> — the model as an object of statistical study.</p>
+<li><p><strong>Statistics for AI:</strong> the model as an object of statistical study.</p>
 <ul>
 <li>An LLM is a <span class="more" data-note="Each word is drawn from a probability distribution over the vocabulary; temperature and top-p are knobs on that distribution.">sampler</span>: temperature and top-p are the same ideas as random-variate generation (Section 3).</li>
 <li>Evaluating a model is a simulation study: accuracy is an estimate, needs a confidence interval, and “how many test prompts?” is a sample-size question (Section 3).</li>
 <li>Bootstrap a benchmark score; test whether model A really beats model B (Section 4).</li>
-<li>Calibration, hallucination rates, and uncertainty for a black box (conformal prediction) — the statistician’s contribution to trustworthy AI (Section 6).</li>
+<li>Calibration, hallucination rates, and uncertainty for a black box (conformal prediction). This is the statistician’s contribution to trustworthy AI (Section 6).</li>
 </ul></li>
-<li><p><strong>Statistics has an edge here.</strong> An LLM is a probability model: it generates text from a distribution and predicts the next word. Generating from a distribution, prediction, inference: these are the questions statistics has worked on for a century.</p></li>
-<li><p><strong>Then why are statisticians not playing a larger role in AI?</strong> Not for lack of ideas. What is missing is often the skills: large-scale computation, modern coding practice, text as data. This course is about closing that gap.</p></li>
+<li><p><strong>Statistics is well placed here.</strong> An LLM is a probability model: it generates text from a distribution and predicts the next word. Generating from a distribution, prediction, inference: these are the questions statistics has worked on for a century.</p></li>
+<li><p><strong>Then why are statisticians not playing a larger role in AI?</strong> One reason is skills, not ideas: large-scale computation, modern coding practice, and text as data. This course teaches these skills.</p></li>
 </ul>
 <p><span class="source">Reference: <em>An Overview of Large Language Models for Statisticians</em>, The American Statistician (2025), arXiv:2502.17814.</span></p>
 <div class="explore">
@@ -514,7 +513,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <section id="why-learn-to-code-when-ai-can-code" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="why-learn-to-code-when-ai-can-code"><span class="header-section-number">5</span> Why learn to code when AI can code?</h2>
 <ul>
-<li><strong>Interviews have no AI in them.</strong>
+<li><strong>Many interviews do not allow AI.</strong>
 <ul>
 <li><a href="https://fortune.com/2025/07/21/billion-dollar-giant-anthropic-ai-ban-hiring-policy-change-job-seekers-interview-process" class="more" data-note="Anthropic, the company behind Claude, allows no AI tools in live interviews and has dropped candidates who used them. In 2025 it banned AI in written applications too, then allowed it for the essay parts only.">Anthropic bans it in live interviews</a> and has dropped candidates who used it.</li>
 <li><a href="https://fabrichq.ai/blogs/state-of-cheating-in-interviews-in-2026-tools-trends-and-prevention" class="more" data-note="Sundar Pichai, internal town hall, February 2025: some roles will interview in person again because of AI use in remote interviews.">Google is moving interviews back in person</a>.</li>
@@ -522,11 +521,11 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 </ul></li>
 <li><strong>Many employers do not allow it.</strong>
 <ul>
-<li><a href="https://cbsnews.com/news/chatgpt-jpmorgan-chase-bars-workers-from-using-ai-tool" class="more" data-note="JPMorgan, Bank of America, Citi, Goldman Sachs, and Wells Fargo restricted ChatGPT in 2023; banks cannot send client data to an outside service.">The big banks</a>, <a href="https://tech.co/news/tech-companies-banning-generative-ai" class="more" data-note="May 2023, after engineers pasted internal source code into ChatGPT. Apple restricted it the same month.">Samsung</a>, and Apple restricted ChatGPT.</li>
+<li><a href="https://cbsnews.com/news/chatgpt-jpmorgan-chase-bars-workers-from-using-ai-tool" class="more" data-note="JPMorgan, Bank of America, Citi, Goldman Sachs, and Wells Fargo restricted ChatGPT in 2023; banks cannot send client data to an outside service.">The big banks</a>, <a href="https://tech.co/news/tech-companies-banning-generative-ai">Samsung</a> (May 2023, after engineers pasted internal source code into ChatGPT), and Apple restricted ChatGPT.</li>
 <li>Patient records, clinical trials, government work: the data cannot leave the building.</li>
 <li><a href="https://its.uiowa.edu/ai-guidelines-and-use-cases" class="more" data-note="ITS guidelines: Copilot Chat with your HawkID for university data, never a public chatbot; restricted data and student records never; a person checks every AI output before it is used.">At Iowa</a>: university data goes only into Copilot Chat with your HawkID, and a person checks every output.</li>
 </ul></li>
-<li><strong>AI code is often almost right. Almost is your job.</strong>
+<li><strong>AI code is often almost right, and you have to find the part that is wrong.</strong>
 <ul>
 <li><a href="https://survey.stackoverflow.co/2025/ai" class="more" data-note="Stack Overflow Developer Survey 2025: the top frustration is AI answers that are almost right; 45% say debugging AI code takes longer than writing it.">66% of developers</a> say their biggest problem is code that is almost right.</li>
 <li><a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" class="more" data-note="METR, July 2025: 16 experienced open-source developers, 246 real tasks, randomly assigned AI or no AI. 19% slower with AI, while believing they were 20% faster. One trial, small sample.">A randomized trial</a> found experienced developers 19% slower with AI, while they believed they were faster.</li>
@@ -535,17 +534,17 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 </ul></li>
 <li><strong>Big models are expensive.</strong>
 <ul>
-<li><a href="https://zylo.com/blog/openai-api-pricing" class="more" data-note="Reported 2026: 84% of Uber's 5,000 engineers on an AI coding tool at $500-2,000 per engineer per month. Zylo, April 2026: the average organization spends $384,500 a year on the OpenAI API.">Uber’s engineers</a> ran up $500 to $2,000 a month each on AI coding tools.</li>
+<li><a href="https://zylo.com/blog/openai-api-pricing" class="more" data-note="Reported 2026: 84% of Uber's 5,000 engineers on an AI coding tool at $500-2,000 per engineer per month. Zylo, April 2026: the average organization spends $384,500 a year on the OpenAI API.">Uber’s engineers</a> spent $500 to $2,000 a month each on AI coding tools.</li>
 <li><a href="https://www.forbes.com/sites/quickerbettertech/2025/05/18/business-tech-news-klarna-reverses-on-ai-says-customers-like-talking-to-people/" class="more" data-note="Klarna cut about 700 customer-service jobs for AI in 2024. May 2025: 'we focused too much on efficiency and cost'; hiring people again.">Klarna</a> replaced 700 support staff with AI, then hired people back.</li>
 <li>By 2026 the headline was <a href="https://fortune.com/2026/05/22/microsoft-ai-cost-problem-tokens-agents/" class="more" data-note="Axios, April 2026; Fortune, May 2026, on Microsoft's token costs; Forbes, July 2026: 'AI costs more than the people it replaced'.">“AI can cost more than the human workers”</a>.</li>
-<li><a href="https://arxiv.org/abs/2506.02153" class="more" data-note="'Small Language Models are the Future of Agentic AI', 2025: agents mostly do narrow, repetitive tasks; small models are cheaper and good enough, with a large model called only for the hard step.">NVIDIA</a> argues agents should run on small, specialized models. Someone has to build them. That is programming plus statistics.</li>
+<li><a href="https://arxiv.org/abs/2506.02153" class="more" data-note="'Small Language Models are the Future of Agentic AI', 2025: agents mostly do narrow, repetitive tasks; small models are cheaper and good enough, with a large model called only for the hard step.">NVIDIA</a> argues agents should run on small, specialized models. Building and evaluating such small models takes both programming and statistics.</li>
 </ul></li>
 <li><strong>You cannot supervise what you do not understand.</strong>
 <ul>
 <li>The job is moving from writing code to checking it.</li>
 <li><a href="https://fortune.com/2025/10/07/deloitte-ai-australia-government-report-hallucinations-technology-290000-refund" class="more" data-note="October 2025: a AU$440,000 report cited papers that do not exist and quoted a judge who never said it. Deloitte admitted using Azure OpenAI and refunded part of the fee.">Deloitte refunded the Australian government</a> for a report with invented citations.</li>
 <li><a href="https://thedailyrecord.com/2025/10/13/california-lawyer-ai-fake-citations-fine/" class="more" data-note="2025: $10,000 in California for 21 fake cases from ChatGPT; $31,100 in a federal case in Los Angeles; $6,000 in Indiana; a habeas filing with quotes invented by Claude.">Courts keep fining lawyers</a> for citing cases that do not exist.</li>
-<li>Statistics is the discipline of knowing when to trust an estimate. An AI answer is an estimate.</li>
+<li>Checking an AI answer uses the skill you use to check an estimate: ask how it could be wrong and test it.</li>
 </ul></li>
 </ul>
 <div class="explore">
@@ -576,7 +575,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <li>Bisection search, Newton’s method, gradient descent.</li>
 <li>Bootstrap, cross-validation.</li>
 </ul></li>
-<li>Experience of computational intensive methods.
+<li>Experience of computationally intensive methods.
 <ul>
 <li>High-dimensional statistics.</li>
 <li>Machine learning methods.</li>
@@ -591,27 +590,27 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 </section>
 <section id="set-up-your-accounts" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="set-up-your-accounts"><span class="header-section-number">7</span> Set up your accounts</h2>
-<p><span class="mode"><i class="fa-solid fa-play" aria-label="play"></i> Run</span> — first, click <em>Run Code</em>. This runs in your browser; nothing to install.</p>
+<p><span class="mode"><i class="fa-solid fa-play" aria-label="play"></i> Run</span> First, click <em>Run Code</em>. This runs in your browser; nothing to install.</p>
 <div class="cell">
 <div>
 <div id="webr-1" class="exercise-cell">
 
 </div>
 <script type="webr-1-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5tZWFuKHgpIn0=
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoic2V0LnNlZWQoNTQwMClcbnggPC0gcm5vcm0oMTAwKVxubWVhbih4KSJ9
 </script>
 </div>
 </div>
 <p>Do these this week; the notes assume them from Section 2 on.</p>
 <ol type="1">
-<li><p><strong>GitHub account</strong> — <a href="https://github.com/signup" class="uri">https://github.com/signup</a>. Add and verify your <code>@uiowa.edu</code> email under Settings → Emails.</p></li>
-<li><p><strong>GitHub Education</strong> (free Copilot and Pro-level Codespaces) — <a href="https://github.com/settings/education/benefits" class="uri">https://github.com/settings/education/benefits</a> → <em>Start an application</em>. Proof: a current student ID, class schedule, or enrollment letter; using the <code>@uiowa.edu</code> email speeds review. When approved, GitHub Copilot Student and Codespaces are activated on your account.</p></li>
-<li><p><strong>Test the Codespace</strong> — click <em>Open in Codespace</em> at the top of this page. The first start builds the course environment (a few minutes); later starts take about 30 seconds. Open <code>notes/section1/run/s1p1_sumC.R</code>, put the cursor on line 3, press Cmd/Ctrl+Enter.</p></li>
-<li><p><strong>One chatbot login</strong> — ChatGPT, Claude, or Gemini; the free tier is enough. The <em>Ask AI</em> buttons in these notes open one of them with the question filled in.</p></li>
-<li><p><strong>A Gemini API key</strong> (free) — <a href="https://aistudio.google.com/apikey" class="uri">https://aistudio.google.com/apikey</a>. Used by the first API call in <a href="#sec-first-llm-call" class="quarto-xref">Section&nbsp;17</a>. Details in the box below.</p></li>
+<li><p><strong>GitHub account</strong>: <a href="https://github.com/signup" class="uri">https://github.com/signup</a>. Add and verify your <code>@uiowa.edu</code> email under Settings → Emails.</p></li>
+<li><p><strong>GitHub Education</strong> (free Copilot and Pro-level Codespaces): <a href="https://github.com/settings/education/benefits" class="uri">https://github.com/settings/education/benefits</a> → <em>Start an application</em>. Proof: a current student ID, class schedule, or enrollment letter; using the <code>@uiowa.edu</code> email speeds review. When approved, GitHub Copilot Student and Codespaces are activated on your account.</p></li>
+<li><p><strong>Test the Codespace</strong>: click <em>Open in Codespace</em> at the top of this page. The first start builds the course environment (a few minutes); later starts take about 30 seconds. Open <code>notes/section1/run/s1p1_sumC.R</code>, select all lines, and press Cmd/Ctrl+Enter. Done when the timing table appears.</p></li>
+<li><p><strong>One chatbot login</strong>: ChatGPT, Claude, or Gemini; the free tier is enough. The <em>Ask AI</em> buttons in these notes open one of them with the question filled in.</p></li>
+<li><p><strong>A Gemini API key</strong> (free): <a href="https://aistudio.google.com/apikey" class="uri">https://aistudio.google.com/apikey</a>. Used by the first API call in <a href="#sec-first-llm-call" class="quarto-xref">Section&nbsp;17</a>. Details in the box below.</p></li>
 <li><p><strong>OpenAI and Anthropic keys</strong> (optional, paid; $5 is enough for the course). Details below.</p></li>
-<li><p><strong>University systems</strong> — the department’s Linux servers <code>l-lnx2xy.stat.uiowa.edu</code> (HawkID, <code>ssh</code>; VPN from off campus; Tech Guide in Section 2); <a href="https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514939/Requesting+An+IDAS+Account">IDAS</a> for the midterm; <a href="https://research.its.uiowa.edu/our-services/computing-services/argon-high-performance-computing-hpc">Argon</a>, the campus cluster, if you want it (I request class access; for research ask your advisor).</p></li>
-<li><p><strong>MorphMind account</strong> (free) — <a href="https://morphmind.ai" class="uri">https://morphmind.ai</a>. The course tutor and the agent demos run there.</p></li>
+<li><p><strong>University systems</strong>: the department’s Linux servers <code>l-lnx2xy.stat.uiowa.edu</code> (HawkID, <code>ssh</code>; VPN from off campus; Tech Guide in Section 2); <a href="https://uiowa.atlassian.net/wiki/spaces/hpcdocs/pages/76514939/Requesting+An+IDAS+Account">IDAS</a> for the midterm; <a href="https://research.its.uiowa.edu/our-services/computing-services/argon-high-performance-computing-hpc">Argon</a>, the campus cluster, if you want it (I request class access; for research ask your advisor).</p></li>
+<li><p><strong>MorphMind account</strong> (free): <a href="https://morphmind.ai" class="uri">https://morphmind.ai</a>. The course tutor and the agent demos run there.</p></li>
 </ol>
 <p><span class="more" data-note="Keys leak most often through git commits and screenshots. If one leaks, delete it on the provider's page and create a new one.">Never paste an API key into a script, a notebook, or these notes. A key in a public repository is found and abused within minutes.</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Gemini API key, step by step (free)">
@@ -626,6 +625,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>The Gemini key is free and takes about five minutes.</strong></p>
 <ol type="1">
 <li>Go to <a href="https://aistudio.google.com/apikey" class="uri">https://aistudio.google.com/apikey</a> and sign in with a Google account (your personal one is fine).</li>
 <li>Click <strong>Create API key</strong>. If it asks for a project, accept the default. Copy the key; it looks like <code>AIza...</code>.</li>
@@ -649,6 +649,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>The OpenAI key needs $5 of credit before it works.</strong></p>
 <ol type="1">
 <li><a href="https://platform.openai.com" class="uri">https://platform.openai.com</a> → sign up (this is separate from a ChatGPT subscription).</li>
 <li><strong>Settings</strong> → <strong>Billing</strong> → add a payment method and buy $5 of credit. Nothing runs without credit.</li>
@@ -671,6 +672,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>The Anthropic key follows the same steps as the OpenAI key.</strong></p>
 <ol type="1">
 <li><a href="https://console.anthropic.com" class="uri">https://console.anthropic.com</a> → sign up (separate from a Claude.ai subscription).</li>
 <li><strong>Billing</strong> → buy $5 of credit.</li>
@@ -693,17 +695,18 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>No key, no cost, works offline. The course Codespace already has Ollama with two models: <code>qwen2.5:0.5b</code> (Alibaba, 0.5 billion parameters, 0.4 GB) and <code>llama3.2:1b</code> (Meta, 1 billion, 1.3 GB). On your own computer, Ollama is one download.</p>
+<p><strong>No key, no cost, works offline.</strong> The course Codespace already has Ollama with two models: <code>qwen2.5:0.5b</code> (Alibaba, 0.5 billion parameters, 0.4 GB) and <code>llama3.2:1b</code> (Meta, 1 billion, 1.3 GB). On your own computer, Ollama is one download.</p>
 <ol type="1">
 <li><p>On your laptop: install from <a href="https://ollama.com" class="uri">https://ollama.com</a> (Mac, Windows, Linux), then <code>ollama pull qwen2.5:0.5b</code> and <code>ollama pull llama3.2:1b</code> in a terminal. In the Codespace, skip this.</p></li>
 <li><p>From R, <code>ellmer</code> talks to a local model the same way it talks to Gemini. Only the function name changes; Ollama is a small server on your own machine.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>small  <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"qwen2.5:0.5b"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bigger <span class="ot">&lt;-</span> <span class="fu">chat_ollama</span>(<span class="at">model =</span> <span class="st">"llama3.2:1b"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>small<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Which is larger, 9.11 or 9.9? Answer in one line."</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>bigger<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Which is larger, 9.11 or 9.9? Answer in one line."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section1/run/s1p1_ollama.R</code></span></div>
-<p>Ask the small one five times. It still gets this wrong some of the time; that is the 2024 story in <a href="#sec-ai-data-science" class="quarto-xref">Section&nbsp;3</a>, on a machine you control. The 1B model is slower and more often right. Bigger models need more memory than a Codespace has; on your laptop try <code>llama3.2</code> (3B).</p></li>
+<p>Ask the small one five times. It may still get this wrong some of the time; that is the 2024 story in <a href="#sec-ai-data-science" class="quarto-xref">Section&nbsp;3</a>, on a machine you control. The 1B model is slower and may be right more often. Bigger models need more memory than a Codespace has; on your laptop try <code>llama3.2</code> (3B).</p></li>
 <li><p>From Python: <code>import ollama; ollama.chat(model="qwen2.5:0.5b", messages=[{"role": "user", "content": "..."}])</code>.</p></li>
 <li><p>If <code>chat_ollama()</code> says it cannot find a running Ollama, the server did not start: type <code>ollama serve &amp;</code> in the terminal, wait three seconds, try again.</p></li>
 <li><p>Also worth knowing: the R package <code>localLLM</code> loads a model inside R with no server at all. We will use it in the Tech Guide.</p></li>
@@ -733,6 +736,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>Install R first, then an editor to write R in.</strong></p>
 <ol type="1">
 <li>R: <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a> → your operating system → the latest release. Mac: pick the Apple silicon build if your Mac is M1 or newer.</li>
 <li>RStudio: <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>. Or Positron, Posit’s newer editor for R and Python: <a href="https://positron.posit.co" class="uri">https://positron.posit.co</a>.</li>
@@ -763,6 +767,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>uv installs Python and keeps the packages of each project apart.</strong></p>
 <ol type="1">
 <li>Install uv: <a href="https://docs.astral.sh/uv/getting-started/installation/" class="uri">https://docs.astral.sh/uv/getting-started/installation/</a> (one command for Mac, Linux, or Windows).</li>
 <li><code>uv python install 3.12</code></li>
@@ -793,6 +798,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>VS Code is one editor for R, Python, and Quarto, with Copilot inside.</strong></p>
 <ol type="1">
 <li>VS Code: <a href="https://code.visualstudio.com" class="uri">https://code.visualstudio.com</a>.</li>
 <li>Extensions (View → Extensions): Quarto, R, Python, Jupyter, GitHub Copilot.</li>
@@ -823,6 +829,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>git is one install, and the Mac compiler tools already include it.</strong></p>
 <ol type="1">
 <li>Mac: <code>xcode-select --install</code> in Terminal gives you git and a C compiler. Windows: <a href="https://git-scm.com/download/win" class="uri">https://git-scm.com/download/win</a>. Linux: <code>sudo apt install git</code>.</li>
 <li>Tell git who you are: <code>git config --global user.name "Your Name"</code> and <code>git config --global user.email "you@uiowa.edu"</code>.</li>
@@ -843,7 +850,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBybm9ybSgxMDApXG5t
 </section>
 </section>
 <section id="applied-statistics" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="applied-statistics"><span class="header-section-number">8</span> Applied Statistics</h2>
+<h2 data-number="8" class="anchored" data-anchor-id="applied-statistics"><span class="header-section-number">8</span> Applied statistics</h2>
 <p>Application of some statistical tools to analyze a practical problem.</p>
 <p>Data collection <span class="math inline">\(\to\)</span> modeling <span class="math inline">\(\to\)</span> decision making.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -893,20 +900,21 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoidGVtcCAgIDwtIGMoNTMsIDU3
 <section id="demonstration-of-better-implementation" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="demonstration-of-better-implementation"><span class="header-section-number">10</span> Demonstration of better implementation</h2>
 <p>Two kinds of code block appear below. Blocks with a <strong>Run Code</strong> button run in your browser. Blocks that need a C++ compiler or a precise clock cannot run in a browser; a <strong>Run in Codespace</strong> button opens the same code in a real R.</p>
-<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — as on the slide:</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> The same comparison with <code>microbenchmark</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">microbenchmark</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(x),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">^</span> <span class="fl">0.5</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5400</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">microbenchmark</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(x),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">^</span> <span class="fl">0.5</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section1/run/s1p1_microbenchmark.R</code></span></div>
 <ul>
 <li>By default, each expression was run 100 times.</li>
-<li>Unit: ns – 1 billionth of a second, which says 1 billion calls take a second.<br>
+<li>Unit: ns (nanosecond), 1 ns = <span class="math inline">\(10^{-9}\)</span> seconds.<br>
 microseconds (<span class="math inline">\(\mu\)</span>s): 1 millionth of a second;<br>
 milliseconds (ms): 1 thousandth of a second.</li>
 </ul>
@@ -928,22 +936,22 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOmZhbHNlLCJldmFsIjp0cnVlfSwiY29kZSI6InRp
 
 </div>
 <script type="webr-4-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBydW5pZigxZTYpXG50aW1laXQoXG4gIHNxcnQoeCksXG4gIHggXiAwLjVcbikifQ==
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoic2V0LnNlZWQoNTQwMClcbnggPC0gcnVuaWYoMWU2KVxudGltZWl0KFxuICBzcXJ0KHgpLFxuICB4IF4gMC41XG4pIn0=
 </script>
 </div>
 </div>
-<p><span class="mode"><i class="fa-solid fa-edit" aria-label="edit"></i> Edit</span> — change the vector length or add your own pair of expressions, then rerun.</p>
+<p><span class="mode"><i class="fa-solid fa-edit" aria-label="edit"></i> Edit</span> Change the vector length or add your own pair of expressions, then rerun.</p>
 <div class="cell">
 <div>
 <div id="webr-5" class="exercise-cell">
 
 </div>
 <script type="webr-5-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoieCA8LSBydW5pZigxZTYpXG50aW1laXQoXG4gIHggKiB4ICogeCxcbiAgeCBeIDMsXG4gIHggKiAwLjEsXG4gIHggLyAxMFxuKVxuXG54IDwtIG1hdHJpeCgyLCAxMDAwLCAxMDAwKVxudGltZWl0KFxuICBjb2xNZWFucyh4KSxcbiAgcm93TWVhbnMoeClcbikifQ==
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoic2V0LnNlZWQoNTQwMClcbnggPC0gcnVuaWYoMWU2KVxudGltZWl0KFxuICB4ICogeCAqIHgsXG4gIHggXiAzLFxuICB4ICogMC4xLFxuICB4IC8gMTBcbilcblxueCA8LSBtYXRyaXgoMiwgMTAwMCwgMTAwMClcbnRpbWVpdChcbiAgY29sTWVhbnMoeCksXG4gIHJvd01lYW5zKHgpXG4pIn0=
 </script>
 </div>
 </div>
-<p><span class="mode"><i class="fa-solid fa-play" aria-label="play"></i> Run</span> — the same product, two ways to put the parentheses.</p>
+<p><span class="mode"><i class="fa-solid fa-play" aria-label="play"></i> Run</span> The same product, two ways to put the parentheses.</p>
 <div class="cell">
 <div>
 <div id="webr-6" class="exercise-cell">
@@ -954,37 +962,38 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiQTEgPC0gbWF0cml4KDIsIDEw
 </script>
 </div>
 </div>
-<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — a plain R loop vs C++ (through Rcpp) vs the built-in <code>sum()</code>. A browser cannot compile C++.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> A plain R loop vs C++ (through Rcpp) vs the built-in <code>sum()</code>. A browser cannot compile C++.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rcpp)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sumR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    total <span class="ot">&lt;-</span> total <span class="sc">+</span> x[i]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  total</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cppFunction</span>(<span class="st">'double sumC(NumericVector x){</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">  int n = x.size();</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  double total = 0;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">  for (int i=0; i &lt; n; i++) {</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">    total += x[i];</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">  return total;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">runif</span>(<span class="fl">1e3</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">microbenchmark</span>(<span class="fu">sum</span>(x), <span class="fu">sumC</span>(x), <span class="fu">sumR</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5400</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rcpp)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sumR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    total <span class="ot">&lt;-</span> total <span class="sc">+</span> x[i]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  total</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cppFunction</span>(<span class="st">'double sumC(NumericVector x){</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">  int n = x.size();</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">  double total = 0;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">  for (int i=0; i &lt; n; i++) {</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">    total += x[i];</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="st">  return total;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">runif</span>(<span class="fl">1e3</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">microbenchmark</span>(<span class="fu">sum</span>(x), <span class="fu">sumC</span>(x), <span class="fu">sumR</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section1/run/s1p1_sumC.R</code></span></div>
 <p><span class="source">Source: <em>Advanced R</em>.</span></p>
-<p><span class="mode"><i class="fa-solid fa-hand-paper" aria-label="hand-paper"></i> By hand</span> — write <code>sumR()</code> yourself (a <code>for</code> loop that adds up the elements of <code>x</code>), then time it against the built-in <code>sum()</code>. Done when <code>all.equal()</code> returns <code>TRUE</code> and the timing table appears. No AI for this block.</p>
+<p><span class="mode"><i class="fa-solid fa-hand-paper" aria-label="hand-paper"></i> By hand</span> Write <code>sumR()</code> yourself (a <code>for</code> loop that adds up the elements of <code>x</code>), then time it against the built-in <code>sum()</code>. Done when <code>all.equal()</code> returns <code>TRUE</code> and the timing table appears. No AI for this block.</p>
 <div class="cell">
 <div>
 <div id="webr-7" class="exercise-cell">
 
 </div>
 <script type="webr-7-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoic3VtUiA8LSBmdW5jdGlvbih4KSB7XG4gICMgeW91ciBjb2RlIGhlcmVcblxufVxuXG54IDwtIHJ1bmlmKDFlNSlcbmFsbC5lcXVhbChzdW1SKHgpLCBzdW0oeCkpXG50aW1laXQoc3VtKHgpLCBzdW1SKHgpKSJ9
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoic2V0LnNlZWQoNTQwMClcbnN1bVIgPC0gZnVuY3Rpb24oeCkge1xuICAjIHlvdXIgY29kZSBoZXJlXG5cbn1cblxueCA8LSBydW5pZigxZTUpXG5hbGwuZXF1YWwoc3VtUih4KSwgc3VtKHgpKVxudGltZWl0KHN1bSh4KSwgc3VtUih4KSkifQ==
 </script>
 </div>
 </div>
@@ -1000,6 +1009,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoic3VtUiA8LSBmdW5jdGlvbih4
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
+<p><strong>One loop adds each element to a running total.</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sumR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) total <span class="ot">&lt;-</span> total <span class="sc">+</span> x[i]</span>
@@ -1008,7 +1018,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoic3VtUiA8LSBmdW5jdGlvbih4
 </div>
 </div>
 </div>
-<p><span class="mode"><i class="fa-solid fa-robot" aria-label="robot"></i> Vibe</span> — AI-assisted extension: turn the timing into a function of <code>n</code> and plot how the <code>x^0.5</code> vs <code>sqrt(x)</code> ratio changes with <code>n</code>. Starter file for Copilot: <a href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section1/vibe/s1p1_benchmark.R"><code>notes/section1/vibe/s1p1_benchmark.R</code></a> (open it in the Codespace). Prefer no AI? Write it here.</p>
+<p><span class="mode"><i class="fa-solid fa-robot" aria-label="robot"></i> Vibe</span> AI-assisted extension: turn the timing into a function of <code>n</code> and plot how the <code>x^0.5</code> vs <code>sqrt(x)</code> ratio changes with <code>n</code>. Starter file for Copilot: <a href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section1/vibe/s1p1_benchmark.R"><code>notes/section1/vibe/s1p1_benchmark.R</code></a> (open it in the Codespace). Prefer no AI? Write it here.</p>
 <div class="cell">
 <div>
 <div id="webr-8" class="exercise-cell">
@@ -1068,7 +1078,7 @@ e.g.&nbsp;Microsoft Word, Excel, S-Plus, R, SAS …</li>
 </ul>
 </section>
 <section id="gui-vs-command-line-text-editor-sublime-vs-vim" class="level2" data-number="13">
-<h2 data-number="13" class="anchored" data-anchor-id="gui-vs-command-line-text-editor-sublime-vs-vim"><span class="header-section-number">13</span> GUI vs command line: text editor: sublime vs vim</h2>
+<h2 data-number="13" class="anchored" data-anchor-id="gui-vs-command-line-text-editor-sublime-vs-vim"><span class="header-section-number">13</span> GUI vs command line: text editor: Sublime vs Vim</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/vim.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
@@ -1124,17 +1134,17 @@ e.g.&nbsp;Microsoft Word, Excel, S-Plus, R, SAS …</li>
 <li><strong>SAS</strong>: regulated pharma.
 <ul>
 <li>FDA has said since 2015 that it <a href="https://fda.report/media/109552/Statistical-Software-Clarifying-Statement-PDF.pdf" class="more" data-note="FDA Statistical Software Clarifying Statement, May 2015: 'FDA does not require use of any specific software for statistical analyses'; the software used must be documented with version and build.">does not require any specific software</a>. SAS stayed the default by habit.</li>
-<li><a href="https://posit.co/about/customer-stories/novo-nordisk" class="more" data-note="First fully R-based NDA submission to FDA, with R and SAS run in parallel to prove they agree; presented Sept 2024.">Novo Nordisk</a> and <a href="https://intuitionlabs.ai/articles/open-source-pharma-trends" class="more" data-note="R-based oncology trial filed with FDA, EMA, and China's NMPA.">Roche</a> have filed R-based submissions; the <a href="https://r-consortium.org/posts/submissions-wg-2026/" class="more" data-note="Pilots 1-5 reviewed by FDA, 2021-2026. Pilot 4 (Sept 2024) submitted a WebAssembly package; FDA reviewers found it easier than containers because it only needed a browser, the same technology as these notes.">R Consortium’s FDA pilots</a> have all been accepted.</li>
-<li>SAS is about to leave TIOBE’s top 30 for the first time. Knowing both is an edge in that industry.</li>
+<li><a href="https://posit.co/about/customer-stories/novo-nordisk">Novo Nordisk</a> (the first fully R-based new drug application to FDA, 2024) and <a href="https://intuitionlabs.ai/articles/open-source-pharma-trends">Roche</a> (an oncology trial filed with FDA, EMA, and China’s NMPA) have filed R-based submissions; the <a href="https://r-consortium.org/posts/submissions-wg-2026/" class="more" data-note="Pilots 1-5 reviewed by FDA, 2021-2026. Pilot 4 (Sept 2024) submitted a WebAssembly package; FDA reviewers found it easier than containers because it only needed a browser, the same technology as these notes.">R Consortium’s FDA pilots</a> have all been accepted.</li>
+<li>SAS may soon leave TIOBE’s top 30. Knowing both R and SAS helps in that industry.</li>
 </ul></li>
 <li><strong>Rust</strong>: the engine under the tools.
 <ul>
-<li>You will meet it without writing it: <a href="https://www.kdnuggets.com/python-project-setup-2026-uv-ruff-ty-polars" class="more" data-note="Dataframe library written in Rust, 10-30x faster than pandas on large data; used at JPMorgan, GitHub, Databricks.">Polars</a>, <code>uv</code>, and <code>ruff</code> are Rust inside, Python outside, the same way R uses C++ through Rcpp.</li>
+<li>You will meet it without writing it: <a href="https://www.kdnuggets.com/python-project-setup-2026-uv-ruff-ty-polars" class="more" data-note="Dataframe library written in Rust, 10-30x faster than pandas on large data; used at JPMorgan, GitHub, Databricks.">Polars</a>, <code>uv</code>, and <code>ruff</code> are written in Rust and used from Python, the same way R uses C++ through Rcpp.</li>
 <li>#10 on TIOBE; the most admired language on Stack Overflow ten years running.</li>
 </ul></li>
 <li><strong>Julia</strong>: excellent for numerical work, real in scientific-computing groups.
 <ul>
-<li>Never a stable top-30 language; rarely in job postings. A specialty, not a foundation.</li>
+<li>Never a stable top-30 language; rarely in job postings. Useful in some fields, but not a first language for this course.</li>
 </ul></li>
 </ul>
 <div class="explore">
@@ -1156,20 +1166,20 @@ e.g.&nbsp;Microsoft Word, Excel, S-Plus, R, SAS …</li>
 </div>
 <p>Three ways to use a model, in the order this course meets them:</p>
 <ul>
-<li><strong>Chatbox</strong> — a person talks to the model. You already do this. Good for questions, explanations, drafts.</li>
-<li><strong>API</strong> — a program talks to the model (Session 6). The answer comes back as data: you can loop over 1,000 prompts, set the temperature, ask for a table instead of prose.</li>
-<li><strong>Agent</strong> — the model calls tools and runs steps on its own, and you supervise (Session 19). The skill is no longer writing the answer; it is specifying the task and checking the work.</li>
+<li><strong>Chatbox</strong>: a person talks to the model. You already do this. Good for questions, explanations, drafts.</li>
+<li><strong>API</strong>: a program talks to the model (Section 2.4). The answer comes back as data: you can loop over 1,000 prompts, set the temperature, ask for a table instead of prose.</li>
+<li><strong>Agent</strong>: the model calls tools and runs steps on its own, and you supervise (Section 7). Your job is to specify the task and check the work.</li>
 </ul>
 <section id="your-first-api-call" class="level3" data-number="17.1">
 <h3 data-number="17.1" class="anchored" data-anchor-id="your-first-api-call"><span class="header-section-number">17.1</span> Your first API call</h3>
-<p>The chatbox is a person talking to a model. The API is a <em>program</em> talking to a model: the same question, but the answer comes back as data your code can use. That is the door to everything in Section 2.4.</p>
-<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — R, with the <code>ellmer</code> package (needs your key):</p>
+<p>The API is a <em>program</em> talking to a model: the same question, but the answer comes back as data your code can use. Section 2.4 builds on this call.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> R, with the <code>ellmer</code> package (needs your key):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">models_google_gemini</span>()                <span class="co"># which models your key can use; pick a "flash" one</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_google_gemini</span>(<span class="at">model =</span> <span class="st">"gemini-3.7-flash"</span>)   <span class="co"># reads GEMINI_API_KEY from the environment</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"In one sentence, what does a statistician do that a chatbot cannot?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section1/run/s1p1_llm.R</code></span></div>
-<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — Python, with Google’s <code>google-genai</code> package:</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> Python, with Google’s <code>google-genai</code> package:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> google <span class="im">import</span> genai</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> genai.Client()               <span class="co"># reads GEMINI_API_KEY from the environment</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>interaction <span class="op">=</span> client.interactions.create(</span>
@@ -1180,9 +1190,9 @@ e.g.&nbsp;Microsoft Word, Excel, S-Plus, R, SAS …</li>
 <div class="codespace"><span class="codespace-file">file: <code>notes/section1/run/s1p1_llm.py</code></span></div>
 <p>Three things to notice, all of which return in Section 2.4:</p>
 <ul>
-<li>The model is a <span class="more" data-note="Same idea as rnorm(): you pass arguments and get a value back. The value happens to be text.">function call</span> with arguments — here the model name and the prompt; later temperature, system instructions, and structured output.</li>
-<li>Run it twice and you get two different answers. An LLM is a <em>sampler</em>; Section 3 is about samplers.</li>
-<li>The answer is text, not truth!</li>
+<li>The model is a <span class="more" data-note="Same idea as calling rnorm in R: you pass arguments and get a value back. The value happens to be text.">function call</span> with arguments: here the model name and the prompt; later temperature, system instructions, and structured output.</li>
+<li>Run it twice. You will likely get two different answers, because an LLM is a <em>sampler</em>. Section 3 is about samplers.</li>
+<li>The answer is text. Check it before you use it.</li>
 </ul>
 </section>
 </section>
@@ -1194,7 +1204,7 @@ e.g.&nbsp;Microsoft Word, Excel, S-Plus, R, SAS …</li>
 <li><label><input type="checkbox">Open the course Codespace once and run <code>notes/section1/run/s1p1_sumC.R</code>.</label></li>
 <li><label><input type="checkbox">Create a Gemini API key and store it as the <code>GEMINI_API_KEY</code> Codespaces secret.</label></li>
 <li><label><input type="checkbox">Register a free account at <a href="https://morphmind.ai">MorphMind</a>.</label></li>
-<li><label><input type="checkbox">Run the two API examples above in the Codespace. Did the two answers differ?</label></li>
+<li><label><input type="checkbox">Run the R example above twice in the Codespace (or the Python one). Did the two answers differ?</label></li>
 </ul>
 <p>Questions about these notes? Later this semester the course tutor, built on <a href="https://morphmind.ai">MorphMind</a>, will answer them. Until then, the <em>Ask AI</em> buttons.</p>
 

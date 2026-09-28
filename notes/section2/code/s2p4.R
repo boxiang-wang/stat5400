@@ -1,6 +1,7 @@
 # STAT:5400 Section 2.4 — LLM APIs and Prompting
 # Code from the lecture notes; no output, no solutions.
 
+if (dir.exists("~/classdata/models/R")) .libPaths(c("~/classdata/models/R", .libPaths()))  # on IDAS: the class copy of ellmer
 # Check the OpenAI key (reads ~/.Renviron again, so no restart is needed after you add the key)
 if (file.exists("~/.Renviron")) readRenviron("~/.Renviron")
 help_url <- "https://boxiang-wang.github.io/stat5400/notes/section2/s2p4.html#setting-up-idas"
@@ -11,6 +12,7 @@ if (!nzchar(Sys.getenv("OPENAI_API_KEY"))) {
   message("Your OpenAI key did not work. Check it, or see: ", help_url)
 }
 
+if (dir.exists("~/classdata/models/R")) .libPaths(c("~/classdata/models/R", .libPaths()))  # on IDAS: the class copy of ellmer
 # Start the Ollama server if it is not running yet (needed once per IDAS session)
 ollama_up <- function() !inherits(try(suppressWarnings(readLines("http://localhost:11434/api/version")), silent = TRUE), "try-error")
 if (!ollama_up()) {
@@ -117,8 +119,8 @@ chat$get_turns()    # every turn so far: user, assistant, user, assistant
 ## 5.1 Ask for a type, not a string
 
 review <- type_object(
-  label     = type_enum("One of Supported, Unsupported, Unclear.",
-                        c("Supported", "Unsupported", "Unclear")),
+  label     = type_enum(c("Supported", "Unsupported", "Unclear"),
+                        "One of Supported, Unsupported, Unclear."),
   reason    = type_string("One short sentence."),
   p_value   = type_number("The p-value mentioned, or -1 if none."))
 
@@ -148,7 +150,7 @@ armed$register_tools(list(
   tool(larger, "Return the larger of two numbers.",
        arguments = list(a = type_number("First number."),
                         b = type_number("Second number.")))))
-armed$on_tool_request(function(req) cat("-> ", req@name, deparse1(req@arguments), "\n"))
+armed$on_tool_request(function(request) cat("-> ", request@name, deparse1(request@arguments), "\n"))
 armed$chat("Which is larger, 9.9 or 9.11?")
 
 
@@ -171,7 +173,7 @@ chat$register_tools(list(
        "Return the mean of one numeric column of the cars data set.",
        arguments = list(column = type_string("Exact column name.")))))
 
-chat$on_tool_request(function(req)
-  cat("-> ", req@name, deparse1(req@arguments), "\n"))
+chat$on_tool_request(function(request)
+  cat("-> ", request@name, deparse1(request@arguments), "\n"))
 
 chat$chat("What is the average weight of these cars?")

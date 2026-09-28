@@ -16,6 +16,9 @@ h1.title { border-bottom: 4px solid var(--c-gold); padding-bottom: .25em; }
 h2 { border-bottom: 2px solid var(--c-gold); padding-bottom: .15em; margin-top: 1.6em; }
 .header-section-number { color: var(--c-gold-dark); }
 
+/* Key terms in the notes: [term]{.term} or [**term**]{.term} */
+.term { color: var(--c-gold-dark); }
+
 /* Small top buttons under the title */
 .page-buttons { margin: .5em 0 1.5em 0; }
 .page-buttons .btn { margin-right: .5em; }
@@ -100,6 +103,5 @@ figcaption, .source { color: #777; font-size: .85em; }
 .trends iframe { display: block; margin-bottom: .4em; background: #fff; }
 .trends .trends-open { font-size: .9em; }
 
-/* hover-note phrases that are also links: look like a hover note, not a blue link */
-a.more { color: inherit; text-decoration: none; }
-a.more:hover { color: var(--c-link); }
+/* hover-note phrases that are also links: a visible blue link, with the hover note on top (decision 4, Sep 26) */
+a.more { color: var(--c-link); text-decoration: none; }

@@ -147,7 +147,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -286,9 +286,7 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -338,47 +336,48 @@ window.Quarto = {
 All code on this page, in one file: <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p4.R" target="_blank" rel="noopener"><i class="fa-brands fa-r-project"></i> R</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p4.py" target="_blank" rel="noopener"><i class="fa-brands fa-python"></i> Python</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p4.Rmd" target="_blank" rel="noopener"><i class="fa-brands fa-markdown"></i> Rmd</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p4.ipynb" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i> ipynb</a>
 </div>
 </div>
+<p><em>Updated Sep 26, 2026: IDAS setup is now automatic (Section 2.3); the key may live in <code>~/.Renviron</code> (Section 2.2); the <code>.env</code> check in Section 7.3 now uses <code>grep -Fx</code>; the R code in Section 5.1 now gives <code>type_enum()</code> its values first, as <code>ellmer</code> 0.4 requires.</em></p>
 <p>Most of this page cannot run in the browser, because calling a language model needs a network connection and an API key. Those blocks carry a <a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> button and open in the Codespace, where your key is already set and two small open-weight models are installed.</p>
 <p>STAT:5400 students at Iowa can also run the code on <a href="https://its.uiowa.edu/idas">IDAS</a>, the university’s JupyterHub service. Several open-weight models are installed there for the class: <code>qwen3:0.6b</code>, <code>llama3.2:1b</code>, <code>phi4-mini</code>, <code>qwen3:4b</code>, and <code>qwen3.5:4b</code>. See <a href="#setting-up-idas">Setting up IDAS</a> before you start.</p>
 <section id="what-a-language-model-is" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="what-a-language-model-is"><span class="header-section-number">1</span> What a Language Model Is</h2>
+<h2 data-number="1" class="anchored" data-anchor-id="what-a-language-model-is"><span class="header-section-number">1</span> What a language model is</h2>
 <section id="the-one-sentence-version" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="the-one-sentence-version"><span class="header-section-number">1.1</span> The one-sentence version</h3>
 <ul>
-<li>A <span style="color:#b8860b"><strong>large language model</strong></span> writes text one <span class="more" data-note="A token is a word piece. Common words are one token; rare words split into several. One token is about 0.75 words on average.">token</span> at a time, each token chosen using everything written before it.</li>
-<li><span style="color:#b8860b"><strong>Pretraining</strong></span> trains the model from scratch on one task: predict the next token, over a very large amount of text.</li>
-<li><span style="color:#b8860b"><strong>Reasoning models</strong></span> add reinforcement learning after pretraining, rewarded for correct answers rather than for matching text. They think in hidden tokens before replying. You pay for these tokens, but you do not see them.</li>
-<li>Modern models are built on the <span style="color:#b8860b"><strong>Transformer</strong></span> architecture, introduced in 2017.</li>
-<li>Most current models are also <span style="color:#b8860b"><strong>multimodal</strong></span>: they read images, audio, and video as well as text, and some generate them.</li>
+<li>A <span class="term"><strong>large language model</strong></span> writes text one <span class="more" data-note="A token is a word piece. Common words are one token; rare words split into several. One token is about 0.75 words on average.">token</span> at a time, each token chosen using everything written before it.</li>
+<li><span class="term"><strong>Pretraining</strong></span> trains the model from scratch on one task: predict the next token, over a very large amount of text.</li>
+<li><span class="term"><strong>Reasoning models</strong></span> add reinforcement learning after pretraining, rewarded for correct answers rather than for matching text. They think in hidden tokens before replying. You pay for these tokens, but you do not see them.</li>
+<li>Modern models are built on the <span class="term"><strong>Transformer</strong></span> architecture, introduced in 2017.</li>
+<li>Most current models are also <span class="term"><strong>multimodal</strong></span>: they read images, audio, and video as well as text, and some generate them.</li>
 </ul>
 <p><span class="source">Source: Vaswani et al., <em>Attention Is All You Need</em>, 2017. <a href="https://arxiv.org/abs/1706.03762" class="uri">https://arxiv.org/abs/1706.03762</a></span></p>
 </section>
 <section id="history-and-evolution" class="level3" data-number="1.2">
 <h3 data-number="1.2" class="anchored" data-anchor-id="history-and-evolution"><span class="header-section-number">1.2</span> History and evolution</h3>
 <ul>
-<li><span style="color:#b8860b"><strong>1966 to 1996, rules and early neural networks.</strong></span> <a href="https://doi.org/10.1145/365153.365168">ELIZA</a> (1966) was a chatbot built from hand-written rules. <a href="https://doi.org/10.1207/s15516709cog1402_1">Recurrent neural networks</a> (1980s and 1990s) read text one word at a time.</li>
-<li><span style="color:#b8860b"><strong>1997 to 2012, better memory.</strong></span> <a href="https://doi.org/10.1162/neco.1997.9.8.1735">LSTM</a> (1997) let a network keep information over longer stretches of text.</li>
-<li><span style="color:#b8860b"><strong>2013 to 2017, embeddings and the Transformer.</strong></span> <a href="https://arxiv.org/abs/1301.3781">Word2Vec</a> (2013) turned words into vectors. The <a href="https://arxiv.org/abs/1706.03762">Transformer</a> (2017) became the core architecture of nearly every modern model.</li>
-<li><span style="color:#b8860b"><strong>2018 to 2021, pretraining at scale.</strong></span> <a href="https://arxiv.org/abs/1810.04805">BERT</a> (Google, 2018); <a href="https://openai.com/index/language-unsupervised/">GPT-1</a> to GPT-3 (OpenAI, 2018 to 2020). <a href="https://arxiv.org/abs/2005.14165">GPT-3</a> showed that a large enough model can learn a task from a few examples in the prompt.</li>
-<li><span style="color:#b8860b"><strong>2022 to 2023, chatbots.</strong></span> <a href="https://openai.com/index/chatgpt/">ChatGPT</a> (November 2022) brought prompt-based use to everyone. <a href="https://arxiv.org/abs/2303.08774">GPT-4</a> and Anthropic’s <a href="https://www.anthropic.com/news/introducing-claude">Claude</a> followed in March 2023, Google’s <a href="https://arxiv.org/abs/2312.11805">Gemini</a> in December. Meta’s <a href="https://arxiv.org/abs/2302.13971">LLaMA</a> (February 2023) and <a href="https://arxiv.org/abs/2310.06825">Mistral 7B</a> (September 2023) made strong models free to download, shared through <a href="https://huggingface.co/models">Hugging Face</a>.</li>
-<li><span style="color:#b8860b"><strong>2024 onward, multimodal.</strong></span> Gemini was built to read text, images, audio, and video from the start. <a href="https://openai.com/index/hello-gpt-4o/">GPT-4o</a> (2024) added real-time voice; <a href="https://www.anthropic.com/news/claude-3-family">Claude</a> reads images and PDFs. Image and video generators such as <a href="https://arxiv.org/abs/2112.10752">Stable Diffusion</a> (2022) and <a href="https://openai.com/index/sora/">Sora</a> (2024) use related ideas.</li>
-<li><span style="color:#b8860b"><strong>2024 onward, reasoning.</strong></span> <a href="https://openai.com/index/learning-to-reason-with-llms/">OpenAI o1</a> (September 2024) was trained to think before answering. <a href="https://arxiv.org/abs/2501.12948">DeepSeek-R1</a> (January 2025) came close with open weights and a much lower reported training cost.</li>
-<li><span style="color:#b8860b"><strong>2025 onward, agents and open weights.</strong></span> Models now run tools and code on their own: <a href="https://code.claude.com/docs/">Claude Code</a> and <a href="https://developers.openai.com/codex/">OpenAI Codex</a> (2025), Section 7. Many of the strongest open-weight models now come from Chinese labs: <a href="https://github.com/QwenLM">Qwen</a> (Alibaba), <a href="https://www.deepseek.com/">DeepSeek</a>, and <a href="https://github.com/MoonshotAI/Kimi-K2">Kimi</a> (Moonshot AI).</li>
+<li><span class="term"><strong>1966 to 1996, rules and early neural networks.</strong></span> <a href="https://doi.org/10.1145/365153.365168">ELIZA</a> (1966) was a chatbot built from hand-written rules. <a href="https://doi.org/10.1207/s15516709cog1402_1">Recurrent neural networks</a> (1980s and 1990s) read text one word at a time.</li>
+<li><span class="term"><strong>1997 to 2012, better memory.</strong></span> <a href="https://doi.org/10.1162/neco.1997.9.8.1735">LSTM</a> (1997) let a network keep information over longer stretches of text.</li>
+<li><span class="term"><strong>2013 to 2017, embeddings and the Transformer.</strong></span> <a href="https://arxiv.org/abs/1301.3781">Word2Vec</a> (2013) turned words into vectors. The <a href="https://arxiv.org/abs/1706.03762">Transformer</a> (2017) became the core architecture of nearly every modern model.</li>
+<li><span class="term"><strong>2018 to 2021, pretraining at scale.</strong></span> <a href="https://arxiv.org/abs/1810.04805">BERT</a> (Google, 2018); <a href="https://openai.com/index/language-unsupervised/">GPT-1</a> to GPT-3 (OpenAI, 2018 to 2020). <a href="https://arxiv.org/abs/2005.14165">GPT-3</a> showed that a large enough model can learn a task from a few examples in the prompt.</li>
+<li><span class="term"><strong>2022 to 2023, chatbots.</strong></span> <a href="https://openai.com/index/chatgpt/">ChatGPT</a> (November 2022) brought prompt-based use to everyone. <a href="https://arxiv.org/abs/2303.08774">GPT-4</a> and Anthropic’s <a href="https://www.anthropic.com/news/introducing-claude">Claude</a> followed in March 2023, Google’s <a href="https://arxiv.org/abs/2312.11805">Gemini</a> in December. Meta’s <a href="https://arxiv.org/abs/2302.13971">LLaMA</a> (February 2023) and <a href="https://arxiv.org/abs/2310.06825">Mistral 7B</a> (September 2023) made strong models free to download, shared through <a href="https://huggingface.co/models">Hugging Face</a>.</li>
+<li><span class="term"><strong>2024 onward, multimodal.</strong></span> Gemini was built to read text, images, audio, and video from the start. <a href="https://openai.com/index/hello-gpt-4o/">GPT-4o</a> (2024) added real-time voice; <a href="https://www.anthropic.com/news/claude-3-family">Claude</a> reads images and PDFs. Image and video generators such as <a href="https://arxiv.org/abs/2112.10752">Stable Diffusion</a> (2022) and <a href="https://openai.com/index/sora/">Sora</a> (2024) use related ideas.</li>
+<li><span class="term"><strong>2024 onward, reasoning.</strong></span> <a href="https://openai.com/index/learning-to-reason-with-llms/">OpenAI o1</a> (September 2024) was trained to think before answering. <a href="https://arxiv.org/abs/2501.12948">DeepSeek-R1</a> (January 2025) came close with open weights and a much lower reported training cost.</li>
+<li><span class="term"><strong>2025 onward, agents and open weights.</strong></span> Models now run tools and code on their own: <a href="https://code.claude.com/docs/">Claude Code</a> and <a href="https://developers.openai.com/codex/">OpenAI Codex</a> (2025), Section 7. Many of the strongest open-weight models now come from Chinese labs: <a href="https://github.com/QwenLM">Qwen</a> (Alibaba), <a href="https://www.deepseek.com/">DeepSeek</a>, and <a href="https://github.com/MoonshotAI/Kimi-K2">Kimi</a> (Moonshot AI).</li>
 </ul>
 <p><span class="source">Source: adapted from GeeksforGeeks, <em>History and Evolution of LLMs</em>, <a href="https://www.geeksforgeeks.org/blogs/history-and-evolution-of-llms/" class="uri">https://www.geeksforgeeks.org/blogs/history-and-evolution-of-llms/</a>, with entries after 2022 added from the providers’ announcements.</span></p>
 </section>
 <section id="two-ways-a-model-reaches-you" class="level3" data-number="1.3">
 <h3 data-number="1.3" class="anchored" data-anchor-id="two-ways-a-model-reaches-you"><span class="header-section-number">1.3</span> Two ways a model reaches you</h3>
 <ul>
-<li><span style="color:#b8860b"><strong>Closed weights.</strong></span> You call an API and never see the weights. <a href="https://platform.openai.com/docs/overview">OpenAI GPT</a>, <a href="https://claude.ai/">Anthropic Claude</a>, <a href="https://gemini.google.com/">Google Gemini</a>, <a href="https://grok.com/">xAI Grok</a>.</li>
-<li><span style="color:#b8860b"><strong>Open weights.</strong></span> You can download, run, and fine-tune the model yourself, subject to its <span class="more" data-note="Most labs release the trained weights but not the training data or the full training code, so open weights is a narrower claim than open source. Licences differ: some allow any use, others limit commercial use.">licence</span>. <a href="https://www.llama.com/">Meta Llama</a>, <a href="https://ai.google.dev/gemma">Google Gemma</a>, <a href="https://mistral.ai/">Mistral</a>, <a href="https://qwen.ai/home">Alibaba Qwen</a>, <a href="https://www.deepseek.com/">DeepSeek</a>, <a href="https://github.com/MoonshotAI/Kimi-K2">Moonshot Kimi</a>, <a href="https://github.com/openai/gpt-oss">OpenAI gpt-oss</a>.</li>
+<li><span class="term"><strong>Closed weights.</strong></span> You call an API and never see the weights. <a href="https://platform.openai.com/docs/overview">OpenAI GPT</a>, <a href="https://claude.ai/">Anthropic Claude</a>, <a href="https://gemini.google.com/">Google Gemini</a>, <a href="https://grok.com/">xAI Grok</a>.</li>
+<li><span class="term"><strong>Open weights.</strong></span> You can download, run, and fine-tune the model yourself, subject to its <span class="more" data-note="Most labs release the trained weights but not the training data or the full training code, so open weights is a narrower claim than open source. Licences differ: some allow any use, others limit commercial use.">licence</span>. <a href="https://www.llama.com/">Meta Llama</a>, <a href="https://ai.google.dev/gemma">Google Gemma</a>, <a href="https://mistral.ai/">Mistral</a>, <a href="https://qwen.ai/home">Alibaba Qwen</a>, <a href="https://www.deepseek.com/">DeepSeek</a>, <a href="https://github.com/MoonshotAI/Kimi-K2">Moonshot Kimi</a>, <a href="https://github.com/openai/gpt-oss">OpenAI gpt-oss</a>.</li>
 <li>Some companies do both: Google has Gemini and Gemma; OpenAI has GPT and <a href="https://github.com/openai/gpt-oss">gpt-oss</a>.</li>
 <li>The largest open-weight models need a cluster of GPUs. Their small versions run on a laptop, or on IDAS.</li>
 </ul>
 </section>
 </section>
 <section id="keys-tokens-and-cost" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="keys-tokens-and-cost"><span class="header-section-number">2</span> Keys, Tokens, and Cost</h2>
+<h2 data-number="2" class="anchored" data-anchor-id="keys-tokens-and-cost"><span class="header-section-number">2</span> Keys, tokens, and cost</h2>
 <section id="api-keys" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="api-keys"><span class="header-section-number">2.1</span> API keys</h3>
 <p><a href="../section1/s1p1.html#set-up-your-accounts">Section 1.1: Set up your accounts</a>.</p>
@@ -390,7 +389,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <section id="what-a-token-costs" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="what-a-token-costs"><span class="header-section-number">2.2</span> What a token costs</h3>
 <ul>
-<li>Billing is per <span style="color:#b8860b"><strong>token</strong></span>, counted on both what you send and what comes back.</li>
+<li>Billing is per <span class="term"><strong>token</strong></span>, counted on both what you send and what comes back.</li>
 <li>One token is roughly 0.75 words. One million tokens is about 3000 double-spaced pages.</li>
 </ul>
 <div class="cell">
@@ -403,7 +402,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicHJvbXB0IDwtIFwiRXhwbGFp
 </script>
 </div>
 </div>
-<p><span class="mode"><i class="fa-solid fa-edit" aria-label="edit"></i> Edit</span> — put in a price per million tokens from the pricing page and a number of calls you might make in a homework, and see what the assignment would cost.</p>
+<p><span class="mode"><i class="fa-solid fa-edit" aria-label="edit"></i> Edit</span> Put in a price per million tokens from the pricing page and a number of calls you might make in a homework, and see what the assignment would cost.</p>
 <div class="cell">
 <div>
 <div id="webr-2" class="exercise-cell">
@@ -441,7 +440,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <li>Output costs more than input, usually eight to ten times more, so a model that answers at length is the expensive one.</li>
 <li>A conversation resends its whole history every turn, so you pay for the book again on the next question.</li>
 </ul>
-<p>The rule from Section 1.1 still holds. A key is a password. It lives in the environment, never in a file you can see. Read it with <code>Sys.getenv("OPENAI_API_KEY")</code> in R or <code>os.environ</code> in Python, and never print it.</p>
+<p>The rule from Section 1.1 still holds. A key is a password. It lives in an environment variable or in <code>~/.Renviron</code>, a private file in your home folder. It never goes in a script or in a project folder. Read it with <code>Sys.getenv("OPENAI_API_KEY")</code> in R or <code>os.environ</code> in Python, and never print it.</p>
 </section>
 <section id="setting-up-idas" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="setting-up-idas"><span class="header-section-number">2.3</span> Setting up IDAS</h3>
@@ -456,21 +455,21 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'OPENAI_API_KEY=sk-fake-replace-with-your-key'</span> <span class="op">&gt;&gt;</span> ~/.Renviron</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 ~/.Renviron   <span class="co"># only you can read the file</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/.Renviron        <span class="co"># replace the fake key with your own; Ctrl+O saves, Ctrl+X exits</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p><strong>Run the code.</strong> All the code on this page is in your <code>classFiles</code> folder: <code>notes/section2/run/s2p4_idas.R</code> for RStudio, <code>notes/section2/run/s2p4_idas.py</code> for a terminal, and <code>notes/section2/code/s2p4.ipynb</code> for Jupyter. First run the setup lines at the top of the file, above the first section title (in the notebook, the first two code cells). They:</p>
+<li><p><strong>Run the code.</strong> All the code on this page is in your <code>classFiles</code> folder: <code>notes/section2/run/s2p4_idas.R</code> for RStudio, <code>notes/section2/run/s2p4_idas.py</code> for a terminal, and <code>notes/section2/code/s2p4.ipynb</code> for Jupyter. First run the setup lines at the top of the file, above the first section title (in the notebook, the first two code cells). They do three things:</p>
 <ul>
-<li>it starts the class models, if they are not running yet;</li>
-<li>it reads your key from <code>~/.Renviron</code>, so you do not need to restart R;</li>
-<li>it prints a message with a link back to this section if your key is missing or wrong.</li>
+<li>Start the class models, if they are not running yet.</li>
+<li>Read your key from <code>~/.Renviron</code>, so you do not need to restart R.</li>
+<li>Print a message with a link back to this section if your key is missing or wrong.</li>
 </ul>
 <p>If they print nothing, you are ready. In your own notebook, copy the first two code cells of <code>s2p4.ipynb</code> to the top.</p></li>
 </ol>
 </section>
 </section>
 <section id="your-first-call" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="your-first-call"><span class="header-section-number">3</span> Your First Call</h2>
+<h2 data-number="3" class="anchored" data-anchor-id="your-first-call"><span class="header-section-number">3</span> Your first call</h2>
 <section id="hello-world" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="hello-world"><span class="header-section-number">3.1</span> Hello world</h3>
-<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — these need a key and a network, so they run in the Codespace.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> These blocks need a key and a network, so they run in the Codespace.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
@@ -499,7 +498,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 </div>
 </div>
 </div>
-<p>Run it twice. The two answers differ, because the model samples. We come back to why in Section 3.1.</p>
+<p>Run it twice. The two answers will likely differ, because the model samples. We come back to why in <a href="../section3/s3p1.html">Section 3.1 of the course (Random number generators)</a>.</p>
 </section>
 <section id="open-weight-models" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="open-weight-models"><span class="header-section-number">3.2</span> Open-weight models</h3>
@@ -508,6 +507,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <li><strong>On IDAS</strong>, the setup lines at the top of each code file start the class models; see <a href="#setting-up-idas">Setting up IDAS</a>.</li>
 <li><strong>In the Codespace</strong>, <code>llama3.2:1b</code> is already installed.</li>
 </ul>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> or IDAS. These blocks need a local model.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
@@ -520,6 +520,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">api_args =</span> <span class="fu">list</span>(<span class="at">reasoning_effort =</span> <span class="st">"none"</span>))    <span class="co"># skip the thinking step</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>bigger<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Give me 3 distributions in the exponential family."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_idas.R</code></span></div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
@@ -537,6 +538,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>               <span class="st">"content"</span>: <span class="st">"Give me 3 distributions in the exponential family."</span>}])</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.choices[<span class="dv">0</span>].message.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_idas.py</code></span></div>
 </div>
 </div>
 </div>
@@ -553,7 +555,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBkb2xsYXJzIHBlciBtaWxs
 <h2 data-number="4" class="anchored" data-anchor-id="prompting"><span class="header-section-number">4</span> Prompting</h2>
 <section id="rules-of-thumb" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="rules-of-thumb"><span class="header-section-number">4.1</span> Rules of thumb</h3>
-<p><span style="color:#b8860b"><strong>Prompt engineering</strong></span> means writing instructions clear enough that the model does what you need, reliably. The output is random, so a prompt that works once may not always work. The seven rules below follow the current guides from OpenAI and Anthropic. Open each one for a bad and a better example.</p>
+<p><span class="term"><strong>Prompt engineering</strong></span> means writing instructions clear enough that the model does what you need, reliably. The output is random, so a prompt that works once may not always work. The seven rules below follow the current guides from OpenAI and Anthropic. Open each one for a bad and a better example.</p>
 <ol type="1">
 <li><p>Be clear and specific. Say who the answer is for, how long it should be, and what form it should take.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Bad and better">
@@ -772,10 +774,10 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <h3 data-number="4.2" class="anchored" data-anchor-id="roles"><span class="header-section-number">4.2</span> Roles</h3>
 <p>Each message has a role, and some roles have higher priority than others.</p>
 <ul>
-<li><span style="color:#b8860b"><strong>platform</strong></span>: the provider’s own rules. You cannot override them, which is why a prompt telling the model to ignore its safety rules does not work.</li>
-<li><span style="color:#b8860b"><strong>developer</strong></span>: your instructions. Sent as the <code>instructions</code> argument, or as a message with role <code>developer</code>.</li>
-<li><span style="color:#b8860b"><strong>user</strong></span>: the end user’s request, which ranks below your instructions.</li>
-<li><span style="color:#b8860b"><strong>assistant</strong></span>: what the model said on earlier turns.</li>
+<li><span class="term"><strong>platform</strong></span>: the provider’s own rules. You cannot override them, which is why a prompt telling the model to ignore its safety rules does not work.</li>
+<li><span class="term"><strong>developer</strong></span>: your instructions. Sent as the <code>instructions</code> argument, or as a message with role <code>developer</code>.</li>
+<li><span class="term"><strong>user</strong></span>: the end user’s request, which ranks below your instructions.</li>
+<li><span class="term"><strong>assistant</strong></span>: what the model said on earlier turns.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled" title="`system` or `developer`?">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
@@ -794,7 +796,8 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 </div>
 </div>
 <p><span class="source">Source: OpenAI model spec, <a href="https://model-spec.openai.com/2025-02-12.html#chain_of_command" class="uri">https://model-spec.openai.com/2025-02-12.html#chain_of_command</a></span></p>
-<p><span class="mode"><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Predict</span> — the same question, two system prompts. Which one is more useful to a student who has to take an exam?</p>
+<p><span class="mode"><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Predict</span> The same question, two system prompts. Which one is more useful to a student who has to take an exam?</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> These blocks need a key and a network.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
@@ -831,9 +834,10 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <section id="the-model-does-not-remember-earlier-calls" class="level3" data-number="4.3">
 <h3 data-number="4.3" class="anchored" data-anchor-id="the-model-does-not-remember-earlier-calls"><span class="header-section-number">4.3</span> The model does not remember earlier calls</h3>
 <ul>
-<li>By default, every request is <span style="color:#b8860b"><strong>stateless</strong></span>: it starts from nothing, and the model sees only what you send in that request. It does not remember your earlier calls.</li>
+<li>By default, every request is <span class="term"><strong>stateless</strong></span>: it starts from nothing, and the model sees only what you send in that request. It does not remember your earlier calls.</li>
 <li>Ask about “the university I just mentioned” in a second, separate call, and it has no idea.</li>
 </ul>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> These blocks need a key and a network.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
@@ -858,6 +862,7 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co"># same$chat("Write two sentences about the University of Iowa.")</span></span>
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co"># same$chat("What is the name of the university I just mentioned?")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_idas.R</code></span></div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell">
@@ -874,6 +879,7 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"What's the name of the university that I just mentioned?"</span>}])</span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r2.output_text)     <span class="co"># it does not know</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_hello.py</code></span></div>
 </div>
 </div>
 </div>
@@ -886,7 +892,8 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <section id="conversation-state" class="level3" data-number="4.4">
 <h3 data-number="4.4" class="anchored" data-anchor-id="conversation-state"><span class="header-section-number">4.4</span> Conversation state</h3>
 <p>The model keeps nothing between requests, as the block above shows. To continue a conversation, the model has to see the earlier messages again. There are three ways to do this.</p>
-<p><span style="color:#b8860b"><strong>1. Pass the previous messages yourself.</strong></span> Write the earlier turns into the request, each with its role. The model answers as if the conversation had really happened.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> The blocks in this section need a key and a network.</p>
+<p><span class="term"><strong>1. Pass the previous messages yourself.</strong></span> Write the earlier turns into the request, each with its role. The model answers as if the conversation had really happened.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
@@ -898,6 +905,7 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">AssistantTurn</span>(<span class="st">"Who's there?"</span>)))</span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Felix"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_idas.R</code></span></div>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <div class="cell">
@@ -908,10 +916,11 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>           {<span class="st">"role"</span>: <span class="st">"user"</span>,      <span class="st">"content"</span>: <span class="st">"Felix"</span>}])</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_idas.py</code></span></div>
 </div>
 </div>
 </div>
-<p><span style="color:#b8860b"><strong>2. Keep a history and resend it.</strong></span> Keep every message in a list. After each reply, add the reply and your next question to the list, then send the whole list again.</p>
+<p><span class="term"><strong>2. Keep a history and resend it.</strong></span> Keep every message in a list. After each reply, add the reply and your next question to the list, then send the whole list again.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
@@ -923,6 +932,7 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Tell me another."</span>)</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">get_turns</span>()    <span class="co"># every turn so far: user, assistant, user, assistant</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_idas.R</code></span></div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <div class="cell">
@@ -935,10 +945,11 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.responses.create(model<span class="op">=</span><span class="st">"gpt-5-nano"</span>, <span class="bu">input</span><span class="op">=</span>history)</span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_idas.py</code></span></div>
 </div>
 </div>
 </div>
-<p><span style="color:#b8860b"><strong>3. Let the provider keep it.</strong></span> OpenAI can store the conversation on its servers. You send only the new message and the ID of the last reply. You still pay for the earlier messages, because the model reads them again.</p>
+<p><span class="term"><strong>3. Let the provider keep it.</strong></span> OpenAI can store the conversation on its servers. You send only the new message and the ID of the last reply. You still pay for the earlier messages, because the model reads them again.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.responses.create(</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-5-nano"</span>,</span>
@@ -951,6 +962,7 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span><span class="op">=</span><span class="st">"Explain why this is funny."</span>)</span>
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(second.output_text)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_idas.py</code></span></div>
 <p>This is an OpenAI feature. <code>ellmer</code> has no counterpart, because its <code>chat</code> object always resends the history (way 2).</p>
 <div class="callout callout-style-default callout-note callout-titled" title="The context window">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
@@ -965,7 +977,7 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Everything you resend is paid for again, and there is a ceiling.</strong></p>
-<p>The <span style="color:#b8860b"><strong>context window</strong></span> is the maximum number of tokens in one request, counting what you send, what comes back, and for some models the hidden reasoning. A long conversation eventually hits it, and the output gets truncated. Model limits are listed at <a href="https://platform.openai.com/docs/models" class="uri">https://platform.openai.com/docs/models</a>.</p>
+<p>The <span class="term"><strong>context window</strong></span> is the maximum number of tokens in one request, counting what you send, what comes back, and for some models the hidden reasoning. A long conversation eventually hits it, and the output gets truncated. Model limits are listed at <a href="https://platform.openai.com/docs/models" class="uri">https://platform.openai.com/docs/models</a>.</p>
 </div>
 </div>
 </div>
@@ -973,12 +985,13 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <section id="few-shot-learning" class="level3" data-number="4.5">
 <h3 data-number="4.5" class="anchored" data-anchor-id="few-shot-learning"><span class="header-section-number">4.5</span> Few-shot learning</h3>
 <ul>
-<li><span style="color:#b8860b"><strong>Zero-shot</strong></span>: you describe the task. <span style="color:#b8860b"><strong>Few-shot</strong></span>: you also show a handful of worked examples.</li>
+<li><span class="term"><strong>Zero-shot</strong></span>: you describe the task. <span class="term"><strong>Few-shot</strong></span>: you also show a handful of worked examples.</li>
 <li>The model reads the pattern from the examples and applies it. The model is not retrained. The examples are used for this request only.</li>
 <li>Diverse examples generalize better than similar ones.</li>
 </ul>
 <p><span class="source">Source: Brown et al.&nbsp;(2020), <em>Language Models are Few-Shot Learners</em>. <a href="https://arxiv.org/pdf/2005.14165" class="uri">https://arxiv.org/pdf/2005.14165</a></span></p>
 <p>A classifier for statistical claims, built entirely out of three examples:</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> This block needs a key and a network.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>INSTRUCTIONS <span class="op">=</span> <span class="st">"""# Identity</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1025,12 +1038,13 @@ phrases to add or delete to fix this, then give the revised prompt.</code></pre>
 <span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a>          <span class="st">"The intervention might help, but the CI crosses zero (95% CI -0.2 to 0.3)."</span>]:</span>
 <span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(label_claim(c))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_prompt.py</code></span></div>
 <p>The function checks the reply: the word must be one of the three allowed labels, or the function raises an error. The model may return a full sentence even when you asked for one word.</p>
 </section>
 <section id="sampling-controls" class="level3" data-number="4.6">
 <h3 data-number="4.6" class="anchored" data-anchor-id="sampling-controls"><span class="header-section-number">4.6</span> Sampling controls</h3>
-<p>At each step the model gives every token <span class="math inline">\(i\)</span> in its vocabulary a score <span class="math inline">\(z_i\)</span>, called a <span style="color:#b8860b"><strong>logit</strong></span>. It turns the scores into probabilities and draws the next token from them: one multinomial trial with <span class="math inline">\(V\)</span> categories, where <span class="math inline">\(V\)</span> is the size of the vocabulary.</p>
-<p><span style="color:#b8860b"><strong>Temperature</strong></span> <span class="math inline">\(T &gt; 0\)</span> divides every logit before the softmax:</p>
+<p>At each step the model gives every token <span class="math inline">\(i\)</span> in its vocabulary a score <span class="math inline">\(z_i\)</span>, called a <span class="term"><strong>logit</strong></span>. It turns the scores into probabilities and draws the next token from them: one multinomial trial with <span class="math inline">\(V\)</span> categories, where <span class="math inline">\(V\)</span> is the size of the vocabulary.</p>
+<p><span class="term"><strong>Temperature</strong></span> <span class="math inline">\(T &gt; 0\)</span> divides every logit before the softmax:</p>
 <p><span class="math display">\[
 p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 \qquad
@@ -1042,7 +1056,7 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <li>As <span class="math inline">\(T \to 0\)</span>, all the probability moves to the largest <span class="math inline">\(z_i\)</span>, so the model always takes the most likely token. This is called greedy decoding.</li>
 <li>As <span class="math inline">\(T \to \infty\)</span>, the distribution becomes uniform.</li>
 </ul>
-<p><span style="color:#b8860b"><strong>Top-p</strong></span>, or nucleus sampling, removes the long tail. Sort the probabilities, <span class="math inline">\(p_{(1)} \ge p_{(2)} \ge \cdots\)</span>, keep the smallest <span class="math inline">\(k\)</span> with <span class="math inline">\(p_{(1)} + \cdots + p_{(k)} \ge p\)</span>, rescale those <span class="math inline">\(k\)</span> probabilities to sum to 1, and draw from them.</p>
+<p><span class="term"><strong>Top-p</strong></span>, or nucleus sampling, removes the long tail. Sort the probabilities, <span class="math inline">\(p_{(1)} \ge p_{(2)} \ge \cdots\)</span>, keep the smallest <span class="math inline">\(k\)</span> with <span class="math inline">\(p_{(1)} + \cdots + p_{(k)} \ge p\)</span>, rescale those <span class="math inline">\(k\)</span> probabilities to sum to 1, and draw from them.</p>
 <p>An example. The text so far is</p>
 <blockquote class="blockquote">
 <p>The p-value is 0.03, so at the 5% level we ___ the null hypothesis.</p>
@@ -1087,7 +1101,7 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <li>With <span class="math inline">\(T = 1\)</span> and top-p <span class="math inline">\(= 0.9\)</span>, the model keeps “reject” and “accept”, because <span class="math inline">\(0.665 + 0.245 = 0.910 \ge 0.9\)</span>. After rescaling they have probabilities 0.731 and 0.269, and “retain” can no longer be drawn.</li>
 <li>Top-p did not remove the wrong word “accept”. It only cuts the tail. When a task has one right answer, use a low temperature.</li>
 </ul>
-<p>Section 3.1 simulates draws like this one.</p>
+<p><a href="../section3/s3p1.html">Section 3.1 of the course (Random number generators)</a> simulates draws like this one.</p>
 <ul>
 <li>Rules of thumb: temperature 0.2 with top-p 0.95 for coherent output; 0.9 and 0.99 for creative output; 0 when the task has one right answer.</li>
 <li>Very low and very high temperatures both cause problems. Too low, and the model may repeat the same text; too high, and the text may stop making sense.</li>
@@ -1111,22 +1125,23 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 </section>
 </section>
 <section id="structured-output" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="structured-output"><span class="header-section-number">5</span> Structured Output</h2>
+<h2 data-number="5" class="anchored" data-anchor-id="structured-output"><span class="header-section-number">5</span> Structured output</h2>
 <section id="ask-for-a-type-not-a-string" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="ask-for-a-type-not-a-string"><span class="header-section-number">5.1</span> Ask for a type, not a string</h3>
 <ul>
 <li>A model always replies with text. To pass its answer to <code>lm</code> or to a plot, you need numbers and columns, not a paragraph.</li>
-<li>Both <code>ellmer</code> and the OpenAI library let you describe the shape you want, called a <span style="color:#b8860b"><strong>schema</strong></span>, and they return data in that shape.</li>
+<li>Both <code>ellmer</code> and the OpenAI library let you describe the shape you want, called a <span class="term"><strong>schema</strong></span>, and they return data in that shape.</li>
 <li>With a schema, you no longer need the checking code from the few-shot example above.</li>
 </ul>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> These blocks need a key and a network.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>review <span class="ot">&lt;-</span> <span class="fu">type_object</span>(</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">label     =</span> <span class="fu">type_enum</span>(<span class="st">"One of Supported, Unsupported, Unclear."</span>,</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">c</span>(<span class="st">"Supported"</span>, <span class="st">"Unsupported"</span>, <span class="st">"Unclear"</span>)),</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">label     =</span> <span class="fu">type_enum</span>(<span class="fu">c</span>(<span class="st">"Supported"</span>, <span class="st">"Unsupported"</span>, <span class="st">"Unclear"</span>),</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"One of Supported, Unsupported, Unclear."</span>),</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">reason    =</span> <span class="fu">type_string</span>(<span class="st">"One short sentence."</span>),</span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_value   =</span> <span class="fu">type_number</span>(<span class="st">"The p-value mentioned, or -1 if none."</span>))</span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -1135,6 +1150,7 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"This study proves the two groups differ (p = 0.20)."</span>,</span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> review)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_prompt.R</code></span></div>
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
 <div class="cell">
@@ -1152,21 +1168,22 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    text_format<span class="op">=</span>Review)</span>
 <span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.output_parsed.label, resp.output_parsed.p_value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_prompt.py</code></span></div>
 </div>
 </div>
 </div>
 </section>
 </section>
 <section id="tool-calling" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="tool-calling"><span class="header-section-number">6</span> Tool Calling</h2>
+<h2 data-number="6" class="anchored" data-anchor-id="tool-calling"><span class="header-section-number">6</span> Tool calling</h2>
 <section id="giving-the-model-a-function-to-call" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="giving-the-model-a-function-to-call"><span class="header-section-number">6.1</span> Giving the model a function to call</h3>
 <ul>
 <li>A model is not a calculator. It can get simple arithmetic wrong.</li>
-<li>A <span style="color:#b8860b"><strong>tool</strong></span> is one of your functions, described well enough that the model can decide when to call it and with what arguments.</li>
+<li>A <span class="term"><strong>tool</strong></span> is one of your functions, described well enough that the model can decide when to call it and with what arguments.</li>
 <li>You run the function. The model never touches your data or your session.</li>
 </ul>
-<p>The loop has four steps, and you will meet it again in Section 7.</p>
+<p>The loop has four steps, and you will meet it again in the later course section on AI agents.</p>
 <ol type="1">
 <li>You send the question and the list of tools.</li>
 <li>The model replies with a request: this tool, these arguments.</li>
@@ -1178,7 +1195,7 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <h3 data-number="6.2" class="anchored" data-anchor-id="watch-a-small-model-fail-then-fix-it"><span class="header-section-number">6.2</span> Watch a small model fail, then fix it</h3>
 <p>In 2024, many chatbots answered that 9.11 is larger than 9.9. Small models still make this mistake.</p>
 <p>We ask the model the same question twice: first without a tool, and then with a tool <code>larger(a, b)</code> that compares the two numbers in R or Python.</p>
-<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> or IDAS — needs a local model. Run the code a few times. The answers change from run to run, and <code>llama3.2:1b</code> is wrong about half the time.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> or IDAS. These blocks need a local model. Run the code a few times. The answers change from run to run, and <code>llama3.2:1b</code> is wrong about half the time.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
@@ -1202,9 +1219,10 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tool</span>(larger, <span class="st">"Return the larger of two numbers."</span>,</span>
 <span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">arguments =</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">type_number</span>(<span class="st">"First number."</span>),</span>
 <span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">b =</span> <span class="fu">type_number</span>(<span class="st">"Second number."</span>)))))</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>armed<span class="sc">$</span><span class="fu">on_tool_request</span>(<span class="cf">function</span>(req) <span class="fu">cat</span>(<span class="st">"-&gt; "</span>, req<span class="sc">@</span>name, <span class="fu">deparse1</span>(req<span class="sc">@</span>arguments), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>armed<span class="sc">$</span><span class="fu">on_tool_request</span>(<span class="cf">function</span>(request) <span class="fu">cat</span>(<span class="st">"-&gt; "</span>, request<span class="sc">@</span>name, <span class="fu">deparse1</span>(request<span class="sc">@</span>arguments), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
 <span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>armed<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Which is larger, 9.9 or 9.11?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_tools.R</code></span></div>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell">
@@ -1240,6 +1258,7 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>final <span class="op">=</span> local.chat.completions.create(model<span class="op">=</span><span class="st">"llama3.2:1b"</span>, messages<span class="op">=</span>msgs, tools<span class="op">=</span>TOOLS)</span>
 <span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(final.choices[<span class="dv">0</span>].message.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="codespace"><span class="codespace-file">file: <code>notes/section2/run/s2p4_idas.py</code></span></div>
 </div>
 </div>
 </div>
@@ -1276,7 +1295,7 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Small models such as <code>llama3.2:1b</code> often use tools incorrectly. The model may answer without calling <code>larger</code>, or pass the wrong numbers. This is a problem with the model, not with your code. The line that starts with <code>-&gt;</code> shows which numbers the model passed. In our tests on IDAS, <code>qwen3.5:4b</code> called the tool correctly every time, so use it when you need the tool to work.</p>
+<p><strong>Small models such as <code>llama3.2:1b</code> often use tools incorrectly.</strong> The model may answer without calling <code>larger</code>, or pass the wrong numbers. This is a problem with the model, not with your code. The line that starts with <code>-&gt;</code> shows which numbers the model passed. In our tests on IDAS, <code>qwen3.5:4b</code> called the tool correctly every time, so use it when you need the tool to work.</p>
 </div>
 </div>
 </section>
@@ -1288,7 +1307,7 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <li><code>column_mean(column)</code> returns the mean of one column.</li>
 </ul>
 <p>The model cannot see the data. To answer, it first needs the column names, and then the mean of the right column.</p>
-<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> — needs a model.</p>
+<p><a class="mode mode-link" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-play"></i> Run in Codespace</a> These blocks need a model.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
@@ -1311,8 +1330,8 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>       <span class="st">"Return the mean of one numeric column of the cars data set."</span>,</span>
 <span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">arguments =</span> <span class="fu">list</span>(<span class="at">column =</span> <span class="fu">type_string</span>(<span class="st">"Exact column name."</span>)))))</span>
 <span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">on_tool_request</span>(<span class="cf">function</span>(req)</span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"-&gt; "</span>, req<span class="sc">@</span>name, <span class="fu">deparse1</span>(req<span class="sc">@</span>arguments), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">on_tool_request</span>(<span class="cf">function</span>(request)</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"-&gt; "</span>, request<span class="sc">@</span>name, <span class="fu">deparse1</span>(request<span class="sc">@</span>arguments), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
 <span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"What is the average weight of these cars?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1366,18 +1385,14 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 </div>
 </div>
 <p>What you should see: first a call to <code>column_names</code>, then a call to <code>column_mean</code> with <code>column = "Weight"</code>, and then an answer with the mean. The loop ends when the model answers without asking for a tool.</p>
-<p><span class="mode"><i class="fa-solid fa-hand-paper" aria-label="hand-paper"></i> By hand</span> — the correct answer is the mean of the <code>Weight</code> column, which you can compute yourself in one line. Run the code and check that the model reports the same number. Done when you can say which tools the model called, in which order, and whether it ever guessed a number.</p>
+<p><span class="mode"><i class="fa-solid fa-hand-paper" aria-label="hand-paper"></i> By hand</span> The correct answer is the mean of the <code>Weight</code> column, which you can compute yourself in one line. Run the code and check that the model reports the same number. Done when you can say which tools the model called, in which order, and whether it ever guessed a number.</p>
 </section>
 </section>
 <section id="working-with-a-coding-agent" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="working-with-a-coding-agent"><span class="header-section-number">7</span> Working with a Coding Agent</h2>
+<h2 data-number="7" class="anchored" data-anchor-id="working-with-a-coding-agent"><span class="header-section-number">7</span> Working with a coding agent</h2>
 <section id="git" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="git"><span class="header-section-number">7.1</span> Git</h3>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Command</th>
@@ -1403,14 +1418,14 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 </tr>
 <tr class="odd">
 <td><code>git restore &lt;file&gt;</code></td>
-<td>throw away everything since the last checkpoint</td>
+<td>discard the unstaged changes in this file</td>
 </tr>
 </tbody>
 </table>
 <ul>
 <li>Commit before you let an agent change anything. If the agent breaks something, you can go back to that commit.</li>
 <li><code>git diff</code> is how you see what it did, line by line. <code>/review</code> reads the same thing.</li>
-<li>A <code>.gitignore</code> lists what never enters the repository: <code>.env</code>, large data, rendered output. Always include <code>.env</code>, so that your key never reaches GitHub.</li>
+<li>A <code>.gitignore</code> tells Git which untracked files to ignore, such as <code>.env</code>, large data, and rendered output. Add <code>.env</code> before your first commit. It does not remove a file that Git already tracks.</li>
 </ul>
 </section>
 <section id="installing-codex-and-claude-code" class="level3" data-number="7.2">
@@ -1433,7 +1448,7 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 <p>Set up git every time before you start an agent.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/projects/my-analysis    <span class="co"># the folder you want to work in</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span>                       <span class="co"># or: codex</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><span class="mode"><i class="fa-solid fa-robot" aria-label="robot"></i> Vibe</span> — once it starts, ask for something like this.</p>
+<p><span class="mode"><i class="fa-solid fa-robot" aria-label="robot"></i> Vibe</span> Once it starts, ask for something like this.</p>
 <pre><code>Initialize a git repository here. Write a .gitignore for a project that
 uses both R and Python, excluding .env, .Rhistory, .Rproj.user,
 __pycache__, and rendered output. Then make the first commit.</code></pre>
@@ -1441,21 +1456,21 @@ __pycache__, and rendered output. Then make the first commit.</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span>          <span class="co"># exactly one commit?</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status                 <span class="co"># working tree clean?</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> .gitignore             <span class="co"># is .env actually in there?</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> ls-files <span class="kw">|</span> <span class="fu">grep</span> .env   <span class="co"># nothing should come back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> ls-files <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-Fx</span> .env   <span class="co"># nothing should come back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The last line is the most important. If a <code>.env</code> file was committed, the agent has just put a key into your history, and deleting the file later does not remove it. Done when you can say what it committed, what it left out, and how you know.</p>
 </section>
 <section id="chat-api-and-coding-agents" class="level3" data-number="7.4">
 <h3 data-number="7.4" class="anchored" data-anchor-id="chat-api-and-coding-agents"><span class="header-section-number">7.4</span> Chat, API, and coding agents</h3>
 <p>There are three ways to use a model.</p>
 <ul>
-<li><p><span style="color:#b8860b"><strong>Chat.</strong></span> You type into a web page.</p></li>
-<li><p><span style="color:#b8860b"><strong>API.</strong></span> You write the call inside a script that can be rerun, versioned, and read by someone else.</p></li>
-<li><p><span style="color:#b8860b"><strong>Coding agent.</strong></span> The model runs the loop on your machine. It reads your files, writes new ones, runs commands, reads the errors, and tries again. <a href="https://developers.openai.com/codex/">OpenAI Codex</a> and <a href="https://code.claude.com/docs/">Anthropic Claude Code</a> are the two common ones. <a href="https://docs.github.com/copilot">Copilot</a> in the Codespace is a lighter version of the same idea.</p></li>
+<li><p><span class="term"><strong>Chat.</strong></span> You type into a web page.</p></li>
+<li><p><span class="term"><strong>API.</strong></span> You write the call inside a script that can be rerun, versioned, and read by someone else.</p></li>
+<li><p><span class="term"><strong>Coding agent.</strong></span> The model runs the loop on your machine. It reads your files, writes new ones, runs commands, reads the errors, and tries again. <a href="https://developers.openai.com/codex/">OpenAI Codex</a> and <a href="https://code.claude.com/docs/">Anthropic Claude Code</a> are the two common ones. <a href="https://docs.github.com/copilot">Copilot</a> in the Codespace is a lighter version of the same idea.</p></li>
 <li><p>The main difference is who is in control. With the API, your script decides every step. A coding agent decides the steps itself, and it changes your files directly.</p></li>
-<li><p>All three leave a record you can check later. A chat can be saved or shared as a web page. With the API, your script and its output are the record. A coding agent keeps a transcript of every step, and Section 7 is about reading one.</p></li>
+<li><p>All three leave a record you can check later. A chat can be saved or shared as a web page. With the API, your script and its output are the record. A coding agent keeps a transcript of every step, and the later course section on AI agents is about reading one.</p></li>
 <li><p>In this course: coding agents are welcome on <span class="mode"><i class="fa-solid fa-robot" aria-label="robot"></i> Vibe</span> blocks, not on <span class="mode"><i class="fa-solid fa-hand-paper" aria-label="hand-paper"></i> By hand</span> blocks, and whatever they write, you run and check yourself.</p></li>
 </ul>
-<p>You use both from a terminal. Most of the time you type ordinary English. To control the tool itself, for example to switch models or start over, you type a <span style="color:#b8860b"><strong>slash command</strong></span>. Type <code>/</code> alone to see the list for your version, because it changes often. Six are worth knowing on day one.</p>
+<p>You use both from a terminal. Most of the time you type ordinary English. To control the tool itself, for example to switch models or start over, you type a <span class="term"><strong>slash command</strong></span>. Type <code>/</code> alone to see the list for your version, because it changes often. Six are worth knowing on day one.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">

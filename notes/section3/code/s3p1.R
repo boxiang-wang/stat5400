@@ -22,9 +22,11 @@ head(.Random.seed)
 set.seed(5400)
 (u1 <- runif(1, 1, 5))
 
+# Predict
 set.seed(5400)
 (u2 <- runif(1) * 4 + 1)
 
+# Predict
 help(runif)
 
 
@@ -130,7 +132,7 @@ plot(xs, dexp(xs, rate = 1),        # <- change this line
 
 # By hand
 probs <- ppoints(1000)
-plot(probs, probs,                  # <- change this line
+plot(probs, rep(0.5, 1000),         # <- change this line
   xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
   main = "Q-Q plot for exponential distribution")
 abline(0, 1)
@@ -167,7 +169,7 @@ plot(xs, dcauchy(xs), type = "l", ylim = c(0, 1),
 
 # By hand
 probs <- ppoints(1000)
-plot(probs, probs,                  # <- change this line
+plot(probs, rep(0.5, 1000),         # <- change this line
   xlab = "Theoretical Quantiles",
   ylab = "Sample Quantiles",
   main = "Q-Q plot for Cauchy distribution")
@@ -259,9 +261,9 @@ X <- m * V
 
 # a better code
 Rsq <- V[, 1]^2 + V[, 2]^2
-Rsq <- Rsq + .Machine$double.xmin
-m <- sqrt(-(2 * log(Rsq)) / (Rsq))
-X <- m * V
+ok <- Rsq > 0               # drop a pair that is exactly (0, 0)
+m <- sqrt(-(2 * log(Rsq[ok])) / Rsq[ok])
+X <- m * V[ok, ]
 
 
 ## 6.3 Checking the normals
@@ -290,7 +292,7 @@ thr_quant <- qnorm(ppoints(length(newX)))
 plot(thr_quant, dat_quant,
   xlab = "Theoretical Quantiles",
   ylab = "Sample Quantiles",
-  main = "Q-Q plot for X ~ N(4, 2)")
+  main = "Q-Q plot for X ~ N(4, 4)")
 abline(a = 4, b = 2) # a = intercept; b = slope
 
 
@@ -372,7 +374,7 @@ X <- tcrossprod(rep(1, n), mu) + Z %*% Sigma.sqrt
 (S <- cov(X))
 
 
-## 7.6 R library `mvtnorm`
+## 7.6 `mvtnorm` in R and `multivariate_normal` in Python
 
 set.seed(5400)
 Z <- rnorm(p)
