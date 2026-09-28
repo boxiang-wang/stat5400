@@ -1103,7 +1103,7 @@ whether it ever guessed a number.
 | `git restore <file>` | discard the unstaged changes in this file |
 
 -   Commit before you let an agent change anything. If the agent breaks something, you can go back to that commit.
--   `git diff` is how you see what it did, line by line. `/review` reads the same thing.
+-   `git diff` is how you see what it did, line by line. `/review` asks the agent to review the same changes.
 -   A `.gitignore` tells Git which untracked files to ignore, such as `.env`, large data, and rendered output. Add `.env` before your first commit. It does not remove a file that Git already tracks.
 
 ### Installing Codex and Claude Code
@@ -1166,7 +1166,7 @@ There are three ways to use a model.
 -   All three leave a record you can check later. A chat can be saved or shared as a web page. With the API, your script and its output are the record. A coding agent keeps a transcript of every step, and the later course section on AI agents is about reading one.
 -   In this course: coding agents are welcome on [{{< fa robot >}} Vibe]{.mode} blocks, not on [{{< fa hand-paper >}} By hand]{.mode} blocks, and whatever they write, you run and check yourself.
 
-You use both from a terminal. Most of the time you type ordinary English. To control the tool
+You use Codex and Claude Code from a terminal. Most of the time you type ordinary English. To control the tool
 itself, for example to switch models or start over, you type a
 [**slash command**]{.term}. Type `/` alone to see the list for your version, because it
 changes often. Six are worth knowing on day one.
@@ -1181,7 +1181,7 @@ changes often. Six are worth knowing on day one.
 | `/review` | reviews the changes instead of making more | you are about to commit |
 
 `/effort` takes `low` through `max`. Low is fast and cheap, high thinks longer. It is a Claude
-Code command; in Codex the same dial sits inside `/model`. Pairing a small model on low effort
+Code command; in Codex the same setting is inside `/model`. Pairing a small model on low effort
 for mechanical edits with a large one on high effort for design is an easy way to lower the cost.
 
 A session looks like this.

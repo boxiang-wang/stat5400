@@ -39,7 +39,7 @@ _Updated Sep 26, 2026: wording edits, the Codex link, and two section references
     -   In 2024, the [median pay was \$112,590](https://www.bls.gov/ooh/math/data-scientists.htm). The median salary for an experienced data scientist in California is approaching \$200,000.
     -   Data Scientist is [#6 *Best STEM Job*](https://money.usnews.com/careers/best-jobs/rankings/best-stem-jobs) and [#4 *Best Technology Job*](https://money.usnews.com/careers/best-jobs/data-scientist).
 
--   2023--2025: the question changes. The discussion moved to whether AI changes the job. [A 2023 essay](https://www.linkedin.com/pulse/do-data-scientists-still-hold-worlds-sexiest-stephen-deangelis){.more note="Stephen DeAngelis, 'Do Data Scientists Still Hold the World's Sexiest Positions?', LinkedIn, Oct 2023: AI lets business specialists do analysis without code; data scientists stay essential for model accuracy and new methods."} argued the title is "being challenged by AI"; [a 2025 essay](https://medium.com/data-science-collective/data-science-the-rise-fall-and-evolution-of-the-sexiest-job-of-the-21st-century-ad03d2a86fb9) called it "the rise, fall, and evolution" of the job: the hype cooled, and the role split into analyst, engineer, and scientist tracks.
+-   2023--2025: the discussion moved to whether AI changes the job. [A 2023 essay](https://www.linkedin.com/pulse/do-data-scientists-still-hold-worlds-sexiest-stephen-deangelis){.more note="Stephen DeAngelis, 'Do Data Scientists Still Hold the World's Sexiest Positions?', LinkedIn, Oct 2023: AI lets business specialists do analysis without code; data scientists stay essential for model accuracy and new methods."} argued the title is "being challenged by AI". [A 2025 essay](https://medium.com/data-science-collective/data-science-the-rise-fall-and-evolution-of-the-sexiest-job-of-the-21st-century-ad03d2a86fb9) called it "the rise, fall, and evolution" of the job: the hype cooled, and the role split into analyst, engineer, and scientist tracks.
 
 -   2026: the numbers say the job kept growing. [BLS projects](https://www.bls.gov/ooh/math/data-scientists.htm) data-scientist employment **+34%** over 2024--2034, about 23,400 openings a year; [for statisticians](https://www.bls.gov/ooh/math/mathematicians-and-statisticians.htm), growth "much faster than average" as well. 
 
@@ -48,7 +48,7 @@ _Updated Sep 26, 2026: wording edits, the Codex link, and two section references
 ## Data science
 
 -   Data science uses [computation]{.term} and [inference]{.term} to analyze data from many fields.
--   The term **data science** is believed to be credited to [Jeff Wu](https://www.isye.gatech.edu/users/jeff-wu){.more note="C. F. Jeff Wu, now Professor Emeritus at Georgia Tech. His 1997 inaugural lecture at the University of Michigan was titled 'Statistics = Data Science?' and argued that statistics should be renamed data science."}, Georgia Tech.
+-   The term **data science** is usually credited to [Jeff Wu](https://www.isye.gatech.edu/users/jeff-wu){.more note="C. F. Jeff Wu, now Professor Emeritus at Georgia Tech. His 1997 inaugural lecture at the University of Michigan was titled 'Statistics = Data Science?' and argued that statistics should be renamed data science."}, Georgia Tech.
 -   Statistical endeavors:
     -   Applied statistics and data analysis
     -   Development of statistical methods and software
@@ -74,7 +74,7 @@ _Updated Sep 26, 2026: wording edits, the Codex link, and two section references
 -   **What people use**, [Stack Overflow Developer Survey 2025](https://survey.stackoverflow.co/2025/technology){.more note="About 49,000 developers, all fields, not only data science; R is small there because most respondents are software developers."}: Python 58%, SQL 59%, R 5%; 84% use or plan to use AI tools, 33% trust the answers.
 -   Live listings: [Glassdoor, data scientist](https://www.glassdoor.com/Job/us-data-scientist-jobs-SRCH_IL.0,2_IN1_KO3,17.htm) · [BLS, data scientists](https://www.bls.gov/ooh/math/data-scientists.htm) · [BLS, statisticians](https://www.bls.gov/ooh/math/mathematicians-and-statisticians.htm).
 
-Both O\*NET lists start with **mathematics and critical thinking**; the tools come second. This course teaches the tools: **Python, R, SQL, Git**, and checking your results.
+Both O\*NET lists start with **mathematics and critical thinking**; the tools come second. This course teaches the tools (**Python, R, SQL, Git**) and how to check your results.
 
 {{< explore "What are the key skills employers want from a statistician or a data scientist in 2026? Cite sources with dates." recency=true >}}
 
@@ -134,7 +134,7 @@ Both O\*NET lists start with **mathematics and critical thinking**; the tools co
 -   November 30, 2022: ChatGPT. 100 million users in two months.
 -   2023: GPT-4 (March), Llama with open weights, Claude, Gemini (December).
 -   2024: GPT-4o, Claude 3, Gemini 1.5 with a million-token context, the first "reasoning" models (o1, September). Also the year [ChatGPT said 9.11 is larger than 9.9](https://mindyourdecisions.com/blog/2024/08/07/9-11-is-larger-than-9-9-according-to-ai/){.more note="July 2024. Asked 'which is larger, 9.11 or 9.9?', ChatGPT and Meta AI answered 9.11, treating the digits after the point as whole numbers. Gemini got it right. The error was inconsistent: about half the time."}.
--   2025: DeepSeek-R1 (January): open weights, a fraction of the cost. Agents and tool use everywhere. GPT-5 (August).
+-   2025: DeepSeek-R1 (January): open weights, a fraction of the cost. Agents and tool use became common. GPT-5 (August).
 -   2026: GPT-5.6, Claude 5, Gemini 3.6, DeepSeek V4, and [hundreds more]{.more note="Release trackers count more than 360 model releases so far in 2026."}.
 
 This is a short history. For a longer one, see IBM's [history of AI](https://www.ibm.com/think/topics/history-of-artificial-intelligence).
@@ -146,7 +146,7 @@ This course covers both directions.
 -   **AI for statistics:** the model as a tool in the statistician's workflow.
     -   Writing and translating code: R ↔ Python, a loop → a vectorized version, a formula → a function (Section 2).
     -   Cleaning and extracting: messy text → a tidy table; [structured output]{.more note="You tell the model the exact shape of the answer you want (fields, types), and it returns data your code can use instead of prose."} instead of prose (Section 2.4).
-    -   Designing and explaining: draft a simulation study, explain an error message, summarize a paper. Then *you* verify.
+    -   Designing and explaining: draft a simulation study, explain an error message, summarize a paper. Then you check the result.
     -   Learning: the *Ask AI* buttons in these notes, and the course tutor.
     -   Agents: an AI that runs a small analysis end to end, from data to report, while you watch each step. In class we replay [one on MorphMind](https://agentlab.morphmind.ai/en/share/replay/bp7e9jff) (free tier, no payment required).
 
@@ -164,7 +164,7 @@ This course covers both directions.
     -   Bootstrap a benchmark score; test whether model A really beats model B (Section 4).
     -   Calibration, hallucination rates, and uncertainty for a black box (conformal prediction). This is the statistician's contribution to trustworthy AI (Section 6).
 
--   **Statistics is well placed here.** An LLM is a probability model: it generates text from a distribution and predicts the next word. Generating from a distribution, prediction, inference: these are the questions statistics has worked on for a century.
+-   **Statistics is well placed here.** An LLM is a probability model: it generates text from a distribution and predicts the next word. Statistics has studied sampling from a distribution, prediction, and inference for a century.
 -   **Then why are statisticians not playing a larger role in AI?** One reason is skills, not ideas: large-scale computation, modern coding practice, and text as data. This course teaches these skills.
 
 [Reference: *An Overview of Large Language Models for Statisticians*, The American Statistician (2025), arXiv:2502.17814.]{.source}
@@ -176,7 +176,7 @@ This course covers both directions.
 -   **Many interviews do not allow AI.**
     -   [Anthropic bans it in live interviews](https://fortune.com/2025/07/21/billion-dollar-giant-anthropic-ai-ban-hiring-policy-change-job-seekers-interview-process){.more note="Anthropic, the company behind Claude, allows no AI tools in live interviews and has dropped candidates who used them. In 2025 it banned AI in written applications too, then allowed it for the essay parts only."} and has dropped candidates who used it.
     -   [Google is moving interviews back in person](https://fabrichq.ai/blogs/state-of-cheating-in-interviews-in-2026-tools-trends-and-prevention){.more note="Sundar Pichai, internal town hall, February 2025: some roles will interview in person again because of AI use in remote interviews."}.
-    -   The by-hand blocks and the midterm here are the same test.
+    -   The by-hand blocks and the midterm in this course test the same skill.
 -   **Many employers do not allow it.**
     -   [The big banks](https://cbsnews.com/news/chatgpt-jpmorgan-chase-bars-workers-from-using-ai-tool){.more note="JPMorgan, Bank of America, Citi, Goldman Sachs, and Wells Fargo restricted ChatGPT in 2023; banks cannot send client data to an outside service."}, [Samsung](https://tech.co/news/tech-companies-banning-generative-ai) (May 2023, after engineers pasted internal source code into ChatGPT), and Apple restricted ChatGPT.
     -   Patient records, clinical trials, government work: the data cannot leave the building.
@@ -291,7 +291,7 @@ Do these this week; the notes assume them from Section 2 on.
 
     {{< codespace "notes/section1/run/s1p1_ollama.R" >}}
 
-    Ask the small one five times. It may still get this wrong some of the time; that is the 2024 story in @sec-ai-data-science, on a machine you control. The 1B model is slower and may be right more often. Bigger models need more memory than a Codespace has; on your laptop try `llama3.2` (3B).
+    Ask the small one five times. It may still get this wrong some of the time. This is the 2024 "9.11 vs 9.9" error from @sec-ai-data-science, now on your own machine. The 1B model is slower and may be right more often. Bigger models need more memory than a Codespace has; on your laptop try `llama3.2` (3B).
 3.  From Python: `import ollama; ollama.chat(model="qwen2.5:0.5b", messages=[{"role": "user", "content": "..."}])`.
 4.  If `chat_ollama()` says it cannot find a running Ollama, the server did not start: type `ollama serve &` in the terminal, wait three seconds, try again.
 5.  Also worth knowing: the R package `localLLM` loads a model inside R with no server at all. We will use it in the Tech Guide.
@@ -300,7 +300,7 @@ Do these this week; the notes assume them from Section 2 on.
 ### Where does code run?
 
 -   **On this page.** Most examples run in your browser. Click *Run Code*.
--   **In a Codespace.** Examples that need a compiler, an API key, or more memory have a *Run in Codespace* button. Same code, real machine.
+-   **In a Codespace.** Examples that need a compiler, an API key, or more memory have a *Run in Codespace* button. It runs the same code on a real machine.
 
 ### Optional: install on your own laptop
 
@@ -669,5 +669,5 @@ Three things to notice, all of which return in Section 2.4:
 - [ ] Register a free account at [MorphMind](https://morphmind.ai).
 - [ ] Run the R example above twice in the Codespace (or the Python one). Did the two answers differ?
 
-Questions about these notes? Later this semester the course tutor, built on [MorphMind](https://morphmind.ai), will answer them. Until then, the *Ask AI* buttons.
+Questions about these notes? Later this semester the course tutor, built on [MorphMind](https://morphmind.ai), will answer them. Until then, use the *Ask AI* buttons.
 

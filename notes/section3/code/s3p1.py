@@ -78,7 +78,7 @@ print(ulist.mean())
 print(ulist.var())
 
 
-## 2.10 The probability integral transform, seen
+## 2.10 Checking the probability integral transform
 
 import matplotlib.pyplot as plt
 import scipy.stats

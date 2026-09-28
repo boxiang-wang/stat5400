@@ -33,8 +33,8 @@ pyodide:
 
 Most code blocks on this page run in your browser. Blocks that need a Codespace are marked.
 Click *Run Code*, change the code, run it again. From here on the two languages run side by side: the R tab comes first,
-the Python tab does the same job. Where an idea belongs to one language only, a one-line
-note says so instead of a fake tab.
+the Python tab does the same job. Where an idea exists in one language only, a one-line
+note says so, and there is no tab for the other language.
 :::
 
 ## Functions
@@ -209,7 +209,7 @@ computation without noticing.
 Python stops at the line that is wrong: `ZeroDivisionError` in the first case, and
 `ValueError: math domain error` in the second.
 
-So `errflag` is doing more work in R. In Python the interpreter already refuses; in R, only
+So `errflag` is doing more work in R. In Python the interpreter already stops with an error; in R, only
 your own checks catch a bad input.
 :::
 
@@ -420,8 +420,8 @@ new local `y`, and the global one is untouched.
 Python decides before the function runs. The body assigns to `y`, so `y` is local everywhere in it,
 including on the line that creates it. Reading it before it exists is the error.
 
-`myfun3` is where the two agree. `<<-` and `global` both mean the outer name, and both set `y` to 0
-for good. Avoid them.
+The two languages agree on `myfun3`. `<<-` and `global` both mean the outer name, and both set the
+global `y` to 0, so it stays 0 after the call. Avoid them.
 :::
 
 ### A confusing example (function vs variable)
@@ -707,7 +707,7 @@ change one of them.
 ### The `apply` family of functions in R
 
 -   `apply` lets you apply the same function to each row or column of a matrix, and returns results in a vector.
--   `lapply` applies same function to each member of a list.
+-   `lapply` applies the same function to each member of a list.
 -   `sapply` does the same job as `lapply` but returns a vector.
 -   `tapply` functions on a group level of a variable.
 
@@ -876,7 +876,7 @@ print([f(list(range(1, 11))) for f in funcs])
 
 `lapply` always returns a list. `sapply` tries to simplify that list to a vector or a matrix. Both
 keep the names of `l1`. The dict comprehension keeps the keys; the list comprehension drops them.
-Functions are ordinary objects in both languages, so a list of them is nothing special.
+Functions are ordinary objects in both languages, so we can put them in a list like any other object.
 
 ### `Reduce` function in R
 
@@ -977,12 +977,12 @@ double stops at about $1.8 \times 10^{308}$. So `factorial(170)` is finite, `fac
 **Recursion: bad advice in both.** A recursive factorial calls itself once per step, so
 `fact_rec(2000)` stacks two thousand calls before the first one can finish. Both languages cap that
 stack, and both let you read the cap: the two cells above print it. On a desktop install
-`sys.getrecursionlimit()` is 1000 and this function stops working at a depth of 997, while
-`getOption("expressions")` is 5000 and R stops at 4986 with "evaluation nested too deeply". So 2000 is
-past Python's cap but inside R's, which is why Python raises `RecursionError` here and R instead gets
+`sys.getrecursionlimit()` is 1000, and this function stops working at a depth of 997. In R,
+`getOption("expressions")` is 5000, and R stops at 4986 with "evaluation nested too deeply". So 2000 is
+past Python's cap but inside R's. This is why Python raises `RecursionError` here, while R goes
 deep enough to overflow to `Inf`. These limits depend on the setup. R can also run out of C stack
 before it reaches the expressions limit, so R in the browser may stop earlier. A loop or `Reduce`
-stacks nothing, so it has no depth limit and is faster than either.
+does not stack calls, so it has no depth limit and is faster than either.
 
 When you need factorials of large numbers, work on the log scale: `lfactorial` in R, `math.lgamma` in
 Python. They overflow only for inputs far larger than you will meet: `lfactorial(171)` is about 712.
@@ -1116,7 +1116,7 @@ timeit("[MyFactorial1([5, 10]) for _ in range(10000)]",
 
 -   PEP 8, the official style guide. <https://peps.python.org/pep-0008/>
 -   Google's Python style guide. <https://google.github.io/styleguide/pyguide.html>
--   `black` reformats a file with no options to argue about. <https://black.readthedocs.io/>
+-   `black` reformats a file and has very few options to set. <https://black.readthedocs.io/>
 -   `ruff` checks style and common mistakes, and is fast. <https://docs.astral.sh/ruff/>
 
 :::
@@ -1211,8 +1211,8 @@ print(list(statedf["div"].cat.categories))
 
 ### Group summaries by a factor
 
-`tapply` was in the list of apply functions but never used. This is its job: one number per level of a
-factor.
+`tapply` was in the list of apply functions above, but we have not used it yet. It returns one number
+for each level of a factor.
 
 ```{webr}
 tapply(statedf[, "Population"], statedf[, "reg"], mean)

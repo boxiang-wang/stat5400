@@ -122,7 +122,7 @@ print(np.array(range(1, 5)) * 3)
 ## 3.1 Subsetting a vector
 
 x = np.array(range(1, 6)) * 3
-print(x)             # range [start, stop) -- a half-open interval
+print(x)             # range [start, stop): a half-open interval
 
 # Predict
 print(x[0:1])        # note Python begins with 0

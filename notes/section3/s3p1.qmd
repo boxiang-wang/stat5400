@@ -67,7 +67,7 @@ Art B. Owen. *Monte Carlo theory, methods and examples*.
     -   bias; mean squared error; coverage of confidence intervals.
 -   [**Properties of hypothesis tests**]{.term} also can be evaluated by simulation studies:
     -   size; power.
--   Simulation studies are [experiments]{.more note="A simulation is an experiment whose subjects are random numbers. Sample size, number of replicates, and the settings you vary are all design choices, and they can be chosen badly."}, and the things you know about experimental design and sample size calculation apply.
+-   Simulation studies are [experiments]{.more note="A simulation is an experiment done with random numbers. The sample size, the number of replicates, and the settings you change are all design choices, so we need to choose them carefully."}, and the things you know about experimental design and sample size calculation apply.
 
 ### What happens when an assumption fails
 
@@ -76,7 +76,7 @@ level actually rejects a true null hypothesis when the data are exponential inst
 
 ![](img/ttest_size.png){width="80%" fig-align="center"}
 
--   With normal data the test does what it promises.
+-   With normal data the rejection rate is close to 5%, as it should be.
 -   With exponential data at $n = 10$ it rejects twice as often as it should.
 -   The error shrinks as $n$ grows, but it is still there at $n = 100$.
 -   These numbers came from a simulation. You will learn how to produce them in this section.
@@ -146,7 +146,7 @@ print(u)
 Run the block twice. The value does not change, because `set.seed` puts the generator back to the same starting state.
 
 ::: {.callout-note collapse="true" title="Going further: what a seed actually is"}
-**A seed is a starting point in a fixed sequence.** R's numbers are not random. They are a long, fixed sequence that looks random, and the seed says where in that sequence to start.
+**A seed is a starting point in a fixed sequence.** R's numbers are not truly random. They are a long, fixed sequence that looks random, and the seed says where in that sequence to start.
 
 R's default generator is the Mersenne-Twister. Its state is 625 integers, kept in `.Random.seed`. `set.seed(5400)` fills that state from the number 5400, so every later draw is determined. Its period is $2^{19937}-1$, so the sequence does not repeat in any simulation we run in this course.
 
@@ -410,7 +410,7 @@ $$
 P(Y \le y) = P(F(X) \le y) = P(X \le F^{-1}(y)) = F(F^{-1}(y)) = y.
 $$
 
-### The probability integral transform, seen
+### Checking the probability integral transform
 
 ::: {.panel-tabset}
 
@@ -447,7 +447,7 @@ Both histograms are flat: $F(X)$ is uniform for both distributions.
 
 ### Uniform random number generators in Python
 
-Two generators have different arguments: `low`--`high` versus `loc`--`scale`.
+The two generators have different arguments: `low` and `high` versus `loc` and `scale`.
 
 ```{pyodide}
 np.random.seed(5400)
@@ -459,7 +459,7 @@ np.random.seed(5400)
 print(scipy.stats.uniform.rvs(loc=2, scale=3, size=3))
 ```
 
-`scale` is the width, not the upper end. To get $\mathrm{Unif}(2, 5)$ you write `scale=3`, because $5 - 2 = 3$. Passing `scale=5` silently gives you $\mathrm{Unif}(2, 7)$.
+`scale` is the width, not the upper end. To get $\mathrm{Unif}(2, 5)$ you write `scale=3`, because $5 - 2 = 3$. If you pass `scale=5`, you get $\mathrm{Unif}(2, 7)$, and there is no warning.
 
 ### Q-Q plot (quantile-quantile plot)
 
@@ -861,9 +861,9 @@ print(np.random.exponential(scale=2, size=3))
 :::
 
 ::: {.callout-note collapse="true" title="Answer"}
-**They do not match.** Both are correct draws from the same distribution, but they consume the uniform stream differently.
+**They do not match.** Both are correct draws from the same distribution, but they use the uniform numbers in different ways.
 
-The inverse-CDF version uses exactly one uniform per exponential. The algorithm of Ahrens and Dieter uses a variable number, sometimes one and sometimes several. So after the first value the two streams are at different places in the same sequence.
+The inverse-CDF version uses exactly one uniform per exponential. The algorithm of Ahrens and Dieter uses a variable number, sometimes one and sometimes several. So after the first value, the two methods are at different places in the same sequence of uniforms.
 
 So the seed fixes the sequence of uniforms, but the result also depends on the algorithm and on the order of the draws.
 
@@ -976,7 +976,7 @@ plt.scatter(np.tan(np.pi * (probs - 0.5)), np.sort(Xlist), s=8)
 
 You may also write `qcauchy(probs)` in place of `tan(pi * (probs - 0.5))`. They are the same function. In Python, `scipy.stats.cauchy.ppf(probs)`.
 
-The extreme points are very far from the line. The Cauchy has heavy tails, so a few points are very far out.
+A few extreme points are very far from the line, because the Cauchy has heavy tails.
 :::
 
 ![](img/qqcauchy.png){width="70%" fig-align="center"}
@@ -1010,7 +1010,7 @@ print(np.mean(np.random.standard_cauchy(10000)))
 
 :::
 
-The three means are far apart, although each uses 10,000 draws. The sample mean does not settle down, because the Cauchy has no mean.
+The three means are far apart, although each uses 10,000 draws. The sample mean does not converge, because the Cauchy has no mean.
 
 ### Sampling the next word
 
@@ -1182,7 +1182,7 @@ with probability $f(Y) / (c\, g(Y))$.
 
 A worked case: draw standard normals using a Cauchy envelope. The Cauchy has heavier tails than
 the normal, so a single constant does bound the ratio. Here $c = 1.52$, and about two thirds of
-the draws survive. The shaded gap between the two curves in the plot below is the part that
+the draws are accepted. The shaded gap between the two curves in the plot below is the part that
 is rejected. A better envelope makes it smaller.
 
 ::: {.panel-tabset}

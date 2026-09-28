@@ -39,7 +39,7 @@ run it again. The whole page shares one R session, so run the blocks in order.
 -   S-Plus is a commercial version of S (began in 1987), sold and supported by [Insightful Corp.]{.more note="Insightful sold S-Plus until 2008, when TIBCO bought the company; S-Plus is no longer actively sold."}
 
 ::: {.callout-note collapse="true" title="What S-Plus offered"}
-**Bottom line.** S-Plus was the paid product built on S. R is the free implementation that replaced it in practice.
+**S-Plus was the paid product built on S.** R is the free implementation of S that replaced it in practice.
 
 -   GUI.
 -   Many formats supported for graphics export and data input/output.
@@ -238,7 +238,7 @@ T
 ::: {.callout-note collapse="true" title="Answer"}
 **`T` is an ordinary variable; `TRUE` is not.** `T` and `F` start out as shortcuts for `TRUE` and `FALSE`, but nothing stops you, a colleague, or a package from assigning to them. `TRUE` and `FALSE` are reserved words and cannot be reassigned.
 
-So `if (x == T)` can silently mean the opposite of what you wrote. `rm(T)` deletes your version and uncovers the original.
+So `if (x == T)` can silently mean the opposite of what you wrote. `rm(T)` deletes your version, so `T` means `TRUE` again.
 :::
 
 ```{webr}
@@ -253,7 +253,7 @@ typeof(a5)
 ```
 
 ::: {.callout-note collapse="true" title="Going further: class, typeof, and mode"}
-{{< fa user-graduate >}} **`typeof()`, `class()`, and `mode()` answer different questions.** `typeof()` gives how the value is stored, `class()` gives what R dispatches methods on, and `mode()` is the older S-era grouping.
+{{< fa user-graduate >}} **`typeof()`, `class()`, and `mode()` answer different questions.** `typeof()` gives how the value is stored, `class()` gives the class that R uses to choose a method (for example, which `print` to call), and `mode()` is an older grouping from the S language.
 
 ```
 1     class numeric     typeof double      mode numeric
@@ -284,7 +284,7 @@ Python lists behave differently. There, `b = a` gives the one list a second name
 
 ### Lists
 
-The element of a list can be of different types.
+The elements of a list can be of different types.
 
 ```{webr}
 l1 <- list(c(1, 2), c(T, F), c("T", "F"), 1 + 2)
@@ -372,11 +372,11 @@ as.numeric(f)
 ```
 
 ::: {.callout-note collapse="true" title="Answer"}
-{{< fa user-graduate >}} **Never call `as.numeric` on a factor: you get `1 3 2`, not `10 9 8`.** A factor stores small integer codes plus a table of levels. `as.numeric()` hands back the codes, not the labels.
+{{< fa user-graduate >}} **Never call `as.numeric` on a factor: you get `1 3 2`, not `10 9 8`.** A factor stores small integer codes plus a table of levels. `as.numeric()` returns the codes, not the labels.
 
 The levels are sorted as text, so they come out `"10" "8" "9"`. `"10"` sorts before `"8"` because `"1"` comes before `"8"`. The codes then follow that order.
 
-The safe idiom goes through the labels:
+The safe way is to convert the labels to text first:
 
 ```r
 as.numeric(as.character(f))   # 10 9 8
