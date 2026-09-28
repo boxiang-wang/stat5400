@@ -3,7 +3,7 @@
 #
 # TASK: ask Copilot to make QuadraticSolver robust. Accept its answer, then test it.
 #
-# Verify with the three cases below. The third one is the one that matters:
+# Verify with the three cases below. Pay most attention to the third case:
 #   QuadraticSolver(2, 4, 1)    two ordinary roots
 #   QuadraticSolver(0, 5, 1)    a is zero, not a quadratic
 #   QuadraticSolver(1, 1e8, 1)  roots near -1e-8 and -1e8

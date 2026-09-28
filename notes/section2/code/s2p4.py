@@ -74,6 +74,7 @@ print(resp.choices[0].message.content)
 
 ## 4.2 Roles
 
+# Predict
 for system in ["you are a concise tutor.",
                "you are a responsible tutor. Help your student "
                "but don't tell them the exact answers."]:

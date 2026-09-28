@@ -14,7 +14,7 @@
 #     North Central    4803.0000
 #     West             2915.3077
 #
-# The order is the point. R prints the regions in factor level order.
+# Check the order of the rows. R prints the regions in factor level order.
 # pandas sorts alphabetically unless the column is a Categorical with
 # the levels given in the right order.
 import pandas as pd

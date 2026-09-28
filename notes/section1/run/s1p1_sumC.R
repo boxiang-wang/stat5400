@@ -19,5 +19,6 @@ cppFunction('double sumC(NumericVector x){
   return total;
 }')
 
+set.seed(5400)
 x <- runif(1e3)
 microbenchmark(sum(x), sumC(x), sumR(x))

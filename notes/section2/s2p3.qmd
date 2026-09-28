@@ -31,8 +31,8 @@ pyodide:
 <div class="page-codefiles">All code on this page, in one file: {{< codefiles s2p3 >}}</div>
 :::
 
-Every code block on this page runs in your browser. Click *Run Code*, change the code,
-run it again. From here on the two languages run side by side: the R tab comes first,
+Most code blocks on this page run in your browser. Blocks that need a Codespace are marked.
+Click *Run Code*, change the code, run it again. From here on the two languages run side by side: the R tab comes first,
 the Python tab does the same job. Where an idea belongs to one language only, a one-line
 note says so instead of a fake tab.
 :::
@@ -54,7 +54,7 @@ function (<arguments>) {
 }
 ```
 
--   Three parts of the function: [**formals, body, environment**]{style="color:#b8860b"}.
+-   Three parts of the function: [**formals, body, environment**]{.term}.
 
 ```{webr}
 myfunc <- function(x) sin(x)
@@ -75,7 +75,7 @@ def <name>(<arguments>):
   return <object to return>
 ```
 
--   The same three parts, under different names: [**signature, code, globals**]{style="color:#b8860b"}.
+-   The same three parts, under different names: [**signature, code, globals**]{.term}.
 
 ```{pyodide}
 import math
@@ -98,7 +98,7 @@ the function. Python keeps only [compiled bytecode]{.more note="Python translate
 
 ### Quadratic equation solver (a bad example)
 
-A question from STAT 5400 proficiency exam:
+A question from the old STAT 5400 proficiency exam (no longer given):
 
 ::: {.panel-tabset}
 
@@ -135,8 +135,9 @@ quadratic(2, 4, 1)
 
 :::
 
-On these coefficients it gives the right answer. It is still a bad function: the name
-`solve` hides an R function, the argument `c` hides `c()`, and nothing is checked.
+For these coefficients the result is correct. The function checks none of its inputs. Its
+variable names `solve` and `c` are also R function names, which makes the code harder to read
+(see the function-versus-variable example below).
 
 What would it return when `a` is zero, or when the discriminant is negative?
 
@@ -202,21 +203,21 @@ QuadraticSolver(2, 4, 1)
 
 Take the checks out and give the function `a = 0`. R divides by zero and returns `NaN` and
 `-Inf`. Give it a negative discriminant and R returns two `NaN` values with a warning that is
-easy to miss. Either way you get something number-shaped, and you can carry it into the next
+easy to miss. Either way you get a value that looks like a number, and you can carry it into the next
 computation without noticing.
 
 Python stops at the line that is wrong: `ZeroDivisionError` in the first case, and
 `ValueError: math domain error` in the second.
 
-So `errflag` is doing more work in R. In Python the interpreter already refuses; in R the only
-thing standing between a bad input and a bad number is the code you wrote.
+So `errflag` is doing more work in R. In Python the interpreter already refuses; in R, only
+your own checks catch a bad input.
 :::
 
 ### A bug the flags do not catch
 
 Both versions use the formula from the textbook. Try coefficients that are far apart.
 
-[{{< fa lightbulb >}} Predict]{.mode} --- the two roots of a quadratic must multiply to $c/a$, which
+[{{< fa lightbulb >}} Predict]{.mode} The two roots of a quadratic must multiply to $c/a$, which
 is 1 here. Will they? Done when you can say which of the two roots is wrong.
 
 ::: {.panel-tabset}
@@ -239,7 +240,7 @@ print(r[0] * r[1])   # must be c/a = 1
 
 :::
 
-::: {.callout-note collapse="true" title="Solution"}
+::: {.callout-note collapse="true" title="Answer"}
 **The product is 0.745, not 1, and no error was raised.**
 
 The large root is fine. The small one should be $-1.0 \times 10^{-8}$ and comes back as
@@ -259,38 +260,46 @@ sol <- c(cval / q, q / aval)
 That version returns $-1.0 \times 10^{-8}$, and the product becomes 1.
 :::
 
-[{{< fa robot >}} Vibe]{.mode} --- give `QuadraticSolver` to Copilot and ask it to make the function
+[{{< fa robot >}} Vibe]{.mode} Give `QuadraticSolver` to Copilot and ask it to make the function
 robust, then test the result on `(1, 1e8, 1)`. Starter files:
 [`vibe/s2p3_quadratic_robust.R`](https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/vibe/s2p3_quadratic_robust.R)
 and [`vibe/s2p3_quadratic_robust.py`](https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/vibe/s2p3_quadratic_robust.py).
-Expect type checks, a docstring, and a message for the negative discriminant. Expect the unstable
-formula to survive. Models fix the errors that have names, and this one has no name until you give it
-one. That division of labor runs through the rest of the course.
+A model may add type checks, a docstring, and a message for the negative discriminant, and still
+leave the unstable formula as it is. This error raises no message, so nothing points the model to it.
+Check the revised function on `(1, 1e8, 1)` yourself.
 
 ### Putting a function in its own file
 
 This program is saved in a file called "quadratic.R" (or "quadratic.py"). Running that file
 puts the function in memory.
 
+{{< codespace-pill >}} These blocks read a file from disk, so they do not run in the browser.
+
 ::: {.panel-tabset}
 
 #### R
 
-```r
+```{.r}
 source("quadratic.R")
 QuadraticSolver(2, 4, 1)
 ```
 
 {{< codespace "notes/section2/run/s2p3_quadratic.R" >}}
 
+In the Codespace the file is `notes/section2/run/s2p3_quadratic.R`, so there the first line
+is `source("notes/section2/run/s2p3_quadratic.R")`.
+
 #### Python
 
-```python
+```{.python}
 from quadratic import QuadraticSolver
 QuadraticSolver(2, 4, 1)
 ```
 
 {{< codespace "notes/section2/run/s2p3_quadratic.py" >}}
+
+In the Codespace the file is `notes/section2/run/s2p3_quadratic.py`. Copy it to a file called
+`quadratic.py` in your working folder first, and then the import works.
 
 :::
 
@@ -398,11 +407,11 @@ print(myfun3(1)); print(y)
 
 :::
 
-[{{< fa lightbulb >}} Predict]{.mode} --- `myfun2` is the same three lines in both languages, and
+[{{< fa lightbulb >}} Predict]{.mode} `myfun2` is the same three lines in both languages, and
 `y` is `-1` outside. Say what each version returns before you run it. Done when you can
 explain why one of them never returns anything at all.
 
-::: {.callout-note collapse="true" title="Solution"}
+::: {.callout-note collapse="true" title="Answer"}
 **R returns 0. Python raises `UnboundLocalError`.**
 
 R finds no `y` inside the function, so it walks outward to the global `-1`. The result is stored in a
@@ -417,7 +426,7 @@ for good. Avoid them.
 
 ### A confusing example (function vs variable)
 
-Think about what the following code outputs?
+Think about what the following code outputs.
 
 ::: {.panel-tabset}
 
@@ -448,12 +457,12 @@ list((4, 5))
 
 :::
 
-Same lesson, opposite behavior. R separates the two lookups and recovers; Python does not,
-and shadowing a built-in name is one of the most common bugs in student code.
+R separates the two lookups and recovers; Python does not. In Python, reusing a built-in name
+such as `list` for your own data (called shadowing) is a common bug.
 
 ### Lazy evaluation
 
--   Use `=` rather than `<-` when assign function arguments.
+-   Use `=` rather than `<-` when you assign function arguments.
 
 ::: {.panel-tabset}
 
@@ -483,8 +492,8 @@ x
 #### Python
 
 Python has no lazy evaluation: an argument is computed before the call starts, whether the
-function uses it or not. The walrus operator `:=` assigns inside an expression, which lets
-us run the same experiment.
+function uses it or not. The walrus operator `:=` (Python 3.8 or later) assigns inside an
+expression, which lets us run the same experiment.
 
 ```{pyodide}
 x = 0
@@ -502,7 +511,7 @@ print(x)
 
 :::
 
-The third R block is the point. `myfun6` never uses `x`, so R never evaluates the argument
+Look at the third R block. `myfun6` never uses `x`, so R never evaluates the argument
 and the global `x` stays 0. Python evaluates it first, so `x` becomes 1 either way.
 
 ### Infix and prefix functions
@@ -584,7 +593,7 @@ an existing one does for your own class, by defining a method such as `__add__`.
 rm(list=ls())
 ```
 
--   In fact, `ls()` lists the object in the global environment `.GlobalEnv()`.
+-   In fact, `ls()` lists the objects in the global environment, `.GlobalEnv`.
 -   Try `ls.str()` to get a more detailed list.
 
 #### Python
@@ -693,7 +702,7 @@ In Python 2 the same call returned 43272 bytes, because `range` built the whole 
 R stores `1:5400` as a compact sequence too, and only writes out all the numbers when you
 change one of them.
 
-{{< explore "Explain how R stores 1:5400 without holding 5400 numbers, and what ALTREP is. Then give me three short lines of R code where the compact form is silently expanded into a full vector, and say what triggers the expansion in each. I will run them and check object.size()." >}}
+{{< explore "Explain how R stores 1:5400 without holding 5400 numbers, and what ALTREP is. Then give me three short lines of R code where the compact form is silently expanded into a full vector, and say what triggers the expansion in each. I will inspect each object before and after with .Internal(inspect()) and check whether the compact form has changed." >}}
 
 ### The `apply` family of functions in R
 
@@ -706,25 +715,75 @@ The `apply` family is an R idea with no single Python counterpart. NumPy does th
 with an `axis` argument, and lists are handled by comprehensions; both appear in the tabs
 below.
 
-[{{< fa hand-paper >}} By hand]{.mode} --- a chatbot was asked for the fast way to get the column means of a large matrix. Its answer is in the comments, and two claims in it are wrong. Run the block and let the clock decide. Done when you can name both wrong claims. No AI for this block.
+The browser has no precise clock, so the timings on this page use a helper `timeit()`. It runs
+each expression 10 times and reports the median wall-clock time in milliseconds (`median_ms`), in
+R and in Python alike. The R helper takes the code itself. The Python helper takes each expression
+as a string in quotes, because Python evaluates an argument before the call starts (see Lazy
+evaluation above).
+
+::: {.panel-tabset}
+
+#### R
+
+```{webr}
+#| autorun: true
+#| edit: false
+timeit <- function(..., times = 10) {
+  exprs <- as.list(substitute(list(...)))[-1]
+  env <- parent.frame()
+  out <- t(sapply(exprs, function(e) {
+    el <- replicate(times, system.time(eval(e, env))[["elapsed"]])
+    c(median_ms = 1000 * median(el), min_ms = 1000 * min(el))
+  }))
+  rownames(out) <- sapply(exprs, function(e) paste(deparse(e), collapse = ""))
+  round(out, 2)
+}
+```
+
+#### Python
+
+```{pyodide}
+#| autorun: true
+#| edit: false
+import time, statistics
+def timeit(*exprs, times=10):
+  # this helper takes the name of Python's timeit module on this page
+  width = max(len(e) for e in exprs)
+  print(" " * width, "median_ms", "min_ms")
+  for e in exprs:
+    code = compile(e, "<timeit>", "eval")
+    el = []
+    for _ in range(times):
+      t0 = time.perf_counter()
+      eval(code, globals())
+      el.append(time.perf_counter() - t0)
+    print(e.ljust(width), f"{1000 * statistics.median(el):9.2f}",
+      f"{1000 * min(el):6.2f}")
+```
+
+:::
+
+[{{< fa hand-paper >}} By hand]{.mode} A chatbot was asked for the fast way to get the column means of a large matrix. Its answer is in the comments, and two claims in it are wrong. Run the block and compare the timings. Done when you can name both wrong claims. No AI for this block.
 
 ```{webr}
 # Chatbot: "Use apply(A, 2, mean). apply is vectorised, so it runs at C
 # speed and is much faster than writing the loop yourself. colMeans is
 # just a convenience wrapper around apply."
 A <- matrix(1:1000000, 1000, 1000)
-system.time(apply(A, 2, mean))
-system.time(colMeans(A))
+timeit(
+  apply(A, 2, mean),
+  colMeans(A)
+)
 ```
 
 ::: {.callout-note collapse="true" title="Solution"}
 **`colMeans` wins.** Both claims are wrong.
 
-`apply` is not vectorised. It is an R loop with the loop written for you, so the per-column work still happens in R. And `colMeans` is not a wrapper around `apply`: it is separate C code that walks the matrix once.
+`apply` is not vectorized. It is an R loop with the loop written for you, so the per-column work still happens in R. And `colMeans` is not a wrapper around `apply`: it is separate C code that walks the matrix once.
 
-In the browser `colMeans` is usually a few times faster here; on R installed on your own machine the gap is much wider. Read the `elapsed` column only --- the browser has no CPU clock, so `user` and `system` always print as zero.
+In the browser `colMeans` is usually a few times faster here; on R installed on your own machine the gap is much wider. Read the `median_ms` column: the median of 10 runs, in milliseconds.
 
-The lesson is the one behind the whole section. "Vectorised" describes where the loop runs, not whether you can see it.
+A vectorized function still loops. The loop runs in compiled C code instead of in R.
 :::
 
 The apply family is not the most efficient way in practice.
@@ -738,31 +797,30 @@ A <- matrix(1:1000000, 1000, 1000)
 ```
 
 ```{webr}
-system.time(apply(A, 2, mean))
+timeit(apply(A, 2, mean))
 ```
 
 ```{webr}
-system.time(for(i in 1:1000) mean(A[,i]))
+timeit(for(i in 1:1000) mean(A[,i]))
 ```
 
 ```{webr}
-system.time(colMeans(A))
+timeit(colMeans(A))
 ```
 
 #### Python
 
 ```{pyodide}
-import numpy as np, timeit
-setup = "import numpy as np; A = np.arange(1, 1000001).reshape(1000, 1000, order='F')"
+import numpy as np
+A = np.arange(1, 1000001).reshape(1000, 1000, order='F')
 ```
 
 ```{pyodide}
-print(timeit.timeit("[A[:, i].mean() for i in range(1000)]",
-  setup=setup, number=3))
+timeit("[A[:, i].mean() for i in range(1000)]")
 ```
 
 ```{pyodide}
-print(timeit.timeit("A.mean(axis=0)", setup=setup, number=3))
+timeit("A.mean(axis=0)")
 ```
 
 :::
@@ -816,7 +874,8 @@ print([f(list(range(1, 11))) for f in funcs])
 
 :::
 
-A comprehension keeping the keys is `lapply`; one keeping only the values is `sapply`.
+`lapply` always returns a list. `sapply` tries to simplify that list to a vector or a matrix. Both
+keep the names of `l1`. The dict comprehension keeps the keys; the list comprehension drops them.
 Functions are ordinary objects in both languages, so a list of them is nothing special.
 
 ### `Reduce` function in R
@@ -862,7 +921,7 @@ to pick a function that was written for arrays.
 
 ### How big can a factorial get?
 
-[{{< fa hand-paper >}} By hand]{.mode} --- a chatbot was asked for a factorial that works for large
+[{{< fa hand-paper >}} By hand]{.mode} A chatbot was asked for a factorial that works for large
 inputs. Its answer is the comment inside the block, and it makes two claims. One of them is true in
 Python and false in R. The other is bad advice in both. Run the cells and decide which is which. Done
 when you can say what each language returns for 171. No AI for this block.
@@ -908,10 +967,10 @@ except RecursionError as e:
 :::
 
 ::: {.callout-note collapse="true" title="Solution"}
-**One claim is half true. The other is bad advice everywhere.**
+**Python supports arbitrarily large integers; R's `factorial` uses doubles.**
 
-**Big integers: true in Python, false in R.** R stores every number as a double, which stops at about
-$1.8 \times 10^{308}$. So `factorial(170)` is finite, `factorial(171)` is `Inf`, and `prod(1:171)` is
+**Big integers: true in Python, false in R.** In R, `factorial()` and `prod()` return doubles, and a
+double stops at about $1.8 \times 10^{308}$. So `factorial(170)` is finite, `factorial(171)` is `Inf`, and `prod(1:171)` is
 `Inf` as well, with no warning. Python integers grow as long as memory allows, so
 `math.factorial(171)` is exact and has 310 digits.
 
@@ -921,11 +980,12 @@ stack, and both let you read the cap: the two cells above print it. On a desktop
 `sys.getrecursionlimit()` is 1000 and this function stops working at a depth of 997, while
 `getOption("expressions")` is 5000 and R stops at 4986 with "evaluation nested too deeply". So 2000 is
 past Python's cap but inside R's, which is why Python raises `RecursionError` here and R instead gets
-deep enough to overflow to `Inf`. A loop or `Reduce` stacks nothing, so it has no depth limit and is
-faster than either.
+deep enough to overflow to `Inf`. These limits depend on the setup. R can also run out of C stack
+before it reaches the expressions limit, so R in the browser may stop earlier. A loop or `Reduce`
+stacks nothing, so it has no depth limit and is faster than either.
 
 When you need factorials of large numbers, work on the log scale: `lfactorial` in R, `math.lgamma` in
-Python. Neither one overflows.
+Python. They overflow only for inputs far larger than you will meet: `lfactorial(171)` is about 712.
 :::
 
 ### Timing the three versions
@@ -934,10 +994,38 @@ Python. Neither one overflows.
 
 #### R
 
-{{< codespace-pill >}} --- `microbenchmark` needs a precise clock, which a browser does not have.
+```{webr}
+MyFactorial1 <- function(nseq) {
+  return(sapply(nseq, factorial))
+}
+
+MyFactorial2 <- function(nseq) {
+  return(sapply(nseq,
+    function(x) Reduce('*', seq(x))))
+}
+
+MyFactorial1(c(5, 8, 10))
+MyFactorial2(c(5, 8, 10))
+```
+
+One call takes a few microseconds, too short for the browser clock, so each expression below
+makes 1000 calls.
+
+```{webr}
+timeit(
+  replicate(1000, factorial(c(5, 8, 10))),
+  replicate(1000, MyFactorial1(c(5, 8, 10))),
+  replicate(1000, MyFactorial2(c(5, 8, 10)))
+)
+```
+
+{{< codespace-pill >}} A more precise version for your own computer. The `microbenchmark` package
+needs a precise clock, which a browser does not have.
 
 ```{r}
 #| eval: false
+library(microbenchmark)
+
 MyFactorial1 <- function(nseq) {
   return(sapply(nseq, factorial))
 }
@@ -957,7 +1045,7 @@ microbenchmark(
 {{< codespace "notes/section2/run/s2p3_microbenchmark.R" >}}
 
 -   In fact, `sapply` and `Reduce` do not really help with efficiency.
--   May also use `Sys.time()` or `system.time()` to time R.
+-   May also use `Sys.time()` or `system.time()` to time R. In the browser, use the page's `timeit()` helper, which repeats `system.time()` and reports the median in milliseconds.
 
 #### Python
 
@@ -982,26 +1070,12 @@ print(MyFactorial1([5, 10]))
 print(MyFactorial2([5, 10]))
 ```
 
-```{pyodide}
-import timeit
-mysetup = '''
-import functools, operator, math
-def MyFactorial1(nseq):
-  return [math.factorial(x) for x in nseq]
-def MyFactorial2(nseq):
-  return [functools.reduce(operator.mul,
-    range(1, x+1)) for x in nseq]
-'''
-```
+One call takes less than a microsecond, too short for the browser clock, so each expression below
+makes 10000 calls.
 
 ```{pyodide}
-print(timeit.timeit(setup=mysetup,
-  stmt='MyFactorial1([5, 10])', number=10000))
-```
-
-```{pyodide}
-print(timeit.timeit(setup=mysetup,
-  stmt='MyFactorial2([5, 10])', number=10000))
+timeit("[MyFactorial1([5, 10]) for _ in range(10000)]",
+  "[MyFactorial2([5, 10]) for _ in range(10000)]")
 ```
 
 :::
@@ -1014,20 +1088,20 @@ print(timeit.timeit(setup=mysetup,
     -   Don't forget some functions like `diff()`, `cumsum()`.
     -   `rowSums()` is faster than `apply(x, 1, sum)`.
     -   `crossprod(x, y)` is typically faster than `t(x) %*% y`.
-    -   In Python the same idea is NumPy: `A.sum(axis=1)`, `np.diff`, `np.cumsum`, `A.T @ B`. A Python `for` loop over an array is the slowest thing on this page.
--   Try to find the computation bottleneck (either by algorithm or by profiling (a later tech-guide topic)).
+    -   In Python the same idea is NumPy: `A.sum(axis=1)`, `np.diff`, `np.cumsum`, `A.T @ B`. NumPy operations are usually much faster than an equivalent Python loop.
+-   Find the computation bottleneck, either by thinking about the algorithm or by profiling. Profiling comes later in the course.
 -   Avoid repeated computation:\
     e.g., `t(a - b) %*% A %*% (a - b)`.
 -   Avoid copies.
-    -   Use those functions on a minimum level: `c`, `append`, `rbind`, `cbind`. Create an empty vector (matrix) and then write a loop.
+    -   Inside a loop, call `c`, `append`, `rbind`, and `cbind` as little as possible. Create a vector (or matrix) of the final size first, then fill it in the loop.
     -   Python has the reverse problem. A NumPy slice does not copy, so writing into the slice writes into the original array. The R habit of assuming a copy gives wrong answers here, not slow ones. See Section 2.2.
     -   `np.shares_memory(A, col)` [tells you whether two arrays read the same block of memory]{.more note="True means writing through one of them changes the other, so ask for an explicit copy first. False means the two are independent."}. Write `.copy()` when you mean to modify.
--   High-performance language (a later Tech Guide topic).
--   Parallel computing (a later Tech Guide topic).
+-   High-performance languages (later in the course).
+-   Parallel computing (later in the course).
 
 ## Coding style
 
-### Coding standards --- good coding style
+### Coding standards: good coding style
 
 ::: {.panel-tabset}
 
@@ -1036,7 +1110,7 @@ print(timeit.timeit(setup=mysetup,
 -   The advanced R. <http://adv-r.had.co.nz/Style.html>
 -   The tidyverse style guide. <https://style.tidyverse.org/>
 -   R package: `styler`, including an RStudio add-in.
--   R package `FormatR`: <https://yihui.org/formatr/#2-reformat-r-code>.
+-   R package `formatR`: <https://yihui.org/formatr/#2-reformat-r-code>.
 
 #### Python
 
@@ -1047,8 +1121,7 @@ print(timeit.timeit(setup=mysetup,
 
 :::
 
-Both communities have converged on the same advice: pick one formatter, run it on save, and
-stop discussing spaces.
+In both languages, a common practice is to pick one formatter and run it every time you save.
 
 {{< explore "What code formatter and linter do R projects and Python projects use most in practice right now? Name the current tools for each language, say which are still maintained, and give the one command that formats a whole project. Cite the project page and its date." recency=true >}}
 
@@ -1056,8 +1129,8 @@ stop discussing spaces.
 
 ### The `state` data
 
--   This data sets related to the 50 states of the United States of America.
--   Variables names:
+-   These data sets describe the 50 states of the United States of America.
+-   Variable names:
     -   `state.abb`: character vector of 2-letter abbreviations for the state names.
     -   `state.area`: numeric vector of state areas (in square miles).
     -   `state.center`: list with components named 'x' and 'y' giving the approximate geographic center of each state in negative longitude and latitude. Alaska and Hawaii are placed just off the West Coast.
@@ -1071,7 +1144,7 @@ help(state, package="datasets")
 ```
 
 The data ships with R. For the Python tab it was written out once to `data/state.csv`, with
-the five columns the slides use.
+the five columns this lecture note uses.
 
 ### Building a data frame
 
@@ -1145,12 +1218,12 @@ factor.
 tapply(statedf[, "Population"], statedf[, "reg"], mean)
 ```
 
-[{{< fa robot >}} Vibe]{.mode} --- the pandas version is not on this page. Ask a model for it, run it,
+[{{< fa robot >}} Vibe]{.mode} The pandas version is not on this page. Ask a model for it, run it,
 and compare with the four numbers above. Starter file:
 [`vibe/s2p3_tapply.py`](https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/vibe/s2p3_tapply.py).
 Done when the two tables agree to four decimals, in the same order.
 
-The order is the part worth watching. R prints the regions in factor level order. pandas will sort
+Check the order of the rows. R prints the regions in factor level order. pandas will sort
 them alphabetically unless the column is a `Categorical`, so a translation that looks right can still
 put the rows in the wrong places.
 
@@ -1182,7 +1255,7 @@ notation in this position, so you name the column and the grouping column separa
 
 The R function `dev.copy2eps` copies a plot from the screen to a postscript file.
 
-We may also open a graphic device (say a postscript file), produce the plot, and then turn off the graphic device, saving the plot to the postscript file, for instance. A browser has no file system to write to, so run these two on your own machine.
+We may also open a graphic device (say a postscript file), produce the plot, and then turn off the graphic device, saving the plot to the postscript file, for instance. Run these two on your own machine, so the plot files are saved to your disk.
 
 ::: {.panel-tabset}
 
@@ -1216,13 +1289,13 @@ build and then save; the file type comes from the extension.
 
 #### R
 
--   [**High-level plotting functions**]{style="color:#b8860b"} create a new plot on the graphics device, possibly with axes, labels, titles and so on.
--   [**Low-level plotting functions**]{style="color:#b8860b"} add more information to an existing plot, such as extra points, lines and labels.
--   [**Interactive graphics functions**]{style="color:#b8860b"} allow you interactively add information to, or extract information from, an existing plot, using a pointing device such as a mouse.
+-   [**High-level plotting functions**]{.term} create a new plot on the graphics device, possibly with axes, labels, titles and so on.
+-   [**Low-level plotting functions**]{.term} add more information to an existing plot, such as extra points, lines and labels.
+-   [**Interactive graphics functions**]{.term} allow you to add information to, or extract information from, an existing plot interactively, using a pointing device such as a mouse.
 
 #### Python
 
--   Matplotlib splits the same work in two: `plt.subplots()` creates the [**figure and axes**]{style="color:#b8860b"}, then every method of the axes object adds one more thing to it.
+-   Matplotlib splits the same work in two: `plt.subplots()` creates the [**figure and axes**]{.term}, then every method of the axes object adds one more thing to it.
 -   There are no separate high-level and low-level functions. `ax.scatter`, `ax.plot`, `ax.text`, and `ax.legend` are all methods of the same object, and you call them in any order.
 -   `plt.show()` at the end draws the figure. On this page it is what makes the plot appear under the block.
 
@@ -1230,7 +1303,7 @@ build and then save; the file type comes from the extension.
 
 {{< explore "I know base R graphics well: plot() then points(), lines(), legend(). Explain matplotlib to me in those terms. What is a figure, what is an axes, and which base R idea does each replace? Give one small example with the R code and the matplotlib code side by side." >}}
 
-### Example of high-level function: Plot
+### Example of high-level function: plot
 
 `plot` is a generic plotting function whose behavior is determined by the class of the object(s) to which it is applied.
 
@@ -1397,7 +1470,7 @@ plt.show()
 
 -   `legend(x, y, legend, ...)`.
 
-We introduce `attach()` here for your information, but we should try to avoid using `attach()` in practice. Python has no counterpart, which is one problem fewer.
+We introduce `attach()` here for your information, but we should try to avoid using `attach()` in practice. Python has no counterpart.
 
 ::: {.panel-tabset}
 
@@ -1410,7 +1483,7 @@ plot(Area, Population)
 lines(lowess(Population ~ Area))
 lines(lowess(Population ~ Area, f=0.25), lty=2)
 legend(400000, 15000,
-  legend=c("f=2/3","f=1/14"), lty=1:2)
+  legend=c("f=2/3","f=0.25"), lty=1:2)
 detach(statedf)
 ```
 
@@ -1424,7 +1497,7 @@ ax.scatter(d["Area"], d["Population"])
 ax.plot(*sm.nonparametric.lowess(d["Population"], d["Area"],
   frac=2/3).T, label="frac=2/3")
 ax.plot(*sm.nonparametric.lowess(d["Population"], d["Area"],
-  frac=0.25).T, ls="--", label="frac=1/14")
+  frac=0.25).T, ls="--", label="frac=0.25")
 ax.legend()
 plt.show()
 ```
@@ -1453,7 +1526,7 @@ graphics window, which a web page does not give them.
 
 #### R
 
-{{< codespace-pill >}} --- `ggplot2` is not installed in the browser session.
+{{< codespace-pill >}} The `ggplot2` package is not installed in the browser session.
 
 ```{r}
 #| eval: false
@@ -1469,7 +1542,7 @@ p + geom_smooth(method="loess", se=FALSE)
 
 #### Python
 
-{{< codespace-pill >}} --- `plotnine` is not installed in the browser session either.
+{{< codespace-pill >}} The `plotnine` package is not installed in the browser session either.
 
 ```{python}
 #| eval: false

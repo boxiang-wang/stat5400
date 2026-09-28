@@ -23,6 +23,7 @@ if (!ollama_up()) {
   }
 }
 
+.libPaths(c("~/classdata/models/R", .libPaths()))   # the class copy of ellmer
 library(ellmer)
 
 chat <- chat_openai(model = "gpt-5-nano")     # reads OPENAI_API_KEY

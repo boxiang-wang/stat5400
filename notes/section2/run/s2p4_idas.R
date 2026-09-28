@@ -10,7 +10,7 @@
 #    Never type a key into this file.
 # 3. Run one section at a time: select the lines and press Ctrl+Enter.
 #    The OpenAI calls use gpt-5-nano and cost a fraction of a cent in total.
-#    The 4B model in 3.3 takes up to a minute to answer.
+#    The 4B model in 3.2 takes up to a minute to answer.
 
 # Check the OpenAI key (reads ~/.Renviron again, so no restart is needed after you add the key)
 if (file.exists("~/.Renviron")) readRenviron("~/.Renviron")
@@ -126,8 +126,8 @@ chat$get_turns()    # every turn so far: user, assistant, user, assistant
 ## 5.1 Ask for a type, not a string
 
 review <- type_object(
-  label     = type_enum("One of Supported, Unsupported, Unclear.",
-                        c("Supported", "Unsupported", "Unclear")),
+  label     = type_enum(c("Supported", "Unsupported", "Unclear"),
+                        "One of Supported, Unsupported, Unclear."),
   reason    = type_string("One short sentence."),
   p_value   = type_number("The p-value mentioned, or -1 if none."))
 
@@ -155,7 +155,7 @@ armed$register_tools(list(
   tool(larger, "Return the larger of two numbers.",
        arguments = list(a = type_number("First number."),
                         b = type_number("Second number.")))))
-armed$on_tool_request(function(req) cat("-> ", req@name, deparse1(req@arguments), "\n"))
+armed$on_tool_request(function(request) cat("-> ", request@name, deparse1(request@arguments), "\n"))
 armed$chat("Which is larger, 9.9 or 9.11?")
 
 
@@ -177,7 +177,7 @@ chat$register_tools(list(
        "Return the mean of one numeric column of the cars data set.",
        arguments = list(column = type_string("Exact column name.")))))
 
-chat$on_tool_request(function(req)
-  cat("-> ", req@name, deparse1(req@arguments), "\n"))
+chat$on_tool_request(function(request)
+  cat("-> ", request@name, deparse1(request@arguments), "\n"))
 
 chat$chat("What is the average weight of these cars?")

@@ -9,6 +9,7 @@ if (!nzchar(Sys.getenv("OPENAI_API_KEY"))) {
   message("Your OpenAI key did not work. Check it, or see: ", help_url)
 }
 
+.libPaths(c("~/classdata/models/R", .libPaths()))   # the class copy of ellmer
 library(ellmer)
 
 # ---- roles: the system prompt outranks the user's question ----
@@ -43,8 +44,8 @@ for (cl in claims) {
 
 # ---- structured output: ask for a type, and stop parsing strings ----
 review <- type_object(
-  label   = type_enum("One of Supported, Unsupported, Unclear.",
-                      c("Supported", "Unsupported", "Unclear")),
+  label   = type_enum(c("Supported", "Unsupported", "Unclear"),
+                      "One of Supported, Unsupported, Unclear."),
   reason  = type_string("One short sentence."),
   p_value = type_number("The p-value mentioned in the claim, or -1 if none."))
 

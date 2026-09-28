@@ -70,13 +70,6 @@ y = c("Hello", "5400")
 y
 c(y, "!")
 
-# By hand
-# The same two lines in R, for comparison.
-a <- c(1, 2, 3)
-b <- a
-b[4] <- 4
-a
-
 z = list("word" = c("Hello", "5400"), "sign" = "!")
 z$"word"
 z$"sign"
@@ -91,7 +84,7 @@ b <- c(1, 2, 3)
 a %*% b
 
 
-## 2.10 The library `Numpy`
+## 2.10 The library `NumPy`
 
 1:4 * 3
 
@@ -103,18 +96,6 @@ x[1:2]
 
 x[seq(1, 5, 2)]
 x[c(1, 3)]
-
-# By hand
-# Chatbot: "A logical index shorter than the vector is padded with FALSE, so
-# only the first element is kept. R and Python both behave this way."
-v <- 1:6 * 5
-v[c(TRUE, FALSE)]
-
-# The same idea in R, for comparison.
-a <- c(1, 2, 3, 4, 5)
-b <- a[1:2]
-b[1] <- 99
-a
 
 
 ## 3.2 Subsetting a matrix

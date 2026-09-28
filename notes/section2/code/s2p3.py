@@ -50,15 +50,13 @@ QuadraticSolver(2, 4, 1)
 
 ## 1.4 A bug the flags do not catch
 
+# Predict
 r = QuadraticSolver(1, 1e8, 1)[0]
 print(r)
 print(r[0] * r[1])   # must be c/a = 1
 
 
 ## 1.5 Putting a function in its own file
-
-from quadratic import QuadraticSolver
-QuadraticSolver(2, 4, 1)
 
 argumts = {"a": 2, "b": 4, "c": 1}
 QuadraticSolver(**argumts)
@@ -155,13 +153,27 @@ print(sys.getsizeof(range(5400)))
 
 ## 2.3 The `apply` family of functions in R
 
-import numpy as np, timeit
-setup = "import numpy as np; A = np.arange(1, 1000001).reshape(1000, 1000, order='F')"
+import time, statistics
+def timeit(*exprs, times=10):
+  # this helper takes the name of Python's timeit module on this page
+  width = max(len(e) for e in exprs)
+  print(" " * width, "median_ms", "min_ms")
+  for e in exprs:
+    code = compile(e, "<timeit>", "eval")
+    el = []
+    for _ in range(times):
+      t0 = time.perf_counter()
+      eval(code, globals())
+      el.append(time.perf_counter() - t0)
+    print(e.ljust(width), f"{1000 * statistics.median(el):9.2f}",
+      f"{1000 * min(el):6.2f}")
 
-print(timeit.timeit("[A[:, i].mean() for i in range(1000)]",
-  setup=setup, number=3))
+import numpy as np
+A = np.arange(1, 1000001).reshape(1000, 1000, order='F')
 
-print(timeit.timeit("A.mean(axis=0)", setup=setup, number=3))
+timeit("[A[:, i].mean() for i in range(1000)]")
+
+timeit("A.mean(axis=0)")
 
 
 ## 2.4 `lapply` and `sapply`
@@ -191,12 +203,14 @@ print(factorial([5, 8, 10]))
 
 ## 2.6 How big can a factorial get?
 
+# By hand
 # Chatbot: "Write it recursively, it is cleaner. Big inputs are
 # no problem: these languages switch to exact big integers."
 import math
 print(math.factorial(171))
 print(len(str(math.factorial(171))), "digits")
 
+# By hand
 import sys
 print(sys.getrecursionlimit())
 def fact_rec(n):
@@ -222,21 +236,8 @@ def MyFactorial2(nseq):
 print(MyFactorial1([5, 10]))
 print(MyFactorial2([5, 10]))
 
-import timeit
-mysetup = '''
-import functools, operator, math
-def MyFactorial1(nseq):
-  return [math.factorial(x) for x in nseq]
-def MyFactorial2(nseq):
-  return [functools.reduce(operator.mul,
-    range(1, x+1)) for x in nseq]
-'''
-
-print(timeit.timeit(setup=mysetup,
-  stmt='MyFactorial1([5, 10])', number=10000))
-
-print(timeit.timeit(setup=mysetup,
-  stmt='MyFactorial2([5, 10])', number=10000))
+timeit("[MyFactorial1([5, 10]) for _ in range(10000)]",
+  "[MyFactorial2([5, 10]) for _ in range(10000)]")
 
 
 ## 5.2 Building a data frame
@@ -272,7 +273,7 @@ statedf.boxplot(column="Population", by="div", ax=ax, rot=90)
 fig.savefig("boxplotstate.eps")
 
 
-## 5.7 Example of high-level function: Plot
+## 5.7 Example of high-level function: plot
 
 fig, ax = plt.subplots()
 statedf["div"].value_counts().reindex(divs).plot.bar(ax=ax)
@@ -323,7 +324,7 @@ ax.scatter(d["Area"], d["Population"])
 ax.plot(*sm.nonparametric.lowess(d["Population"], d["Area"],
   frac=2/3).T, label="frac=2/3")
 ax.plot(*sm.nonparametric.lowess(d["Population"], d["Area"],
-  frac=0.25).T, ls="--", label="frac=1/14")
+  frac=0.25).T, ls="--", label="frac=0.25")
 ax.legend()
 plt.show()
 

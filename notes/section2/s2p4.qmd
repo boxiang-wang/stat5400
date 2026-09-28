@@ -22,6 +22,8 @@ toc-depth: 1
 <div class="page-codefiles">All code on this page, in one file: {{< codefiles s2p4 >}}</div>
 :::
 
+_Updated Sep 26, 2026: IDAS setup is now automatic (Section 2.3); the key may live in `~/.Renviron` (Section 2.2); the `.env` check in Section 7.3 now uses `grep -Fx`; the R code in Section 5.1 now gives `type_enum()` its values first, as `ellmer` 0.4 requires._
+
 Most of this page cannot run in the browser, because calling a language model needs a network
 connection and an API key. Those blocks carry a {{< codespace-pill >}} button and open in the
 Codespace, where your key is already set and two small open-weight models are installed.
@@ -32,39 +34,39 @@ university's JupyterHub service. Several open-weight models are installed there 
 [Setting up IDAS](#setting-up-idas) before you start.
 :::
 
-## What a Language Model Is
+## What a language model is
 
 ### The one-sentence version
 
--   A [**large language model**]{style="color:#b8860b"} writes text one [token]{.more note="A token is a word piece. Common words are one token; rare words split into several. One token is about 0.75 words on average."} at a time, each token chosen using everything written before it.
--   [**Pretraining**]{style="color:#b8860b"} trains the model from scratch on one task: predict the next token, over a very large amount of text.
--   [**Reasoning models**]{style="color:#b8860b"} add reinforcement learning after pretraining, rewarded for correct answers rather than for matching text. They think in hidden tokens before replying. You pay for these tokens, but you do not see them.
--   Modern models are built on the [**Transformer**]{style="color:#b8860b"} architecture, introduced in 2017.
--   Most current models are also [**multimodal**]{style="color:#b8860b"}: they read images, audio, and video as well as text, and some generate them.
+-   A [**large language model**]{.term} writes text one [token]{.more note="A token is a word piece. Common words are one token; rare words split into several. One token is about 0.75 words on average."} at a time, each token chosen using everything written before it.
+-   [**Pretraining**]{.term} trains the model from scratch on one task: predict the next token, over a very large amount of text.
+-   [**Reasoning models**]{.term} add reinforcement learning after pretraining, rewarded for correct answers rather than for matching text. They think in hidden tokens before replying. You pay for these tokens, but you do not see them.
+-   Modern models are built on the [**Transformer**]{.term} architecture, introduced in 2017.
+-   Most current models are also [**multimodal**]{.term}: they read images, audio, and video as well as text, and some generate them.
 
 [Source: Vaswani et al., *Attention Is All You Need*, 2017. <https://arxiv.org/abs/1706.03762>]{.source}
 
 ### History and evolution
 
--   [**1966 to 1996, rules and early neural networks.**]{style="color:#b8860b"} [ELIZA](https://doi.org/10.1145/365153.365168) (1966) was a chatbot built from hand-written rules. [Recurrent neural networks](https://doi.org/10.1207/s15516709cog1402_1) (1980s and 1990s) read text one word at a time.
--   [**1997 to 2012, better memory.**]{style="color:#b8860b"} [LSTM](https://doi.org/10.1162/neco.1997.9.8.1735) (1997) let a network keep information over longer stretches of text.
--   [**2013 to 2017, embeddings and the Transformer.**]{style="color:#b8860b"} [Word2Vec](https://arxiv.org/abs/1301.3781) (2013) turned words into vectors. The [Transformer](https://arxiv.org/abs/1706.03762) (2017) became the core architecture of nearly every modern model.
--   [**2018 to 2021, pretraining at scale.**]{style="color:#b8860b"} [BERT](https://arxiv.org/abs/1810.04805) (Google, 2018); [GPT-1](https://openai.com/index/language-unsupervised/) to GPT-3 (OpenAI, 2018 to 2020). [GPT-3](https://arxiv.org/abs/2005.14165) showed that a large enough model can learn a task from a few examples in the prompt.
--   [**2022 to 2023, chatbots.**]{style="color:#b8860b"} [ChatGPT](https://openai.com/index/chatgpt/) (November 2022) brought prompt-based use to everyone. [GPT-4](https://arxiv.org/abs/2303.08774) and Anthropic's [Claude](https://www.anthropic.com/news/introducing-claude) followed in March 2023, Google's [Gemini](https://arxiv.org/abs/2312.11805) in December. Meta's [LLaMA](https://arxiv.org/abs/2302.13971) (February 2023) and [Mistral 7B](https://arxiv.org/abs/2310.06825) (September 2023) made strong models free to download, shared through [Hugging Face](https://huggingface.co/models).
--   [**2024 onward, multimodal.**]{style="color:#b8860b"} Gemini was built to read text, images, audio, and video from the start. [GPT-4o](https://openai.com/index/hello-gpt-4o/) (2024) added real-time voice; [Claude](https://www.anthropic.com/news/claude-3-family) reads images and PDFs. Image and video generators such as [Stable Diffusion](https://arxiv.org/abs/2112.10752) (2022) and [Sora](https://openai.com/index/sora/) (2024) use related ideas.
--   [**2024 onward, reasoning.**]{style="color:#b8860b"} [OpenAI o1](https://openai.com/index/learning-to-reason-with-llms/) (September 2024) was trained to think before answering. [DeepSeek-R1](https://arxiv.org/abs/2501.12948) (January 2025) came close with open weights and a much lower reported training cost.
--   [**2025 onward, agents and open weights.**]{style="color:#b8860b"} Models now run tools and code on their own: [Claude Code](https://code.claude.com/docs/) and [OpenAI Codex](https://developers.openai.com/codex/) (2025), Section 7. Many of the strongest open-weight models now come from Chinese labs: [Qwen](https://github.com/QwenLM) (Alibaba), [DeepSeek](https://www.deepseek.com/), and [Kimi](https://github.com/MoonshotAI/Kimi-K2) (Moonshot AI).
+-   [**1966 to 1996, rules and early neural networks.**]{.term} [ELIZA](https://doi.org/10.1145/365153.365168) (1966) was a chatbot built from hand-written rules. [Recurrent neural networks](https://doi.org/10.1207/s15516709cog1402_1) (1980s and 1990s) read text one word at a time.
+-   [**1997 to 2012, better memory.**]{.term} [LSTM](https://doi.org/10.1162/neco.1997.9.8.1735) (1997) let a network keep information over longer stretches of text.
+-   [**2013 to 2017, embeddings and the Transformer.**]{.term} [Word2Vec](https://arxiv.org/abs/1301.3781) (2013) turned words into vectors. The [Transformer](https://arxiv.org/abs/1706.03762) (2017) became the core architecture of nearly every modern model.
+-   [**2018 to 2021, pretraining at scale.**]{.term} [BERT](https://arxiv.org/abs/1810.04805) (Google, 2018); [GPT-1](https://openai.com/index/language-unsupervised/) to GPT-3 (OpenAI, 2018 to 2020). [GPT-3](https://arxiv.org/abs/2005.14165) showed that a large enough model can learn a task from a few examples in the prompt.
+-   [**2022 to 2023, chatbots.**]{.term} [ChatGPT](https://openai.com/index/chatgpt/) (November 2022) brought prompt-based use to everyone. [GPT-4](https://arxiv.org/abs/2303.08774) and Anthropic's [Claude](https://www.anthropic.com/news/introducing-claude) followed in March 2023, Google's [Gemini](https://arxiv.org/abs/2312.11805) in December. Meta's [LLaMA](https://arxiv.org/abs/2302.13971) (February 2023) and [Mistral 7B](https://arxiv.org/abs/2310.06825) (September 2023) made strong models free to download, shared through [Hugging Face](https://huggingface.co/models).
+-   [**2024 onward, multimodal.**]{.term} Gemini was built to read text, images, audio, and video from the start. [GPT-4o](https://openai.com/index/hello-gpt-4o/) (2024) added real-time voice; [Claude](https://www.anthropic.com/news/claude-3-family) reads images and PDFs. Image and video generators such as [Stable Diffusion](https://arxiv.org/abs/2112.10752) (2022) and [Sora](https://openai.com/index/sora/) (2024) use related ideas.
+-   [**2024 onward, reasoning.**]{.term} [OpenAI o1](https://openai.com/index/learning-to-reason-with-llms/) (September 2024) was trained to think before answering. [DeepSeek-R1](https://arxiv.org/abs/2501.12948) (January 2025) came close with open weights and a much lower reported training cost.
+-   [**2025 onward, agents and open weights.**]{.term} Models now run tools and code on their own: [Claude Code](https://code.claude.com/docs/) and [OpenAI Codex](https://developers.openai.com/codex/) (2025), Section 7. Many of the strongest open-weight models now come from Chinese labs: [Qwen](https://github.com/QwenLM) (Alibaba), [DeepSeek](https://www.deepseek.com/), and [Kimi](https://github.com/MoonshotAI/Kimi-K2) (Moonshot AI).
 
 [Source: adapted from GeeksforGeeks, *History and Evolution of LLMs*, <https://www.geeksforgeeks.org/blogs/history-and-evolution-of-llms/>, with entries after 2022 added from the providers' announcements.]{.source}
 
 ### Two ways a model reaches you
 
--   [**Closed weights.**]{style="color:#b8860b"} You call an API and never see the weights. [OpenAI GPT](https://platform.openai.com/docs/overview), [Anthropic Claude](https://claude.ai/), [Google Gemini](https://gemini.google.com/), [xAI Grok](https://grok.com/).
--   [**Open weights.**]{style="color:#b8860b"} You can download, run, and fine-tune the model yourself, subject to its [licence]{.more note="Most labs release the trained weights but not the training data or the full training code, so open weights is a narrower claim than open source. Licences differ: some allow any use, others limit commercial use."}. [Meta Llama](https://www.llama.com/), [Google Gemma](https://ai.google.dev/gemma), [Mistral](https://mistral.ai/), [Alibaba Qwen](https://qwen.ai/home), [DeepSeek](https://www.deepseek.com/), [Moonshot Kimi](https://github.com/MoonshotAI/Kimi-K2), [OpenAI gpt-oss](https://github.com/openai/gpt-oss).
+-   [**Closed weights.**]{.term} You call an API and never see the weights. [OpenAI GPT](https://platform.openai.com/docs/overview), [Anthropic Claude](https://claude.ai/), [Google Gemini](https://gemini.google.com/), [xAI Grok](https://grok.com/).
+-   [**Open weights.**]{.term} You can download, run, and fine-tune the model yourself, subject to its [licence]{.more note="Most labs release the trained weights but not the training data or the full training code, so open weights is a narrower claim than open source. Licences differ: some allow any use, others limit commercial use."}. [Meta Llama](https://www.llama.com/), [Google Gemma](https://ai.google.dev/gemma), [Mistral](https://mistral.ai/), [Alibaba Qwen](https://qwen.ai/home), [DeepSeek](https://www.deepseek.com/), [Moonshot Kimi](https://github.com/MoonshotAI/Kimi-K2), [OpenAI gpt-oss](https://github.com/openai/gpt-oss).
 -   Some companies do both: Google has Gemini and Gemma; OpenAI has GPT and [gpt-oss](https://github.com/openai/gpt-oss).
 -   The largest open-weight models need a cluster of GPUs. Their small versions run on a laptop, or on IDAS.
 
-## Keys, Tokens, and Cost
+## Keys, tokens, and cost
 
 ### API keys
 
@@ -75,7 +77,7 @@ university's JupyterHub service. Several open-weight models are installed there 
 
 ### What a token costs
 
--   Billing is per [**token**]{style="color:#b8860b"}, counted on both what you send and what comes back.
+-   Billing is per [**token**]{.term}, counted on both what you send and what comes back.
 -   One token is roughly 0.75 words. One million tokens is about 3000 double-spaced pages.
 
 ```{webr}
@@ -86,7 +88,7 @@ tokens <- round(words / 0.75)
 c(words = words, approx_tokens = tokens)
 ```
 
-[{{< fa edit >}} Edit]{.mode} --- put in a price per million tokens from the pricing page and a
+[{{< fa edit >}} Edit]{.mode} Put in a price per million tokens from the pricing page and a
 number of calls you might make in a homework, and see what the assignment would cost.
 
 ```{webr}
@@ -117,8 +119,9 @@ round(book_tokens / 1e6 * per_million, 2)
 -   Output costs more than input, usually eight to ten times more, so a model that answers at length is the expensive one.
 -   A conversation resends its whole history every turn, so you pay for the book again on the next question.
 
-The rule from Section 1.1 still holds. A key is a password. It lives in the environment, never
-in a file you can see. Read it with `Sys.getenv("OPENAI_API_KEY")` in R or `os.environ` in
+The rule from Section 1.1 still holds. A key is a password. It lives in an environment variable
+or in `~/.Renviron`, a private file in your home folder. It never goes in a script or in a
+project folder. Read it with `Sys.getenv("OPENAI_API_KEY")` in R or `os.environ` in
 Python, and never print it.
 
 ### Setting up IDAS
@@ -149,20 +152,21 @@ Do step 1 once. After that, step 2 is all you do.
 2.  **Run the code.** All the code on this page is in your `classFiles` folder:
     `notes/section2/run/s2p4_idas.R` for RStudio, `notes/section2/run/s2p4_idas.py` for a
     terminal, and `notes/section2/code/s2p4.ipynb` for Jupyter. First run the setup lines at the
-    top of the file, above the first section title (in the notebook, the first two code cells). They:
+    top of the file, above the first section title (in the notebook, the first two code cells). They do
+    three things:
 
-    -   it starts the class models, if they are not running yet;
-    -   it reads your key from `~/.Renviron`, so you do not need to restart R;
-    -   it prints a message with a link back to this section if your key is missing or wrong.
+    -   Start the class models, if they are not running yet.
+    -   Read your key from `~/.Renviron`, so you do not need to restart R.
+    -   Print a message with a link back to this section if your key is missing or wrong.
 
     If they print nothing, you are ready. In your own notebook, copy the first two code cells of
     `s2p4.ipynb` to the top.
 
-## Your First Call
+## Your first call
 
 ### Hello world
 
-{{< codespace-pill >}} --- these need a key and a network, so they run in the Codespace.
+{{< codespace-pill >}} These blocks need a key and a network, so they run in the Codespace.
 
 ::: {.panel-tabset}
 
@@ -197,8 +201,8 @@ print(response.output_text)
 
 :::
 
-Run it twice. The two answers differ, because the model samples. We come back to why in
-Section 3.1.
+Run it twice. The two answers will likely differ, because the model samples. We come back to why in
+[Section 3.1 of the course (Random number generators)](../section3/s3p1.html).
 
 ### Open-weight models
 
@@ -209,6 +213,8 @@ They need no key and cost nothing.
 
 -   **On IDAS**, the setup lines at the top of each code file start the class models; see [Setting up IDAS](#setting-up-idas).
 -   **In the Codespace**, `llama3.2:1b` is already installed.
+
+{{< codespace-pill >}} or IDAS. These blocks need a local model.
 
 ::: {.panel-tabset}
 
@@ -223,6 +229,8 @@ bigger <- chat_ollama(model = "qwen3.5:4b",      # 4 billion parameters, IDAS on
   api_args = list(reasoning_effort = "none"))    # skip the thinking step
 bigger$chat("Give me 3 distributions in the exponential family.")
 ```
+
+{{< codespace "notes/section2/run/s2p4_idas.R" >}}
 
 #### Python
 
@@ -243,6 +251,8 @@ resp = local.chat.completions.create(
 print(resp.choices[0].message.content)
 ```
 
+{{< codespace "notes/section2/run/s2p4_idas.py" >}}
+
 :::
 
 -   `base_url` says where to send the request. In R, `chat_ollama()` already knows the address.
@@ -260,7 +270,7 @@ A small local model is also useful for testing your code. It costs nothing and n
 
 ### Rules of thumb
 
-[**Prompt engineering**]{style="color:#b8860b"} means writing instructions clear enough that the
+[**Prompt engineering**]{.term} means writing instructions clear enough that the
 model does what you need, reliably. The output is random, so a prompt that works once may not always work.
 The seven rules below follow the current guides from OpenAI and Anthropic. Open each one for a
 bad and a better example.
@@ -457,10 +467,10 @@ which writes a first draft of a prompt for Claude.
 
 Each message has a role, and some roles have higher priority than others. 
 
--   [**platform**]{style="color:#b8860b"}: the provider's own rules. You cannot override them, which is why a prompt telling the model to ignore its safety rules does not work.
--   [**developer**]{style="color:#b8860b"}: your instructions. Sent as the `instructions` argument, or as a message with role `developer`.
--   [**user**]{style="color:#b8860b"}: the end user's request, which ranks below your instructions.
--   [**assistant**]{style="color:#b8860b"}: what the model said on earlier turns.
+-   [**platform**]{.term}: the provider's own rules. You cannot override them, which is why a prompt telling the model to ignore its safety rules does not work.
+-   [**developer**]{.term}: your instructions. Sent as the `instructions` argument, or as a message with role `developer`.
+-   [**user**]{.term}: the end user's request, which ranks below your instructions.
+-   [**assistant**]{.term}: what the model said on earlier turns.
 
 ::: {.callout-note collapse="true" title="`system` or `developer`?"}
 **They are the same level, under two names.** `system` is the old name. Since the reasoning
@@ -472,8 +482,10 @@ level.
 
 [Source: OpenAI model spec, <https://model-spec.openai.com/2025-02-12.html#chain_of_command>]{.source}
 
-[{{< fa lightbulb >}} Predict]{.mode} --- the same question, two system prompts. Which one is
+[{{< fa lightbulb >}} Predict]{.mode} The same question, two system prompts. Which one is
 more useful to a student who has to take an exam?
+
+{{< codespace-pill >}} These blocks need a key and a network.
 
 ::: {.panel-tabset}
 
@@ -514,8 +526,10 @@ for system in ["you are a concise tutor.",
 
 ### The model does not remember earlier calls
 
--   By default, every request is [**stateless**]{style="color:#b8860b"}: it starts from nothing, and the model sees only what you send in that request. It does not remember your earlier calls.
+-   By default, every request is [**stateless**]{.term}: it starts from nothing, and the model sees only what you send in that request. It does not remember your earlier calls.
 -   Ask about "the university I just mentioned" in a second, separate call, and it has no idea.
+
+{{< codespace-pill >}} These blocks need a key and a network.
 
 ::: {.panel-tabset}
 
@@ -544,6 +558,8 @@ same$chat("What is the name of the university I just mentioned?")
 # same$chat("What is the name of the university I just mentioned?")
 ```
 
+{{< codespace "notes/section2/run/s2p4_idas.R" >}}
+
 #### Python
 
 ```{python}
@@ -562,6 +578,8 @@ r2 = client.responses.create(
 print(r2.output_text)     # it does not know
 ```
 
+{{< codespace "notes/section2/run/s2p4_hello.py" >}}
+
 :::
 
 -   A conversation is something *you* build, by sending the history back every time.
@@ -574,7 +592,9 @@ The model keeps nothing between requests, as the block above shows.
 To continue a conversation, the model has to see the earlier messages again. There are three
 ways to do this.
 
-[**1. Pass the previous messages yourself.**]{style="color:#b8860b"} Write the earlier turns into the
+{{< codespace-pill >}} The blocks in this section need a key and a network.
+
+[**1. Pass the previous messages yourself.**]{.term} Write the earlier turns into the
 request, each with its role. The model answers as if the conversation had really happened.
 
 ::: {.panel-tabset}
@@ -590,6 +610,8 @@ chat$set_turns(list(
 chat$chat("Felix")
 ```
 
+{{< codespace "notes/section2/run/s2p4_idas.R" >}}
+
 #### Python
 
 ```{python}
@@ -602,9 +624,11 @@ response = client.responses.create(
 print(response.output_text)
 ```
 
+{{< codespace "notes/section2/run/s2p4_idas.py" >}}
+
 :::
 
-[**2. Keep a history and resend it.**]{style="color:#b8860b"} Keep every message in a list. After each
+[**2. Keep a history and resend it.**]{.term} Keep every message in a list. After each
 reply, add the reply and your next question to the list, then send the whole list again.
 
 ::: {.panel-tabset}
@@ -622,6 +646,8 @@ chat$chat("Tell me another.")
 chat$get_turns()    # every turn so far: user, assistant, user, assistant
 ```
 
+{{< codespace "notes/section2/run/s2p4_idas.R" >}}
+
 #### Python
 
 ```{python}
@@ -636,9 +662,11 @@ response = client.responses.create(model="gpt-5-nano", input=history)
 print(response.output_text)
 ```
 
+{{< codespace "notes/section2/run/s2p4_idas.py" >}}
+
 :::
 
-[**3. Let the provider keep it.**]{style="color:#b8860b"} OpenAI can store the conversation on its
+[**3. Let the provider keep it.**]{.term} OpenAI can store the conversation on its
 servers. You send only the new message and the ID of the last reply. You still pay for the
 earlier messages, because the model reads them again.
 
@@ -656,13 +684,15 @@ second = client.responses.create(
 print(second.output_text)
 ```
 
+{{< codespace "notes/section2/run/s2p4_idas.py" >}}
+
 This is an OpenAI feature. `ellmer` has no counterpart, because its `chat` object always resends
 the history (way 2).
 
 ::: {.callout-note collapse="true" title="The context window"}
 **Everything you resend is paid for again, and there is a ceiling.**
 
-The [**context window**]{style="color:#b8860b"} is the maximum number of tokens in one request,
+The [**context window**]{.term} is the maximum number of tokens in one request,
 counting what you send, what comes back, and for some models the hidden reasoning. A long
 conversation eventually hits it, and the output gets truncated. Model limits are listed at
 <https://platform.openai.com/docs/models>.
@@ -670,13 +700,15 @@ conversation eventually hits it, and the output gets truncated. Model limits are
 
 ### Few-shot learning
 
--   [**Zero-shot**]{style="color:#b8860b"}: you describe the task. [**Few-shot**]{style="color:#b8860b"}: you also show a handful of worked examples.
+-   [**Zero-shot**]{.term}: you describe the task. [**Few-shot**]{.term}: you also show a handful of worked examples.
 -   The model reads the pattern from the examples and applies it. The model is not retrained. The examples are used for this request only.
 -   Diverse examples generalize better than similar ones.
 
 [Source: Brown et al. (2020), *Language Models are Few-Shot Learners*. <https://arxiv.org/pdf/2005.14165>]{.source}
 
 A classifier for statistical claims, built entirely out of three examples:
+
+{{< codespace-pill >}} This block needs a key and a network.
 
 ```{python}
 #| eval: false
@@ -726,17 +758,19 @@ for c in ["We can conclude there is no effect because p=0.40.",
     print(label_claim(c))
 ```
 
+{{< codespace "notes/section2/run/s2p4_prompt.py" >}}
+
 The function checks the reply: the word must be one of the three allowed labels, or the
 function raises an error. The model may return a full sentence even when you asked for one word.
 
 ### Sampling controls
 
 At each step the model gives every token $i$ in its vocabulary a score $z_i$, called a
-[**logit**]{style="color:#b8860b"}. It turns the scores into probabilities and draws the next
+[**logit**]{.term}. It turns the scores into probabilities and draws the next
 token from them: one multinomial trial with $V$ categories, where $V$ is the size of the
 vocabulary.
 
-[**Temperature**]{style="color:#b8860b"} $T > 0$ divides every logit before the softmax:
+[**Temperature**]{.term} $T > 0$ divides every logit before the softmax:
 
 $$
 p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
@@ -749,7 +783,7 @@ $$
 -   As $T \to 0$, all the probability moves to the largest $z_i$, so the model always takes the most likely token. This is called greedy decoding.
 -   As $T \to \infty$, the distribution becomes uniform.
 
-[**Top-p**]{style="color:#b8860b"}, or nucleus sampling, removes the long tail. Sort the
+[**Top-p**]{.term}, or nucleus sampling, removes the long tail. Sort the
 probabilities, $p_{(1)} \ge p_{(2)} \ge \cdots$, keep the smallest $k$ with
 $p_{(1)} + \cdots + p_{(k)} \ge p$, rescale those $k$ probabilities to sum to 1, and draw from
 them.
@@ -771,7 +805,7 @@ showing:
 -   With $T = 1$ and top-p $= 0.9$, the model keeps "reject" and "accept", because $0.665 + 0.245 = 0.910 \ge 0.9$. After rescaling they have probabilities 0.731 and 0.269, and "retain" can no longer be drawn.
 -   Top-p did not remove the wrong word "accept". It only cuts the tail. When a task has one right answer, use a low temperature.
 
-Section 3.1 simulates draws like this one.
+[Section 3.1 of the course (Random number generators)](../section3/s3p1.html) simulates draws like this one.
 
 -   Rules of thumb: temperature 0.2 with top-p 0.95 for coherent output; 0.9 and 0.99 for creative output; 0 when the task has one right answer.
 -   Very low and very high temperatures both cause problems. Too low, and the model may repeat the same text; too high, and the text may stop making sense.
@@ -782,13 +816,15 @@ raise an error if `temperature` or `top_p` is included. To set them you need a m
 supports them, with reasoning effort turned off.
 :::
 
-## Structured Output
+## Structured output
 
 ### Ask for a type, not a string
 
 -   A model always replies with text. To pass its answer to `lm` or to a plot, you need numbers and columns, not a paragraph.
--   Both `ellmer` and the OpenAI library let you describe the shape you want, called a [**schema**]{style="color:#b8860b"}, and they return data in that shape.
+-   Both `ellmer` and the OpenAI library let you describe the shape you want, called a [**schema**]{.term}, and they return data in that shape.
 -   With a schema, you no longer need the checking code from the few-shot example above.
+
+{{< codespace-pill >}} These blocks need a key and a network.
 
 ::: {.panel-tabset}
 
@@ -797,8 +833,8 @@ supports them, with reasoning effort turned off.
 ```{r}
 #| eval: false
 review <- type_object(
-  label     = type_enum("One of Supported, Unsupported, Unclear.",
-                        c("Supported", "Unsupported", "Unclear")),
+  label     = type_enum(c("Supported", "Unsupported", "Unclear"),
+                        "One of Supported, Unsupported, Unclear."),
   reason    = type_string("One short sentence."),
   p_value   = type_number("The p-value mentioned, or -1 if none."))
 
@@ -807,6 +843,8 @@ chat$chat_structured(
   "This study proves the two groups differ (p = 0.20).",
   type = review)
 ```
+
+{{< codespace "notes/section2/run/s2p4_prompt.R" >}}
 
 #### Python
 
@@ -827,17 +865,19 @@ resp = client.responses.parse(
 print(resp.output_parsed.label, resp.output_parsed.p_value)
 ```
 
+{{< codespace "notes/section2/run/s2p4_prompt.py" >}}
+
 :::
 
-## Tool Calling
+## Tool calling
 
 ### Giving the model a function to call
 
 -   A model is not a calculator. It can get simple arithmetic wrong.
--   A [**tool**]{style="color:#b8860b"} is one of your functions, described well enough that the model can decide when to call it and with what arguments.
+-   A [**tool**]{.term} is one of your functions, described well enough that the model can decide when to call it and with what arguments.
 -   You run the function. The model never touches your data or your session.
 
-The loop has four steps, and you will meet it again in Section 7.
+The loop has four steps, and you will meet it again in the later course section on AI agents.
 
 1.  You send the question and the list of tools.
 2.  The model replies with a request: this tool, these arguments.
@@ -852,7 +892,7 @@ mistake.
 We ask the model the same question twice: first without a tool, and then with a tool
 `larger(a, b)` that compares the two numbers in R or Python.
 
-{{< codespace-pill >}} or IDAS --- needs a local model. Run the code a few times. The answers
+{{< codespace-pill >}} or IDAS. These blocks need a local model. Run the code a few times. The answers
 change from run to run, and `llama3.2:1b` is wrong about half the time.
 
 ::: {.panel-tabset}
@@ -879,9 +919,11 @@ armed$register_tools(list(
   tool(larger, "Return the larger of two numbers.",
        arguments = list(a = type_number("First number."),
                         b = type_number("Second number.")))))
-armed$on_tool_request(function(req) cat("-> ", req@name, deparse1(req@arguments), "\n"))
+armed$on_tool_request(function(request) cat("-> ", request@name, deparse1(request@arguments), "\n"))
 armed$chat("Which is larger, 9.9 or 9.11?")
 ```
+
+{{< codespace "notes/section2/run/s2p4_tools.R" >}}
 
 #### Python
 
@@ -920,6 +962,8 @@ final = local.chat.completions.create(model="llama3.2:1b", messages=msgs, tools=
 print(final.choices[0].message.content)
 ```
 
+{{< codespace "notes/section2/run/s2p4_idas.py" >}}
+
 :::
 
 What you should see:
@@ -937,7 +981,7 @@ general, if a model often gets a calculation wrong, give it a tool that does the
 :::
 
 ::: {.callout-warning title="If the small model does not use the tool"}
-Small models such as `llama3.2:1b` often use tools incorrectly. The model may answer without
+**Small models such as `llama3.2:1b` often use tools incorrectly.** The model may answer without
 calling `larger`, or pass the wrong numbers. This is a problem with the model, not with your
 code. The line that starts with `->` shows which numbers the model passed. In our tests on IDAS,
 `qwen3.5:4b` called the tool correctly every time, so use it when you need the tool to work.
@@ -954,7 +998,7 @@ two functions:
 The model cannot see the data. To answer, it first needs the column names, and then the mean of
 the right column.
 
-{{< codespace-pill >}} --- needs a model.
+{{< codespace-pill >}} These blocks need a model.
 
 ::: {.panel-tabset}
 
@@ -979,8 +1023,8 @@ chat$register_tools(list(
        "Return the mean of one numeric column of the cars data set.",
        arguments = list(column = type_string("Exact column name.")))))
 
-chat$on_tool_request(function(req)
-  cat("-> ", req@name, deparse1(req@arguments), "\n"))
+chat$on_tool_request(function(request)
+  cat("-> ", request@name, deparse1(request@arguments), "\n"))
 
 chat$chat("What is the average weight of these cars?")
 ```
@@ -1041,12 +1085,12 @@ What you should see: first a call to `column_names`, then a call to `column_mean
 `column = "Weight"`, and then an answer with the mean. The loop ends when the model answers
 without asking for a tool.
 
-[{{< fa hand-paper >}} By hand]{.mode} --- the correct answer is the mean of the `Weight`
+[{{< fa hand-paper >}} By hand]{.mode} The correct answer is the mean of the `Weight`
 column, which you can compute yourself in one line. Run the code and check that the model
 reports the same number. Done when you can say which tools the model called, in which order, and
 whether it ever guessed a number.
 
-## Working with a Coding Agent
+## Working with a coding agent
 
 ### Git
 
@@ -1056,11 +1100,11 @@ whether it ever guessed a number.
 | `git diff` | exactly which lines changed |
 | `git add .` and `git commit -m "..."` | save a checkpoint |
 | `git log --oneline` | the checkpoints so far |
-| `git restore <file>` | throw away everything since the last checkpoint |
+| `git restore <file>` | discard the unstaged changes in this file |
 
 -   Commit before you let an agent change anything. If the agent breaks something, you can go back to that commit.
 -   `git diff` is how you see what it did, line by line. `/review` reads the same thing.
--   A `.gitignore` lists what never enters the repository: `.env`, large data, rendered output. Always include `.env`, so that your key never reaches GitHub.
+-   A `.gitignore` tells Git which untracked files to ignore, such as `.env`, large data, and rendered output. Add `.env` before your first commit. It does not remove a file that Git already tracks.
 
 ### Installing Codex and Claude Code
 
@@ -1089,7 +1133,7 @@ cd ~/projects/my-analysis    # the folder you want to work in
 claude                       # or: codex
 ```
 
-[{{< fa robot >}} Vibe]{.mode} --- once it starts, ask for something like this.
+[{{< fa robot >}} Vibe]{.mode} Once it starts, ask for something like this.
 
 ```
 Initialize a git repository here. Write a .gitignore for a project that
@@ -1103,7 +1147,7 @@ Then check what the agent did:
 git log --oneline          # exactly one commit?
 git status                 # working tree clean?
 cat .gitignore             # is .env actually in there?
-git ls-files | grep .env   # nothing should come back
+git ls-files | grep -Fx .env   # nothing should come back
 ```
 
 The last line is the most important. If a `.env` file was committed, the agent has just put
@@ -1114,17 +1158,17 @@ what it committed, what it left out, and how you know.
 
 There are three ways to use a model.
 
--   [**Chat.**]{style="color:#b8860b"} You type into a web page. 
--   [**API.**]{style="color:#b8860b"} You write the call inside a script that can be rerun, versioned, and read by someone else. 
--   [**Coding agent.**]{style="color:#b8860b"} The model runs the loop on your machine. It reads your files, writes new ones, runs commands, reads the errors, and tries again. [OpenAI Codex](https://developers.openai.com/codex/) and [Anthropic Claude Code](https://code.claude.com/docs/) are the two common ones. [Copilot](https://docs.github.com/copilot) in the Codespace is a lighter version of the same idea.
+-   [**Chat.**]{.term} You type into a web page. 
+-   [**API.**]{.term} You write the call inside a script that can be rerun, versioned, and read by someone else. 
+-   [**Coding agent.**]{.term} The model runs the loop on your machine. It reads your files, writes new ones, runs commands, reads the errors, and tries again. [OpenAI Codex](https://developers.openai.com/codex/) and [Anthropic Claude Code](https://code.claude.com/docs/) are the two common ones. [Copilot](https://docs.github.com/copilot) in the Codespace is a lighter version of the same idea.
 
 -   The main difference is who is in control. With the API, your script decides every step. A coding agent decides the steps itself, and it changes your files directly.
--   All three leave a record you can check later. A chat can be saved or shared as a web page. With the API, your script and its output are the record. A coding agent keeps a transcript of every step, and Section 7 is about reading one.
+-   All three leave a record you can check later. A chat can be saved or shared as a web page. With the API, your script and its output are the record. A coding agent keeps a transcript of every step, and the later course section on AI agents is about reading one.
 -   In this course: coding agents are welcome on [{{< fa robot >}} Vibe]{.mode} blocks, not on [{{< fa hand-paper >}} By hand]{.mode} blocks, and whatever they write, you run and check yourself.
 
 You use both from a terminal. Most of the time you type ordinary English. To control the tool
 itself, for example to switch models or start over, you type a
-[**slash command**]{style="color:#b8860b"}. Type `/` alone to see the list for your version, because it
+[**slash command**]{.term}. Type `/` alone to see the list for your version, because it
 changes often. Six are worth knowing on day one.
 
 | Command | What it does | Use it when |

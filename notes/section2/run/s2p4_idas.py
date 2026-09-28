@@ -54,7 +54,7 @@ if not ollama_up():
 
 from openai import OpenAI
 
-client = OpenAI()                                                        # OpenAI, reads OPENAI_API_KEY
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "no-key-set"))   # OpenAI; without a key only its calls fail
 local = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")   # the class models on IDAS
 
 ## 3.1 Hello world

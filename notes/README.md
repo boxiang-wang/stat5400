@@ -30,6 +30,8 @@ Mac) to run it in the R console, or select all and run.
 - `section2/run/s2p3_plotnine.py` — Section 2.3, the plotnine version of the same plot (plotnine is not in the browser session)
 - `section3/run/s3p2_ggplot.R` - Section 3.2, one-dimensional sample means with ggplot2
 - `section3/run/s3p2_binom_ci.R` - Section 3.2, six binomial confidence intervals at B = 10000 (needs the binom package)
+- `section3/run/s3p2_llama_repeat.R` - Section 3.2, ask llama3.2:1b the same question 50 times, then a CI for P(correct) (starts Ollama itself)
+- `section3/run/s3p2_llama_repeat.py` - the same, in Python
 - `section7/run/s7p1_agent_ellmer.R` - Section 7.1, the regression agent with a real model through ellmer (course model or Ollama)
 - `section7/run/s7p1_agent_openai.py` - Section 7.1, the same agent loop written out against the OpenAI Responses API (any OpenAI-compatible endpoint)
 - `section7/run/s7p1_agent_anthropic.py` - Section 7.1, the same loop against the Anthropic Messages API (reference; needs a key)

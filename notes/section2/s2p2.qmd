@@ -32,18 +32,20 @@ pyodide:
 <div class="page-codefiles">All code on this page, in one file: {{< codefiles s2p2 >}}</div>
 :::
 
+_Updated Sep 26, 2026: wording edits; the three By-hand blocks on chatbot answers now use Python only._
+
 Every code block on this page runs in your browser. Click *Run Code*, change the code,
 run it again. R and Python each keep their own session, so run the blocks in order.
 :::
 
-## A First Look at Python
+## A first look at Python
 
 ### Python
 
--   Python is a [**general purpose**]{style="color:#b8860b"} programming language.
--   Python has simplified syntax and it is [**easy**]{style="color:#b8860b"} to learn and implement.
--   Python has an active and mature [**supporting community**]{style="color:#b8860b"}.
--   Python has many popular and powerful [**libraries**]{style="color:#b8860b"}, e.g., NumPy, Pandas, etc.
+-   Python is a [**general purpose**]{.term} programming language.
+-   Python has simplified syntax and it is [**easy**]{.term} to learn and implement.
+-   Python has an active and mature [**supporting community**]{.term}.
+-   Python has many popular and powerful [**libraries**]{.term}, e.g., NumPy, Pandas, etc.
 -   Python was written by [Guido van Rossum](https://en.wikipedia.org/wiki/Guido_van_Rossum){.more note="Van Rossum started Python as a holiday project in 1989 and led the project as its Benevolent Dictator For Life until 2018."} and the name was inspired by a comedy series "Monty Python".
 
 ![](img/VanRossum.png){width="80%" fig-align="center"}
@@ -58,10 +60,10 @@ run it again. R and Python each keep their own session, so run the blocks in ord
 
 ### Download Python
 
-Two ways to install Python. Section 1.1 recommends [**uv**]{style="color:#b8860b"}, and that is still the recommendation here.
+Two ways to install Python. Section 1.1 recommends [**uv**]{.term}, and that is still the recommendation here.
 
--   [uv](https://docs.astral.sh/uv/getting-started/installation/) --- one small program that installs Python itself and manages the packages of each project separately. It is fast, and one project cannot break another, because each has its own copy of what it needs.
--   [Anaconda](https://www.anaconda.com/download) --- a large bundle that ships Python together with hundreds of scientific packages and a graphical launcher. Nothing to choose: everything is already installed. It takes several gigabytes of disk and is slower to update.
+-   [uv](https://docs.astral.sh/uv/getting-started/installation/): one small program that installs Python itself and manages the packages of each project separately. It is fast, and one project cannot break another, because each has its own copy of what it needs.
+-   [Anaconda](https://www.anaconda.com/download): a large bundle that ships Python together with hundreds of scientific packages and a graphical launcher. Everything comes preinstalled. It takes several gigabytes of disk and is slower to update.
 
 Use uv if you are comfortable typing commands in a terminal. Use Anaconda if you would rather install everything at once and start from a window. Either works for this course.
 
@@ -116,7 +118,7 @@ The next block is meant to fail.
 exp(-2)
 ```
 
-Let's import some math functions from the [`math` module (library)]{style="color:#0072B2"}.
+Let's import some math functions from the [`math` module (library)]{.term}.
 
 ```{pyodide}
 import math
@@ -141,7 +143,7 @@ Dividing by zero is an error in Python, not `Inf`. This block is meant to fail.
 
 In Python 3, `/` is float division and `//` is integer division.
 
-[{{< fa lightbulb >}} Predict]{.mode} --- one of these three lines prints something different from the other two. Which one?
+[{{< fa lightbulb >}} Predict]{.mode} One of these three lines prints something different from the other two. Which one?
 
 ```{pyodide}
 print(3 / 2 * 3)
@@ -158,7 +160,7 @@ R converts integers to float values as needed.
 3L / 2L * 3L
 ```
 
-## Data Analysis
+## Data analysis
 
 ### Reading the data
 
@@ -174,11 +176,11 @@ str(Cars)
 
 Quote from its official website: <https://pandas.pydata.org/>
 
-*`pandas` is a fast, powerful, flexible and easy to use open source data analysis and [manipulation tool]{style="color:#0072B2"}, built on top of the Python programming language.*
+*`pandas` is a fast, powerful, flexible and easy to use open source data analysis and [manipulation tool]{.term}, built on top of the Python programming language.*
 
-`pandas` provide abundant functions to import, index, manipulate, merge, and plot data frame.
+`pandas` provides abundant functions to import, index, manipulate, merge, and plot data frames.
 
-**Run this block first** — the Python blocks below use `Cars`.
+**Run this block first.** The Python blocks below use `Cars`.
 
 ```{pyodide}
 import pandas as pd
@@ -298,15 +300,7 @@ y.append('!')
 print(y)
 ```
 
-[{{< fa hand-paper >}} By hand]{.mode} --- this difference catches R users more than any other. A chatbot was asked whether `b = a` copies a list. Its answer is in the comments. Run the R block, then the Python block, and check the claim against both. Done when you can say what each one prints, and why they differ. No AI for this block.
-
-```{webr}
-# The same two lines in R, for comparison.
-a <- c(1, 2, 3)
-b <- a
-b[4] <- 4
-a
-```
+[{{< fa hand-paper >}} By hand]{.mode} This difference often surprises R users. A chatbot was asked whether `b = a` copies a list. Its answer is in the comments, and one claim in it is wrong. Run the block and check the claim. Done when you can say what `a` prints, and why. No AI for this block.
 
 ```{pyodide}
 # Chatbot: "b = a makes b a copy of the list, so the two are independent.
@@ -318,14 +312,14 @@ print(a)
 ```
 
 ::: {.callout-note collapse="true" title="Solution"}
-**R prints `1 2 3`. Python prints `[1, 2, 3, 4]`.**
+**Python prints `[1, 2, 3, 4]`.**
 
-In R, changing `b` makes a copy first, so `a` is untouched. In Python, `b = a` does not copy the list; it gives the one list a second name, so `a is b` is `True` and appending through either name changes it. Ask for the copy: `b = a.copy()`.
+In Python, `b = a` does not copy the list; it gives the one list a second name, so `a is b` is `True` and appending through either name changes it. Ask for the copy: `b = a.copy()`.
 
-So the chatbot's answer describes R, not Python. That is the trap: it is the right answer to the wrong language.
+The chatbot described how R behaves, not Python. In R, changing `b` makes a copy first, so `a` is untouched. Section 2.1 has the same example in R.
 :::
 
-A list in R and python can contain variables of different types.
+A list in R and Python can contain variables of different types.
 
 ```{webr}
 z = list("word" = c("Hello", "5400"), "sign" = "!")
@@ -373,18 +367,18 @@ np.dot(a, b)
 
 The `range` function in Python has arguments: `start`, `stop`, `step`.
 
-### The library `Numpy`
+### The library `NumPy`
 
 Quote from its official website: <https://numpy.org/> *the fundamental package for scientific computing*.
 
--   It is mainly devised for processing and operating arrays with general purpose.
--   It provides functions to add, multiply, slice, reshape, broadcast, and index, arrays.
+-   NumPy provides tools for working with arrays.
+-   It provides functions to add, multiply, slice, reshape, broadcast, and index arrays.
 
 ```{webr}
 1:4 * 3
 ```
 
-[{{< fa lightbulb >}} Predict]{.mode} --- the same `* 3`, on a list and on a NumPy array. Do they do the same thing?
+[{{< fa lightbulb >}} Predict]{.mode} The same `* 3`, on a list and on a NumPy array. Do they do the same thing?
 
 ```{pyodide}
 import numpy as np
@@ -416,7 +410,7 @@ x = np.array(range(1, 6)) * 3
 print(x)             # range [start, stop) -- a half-open interval
 ```
 
-[{{< fa lightbulb >}} Predict]{.mode} --- how many elements does each line return? Compare with the R block above.
+[{{< fa lightbulb >}} Predict]{.mode} How many elements does each line return? Compare with the R block above.
 
 ```{pyodide}
 print(x[0:1])        # note Python begins with 0
@@ -424,16 +418,11 @@ print(x[0:4:2])
 print(np.array(x)[[0, 2]])
 ```
 
-[{{< fa hand-paper >}} By hand]{.mode} --- a chatbot was asked what happens when a logical index is shorter than the vector. Its answer is in the comments. Run the R block, then the Python block. One language does something surprising, the other refuses to guess. Done when you can say what R returns, and what NumPy says instead. No AI for this block.
-
-```{webr}
-# Chatbot: "A logical index shorter than the vector is padded with FALSE, so
-# only the first element is kept. R and Python both behave this way."
-v <- 1:6 * 5
-v[c(TRUE, FALSE)]
-```
+[{{< fa hand-paper >}} By hand]{.mode} A chatbot was asked what happens when a boolean mask is shorter than the NumPy array. Its answer is in the comments, and one claim in it is wrong. Run the block. Done when you can say what NumPy does instead. No AI for this block.
 
 ```{pyodide}
+# Chatbot: "A boolean mask shorter than the array is padded with False, so
+# only the first element is kept."
 import numpy as np
 v = np.array(range(1, 7)) * 5
 try:
@@ -443,16 +432,14 @@ except IndexError as e:
 ```
 
 ::: {.callout-note collapse="true" title="Solution"}
-**R returns `5 15 25`. NumPy returns an error.** The chatbot is wrong twice.
-
-R does not pad with `FALSE`. It recycles the index to the length of `v`, giving `TRUE FALSE TRUE FALSE TRUE FALSE`, so three elements come back, not one.
+**NumPy returns an error, not one element.** NumPy does not pad the mask with `False`.
 
 NumPy refuses: `boolean index did not match indexed array along axis 0; size of axis is 6 but size of corresponding boolean axis is 2`. The mask must be the same length as the array.
 
-This is worth remembering in both directions. R guesses what you meant and stays silent, which is convenient until the guess is wrong. NumPy makes you say it exactly. To take every other element in Python, slice instead: `v[::2]`.
+R behaves differently. It recycles the index with no warning, so `v[c(TRUE, FALSE)]` in R returns `5 15 25`. Section 2.1 has the same example in R. In NumPy, a length mistake gives an error. To take every other element in Python, slice instead: `v[::2]`.
 :::
 
-[{{< fa hand-paper >}} By hand]{.mode} --- a chatbot was asked whether it is safe to modify a slice of a NumPy array. Its answer is in the comments, and one claim in it is wrong. Run the block. Done when you can say which of the three lines changed `a`, and why that one and not the others. No AI for this block.
+[{{< fa hand-paper >}} By hand]{.mode} A chatbot was asked whether it is safe to modify a slice of a NumPy array. Its answer is in the comments, and one claim in it is wrong. Run the block. Done when you can say which of the three lines changed `a`, and why that one and not the others. No AI for this block.
 
 ```{pyodide}
 # Chatbot: "Slicing a NumPy array returns a copy, just as R does. Writing to
@@ -476,24 +463,16 @@ m[0] = 99
 print("after a[a > 3] :", a)
 ```
 
-```{webr}
-# The same idea in R, for comparison.
-a <- c(1, 2, 3, 4, 5)
-b <- a[1:2]
-b[1] <- 99
-a
-```
-
 ::: {.callout-note collapse="true" title="Solution"}
-**Only the first line changed `a`.** It prints `[99 2 3 4 5]`. The other two leave `a` alone, and so does R.
+**Only the first line changed `a`.** It prints `[99 2 3 4 5]`. The other two leave `a` alone.
 
 `a[0:2]` returns a [view]{.more note="A view is a new array object with its own shape and step size, reading the same block of memory as the original. Nothing is copied."}: a second way of reading the same memory. Writing through it writes into `a`.
 
-`a[[0, 1]]` and `a[a > 3]` return copies. Not by choice: a view can only describe positions at a regular step --- a start, then every k-th element. A list of positions, or whatever a mask happens to select, is not regular, so NumPy has to gather those values into new memory.
+`a[[0, 1]]` and `a[a > 3]` return copies. NumPy's rule depends on the kind of index, not on which positions are picked. A slice such as `0:2` gives a view. A list of positions or a mask always gives a copy, even when the positions happen to be evenly spaced, as `[0, 1]` is.
 
-Slicing is a view because copying is expensive. Taking `big[0:5000000]` as a copy has to move 40 MB; as a view it moves nothing. R never does this: `a[1:2]` always allocates. So the bug cannot happen in R, and an R user has no habit of watching for it.
+Slicing is a view because copying is expensive. Taking `big[0:5000000]` as a copy has to move 40 MB; as a view it moves nothing. R never does this: `a[1:2]` always makes a new vector. So this bug does not occur in R, and R users may not expect it. Section 2.1 has the same example in R.
 
-Two ways to stay safe: write `a[0:2].copy()` when you mean to modify, and check with `np.shares_memory(a, b)` when you are unsure. Note that a plain Python list is not an array --- `lst[0:2]` always copies --- so testing the idea on a list teaches the wrong rule.
+Two ways to stay safe: write `a[0:2].copy()` when you mean to modify, and check with `np.shares_memory(a, b)` when you are unsure. Note that a plain Python list is not an array: `lst[0:2]` always copies, so a test on a list will not show this behavior.
 :::
 
 ### Subsetting a matrix
@@ -515,7 +494,7 @@ print(a[0, ])
 print(a[:, 0])
 ```
 
-[{{< fa lightbulb >}} Predict]{.mode} --- one of these matches `colMeans` above. Axis 0 or axis 1?
+[{{< fa lightbulb >}} Predict]{.mode} One of these matches `colMeans` above. Axis 0 or axis 1?
 
 ```{pyodide}
 print(a.mean(axis=0))
@@ -547,7 +526,7 @@ print(b)
 print(a + b)
 ```
 
-## A Simple Statistical Analysis
+## A simple statistical analysis
 
 ### Selecting columns
 
@@ -613,7 +592,7 @@ Quotes from its official website <https://matplotlib.org/>.
 -   *`Matplotlib` is a comprehensive library for creating static, animated, and interactive visualizations in Python.*
 -   *`Matplotlib` makes easy things easy and hard things possible.*
 
-Provides functions to produce scatter plots, bar chars, histogram, box plots, pie charts, etc.
+Provides functions to produce scatter plots, bar charts, histograms, box plots, pie charts, etc.
 
 ```{webr}
 hist(Cars[Cars$Country == "Japan", "MPG"])

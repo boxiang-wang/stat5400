@@ -53,11 +53,11 @@ is.integer(a1)
 is.atomic(a1)
 
 a2 <- c(1L, 2L, 3L)
-# same to a2 <- seq(3) or seq.int(3)
+# same as a2 <- seq(3) or seq.int(3)
 class(a2)
 typeof(a2)
 
-a3 <- c(T, F, TRUE, FALSE) # ALWAYS spell T and F.
+a3 <- c(T, F, TRUE, FALSE) # Always write TRUE and FALSE in full.
 class(a3); typeof(a3) # semicolons not recommended.
 as.numeric(a3)
 
@@ -73,6 +73,14 @@ as.numeric(a4)
 
 a5 <- c(T, F, "T", "F")
 typeof(a5)
+
+# By hand
+# Chatbot: "b <- a does not copy the vector. Both names point to the same
+# data, so after b[4] <- 4, a also prints 1 2 3 4."
+a <- c(1, 2, 3)
+b <- a
+b[4] <- 4
+a
 
 
 ## 2.3 Lists
@@ -123,8 +131,6 @@ boxplot(Cars$MPG ~ Cars$Country)
 # Predict
 f <- factor(c("10", "9", "8"))
 as.numeric(f)
-
-as.numeric(as.character(f))   # 10 9 8
 
 
 ## 2.6 Matrices and arrays
@@ -191,6 +197,24 @@ x[c("a", "c")]
 # a vector of length 1."
 v <- 1:6 * 5
 v[c(TRUE, FALSE)]
+
+# By hand
+# Chatbot: "In R, as in NumPy, a[1:2] returns a view of a, so writing to it
+# changes a. Subsetting with c(1, 2) or with a logical vector returns a copy."
+a <- c(1, 2, 3, 4, 5)
+b <- a[1:2]
+b[1] <- 99
+cat("after a[1:2]      :", a, "\n")
+
+a <- c(1, 2, 3, 4, 5)
+d <- a[c(1, 2)]
+d[1] <- 99
+cat("after a[c(1, 2)]  :", a, "\n")
+
+a <- c(1, 2, 3, 4, 5)
+m <- a[a > 3]
+m[1] <- 99
+cat("after a[a > 3]    :", a, "\n")
 
 
 ## 3.2 Subsetting a list

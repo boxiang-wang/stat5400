@@ -25,16 +25,18 @@ webr:
 <div class="page-codefiles">All code on this page, in one file: {{< codefiles s2p1 >}}</div>
 :::
 
+_Updated Sep 26, 2026: wording edits, and two By-hand blocks on copying in R._
+
 Every code block on this page runs in your browser. Click *Run Code*, change the code,
 run it again. The whole page shares one R session, so run the blocks in order.
 :::
 
-## A First Look at R
+## A first look at R
 
 ### An implementation of S language
 
 -   S language was developed at AT&T-Bell Labs; first version 1976.
--   S-Plus is a commercial version of S (begin in 1987), sold and supported by [Insightful Corp.]{.more note="Insightful sold S-Plus until 2008, when TIBCO bought the company; S-Plus is no longer actively sold."}
+-   S-Plus is a commercial version of S (began in 1987), sold and supported by [Insightful Corp.]{.more note="Insightful sold S-Plus until 2008, when TIBCO bought the company; S-Plus is no longer actively sold."}
 
 ::: {.callout-note collapse="true" title="What S-Plus offered"}
 **Bottom line.** S-Plus was the paid product built on S. R is the free implementation that replaced it in practice.
@@ -46,14 +48,14 @@ run it again. The whole page shares one R session, so run the blocks in order.
 
 ### R
 
--   International team of statisticians started developing R in early 1990's.
-    -   To provide [**free and open source**]{style="color:#b8860b"} alternative to S-Plus.
+-   International team of statisticians started developing R in early 1990s.
+    -   To provide [**free and open source**]{.term} alternative to S-Plus.
     -   To provide S implementation on Linux (not supported by S-Plus then); your code can be replicated by users on Windows, Unix, Linux, Mac...
 -   Easy to [download](https://www.r-project.org/) and install from web sites.
--   User-contributed [packages]{style="color:#0072B2"} expand capabilities and provide support for cutting edge research.
--   An active [community]{style="color:#0072B2"}.
--   Facilitate [communicating]{style="color:#0072B2"} your results: knitr, r markdown, shiny.
--   Support of calling [high-performance languages]{style="color:#0072B2"}: C, C++, Fortran... some connection with Python and Matlab.
+-   User-contributed [packages]{.term} expand capabilities and provide support for cutting edge research.
+-   An active [community]{.term}.
+-   Facilitate [communicating]{.term} your results: knitr, R Markdown, Shiny.
+-   Support of calling [high-performance languages]{.term}: C, C++, Fortran... some connection with Python and Matlab.
 -   On the other hand, R itself is not very fast and efficient in using memory. Users' coding is sometimes not elegant.
 
 {{< explore "S-Plus was the commercial product. It had the funding, a graphical interface, and company support. R was free and started later. Why did R win? Give the main reasons, and say roughly when the balance tipped." >}}
@@ -100,7 +102,7 @@ sqrt(2 * pi)
 print("Hello 5400!")
 ```
 
-[{{< fa lightbulb >}} Predict]{.mode} --- say the answer out loud before you run it.
+[{{< fa lightbulb >}} Predict]{.mode} Say the answer out loud before you run it.
 
 ```{webr}
 0.1 + 0.2 == 0.3
@@ -108,33 +110,33 @@ all.equal(0.1 + 0.2, 0.3)
 .Machine$double.eps
 ```
 
-::: {.callout-note collapse="true" title="Why FALSE?"}
-**Bottom line.** `0.1`, `0.2` and `0.3` cannot be written exactly in binary, so the sum is off by about `5.6e-17`. Never compare two computed numbers with `==`. Use `all.equal()`, which allows a tolerance of about `1.5e-8` by default.
+::: {.callout-note collapse="true" title="Answer"}
+**The sum is not exactly 0.3.** `0.1`, `0.2` and `0.3` cannot be written exactly in binary, so the sum is off by about `5.6e-17`. When rounding error is possible, do not compare two numbers with `==`. Use `all.equal()`, which allows a tolerance of about `1.5e-8` by default.
 
-`.Machine$double.eps` is the smallest number that still makes a difference when added to 1. On almost every machine it is `2.220446e-16`.
+`.Machine$double.eps` is the gap between 1 and the next larger number that the computer can store. On almost every machine it is `2.220446e-16`.
 :::
 
-[{{< fa lightbulb >}} Predict]{.mode} --- one of these two lines warns you. Which one, and why?
+[{{< fa lightbulb >}} Predict]{.mode} One of these two lines warns you. Which one, and why?
 
 ```{webr}
 1:3 + 1:2
 1:4 + 1:2
 ```
 
-::: {.callout-note collapse="true" title="Which one warns?"}
+::: {.callout-note collapse="true" title="Answer"}
 **The first one warns; the second is silent.** Both recycle the shorter vector. R warns only when the longer length is not a multiple of the shorter one: `1:3 + 1:2` gives `2 4 4` with *longer object length is not a multiple of shorter object length*, while `1:4 + 1:2` gives `2 4 4 6` and says nothing.
 
-So the warning is not "you recycled". It is "your recycling did not come out even". The silent case is the one to watch.
+When the longer length is a multiple of the shorter one, R recycles with no warning, so check the lengths yourself.
 :::
 
 ### Reading in data from external files
 
 -   Download `Cars.dat` from <https://raw.githubusercontent.com/boxiang-wang/stat5400/main/data/Cars.dat>.
--   Use a text editor to look at this file. Note that the separators between columns are tabs (You can tell because the cursor jumps) and that the decimal point in numbers is indicated by periods.
+-   Use a text editor to look at this file. Note that the separators between columns are tabs (you can tell because the cursor jumps) and that the decimal point in numbers is indicated by periods.
 -   We need to read this file into an `object` in R to analyze it. R has several functions that read in data files in different formats.
 -   We will use R's built-in help facility to figure out which one to use.
 
-On this page the file is already next to the notes, as `data/Cars.dat`. **Run this block first** — everything after it uses `Cars`.
+On this page the file is already next to the notes, as `data/Cars.dat`. **Run this block first.** Everything after it uses `Cars`.
 
 ```{webr}
 Cars <- read.delim("data/Cars.dat")
@@ -177,7 +179,7 @@ Data frame:
 -   Variables (columns) can be of different data types:
     -   Numeric, character, factors.
 
-## Data Structures
+## Data structures
 
 ### A question regarding proficiency test
 
@@ -201,7 +203,7 @@ See the table from Wickham's book:
 
 ### Vectors
 
-Atomic vector: same type --- [**integer**]{style="color:#b8860b"}, [**double**]{style="color:#b8860b"}, [**logical**]{style="color:#b8860b"}, [**character**]{style="color:#b8860b"}.
+Atomic vector: every element has the same type ([**integer**]{.term}, [**double**]{.term}, [**logical**]{.term}, or [**character**]{.term}).
 
 ```{webr}
 a1 <- c(1, 2, 3)
@@ -213,18 +215,18 @@ is.atomic(a1)
 
 ```{webr}
 a2 <- c(1L, 2L, 3L)
-# same to a2 <- seq(3) or seq.int(3)
+# same as a2 <- seq(3) or seq.int(3)
 class(a2)
 typeof(a2)
 ```
 
 ```{webr}
-a3 <- c(T, F, TRUE, FALSE) # ALWAYS spell T and F.
+a3 <- c(T, F, TRUE, FALSE) # Always write TRUE and FALSE in full.
 class(a3); typeof(a3) # semicolons not recommended.
 as.numeric(a3)
 ```
 
-[{{< fa lightbulb >}} Predict]{.mode} --- what does the second line give? This is why the comment above says to spell `T` and `F` out.
+[{{< fa lightbulb >}} Predict]{.mode} What does the second line give? This is why the comment above says to write `TRUE` and `FALSE` in full.
 
 ```{webr}
 T <- FALSE
@@ -233,7 +235,7 @@ rm(T)     # put things back
 T
 ```
 
-::: {.callout-note collapse="true" title="What just happened?"}
+::: {.callout-note collapse="true" title="Answer"}
 **`T` is an ordinary variable; `TRUE` is not.** `T` and `F` start out as shortcuts for `TRUE` and `FALSE`, but nothing stops you, a colleague, or a package from assigning to them. `TRUE` and `FALSE` are reserved words and cannot be reassigned.
 
 So `if (x == T)` can silently mean the opposite of what you wrote. `rm(T)` deletes your version and uncovers the original.
@@ -251,7 +253,7 @@ typeof(a5)
 ```
 
 ::: {.callout-note collapse="true" title="Going further: class, typeof, and mode"}
-{{< fa user-graduate >}} **Three questions that sound the same and are not.** `typeof()` gives how the value is stored, `class()` gives what R dispatches methods on, and `mode()` is the older S-era grouping.
+{{< fa user-graduate >}} **`typeof()`, `class()`, and `mode()` answer different questions.** `typeof()` gives how the value is stored, `class()` gives what R dispatches methods on, and `mode()` is the older S-era grouping.
 
 ```
 1     class numeric     typeof double      mode numeric
@@ -260,7 +262,24 @@ TRUE  class logical     typeof logical     mode logical
 "a"   class character   typeof character   mode character
 ```
 
-The line that catches people is the first: a plain `1` is stored as a `double`, but its class is `numeric`. That is why `is.integer(1)` is `FALSE` while `is.integer(1L)` is `TRUE`, and why `1:3` (integer) and `c(1, 2, 3)` (double) are not the same vector.
+Note the first line: a plain `1` is stored as a `double`, but its class is `numeric`. That is why `is.integer(1)` is `FALSE` while `is.integer(1L)` is `TRUE`, and why `1:3` (integer) and `c(1, 2, 3)` (double) are not the same vector.
+:::
+
+[{{< fa hand-paper >}} By hand]{.mode} A chatbot was asked whether `b <- a` copies a vector in R. Its answer is in the comments, and one claim in it is wrong. Run the block. Done when you can say what `a` prints, and why. No AI for this block.
+
+```{webr}
+# Chatbot: "b <- a does not copy the vector. Both names point to the same
+# data, so after b[4] <- 4, a also prints 1 2 3 4."
+a <- c(1, 2, 3)
+b <- a
+b[4] <- 4
+a
+```
+
+::: {.callout-note collapse="true" title="Solution"}
+**`a` prints `1 2 3`.** The first part of the claim is close: right after `b <- a`, both names point to the same data in memory. The second part is wrong. When you change `b`, R first makes a copy for `b` and changes the copy. This is called copy-on-modify. So `a` is never touched.
+
+Python lists behave differently. There, `b = a` gives the one list a second name, and a change through `b` also shows in `a`. Section 2.2 has the same example in Python.
 :::
 
 ### Lists
@@ -278,11 +297,11 @@ l2 <- list(list(), list(list()))
 str(l2)
 ```
 
-This is a [Matryoshka doll]{.more note="A Russian nesting doll: open it and there is a smaller doll inside, and another inside that one."}!
+A list can contain other lists, and those lists can contain lists too.
 
 ### Three properties of vectors and lists
 
--   [**Name**]{style="color:#b8860b"}:
+-   [**Name**]{.term}:
 
 ```{webr}
 a1 <- c(T, T, F)
@@ -299,13 +318,13 @@ l1$name2
 l1[2]
 ```
 
--   [**Length**]{style="color:#b8860b"}:
+-   [**Length**]{.term}:
 
 ```{webr}
 length(a1); length(l1)
 ```
 
--   [**Attributes**]{style="color:#b8860b"}:
+-   [**Attributes**]{.term}:
 
 ```{webr}
 attr(a1, "my_attr") <- "This is my vector."
@@ -315,7 +334,7 @@ a1
 
 ### Factors
 
-Important use of attributes --- [**factors**]{style="color:#b8860b"}.
+Important use of attributes: [**factors**]{.term}.
 
 ```{webr}
 x <- factor(c("S", "T", "A", "T"))
@@ -345,17 +364,17 @@ levels(Cars$Country)
 boxplot(Cars$MPG ~ Cars$Country)
 ```
 
-[{{< fa lightbulb >}} Predict]{.mode} --- a factor that looks like numbers. What does the second line give?
+[{{< fa lightbulb >}} Predict]{.mode} A factor that looks like numbers. What does the second line give?
 
 ```{webr}
 f <- factor(c("10", "9", "8"))
 as.numeric(f)
 ```
 
-::: {.callout-note collapse="true" title="Going further: never call as.numeric on a factor"}
-{{< fa user-graduate >}} **You get `1 3 2`, not `10 9 8`.** A factor stores small integer codes plus a table of levels. `as.numeric()` hands back the codes, not the labels.
+::: {.callout-note collapse="true" title="Answer"}
+{{< fa user-graduate >}} **Never call `as.numeric` on a factor: you get `1 3 2`, not `10 9 8`.** A factor stores small integer codes plus a table of levels. `as.numeric()` hands back the codes, not the labels.
 
-The levels are sorted as text, so they come out `"10" "8" "9"` --- `"10"` sorts before `"8"` because `"1"` comes before `"8"`. The codes then follow that order.
+The levels are sorted as text, so they come out `"10" "8" "9"`. `"10"` sorts before `"8"` because `"1"` comes before `"8"`. The codes then follow that order.
 
 The safe idiom goes through the labels:
 
@@ -363,7 +382,7 @@ The safe idiom goes through the labels:
 as.numeric(as.character(f))   # 10 9 8
 ```
 
-Two more worth knowing. `factor(x, levels = ...)` sets the order yourself, which is how you control the order of boxes in the plot above. And after subsetting, unused levels stay behind: `droplevels()` removes them.
+Two more facts about factors. `factor(x, levels = ...)` sets the order yourself, which is how you control the order of boxes in the plot above. After subsetting, unused levels stay behind: `droplevels()` removes them.
 :::
 
 ### Matrices and arrays
@@ -387,6 +406,8 @@ colnames(a) <- paste0("col", 1:3)
 dimnames(b) <- list(letters[1:2], LETTERS[1:3],
   c("one", "two"))
 ```
+
+Remove the `#` in front of `a` and run the block. Then do the same for `b`.
 
 ```{webr}
 # a
@@ -426,18 +447,18 @@ str(Cars)
 ```
 
 ::: {.callout-note collapse="true" title="Going further: a data frame is a list"}
-{{< fa user-graduate >}} **A data frame is a list of equal-length columns, wearing a two-dimensional coat.** That is why `is.list(Cars)` above is `TRUE`.
+{{< fa user-graduate >}} **A data frame is a list of equal-length columns, shown as a two-dimensional table.** That is why `is.list(Cars)` above is `TRUE`.
 
-It explains several things at once. `length(Cars)` is `8`, the number of columns, not the number of rows. Anything that works on a list works here, so `sapply(Cars, class)` gives the type of every column in one line. And `Cars[1]` returns a one-column data frame while `Cars[[1]]` returns the column itself --- the same `[` versus `[[` rule as any other list.
+It explains several things at once. `length(Cars)` is `8`, the number of columns, not the number of rows. Anything that works on a list works here, so `sapply(Cars, class)` gives the type of every column in one line. `Cars[1]` returns a one-column data frame, while `Cars[[1]]` returns the column itself. This is the same `[` versus `[[` rule as for any other list.
 
-The only thing the coat adds is the requirement that every column has the same length.
+The only extra requirement is that every column has the same length.
 :::
 
 ### Summary of data structure
 
--   Three properties of a vector or a list are [**type**]{style="color:#b8860b"}, [**length**]{style="color:#b8860b"}, and [**attributes**]{style="color:#b8860b"}.
--   The four common types of atomic vectors are [**integer**]{style="color:#b8860b"}, [**double**]{style="color:#b8860b"}, [**logical**]{style="color:#b8860b"}, and [**character**]{style="color:#b8860b"} (strings).
--   The elements of a [**list**]{style="color:#b8860b"} and a [**data frame**]{style="color:#b8860b"} can be of any type. The elements of an [**atomic vector**]{style="color:#b8860b"} and a [**matrix**]{style="color:#b8860b"} must be of the same type.
+-   Three properties of a vector or a list are [**type**]{.term}, [**length**]{.term}, and [**attributes**]{.term}.
+-   The four common types of atomic vectors are [**integer**]{.term}, [**double**]{.term}, [**logical**]{.term}, and [**character**]{.term} (strings).
+-   The elements of a [**list**]{.term} and a [**data frame**]{.term} can be of any type. The elements of an [**atomic vector**]{.term} and a [**matrix**]{.term} must be of the same type.
 
 ## Subsetting
 
@@ -445,7 +466,7 @@ The only thing the coat adds is the requirement that every column has the same l
 
 {{< explore "List five corner cases of R's `[` operator that surprise experienced users, and for each give the exact output R prints. Include at least one case that is silent rather than an error. I will run every one of them to check you." >}}
 
--   [**Positive integers**]{style="color:#b8860b"}:
+-   [**Positive integers**]{.term}:
 
 ```{webr}
 (x <- 1:4 * 10)
@@ -458,14 +479,14 @@ x[c(1, 1)]
 x[c(1.2, 2.9)]
 ```
 
--   [**Negative integers**]{style="color:#b8860b"}:
+-   [**Negative integers**]{.term}:
 
 ```{webr}
 x[-c(3, 1)]
 x[c(-3, 1)]
 ```
 
--   [**Logical vectors**]{style="color:#b8860b"}:
+-   [**Logical vectors**]{.term}:
 
 ```{webr}
 x[x < 25]
@@ -482,14 +503,14 @@ x[c(TRUE, FALSE, TRUE, TRUE, TRUE)]
 x[c(TRUE, FALSE, NA, TRUE)]
 ```
 
--   [**Characters**]{style="color:#b8860b"}:
+-   [**Characters**]{.term}:
 
 ```{webr}
 names(x) <- letters[1:4]
 x[c("a", "c")]
 ```
 
-[{{< fa hand-paper >}} By hand]{.mode} --- a chatbot was asked what `v[c(TRUE, FALSE)]` returns. Its answer is in the comments, and one claim in it is wrong. Run the block and check it against R. Done when you can say how many elements come back, and why. No AI for this block.
+[{{< fa hand-paper >}} By hand]{.mode} A chatbot was asked what `v[c(TRUE, FALSE)]` returns. Its answer is in the comments, and one claim in it is wrong. Run the block and check it against R. Done when you can say how many elements come back, and why. No AI for this block.
 
 ```{webr}
 # Chatbot: "Logical subsetting keeps the elements marked TRUE. The index
@@ -506,6 +527,33 @@ v[c(TRUE, FALSE)]
 Recycling does not need the lengths to divide evenly. Change `v` to `1:7 * 5` and the same index returns elements 1, 3, 5, and 7, with no warning.
 :::
 
+[{{< fa hand-paper >}} By hand]{.mode} A chatbot was asked whether it is safe to modify a subset of an R vector. Its answer is in the comments, and one claim in it is wrong. Run the block. Done when you can say which of the three lines changed `a`, and why. No AI for this block.
+
+```{webr}
+# Chatbot: "In R, as in NumPy, a[1:2] returns a view of a, so writing to it
+# changes a. Subsetting with c(1, 2) or with a logical vector returns a copy."
+a <- c(1, 2, 3, 4, 5)
+b <- a[1:2]
+b[1] <- 99
+cat("after a[1:2]      :", a, "\n")
+
+a <- c(1, 2, 3, 4, 5)
+d <- a[c(1, 2)]
+d[1] <- 99
+cat("after a[c(1, 2)]  :", a, "\n")
+
+a <- c(1, 2, 3, 4, 5)
+m <- a[a > 3]
+m[1] <- 99
+cat("after a[a > 3]    :", a, "\n")
+```
+
+::: {.callout-note collapse="true" title="Solution"}
+**None of the three lines changed `a`.** All three print `1 2 3 4 5`. The claim about `a[1:2]` is wrong. In R, `[` always returns a new vector, whether the index is a range, a vector of positions, or a logical vector. Changing the result never changes `a`.
+
+NumPy is different: a slice such as `a[0:2]` is a view, and writing to it changes the original. Section 2.2 has the same example in NumPy.
+:::
+
 ### Subsetting a list
 
 ```{webr}
@@ -519,12 +567,12 @@ l1[1]
 ```
 
 ::: {.callout-note collapse="true" title="Going further: two corners of `[[`"}
-{{< fa user-graduate >}} **`[[` with a vector digs down, it does not pick several.** For a nested list, `l[[c(2, 1)]]` means "element 2, then element 1 inside that" --- one step per number. To pick several elements, use `[`.
+{{< fa user-graduate >}} **With a vector index, `[[` goes one level deeper for each number. It does not select several elements.** For a nested list, `l[[c(2, 1)]]` means "element 2, then element 1 inside that". To pick several elements, use `[`.
 
 **You cannot mix positive and negative indices.** `x[c(-1, 2)]` is an error, *only 0's may be mixed with negative subscripts*, because R cannot tell whether you meant to keep or to drop. Pick one direction.
 :::
 
-If a list `x` is a train carrying objects, then `x[1]` is a train of car 1 and `x[[1]]` is the objects in car 1 --- \@RLangTip.
+For a list `x`, `x[1]` returns a list with one element. `x[[1]]` returns the first element itself.
 
 ### Words on the `drop` option
 
@@ -555,7 +603,7 @@ a[, 1, drop = FALSE]
 colMeans(a[, 1, drop = FALSE])
 ```
 
-## A Simple Statistical Analysis
+## A simple statistical analysis
 
 ### Subsetting rows and columns of a data frame
 
@@ -591,7 +639,7 @@ hist(Cars[Cars$Country == "Japan", "MPG"])
 
 ### One-sample t-test
 
-{{< explore "State the assumptions behind a one-sample t-test, and for each one give the R code that checks it on a data frame column. Then say what you would do instead when each assumption fails. I will run your checks on the Cars data in front of me." >}}
+{{< explore "State the assumptions behind a one-sample t-test. For each one, give R code that checks it on a data frame column, or say why a column alone cannot check it. Then say what you would do instead when each assumption fails. I will run your checks on the Cars data in front of me." >}}
 
 Try `help(t.test)` first.
 

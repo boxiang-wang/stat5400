@@ -23,20 +23,24 @@ if (!ollama_up()) {
   }
 }
 
+.libPaths(c("~/classdata/models/R", .libPaths()))   # the class copy of ellmer
 library(ellmer)
 
 # ---- warm-up: a small model cannot compare two numbers, until you give it a tool ----
 bare <- chat_ollama(model = "llama3.2:1b")
 bare$chat("Which is larger, 9.9 or 9.11? Answer with just the number.")
 
-larger <- function(a, b) if (a > b) a else if (b > a) b else "equal"
+larger <- function(a, b) {
+  a <- as.numeric(a); b <- as.numeric(b)         # small models sometimes send "9.9" as text
+  if (a > b) a else if (b > a) b else "equal"
+}
 
 armed <- chat_ollama(model = "llama3.2:1b",
   system_prompt = "Use the tool to compare numbers. Never compare them yourself.")
 armed$register_tools(list(
   tool(larger, "Return the larger of two numbers.",
        arguments = list(a = type_number("First number."), b = type_number("Second number.")))))
-armed$on_tool_request(function(req) cat("-> ", req@name, deparse1(req@arguments), "\n"))
+armed$on_tool_request(function(request) cat("-> ", request@name, deparse1(request@arguments), "\n"))
 armed$chat("Which is larger, 9.9 or 9.11?")
 
 # ---- the main example: two tools on the cars data ----
@@ -57,8 +61,8 @@ chat$register_tools(list(
        arguments = list(column = type_string("Exact column name, as returned by column_names.")))))
 
 # the receipt: every request and every result, as they happen
-chat$on_tool_request(function(req) cat("-> ", req@name, deparse1(req@arguments), "\n"))
-chat$on_tool_result(function(res) cat("<- ", deparse1(res@value), "\n"))
+chat$on_tool_request(function(request) cat("-> ", request@name, deparse1(request@arguments), "\n"))
+chat$on_tool_result(function(result) cat("<- ", deparse1(result@value), "\n"))
 
 chat$chat("What is the average weight of these cars?")
 

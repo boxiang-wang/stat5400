@@ -85,6 +85,7 @@ print([y, '!'])
 y.append('!')
 print(y)
 
+# By hand
 # Chatbot: "b = a makes b a copy of the list, so the two are independent.
 # Appending to b leaves a unchanged, and a still prints [1, 2, 3]."
 a = [1, 2, 3]
@@ -110,7 +111,7 @@ b = [1, 2, 3]
 np.dot(a, b)
 
 
-## 2.10 The library `Numpy`
+## 2.10 The library `NumPy`
 
 # Predict
 import numpy as np
@@ -128,6 +129,9 @@ print(x[0:1])        # note Python begins with 0
 print(x[0:4:2])
 print(np.array(x)[[0, 2]])
 
+# By hand
+# Chatbot: "A boolean mask shorter than the array is padded with False, so
+# only the first element is kept."
 import numpy as np
 v = np.array(range(1, 7)) * 5
 try:

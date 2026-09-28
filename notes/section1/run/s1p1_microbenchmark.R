@@ -1,6 +1,7 @@
 # STAT 5400 - Section 1.1 - Demonstration of better implementation
 library(microbenchmark)
 
+set.seed(5400)
 x <- runif(100)
 microbenchmark(
   sqrt(x),
