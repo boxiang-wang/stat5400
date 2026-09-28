@@ -358,7 +358,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Bottom line.</strong> S-Plus was the paid product built on S. R is the free implementation that replaced it in practice.</p>
+<p><strong>S-Plus was the paid product built on S.</strong> R is the free implementation of S that replaced it in practice.</p>
 <ul>
 <li>GUI.</li>
 <li>Many formats supported for graphics export and data input/output.</li>
@@ -699,7 +699,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiVCA8LSBGQUxTRVxuYyhULCBU
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong><code>T</code> is an ordinary variable; <code>TRUE</code> is not.</strong> <code>T</code> and <code>F</code> start out as shortcuts for <code>TRUE</code> and <code>FALSE</code>, but nothing stops you, a colleague, or a package from assigning to them. <code>TRUE</code> and <code>FALSE</code> are reserved words and cannot be reassigned.</p>
-<p>So <code>if (x == T)</code> can silently mean the opposite of what you wrote. <code>rm(T)</code> deletes your version and uncovers the original.</p>
+<p>So <code>if (x == T)</code> can silently mean the opposite of what you wrote. <code>rm(T)</code> deletes your version, so <code>T</code> means <code>TRUE</code> again.</p>
 </div>
 </div>
 </div>
@@ -735,7 +735,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiYTUgPC0gYyhULCBGLCBcIlRc
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><i class="fa-solid fa-user-graduate" aria-label="user-graduate"></i> <strong><code>typeof()</code>, <code>class()</code>, and <code>mode()</code> answer different questions.</strong> <code>typeof()</code> gives how the value is stored, <code>class()</code> gives what R dispatches methods on, and <code>mode()</code> is the older S-era grouping.</p>
+<p><i class="fa-solid fa-user-graduate" aria-label="user-graduate"></i> <strong><code>typeof()</code>, <code>class()</code>, and <code>mode()</code> answer different questions.</strong> <code>typeof()</code> gives how the value is stored, <code>class()</code> gives the class that R uses to choose a method (for example, which <code>print</code> to call), and <code>mode()</code> is an older grouping from the S language.</p>
 <pre><code>1     class numeric     typeof double      mode numeric
 1L    class integer     typeof integer     mode numeric
 TRUE  class logical     typeof logical     mode logical
@@ -775,7 +775,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBDaGF0Ym90OiBcImIgPC0g
 </section>
 <section id="lists" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="lists"><span class="header-section-number">2.3</span> Lists</h3>
-<p>The element of a list can be of different types.</p>
+<p>The elements of a list can be of different types.</p>
 <div class="cell">
 <div>
 <div id="webr-19" class="exercise-cell">
@@ -937,9 +937,9 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZiA8LSBmYWN0b3IoYyhcIjEw
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><i class="fa-solid fa-user-graduate" aria-label="user-graduate"></i> <strong>Never call <code>as.numeric</code> on a factor: you get <code>1 3 2</code>, not <code>10 9 8</code>.</strong> A factor stores small integer codes plus a table of levels. <code>as.numeric()</code> hands back the codes, not the labels.</p>
+<p><i class="fa-solid fa-user-graduate" aria-label="user-graduate"></i> <strong>Never call <code>as.numeric</code> on a factor: you get <code>1 3 2</code>, not <code>10 9 8</code>.</strong> A factor stores small integer codes plus a table of levels. <code>as.numeric()</code> returns the codes, not the labels.</p>
 <p>The levels are sorted as text, so they come out <code>"10" "8" "9"</code>. <code>"10"</code> sorts before <code>"8"</code> because <code>"1"</code> comes before <code>"8"</code>. The codes then follow that order.</p>
-<p>The safe idiom goes through the labels:</p>
+<p>The safe way is to convert the labels to text first:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">as.character</span>(f))   <span class="co"># 10 9 8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Two more facts about factors. <code>factor(x, levels = ...)</code> sets the order yourself, which is how you control the order of boxes in the plot above. After subsetting, unused levels stay behind: <code>droplevels()</code> removes them.</p>
 </div>

@@ -1424,7 +1424,7 @@ p_i(T) = \frac{\exp(z_i / T)}{\sum_{j=1}^{V} \exp(z_j / T)},
 </table>
 <ul>
 <li>Commit before you let an agent change anything. If the agent breaks something, you can go back to that commit.</li>
-<li><code>git diff</code> is how you see what it did, line by line. <code>/review</code> reads the same thing.</li>
+<li><code>git diff</code> is how you see what it did, line by line. <code>/review</code> asks the agent to review the same changes.</li>
 <li>A <code>.gitignore</code> tells Git which untracked files to ignore, such as <code>.env</code>, large data, and rendered output. Add <code>.env</code> before your first commit. It does not remove a file that Git already tracks.</li>
 </ul>
 </section>
@@ -1470,7 +1470,7 @@ __pycache__, and rendered output. Then make the first commit.</code></pre>
 <li><p>All three leave a record you can check later. A chat can be saved or shared as a web page. With the API, your script and its output are the record. A coding agent keeps a transcript of every step, and the later course section on AI agents is about reading one.</p></li>
 <li><p>In this course: coding agents are welcome on <span class="mode"><i class="fa-solid fa-robot" aria-label="robot"></i> Vibe</span> blocks, not on <span class="mode"><i class="fa-solid fa-hand-paper" aria-label="hand-paper"></i> By hand</span> blocks, and whatever they write, you run and check yourself.</p></li>
 </ul>
-<p>You use both from a terminal. Most of the time you type ordinary English. To control the tool itself, for example to switch models or start over, you type a <span class="term"><strong>slash command</strong></span>. Type <code>/</code> alone to see the list for your version, because it changes often. Six are worth knowing on day one.</p>
+<p>You use Codex and Claude Code from a terminal. Most of the time you type ordinary English. To control the tool itself, for example to switch models or start over, you type a <span class="term"><strong>slash command</strong></span>. Type <code>/</code> alone to see the list for your version, because it changes often. Six are worth knowing on day one.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -1517,7 +1517,7 @@ __pycache__, and rendered output. Then make the first commit.</code></pre>
 </tr>
 </tbody>
 </table>
-<p><code>/effort</code> takes <code>low</code> through <code>max</code>. Low is fast and cheap, high thinks longer. It is a Claude Code command; in Codex the same dial sits inside <code>/model</code>. Pairing a small model on low effort for mechanical edits with a large one on high effort for design is an easy way to lower the cost.</p>
+<p><code>/effort</code> takes <code>low</code> through <code>max</code>. Low is fast and cheap, high thinks longer. It is a Claude Code command; in Codex the same setting is inside <code>/model</code>. Pairing a small model on low effort for mechanical edits with a large one on high effort for design is an easy way to lower the cost.</p>
 <p>A session looks like this.</p>
 <pre><code>&gt; /init
   wrote AGENTS.md

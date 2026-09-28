@@ -336,7 +336,7 @@ window.Quarto = {
 All code on this page, in one file: <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p3.R" target="_blank" rel="noopener"><i class="fa-brands fa-r-project"></i> R</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p3.py" target="_blank" rel="noopener"><i class="fa-brands fa-python"></i> Python</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p3.Rmd" target="_blank" rel="noopener"><i class="fa-brands fa-markdown"></i> Rmd</a> <a class="codefile" href="https://github.com/boxiang-wang/stat5400/blob/main/notes/section2/code/s2p3.ipynb" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i> ipynb</a>
 </div>
 </div>
-<p>Most code blocks on this page run in your browser. Blocks that need a Codespace are marked. Click <em>Run Code</em>, change the code, run it again. From here on the two languages run side by side: the R tab comes first, the Python tab does the same job. Where an idea belongs to one language only, a one-line note says so instead of a fake tab.</p>
+<p>Most code blocks on this page run in your browser. Blocks that need a Codespace are marked. Click <em>Run Code</em>, change the code, run it again. From here on the two languages run side by side: the R tab comes first, the Python tab does the same job. Where an idea exists in one language only, a one-line note says so, and there is no tab for the other language.</p>
 <section id="functions" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="functions"><span class="header-section-number">1</span> Functions</h2>
 <section id="write-your-own-functions" class="level3" data-number="1.1">
@@ -529,7 +529,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiUXVhZHJhdGljU29sdmVyKDIs
 <p><strong>Without the checks, R answers anyway.</strong></p>
 <p>Take the checks out and give the function <code>a = 0</code>. R divides by zero and returns <code>NaN</code> and <code>-Inf</code>. Give it a negative discriminant and R returns two <code>NaN</code> values with a warning that is easy to miss. Either way you get a value that looks like a number, and you can carry it into the next computation without noticing.</p>
 <p>Python stops at the line that is wrong: <code>ZeroDivisionError</code> in the first case, and <code>ValueError: math domain error</code> in the second.</p>
-<p>So <code>errflag</code> is doing more work in R. In Python the interpreter already refuses; in R, only your own checks catch a bad input.</p>
+<p>So <code>errflag</code> is doing more work in R. In Python the interpreter already stops with an error; in R, only your own checks catch a bad input.</p>
 </div>
 </div>
 </div>
@@ -812,7 +812,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicHJpbnQobXlmdW4zKDEpKTsg
 <p><strong>R returns 0. Python raises <code>UnboundLocalError</code>.</strong></p>
 <p>R finds no <code>y</code> inside the function, so it walks outward to the global <code>-1</code>. The result is stored in a new local <code>y</code>, and the global one is untouched.</p>
 <p>Python decides before the function runs. The body assigns to <code>y</code>, so <code>y</code> is local everywhere in it, including on the line that creates it. Reading it before it exists is the error.</p>
-<p><code>myfun3</code> is where the two agree. <code>&lt;&lt;-</code> and <code>global</code> both mean the outer name, and both set <code>y</code> to 0 for good. Avoid them.</p>
+<p>The two languages agree on <code>myfun3</code>. <code>&lt;&lt;-</code> and <code>global</code> both mean the outer name, and both set the global <code>y</code> to 0, so it stays 0 after the call. Avoid them.</p>
 </div>
 </div>
 </div>
@@ -1231,7 +1231,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IHN5c1xucHJpbnQo
 <h3 data-number="2.3" class="anchored" data-anchor-id="the-apply-family-of-functions-in-r"><span class="header-section-number">2.3</span> The <code>apply</code> family of functions in R</h3>
 <ul>
 <li><code>apply</code> lets you apply the same function to each row or column of a matrix, and returns results in a vector.</li>
-<li><code>lapply</code> applies same function to each member of a list.</li>
+<li><code>lapply</code> applies the same function to each member of a list.</li>
 <li><code>sapply</code> does the same job as <code>lapply</code> but returns a vector.</li>
 <li><code>tapply</code> functions on a group level of a variable.</li>
 </ul>
@@ -1453,7 +1453,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG51bXB5IGFzIG5w
 </div>
 </div>
 </div>
-<p><code>lapply</code> always returns a list. <code>sapply</code> tries to simplify that list to a vector or a matrix. Both keep the names of <code>l1</code>. The dict comprehension keeps the keys; the list comprehension drops them. Functions are ordinary objects in both languages, so a list of them is nothing special.</p>
+<p><code>lapply</code> always returns a list. <code>sapply</code> tries to simplify that list to a vector or a matrix. Both keep the names of <code>l1</code>. The dict comprehension keeps the keys; the list comprehension drops them. Functions are ordinary objects in both languages, so we can put them in a list like any other object.</p>
 </section>
 <section id="reduce-function-in-r" class="level3" data-number="2.5">
 <h3 data-number="2.5" class="anchored" data-anchor-id="reduce-function-in-r"><span class="header-section-number">2.5</span> <code>Reduce</code> function in R</h3>
@@ -1577,7 +1577,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IHN5c1xucHJpbnQo
 <div class="callout-body-container callout-body">
 <p><strong>Python supports arbitrarily large integers; R’s <code>factorial</code> uses doubles.</strong></p>
 <p><strong>Big integers: true in Python, false in R.</strong> In R, <code>factorial()</code> and <code>prod()</code> return doubles, and a double stops at about <span class="math inline">\(1.8 \times 10^{308}\)</span>. So <code>factorial(170)</code> is finite, <code>factorial(171)</code> is <code>Inf</code>, and <code>prod(1:171)</code> is <code>Inf</code> as well, with no warning. Python integers grow as long as memory allows, so <code>math.factorial(171)</code> is exact and has 310 digits.</p>
-<p><strong>Recursion: bad advice in both.</strong> A recursive factorial calls itself once per step, so <code>fact_rec(2000)</code> stacks two thousand calls before the first one can finish. Both languages cap that stack, and both let you read the cap: the two cells above print it. On a desktop install <code>sys.getrecursionlimit()</code> is 1000 and this function stops working at a depth of 997, while <code>getOption("expressions")</code> is 5000 and R stops at 4986 with “evaluation nested too deeply”. So 2000 is past Python’s cap but inside R’s, which is why Python raises <code>RecursionError</code> here and R instead gets deep enough to overflow to <code>Inf</code>. These limits depend on the setup. R can also run out of C stack before it reaches the expressions limit, so R in the browser may stop earlier. A loop or <code>Reduce</code> stacks nothing, so it has no depth limit and is faster than either.</p>
+<p><strong>Recursion: bad advice in both.</strong> A recursive factorial calls itself once per step, so <code>fact_rec(2000)</code> stacks two thousand calls before the first one can finish. Both languages cap that stack, and both let you read the cap: the two cells above print it. On a desktop install <code>sys.getrecursionlimit()</code> is 1000, and this function stops working at a depth of 997. In R, <code>getOption("expressions")</code> is 5000, and R stops at 4986 with “evaluation nested too deeply”. So 2000 is past Python’s cap but inside R’s. This is why Python raises <code>RecursionError</code> here, while R goes deep enough to overflow to <code>Inf</code>. These limits depend on the setup. R can also run out of C stack before it reaches the expressions limit, so R in the browser may stop earlier. A loop or <code>Reduce</code> does not stack calls, so it has no depth limit and is faster than either.</p>
 <p>When you need factorials of large numbers, work on the log scale: <code>lfactorial</code> in R, <code>math.lgamma</code> in Python. They overflow only for inputs far larger than you will meet: <code>lfactorial(171)</code> is about 712.</p>
 </div>
 </div>
@@ -1736,7 +1736,7 @@ e.g., <code>t(a - b) %*% A %*% (a - b)</code>.</li>
 <ul>
 <li>PEP 8, the official style guide. <a href="https://peps.python.org/pep-0008/" class="uri">https://peps.python.org/pep-0008/</a></li>
 <li>Google’s Python style guide. <a href="https://google.github.io/styleguide/pyguide.html" class="uri">https://google.github.io/styleguide/pyguide.html</a></li>
-<li><code>black</code> reformats a file with no options to argue about. <a href="https://black.readthedocs.io/" class="uri">https://black.readthedocs.io/</a></li>
+<li><code>black</code> reformats a file and has very few options to set. <a href="https://black.readthedocs.io/" class="uri">https://black.readthedocs.io/</a></li>
 <li><code>ruff</code> checks style and common mistakes, and is fast. <a href="https://docs.astral.sh/ruff/" class="uri">https://docs.astral.sh/ruff/</a></li>
 </ul>
 </div>
@@ -1880,7 +1880,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicHJpbnQoc3RhdGVkZltcImRp
 </section>
 <section id="group-summaries-by-a-factor" class="level3" data-number="5.4">
 <h3 data-number="5.4" class="anchored" data-anchor-id="group-summaries-by-a-factor"><span class="header-section-number">5.4</span> Group summaries by a factor</h3>
-<p><code>tapply</code> was in the list of apply functions but never used. This is its job: one number per level of a factor.</p>
+<p><code>tapply</code> was in the list of apply functions above, but we have not used it yet. It returns one number for each level of a factor.</p>
 <div class="cell">
 <div>
 <div id="webr-98" class="exercise-cell">

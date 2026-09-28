@@ -56,7 +56,7 @@ mean(ulist)
 var(ulist)
 
 
-## 2.10 The probability integral transform, seen
+## 2.10 Checking the probability integral transform
 
 par(mfrow = c(1, 2))
 X <- runif(1000, 2, 5)

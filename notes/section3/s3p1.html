@@ -377,7 +377,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <ul>
 <li>size; power.</li>
 </ul></li>
-<li>Simulation studies are <span class="more" data-note="A simulation is an experiment whose subjects are random numbers. Sample size, number of replicates, and the settings you vary are all design choices, and they can be chosen badly.">experiments</span>, and the things you know about experimental design and sample size calculation apply.</li>
+<li>Simulation studies are <span class="more" data-note="A simulation is an experiment done with random numbers. The sample size, the number of replicates, and the settings you change are all design choices, so we need to choose them carefully.">experiments</span>, and the things you know about experimental design and sample size calculation apply.</li>
 </ul>
 </section>
 <section id="what-happens-when-an-assumption-fails" class="level3" data-number="1.4">
@@ -389,7 +389,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 </figure>
 </div>
 <ul>
-<li>With normal data the test does what it promises.</li>
+<li>With normal data the rejection rate is close to 5%, as it should be.</li>
 <li>With exponential data at <span class="math inline">\(n = 10\)</span> it rejects twice as often as it should.</li>
 <li>The error shrinks as <span class="math inline">\(n\)</span> grows, but it is still there at <span class="math inline">\(n = 100\)</span>.</li>
 <li>These numbers came from a simulation. You will learn how to produce them in this section.</li>
@@ -492,7 +492,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibnAucmFuZG9tLnNlZWQoNTQw
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>A seed is a starting point in a fixed sequence.</strong> R’s numbers are not random. They are a long, fixed sequence that looks random, and the seed says where in that sequence to start.</p>
+<p><strong>A seed is a starting point in a fixed sequence.</strong> R’s numbers are not truly random. They are a long, fixed sequence that looks random, and the seed says where in that sequence to start.</p>
 <p>R’s default generator is the Mersenne-Twister. Its state is 625 integers, kept in <code>.Random.seed</code>. <code>set.seed(5400)</code> fills that state from the number 5400, so every later draw is determined. Its period is <span class="math inline">\(2^{19937}-1\)</span>, so the sequence does not repeat in any simulation we run in this course.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Python</a></li></ul>
@@ -839,8 +839,8 @@ S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})^2.
 P(Y \le y) = P(F(X) \le y) = P(X \le F^{-1}(y)) = F(F^{-1}(y)) = y.
 \]</span></p>
 </section>
-<section id="the-probability-integral-transform-seen" class="level3" data-number="2.10">
-<h3 data-number="2.10" class="anchored" data-anchor-id="the-probability-integral-transform-seen"><span class="header-section-number">2.10</span> The probability integral transform, seen</h3>
+<section id="checking-the-probability-integral-transform" class="level3" data-number="2.10">
+<h3 data-number="2.10" class="anchored" data-anchor-id="checking-the-probability-integral-transform"><span class="header-section-number">2.10</span> Checking the probability integral transform</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
@@ -874,7 +874,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </section>
 <section id="uniform-random-number-generators-in-python" class="level3" data-number="2.11">
 <h3 data-number="2.11" class="anchored" data-anchor-id="uniform-random-number-generators-in-python"><span class="header-section-number">2.11</span> Uniform random number generators in Python</h3>
-<p>Two generators have different arguments: <code>low</code>–<code>high</code> versus <code>loc</code>–<code>scale</code>.</p>
+<p>The two generators have different arguments: <code>low</code> and <code>high</code> versus <code>loc</code> and <code>scale</code>.</p>
 <div class="cell">
 <div>
 <div id="pyodide-24" class="exercise-cell">
@@ -895,7 +895,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibnAucmFuZG9tLnNlZWQoNTQw
 </script>
 </div>
 </div>
-<p><code>scale</code> is the width, not the upper end. To get <span class="math inline">\(\mathrm{Unif}(2, 5)\)</span> you write <code>scale=3</code>, because <span class="math inline">\(5 - 2 = 3\)</span>. Passing <code>scale=5</code> silently gives you <span class="math inline">\(\mathrm{Unif}(2, 7)\)</span>.</p>
+<p><code>scale</code> is the width, not the upper end. To get <span class="math inline">\(\mathrm{Unif}(2, 5)\)</span> you write <code>scale=3</code>, because <span class="math inline">\(5 - 2 = 3\)</span>. If you pass <code>scale=5</code>, you get <span class="math inline">\(\mathrm{Unif}(2, 7)\)</span>, and there is no warning.</p>
 </section>
 <section id="q-q-plot-quantile-quantile-plot" class="level3" data-number="2.12">
 <h3 data-number="2.12" class="anchored" data-anchor-id="q-q-plot-quantile-quantile-plot"><span class="header-section-number">2.12</span> Q-Q plot (quantile-quantile plot)</h3>
@@ -1423,8 +1423,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibnAucmFuZG9tLnNlZWQoNTQw
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>They do not match.</strong> Both are correct draws from the same distribution, but they consume the uniform stream differently.</p>
-<p>The inverse-CDF version uses exactly one uniform per exponential. The algorithm of Ahrens and Dieter uses a variable number, sometimes one and sometimes several. So after the first value the two streams are at different places in the same sequence.</p>
+<p><strong>They do not match.</strong> Both are correct draws from the same distribution, but they use the uniform numbers in different ways.</p>
+<p>The inverse-CDF version uses exactly one uniform per exponential. The algorithm of Ahrens and Dieter uses a variable number, sometimes one and sometimes several. So after the first value, the two methods are at different places in the same sequence of uniforms.</p>
 <p>So the seed fixes the sequence of uniforms, but the result also depends on the algorithm and on the order of the draws.</p>
 <p>Python: they do not match either, for a different reason. <code>np.random.exponential</code> does use the inverse CDF, one uniform each, but in the form <span class="math inline">\(-2\log(1-U)\)</span>. So the same uniforms give different numbers.</p>
 </div>
@@ -1547,7 +1547,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicHJvYnMgPSAobnAuYXJhbmdl
 <p>Python:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(np.tan(np.pi <span class="op">*</span> (probs <span class="op">-</span> <span class="fl">0.5</span>)), np.sort(Xlist), s<span class="op">=</span><span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You may also write <code>qcauchy(probs)</code> in place of <code>tan(pi * (probs - 0.5))</code>. They are the same function. In Python, <code>scipy.stats.cauchy.ppf(probs)</code>.</p>
-<p>The extreme points are very far from the line. The Cauchy has heavy tails, so a few points are very far out.</p>
+<p>A few extreme points are very far from the line, because the Cauchy has heavy tails.</p>
 </div>
 </div>
 </div>
@@ -1597,7 +1597,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibnAucmFuZG9tLnNlZWQoNTQw
 </div>
 </div>
 </div>
-<p>The three means are far apart, although each uses 10,000 draws. The sample mean does not settle down, because the Cauchy has no mean.</p>
+<p>The three means are far apart, although each uses 10,000 draws. The sample mean does not converge, because the Cauchy has no mean.</p>
 </section>
 <section id="sampling-the-next-word" class="level3" data-number="4.8">
 <h3 data-number="4.8" class="anchored" data-anchor-id="sampling-the-next-word"><span class="header-section-number">4.8</span> Sampling the next word</h3>
@@ -1808,7 +1808,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 <li>Each trial is accepted with probability <span class="math inline">\(1/c\)</span>, so the expected number of trials is <span class="math inline">\(c\)</span>. So we want <span class="math inline">\(c\)</span> as small as possible.</li>
 <li>The disk is this recipe with <span class="math inline">\(f\)</span> uniform on the disk, <span class="math inline">\(g\)</span> uniform on the square, and <span class="math inline">\(c = 4/\pi = 1.27\)</span>.</li>
 </ul>
-<p>A worked case: draw standard normals using a Cauchy envelope. The Cauchy has heavier tails than the normal, so a single constant does bound the ratio. Here <span class="math inline">\(c = 1.52\)</span>, and about two thirds of the draws survive. The shaded gap between the two curves in the plot below is the part that is rejected. A better envelope makes it smaller.</p>
+<p>A worked case: draw standard normals using a Cauchy envelope. The Cauchy has heavier tails than the normal, so a single constant does bound the ratio. Here <span class="math inline">\(c = 1.52\)</span>, and about two thirds of the draws are accepted. The shaded gap between the two curves in the plot below is the part that is rejected. A better envelope makes it smaller.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-23-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-1" role="tab" aria-controls="tabset-23-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-23-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-2" role="tab" aria-controls="tabset-23-2" aria-selected="false" href="">Python</a></li></ul>
 <div class="tab-content">
