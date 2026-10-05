@@ -1,0 +1,482 @@
+---
+title: "STAT:5400 Section 3.2 — CLT and Confidence Intervals"
+output: html_document
+---
+
+```{r}
+if (dir.exists("~/classdata/models/R")) .libPaths(c("~/classdata/models/R", .libPaths()))  # on IDAS: the class copy of ellmer
+# Start the Ollama server if it is not running yet (needed once per IDAS session)
+ollama_up <- function() !inherits(try(suppressWarnings(readLines("http://localhost:11434/api/version")), silent = TRUE), "try-error")
+if (!ollama_up()) {
+  if (dir.exists("~/classdata/models")) {             # on IDAS: use the class copy of Ollama and its models
+    Sys.setenv(PATH = paste0(path.expand("~/classdata/models/ollama/bin:"), Sys.getenv("PATH")),
+               OLLAMA_MODELS = path.expand("~/classdata/models/library"), OLLAMA_NOPRUNE = "1")
+  }
+  if (nzchar(Sys.which("ollama"))) {                  # skip if Ollama is not installed
+    system("nohup ollama serve > ~/ollama.log 2>&1 &")  # start it in the background
+    for (i in 1:30) if (ollama_up()) break else Sys.sleep(1)
+  }
+}
+```
+
+### 1.4 One dimension, four sample sizes
+
+```{r}
+library(ggplot2)
+
+set.seed(5400)
+n <- rep(c(10, 25, 40, 100), each = 100)
+y <- sapply(n, function(n) mean(rnorm(n)))
+
+ggplot() + geom_point(aes(y, factor(n)),
+  position = position_jitter(height = 0.15)) +
+  labs(x = "sample mean", y = "sample size")
+```
+
+### 1.6 Simulating the sampling distribution
+
+```{r}
+set.seed(5400)
+n <- 30          # sample size
+mu <- 1          # population mean
+sig.sq <- 4      # population variance
+
+# generating 1000 random samples,
+#   each of which is of size 30.
+# record the 1000 sample means.
+Xbarlist <- rep(NA, 1000)
+for (i in seq(1000)) {
+  Xlist <- rnorm(n, mu, sqrt(sig.sq))
+  Xbarlist[i] <- mean(Xlist)
+}
+```
+
+```{r}
+# a faster way
+set.seed(5400)
+n <- 30          # sample size
+mu <- 1          # population mean
+sig.sq <- 4      # population variance
+
+Xlist <- matrix(rnorm(1000 * n, mu, sqrt(sig.sq)), 1000, n)
+Xbarlist <- rowMeans(Xlist)
+# may also use apply(Xlist, 1, mean), but slower.
+```
+
+```{r}
+hist(Xbarlist)
+```
+
+### 1.7 Functions `qqnorm` and `qqline` in R
+
+```{r}
+par(mfrow = c(1, 2))
+# Q-Q plot by R
+qqnorm(Xbarlist, main = "Q-Q plot by R")
+qqline(Xbarlist)
+# Q-Q plot by hand
+probs <- ppoints(1000)
+dat_quant <- sort(Xbarlist)
+thr_quant <- qnorm(probs)
+plot(thr_quant, dat_quant,
+  xlab = "Theoretical Quantiles",
+  ylab = "Sample Quantiles",
+  main = "Q-Q plot by hand")
+abline(mean(Xbarlist), sd(Xbarlist))
+```
+
+### 1.9 Four sample sizes
+
+```{r}
+set.seed(5400)
+mu <- 1          # population mean
+sig.sq <- 4      # population variance
+
+par(mfrow = c(2, 2))
+for (nlist in c(10, 25, 50, 100)) {
+  Xlist <- matrix(rnorm(1000 * nlist,
+    mu, sqrt(sig.sq)), 1000, nlist)
+  Xbarlist <- rowMeans(Xlist)
+  hist(Xbarlist, xlim = c(-1, 3),
+    main = paste("Histogram of sample mean: n =", nlist))
+}
+```
+
+### 2.2 CLT for random samples drawn from the uniform
+
+```{r}
+set.seed(5400)
+par(mfrow = c(2, 2))
+for (nlist in c(5, 10, 20, 30)) {
+  Xlist <- matrix(runif(1000 * nlist), 1000, nlist)
+  Xbarlist <- rowMeans(Xlist)
+  hist(Xbarlist, xlim = c(0, 1),
+    main = paste("Histogram of sample mean: n =", nlist))
+}
+```
+
+```{r}
+set.seed(5400)
+par(mfrow = c(2, 2))
+for (nlist in c(5, 10, 20, 30)) {
+  Xlist <- matrix(runif(1000 * nlist), 1000, nlist)
+  Xbarlist <- rowMeans(Xlist)
+  qqnorm(Xbarlist,
+    main = paste("Q-Q plot of sample mean: n =", nlist))
+  qqline(Xbarlist)
+}
+```
+
+### 2.3 CLT for random samples drawn from the exponential
+
+```{r}
+set.seed(5400)
+par(mfrow = c(2, 2))
+for (nlist in c(5, 10, 20, 50)) {
+  Xlist <- matrix(rexp(1000 * nlist), 1000, nlist)
+  Xbarlist <- rowMeans(Xlist)
+  hist(Xbarlist, xlim = c(0, 3),
+    main = paste("Histogram of sample mean: n =", nlist))
+}
+```
+
+```{r}
+set.seed(5400)
+par(mfrow = c(2, 2))
+for (nlist in c(5, 10, 20, 50)) {
+  Xlist <- matrix(rexp(1000 * nlist), 1000, nlist)
+  Xbarlist <- rowMeans(Xlist)
+  qqnorm(Xbarlist,
+    main = paste("Q-Q plot of sample mean: n =", nlist))
+  qqline(Xbarlist)
+}
+```
+
+### 2.4 Application: a model's accuracy is a sample mean
+
+```{r}
+set.seed(5400)
+theta <- 0.88
+par(mfrow = c(1, 3))
+for (n in c(25, 100, 1000)) {
+  acc <- rbinom(10000, n, theta) / n     # accuracy on 10,000 test sets
+  hist(acc, xlim = c(0.7, 1), main = paste("n =", n), xlab = "Accuracy")
+}
+```
+
+```{r}
+n <- c(100, 500, 1000, 5000)
+round(qnorm(0.975) * sqrt(theta * (1 - theta) / n), 3)
+```
+
+### 3.2 Getting the quantile
+
+```{r}
+qnorm(0.025, lower = FALSE) # default: lower tail
+-qnorm(0.025)               # same result
+pnorm(1.96)                 # cdf
+```
+
+```{r}
+curve(dnorm(x, 0, 1), xlim = c(-3, 3),
+  main = "Probability Density Function of N(0,1)",
+  xlab = "X", ylab = "f(x)", lwd = 3)
+cord.x <- c(qnorm(0.975), seq(qnorm(0.975), 3, 0.01), 3)
+cord.y <- c(0, dnorm(seq(qnorm(0.975), 3, 0.01)), 0)
+polygon(cord.x, cord.y, col = "skyblue")
+mtext(expression(paste(z[alpha/2])), at = 2, line = 3, side = 1)
+arrows(2.7, 0.08, 2.5, 0.01, angle = 15, length = 0.15)
+text(2.75, 0.09, expression(alpha/2))
+abline(h = 0)
+```
+
+### 3.4 Coverage probability of a random confidence interval
+
+```{r}
+# case I true dist: N(0.5, 1)
+set.seed(5400)
+n <- 20
+alp <- 0.05
+sig.sq <- 1
+mu <- 0.5
+Xlist <- matrix(rnorm(10000 * n, mu, sqrt(sig.sq)), 10000, n)
+Xbarlist <- rowMeans(Xlist)
+```
+
+```{r}
+moe <- qnorm(1 - alp/2) * sqrt(sig.sq / n)
+CI <- cbind(Xbarlist - moe, Xbarlist + moe)
+is_cover <- apply(CI, 1, function(x) mu > x[1] & mu < x[2])
+mean(is_cover)
+```
+
+### 3.5 Case II: unknown variance, normality
+
+```{r}
+curve(dnorm(x, 0, 1), xlim = c(-3, 3), xlab = "X",
+  ylab = "f(x)", lwd = 3, lty = 1, main = "Normal and t")
+xl <- c(-3, 3)
+curve(dt(x, 1), xlim = xl, add = TRUE, lty = 2, col = "red")
+curve(dt(x, 2), xlim = xl, add = TRUE, lty = 3, col = "blue")
+curve(dt(x, 5), xlim = xl, add = TRUE, lty = 4, col = "green")
+curve(dt(x, 50), xlim = xl, add = TRUE, lty = 5, col = "brown")
+abline(h = 0)
+legend("topright",
+  c("normal", "t(1)", "t(2)", "t(5)", "t(50)"),
+  lty = 1:5,
+  col = c("black", "red", "blue", "green", "brown"))
+```
+
+*By hand*
+
+```{r}
+# case II true dist: N(0.5, 1)
+set.seed(5400)
+n <- 20; alp <- 0.05; mu <- 0.5; sig.sq <- 1
+Xlist <- matrix(rnorm(10000 * n, mu, sqrt(sig.sq)), 10000, n)
+Xbarlist <- rowMeans(Xlist)
+sdlist <- apply(Xlist, 1, sd)
+
+se <- 0                       # <- change this line
+
+CI <- cbind(Xbarlist - se, Xbarlist + se)
+is_cover <- apply(CI, 1, function(x) mu > x[1] & mu < x[2])
+mean(is_cover)
+```
+
+### 3.6 Case III: non-normality, large sample
+
+*By hand*
+
+```{r}
+# case III true dist: exp with mean 2
+set.seed(5400)
+n <- 20; alp <- 0.05; mu <- 2
+Xlist <- matrix(rexp(10000 * n, rate = 1/mu), 10000, n)
+Xbarlist <- rowMeans(Xlist)
+sdlist <- apply(Xlist, 1, sd)
+
+moe <- 0                      # <- change this line
+
+CI <- cbind(Xbarlist - moe, Xbarlist + moe)
+is_cover <- apply(CI, 1, function(x) mu > x[1] & mu < x[2])
+mean(is_cover)
+```
+
+### 3.7 How large is large enough?
+
+```{r}
+CovProb <- function(n, mu = 2, alp = 0.05) {
+  Xlist <- matrix(rexp(10000 * n, rate = 1/mu), 10000, n)
+  Xbarlist <- rowMeans(Xlist)
+  sdlist <- apply(Xlist, 1, sd)
+  moe <- qnorm(1 - alp/2) * sdlist / sqrt(n)
+  CI <- cbind(Xbarlist - moe, Xbarlist + moe)
+  is_cover <- apply(CI, 1, function(x) mu > x[1] & mu < x[2])
+  mean(is_cover)
+}
+```
+
+```{r}
+set.seed(5400)
+CovProb(10)
+CovProb(30)
+CovProb(50)
+CovProb(200)
+```
+
+### 3.8 Application: how long an AI model takes to answer
+
+```{r}
+CovProbLN <- function(n, meanlog = 0, sdlog = 1.2, alp = 0.05) {
+  mu <- exp(meanlog + sdlog^2 / 2)          # true mean latency
+  Xlist <- matrix(rlnorm(10000 * n, meanlog, sdlog), 10000, n)
+  Xbarlist <- rowMeans(Xlist)
+  sdlist <- apply(Xlist, 1, sd)
+  moe <- qnorm(1 - alp/2) * sdlist / sqrt(n)
+  mean(Xbarlist - moe < mu & mu < Xbarlist + moe)
+}
+```
+
+```{r}
+set.seed(5400)
+sapply(c(10, 30, 100, 200), CovProbLN)
+```
+
+### 3.10 Generating dependent samples
+
+```{r}
+rho <- 0.1; n <- 5
+Sigma <- matrix(rho, n, n)
+diag(Sigma) <- 1
+eig <- eigen(Sigma)
+Sigma.sq <- eig$vectors %*%
+  tcrossprod(diag(sqrt(eig$values)), eig$vectors)
+```
+
+```{r}
+Sigma.sq %*% Sigma.sq
+```
+
+```{r}
+set.seed(5400)
+X <- rnorm(n) %*% Sigma.sq
+X
+```
+
+```{r}
+set.seed(5400)
+bigN <- 1e4   # 1e4 keeps this quick in the browser; try 1e5 on your own computer
+Xlist <- matrix(rnorm(bigN * n, 0, 1), bigN, n) %*% Sigma.sq
+round(var(Xlist), 3)
+```
+
+### 3.11 Coverage as $\rho$ varies
+
+```{r}
+# bigN = 1e4 keeps the 20-point curve quick in the browser; try 1e5 on your own computer
+CovProb2 <- function(rho, n = 30, mu = 0, bigN = 1e4, alp = 0.05) {
+  Sigma <- matrix(rho, n, n)
+  diag(Sigma) <- 1
+  eig <- eigen(Sigma)
+  Sigma.sq <- eig$vectors %*%
+    tcrossprod(diag(sqrt(eig$values)), eig$vectors)
+  # generate dependent samples
+  Xlist <- mu + matrix(rnorm(bigN * n), bigN, n) %*% Sigma.sq
+  Xbarlist <- rowMeans(Xlist)
+  moe <- qnorm(1 - alp/2) * 1 / sqrt(n)
+  CI <- cbind(Xbarlist - moe, Xbarlist + moe)
+  is_cover <- apply(CI, 1, function(x) mu > x[1] & mu < x[2])
+  mean(is_cover)
+}
+```
+
+*Predict*
+
+```{r}
+set.seed(5400)
+rhos <- seq(0, 0.1, len = 20)
+covprobs <- rep(NA, 20)
+for (i in seq(20)) {
+  # call the function above
+  covprobs[i] <- CovProb2(rhos[i])
+}
+
+plot(rhos, covprobs, type = "b",
+  xlab = expression(rho),
+  ylab = "Coverage Probabilities")
+```
+
+```{r}
+set.seed(5400)
+covprobs <- sapply(rhos, CovProb2)
+head(covprobs)
+```
+
+```{r}
+covprobs <- rep(NA, 20)
+for (i in seq(20)) {
+  covprobs[i] <- CovProb2(rhos[i])
+}
+```
+
+### 3.12 Application: benchmark questions that come in groups
+
+```{r}
+CovClust <- function(K = 40, m = 5, B = 2000) {
+  naive <- passage <- logical(B)
+  for (r in 1:B) {
+    pk <- sample(c(0.9, 0.5), K, replace = TRUE)      # each passage is easy (0.9) or hard (0.5)
+    Y <- matrix(rbinom(K * m, 1, rep(pk, m)), K, m)   # row = passage, column = question
+    se_naive   <- sd(as.vector(Y)) / sqrt(K * m)      # treats all answers as independent
+    se_passage <- sd(rowMeans(Y)) / sqrt(K)           # uses the K passage means
+    naive[r]   <- abs(mean(Y) - 0.7) < 1.96 * se_naive
+    passage[r] <- abs(mean(Y) - 0.7) < 1.96 * se_passage
+  }
+  c(naive = mean(naive), passage = mean(passage))
+}
+```
+
+```{r}
+set.seed(5400)
+CovClust()
+```
+
+### 4.3 Comparing the six
+
+```{r}
+set.seed(5400)
+theta <- 0.6
+n <- 40
+B <- 1000        # 1000 keeps this quick in the browser; try B = 10000 on your own computer
+alp <- 0.05
+# generate data
+Xbarlist <- rbinom(B, size = n, prob = theta) / n
+```
+
+```{r}
+## Wald interval
+moe_Wald <- qnorm(1 - alp/2) * sqrt(Xbarlist * (1 - Xbarlist)/n)
+CI_Wald <- cbind(Xbarlist - moe_Wald, Xbarlist + moe_Wald)
+## simple conservative interval
+moe_simple <- qnorm(1 - alp/2) * sqrt(0.5 * (1 - 0.5)/n)
+CI_simple <- cbind(Xbarlist - moe_simple, Xbarlist + moe_simple)
+```
+
+```{r}
+library(binom)
+## score, CP, AC, and the Jeffreys Bayesian CIs
+CI_score <- CI_CP <- CI_AC <- CI_Bayes <- matrix(NA, B, 2)
+for (i in seq(B)) {
+  CI_score[i, ] <- prop.test(x = (n * Xbarlist[i]), n = n,
+    correct = FALSE, conf.level = (1 - alp))$conf.int
+  CI_CP[i, ] <- binom.test(x = (n * Xbarlist[i]), n = n,
+    conf.level = (1 - alp))$conf.int
+  ret <- binom.confint(x = (n * Xbarlist[i]), n = n,
+    conf.level = (1 - alp), methods = "ac")
+  CI_AC[i, ] <- c(ret$lower, ret$upper)
+  ret2 <- binom.bayes(x = (n * Xbarlist[i]), n = n,
+    type = "central", conf.level = (1 - alp))
+  CI_Bayes[i, ] <- c(ret2$lower, ret2$upper)
+}
+```
+
+```{r}
+## get mean and se of width and coverage probability
+WidthCov <- function(CI) {
+  # get coverage probability
+  is_cov <- function(x) theta > x[1] & theta < x[2]
+  # get standard error
+  se <- function(x) sd(x) / sqrt(nrow(CI))
+  allwidth <- CI[, 2] - CI[, 1]     # width
+  allcov <- apply(CI, 1, is_cov)    # coverage
+  c(mean(allwidth), se(allwidth), mean(allcov), se(allcov))
+}
+```
+
+```{r}
+## display results
+col.nm <- paste0("CI_", c("simple", "Wald", "score", "CP", "AC", "Bayes"))
+res <- sapply(lapply(col.nm, get), WidthCov)
+colnames(res) <- col.nm
+rownames(res) <- c("exp.width", "se", "cov.prob", "se")
+round(res, 3)
+```
+
+### 4.4 Application: asking a model the same question 50 times
+
+```{r}
+x <- 22; n <- 50                 # 22 correct answers in 50 runs
+binom.confint(x, n, methods = c("asymptotic", "wilson", "exact"))
+```
+
+```{r}
+library(ellmer)
+
+q <- "Which is larger, 9.9 or 9.11? Answer with the number only."
+answers <- character(50)
+for (i in 1:50) {
+  answers[i] <- trimws(chat_ollama(model = "llama3.2:1b")$chat(q, echo = "none"))   # a new chat each time
+}
+table(answers)
+```
