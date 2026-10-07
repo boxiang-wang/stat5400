@@ -730,23 +730,6 @@ plt.show()
 
 :::
 
-::: {.callout-note collapse="true" title="Solution"}
-**The rate is the reciprocal of the mean.** `Xlist` has mean 2, so the rate is $1/2$:
-
-```r
-plot(xs, dexp(xs, rate = 1/2), type = "l", ylim = c(0, 1),
-  xlab = "X", main = "exp(2)", ylab = "f(x)")
-```
-
-Python (here `scale` is the mean, so it is 2):
-
-```python
-plt.plot(xs, scipy.stats.expon.pdf(xs, scale=2))
-```
-
-R's `dexp`, `rexp`, `pexp` and `qexp` are all parameterized by **rate**, not mean. Python's `np.random.exponential` is parameterized by **scale**, which is the mean. This is a common mistake when translating between the two languages.
-:::
-
 ![](img/exp.png){width="70%" fig-align="center"}
 
 ### Q-Q plot for the exponential
@@ -777,25 +760,6 @@ plt.title("Q-Q plot for exponential distribution")
 plt.show()
 ```
 
-:::
-
-::: {.callout-note collapse="true" title="Solution"}
-**Plot the exponential quantiles against the sorted sample.**
-
-```r
-plot(qexp(probs, rate = 0.5), sort(Xlist),
-  xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
-  main = "Q-Q plot for exponential distribution")
-abline(0, 1)
-```
-
-Python:
-
-```python
-plt.scatter(scipy.stats.expon.ppf(probs, scale=2), np.sort(Xlist), s=8)
-```
-
-The theoretical quantiles go on the x-axis and the **sorted** sample on the y-axis. Forgetting `sort` is the usual mistake, and it produces a shapeless cloud rather than a line.
 :::
 
 ![](img/qqexp.png){width="70%" fig-align="center"}
@@ -956,27 +920,6 @@ plt.title("Q-Q plot for Cauchy distribution")
 plt.show()
 ```
 
-:::
-
-::: {.callout-note collapse="true" title="Solution"}
-**The Cauchy quantile function is $\tan(\pi(p - 0.5))$.**
-
-```r
-plot(tan(pi * (probs - 0.5)), sort(Xlist),
-  xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
-  main = "Q-Q plot for Cauchy distribution")
-abline(0, 1)
-```
-
-Python:
-
-```python
-plt.scatter(np.tan(np.pi * (probs - 0.5)), np.sort(Xlist), s=8)
-```
-
-You may also write `qcauchy(probs)` in place of `tan(pi * (probs - 0.5))`. They are the same function. In Python, `scipy.stats.cauchy.ppf(probs)`.
-
-A few extreme points are very far from the line, because the Cauchy has heavy tails.
 :::
 
 ![](img/qqcauchy.png){width="70%" fig-align="center"}

@@ -934,22 +934,6 @@ print(np.mean(is_cover))
 
 :::
 
-::: {.callout-note collapse="true" title="Solution"}
-**Use the normal quantile with the estimated standard error.**
-
-```r
-moe <- qnorm(1 - alp/2) * sdlist / sqrt(n)
-```
-
-In Python:
-
-```python
-moe = scipy.stats.norm.ppf(1 - alp/2) * sdlist / np.sqrt(n)
-```
-
-The coverage is about 0.90, not 0.95. The code is correct. At $n = 20$, the normal approximation with an estimated standard error is not accurate enough for this skewed population. About one interval in ten misses the true mean, instead of one in twenty.
-:::
-
 ### How large is large enough?
 
 ::: {.panel-tabset}
