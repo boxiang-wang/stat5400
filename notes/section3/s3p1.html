@@ -1246,27 +1246,6 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IHNjaXB5LnN0YXRz
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>The rate is the reciprocal of the mean.</strong> <code>Xlist</code> has mean 2, so the rate is <span class="math inline">\(1/2\)</span>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(xs, <span class="fu">dexp</span>(xs, <span class="at">rate =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">main =</span> <span class="st">"exp(2)"</span>, <span class="at">ylab =</span> <span class="st">"f(x)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Python (here <code>scale</code> is the mean, so it is 2):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, scipy.stats.expon.pdf(xs, scale<span class="op">=</span><span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>R’s <code>dexp</code>, <code>rexp</code>, <code>pexp</code> and <code>qexp</code> are all parameterized by <strong>rate</strong>, not mean. Python’s <code>np.random.exponential</code> is parameterized by <strong>scale</strong>, which is the mean. This is a common mistake when translating between the two languages.</p>
-</div>
-</div>
-</div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/exp.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
@@ -1302,29 +1281,6 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicHJvYnMgPSAobnAuYXJhbmdl
 </script>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Plot the exponential quantiles against the sorted sample.</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">qexp</span>(probs, <span class="at">rate =</span> <span class="fl">0.5</span>), <span class="fu">sort</span>(Xlist),</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Theoretical Quantiles"</span>, <span class="at">ylab =</span> <span class="st">"Sample Quantiles"</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Q-Q plot for exponential distribution"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Python:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(scipy.stats.expon.ppf(probs, scale<span class="op">=</span><span class="dv">2</span>), np.sort(Xlist), s<span class="op">=</span><span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The theoretical quantiles go on the x-axis and the <strong>sorted</strong> sample on the y-axis. Forgetting <code>sort</code> is the usual mistake, and it produces a shapeless cloud rather than a line.</p>
 </div>
 </div>
 </div>
@@ -1418,7 +1374,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibnAucmFuZG9tLnNlZWQoNTQw
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1427,7 +1383,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibnAucmFuZG9tLnNlZWQoNTQw
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>They do not match.</strong> Both are correct draws from the same distribution, but they use the uniform numbers in different ways.</p>
 <p>The inverse-CDF version uses exactly one uniform per exponential. The algorithm of Ahrens and Dieter uses a variable number, sometimes one and sometimes several. So after the first value, the two methods are at different places in the same sequence of uniforms.</p>
@@ -1530,30 +1486,6 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicHJvYnMgPSAobnAuYXJhbmdl
 </script>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Solution">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>The Cauchy quantile function is <span class="math inline">\(\tan(\pi(p - 0.5))\)</span>.</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">tan</span>(pi <span class="sc">*</span> (probs <span class="sc">-</span> <span class="fl">0.5</span>)), <span class="fu">sort</span>(Xlist),</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Theoretical Quantiles"</span>, <span class="at">ylab =</span> <span class="st">"Sample Quantiles"</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Q-Q plot for Cauchy distribution"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Python:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(np.tan(np.pi <span class="op">*</span> (probs <span class="op">-</span> <span class="fl">0.5</span>)), np.sort(Xlist), s<span class="op">=</span><span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You may also write <code>qcauchy(probs)</code> in place of <code>tan(pi * (probs - 0.5))</code>. They are the same function. In Python, <code>scipy.stats.cauchy.ppf(probs)</code>.</p>
-<p>A few extreme points are very far from the line, because the Cauchy has heavy tails.</p>
 </div>
 </div>
 </div>
@@ -1786,7 +1718,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <p>Since the acceptance rate estimates <span class="math inline">\(\pi/4\)</span>, <code>4 * mean(accept)</code> estimates <span class="math inline">\(\pi\)</span>. This is Monte Carlo integration. Its error decreases like <span class="math inline">\(1/\sqrt{n}\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Going further: the general accept-reject method">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1795,7 +1727,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiaW1wb3J0IG1hdHBsb3RsaWIu
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>The disk inside the square is one case of a general recipe.</strong> Draw from a density <span class="math inline">\(g\)</span> that is easy to sample. Choose a constant <span class="math inline">\(c\)</span> so that <span class="math inline">\(c\, g(x) \ge f(x)\)</span> for every <span class="math inline">\(x\)</span>, and keep a draw <span class="math inline">\(Y\)</span> with probability <span class="math inline">\(f(Y) / (c\, g(Y))\)</span>.</p>
 <ul>
@@ -1983,7 +1915,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiUnNxID0gbnAuYXJyYXkoW3Jv
 </div>
 <p><span class="mode"><i class="fa-solid fa-lightbulb" aria-label="lightbulb"></i> Predict</span>: suppose one accepted pair is exactly <span class="math inline">\((0, 0)\)</span>. What does the first version return in that row?</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Answer">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1992,7 +1924,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiUnNxID0gbnAuYXJyYXkoW3Jv
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>It returns <code>NaN</code>.</strong> If an accepted pair is exactly <span class="math inline">\((0, 0)\)</span>, <code>Rsq</code> is 0 and <code>log(0)</code> is <code>-Inf</code>. Then <code>m</code> is <code>Inf</code>, and <code>Inf * 0</code> is <code>NaN</code>.</p>
 <p>The second version drops such a pair before it computes <code>m</code>. The usual statement of the polar method does the same: it rejects a pair with <span class="math inline">\(R^2 = 0\)</span>, together with the pairs outside the disk. Adding a tiny number such as <code>.Machine$double.xmin</code> to <code>Rsq</code> does not help: <code>m</code> still overflows to <code>Inf</code>, and the row is still <code>NaN</code>. In general, check where a formula divides by zero or takes the log of zero, and protect that step.</p>
