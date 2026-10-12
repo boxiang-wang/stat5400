@@ -1,0 +1,326 @@
+# STAT:5400 Section 3.3 — Hypothesis Testing and Replicates
+# Code from the lecture notes; no output, no solutions.
+
+## 1.4 The observed $p$-value
+
+set.seed(5400)
+n    <- 30   # sample size
+mu   <- 1    # true mean
+mu_0 <- 1    # mean to be tested
+sig  <- 2    # standard deviation
+alp  <- 0.05 # significance level
+X <- rnorm(n, mu, sig)
+
+(t_stat <- (mean(X) - mu_0) / (sd(X) / sqrt(n)))
+
+(p_val <- 2 * pt(-abs(t_stat), n - 1))
+
+
+## 1.7 The function `pvalDist`
+
+#' Simulation of p-values
+#'
+#' The function is used to simulate
+#'   the distribution of observed p-values
+#' arguments:
+#' @param n      sample size
+#' @param mu     true mean
+#' @param mu_0   mean to be tested
+#' @param sig    true standard deviation
+#' @param alp    significance level, default is 0.05
+#' @param B      simulation size, default is 10000
+#' @return
+#' a vector of observed pvals
+
+pvalDist <- function(n, mu, mu_0, sig, alp = 0.05, B = 10000) {
+  # step 1: generate samples
+  Xlist <- matrix(rnorm(B * n, mu, sig), B, n)
+  # step 2: compute sample mean
+  Xbarlist <- rowMeans(Xlist)
+  # step 3: compute sample standard deviation
+  sdlist <- apply(Xlist, 1, sd)
+  # step 4: compute t-statistic
+  t_stat <- (Xbarlist - mu_0) / (sdlist / sqrt(n))
+  # step 5: compute the (observed) p-value
+  pvals <- 2 * pt(-abs(t_stat), n - 1)
+
+  return(pvals)
+}
+
+
+## 1.8 Type I error when $H_0$ is true
+
+# Simulation on Type I error when H0 is true
+set.seed(5400)
+n   <- 30
+mu  <- 1
+sig <- 2
+alp <- 0.05
+
+# H_0 is true
+mu_0 <- 1
+
+pvals <- pvalDist(n, mu, mu_0, sig, alp)
+
+# Type I error
+mean(pvals < alp)
+
+# Q-Q plot for uniform distribution
+qqunif <- function(dat, ...) {
+  probs <- ppoints(length(dat))
+  plot(qunif(probs), sort(dat),
+    xlab = "Theoretical Quantiles",
+    ylab = "Sample Quantiles",
+    main = "Q-Q plot", ...)
+  abline(0, 1)
+}
+
+# Histogram and Q-Q plot for observed p-value
+par(mfrow = c(1, 2))
+hist(pvals,
+  main = "Histogram of observed p-val",
+  xlab = "Observed p-values")
+qqunif(pvals)
+
+
+## 1.9 Application: trying many prompts and keeping the best
+
+set.seed(5400)
+K <- c(1, 5, 20)
+sapply(K, function(k) mean(replicate(5000, min(runif(k))) < 0.05))
+1 - 0.95^K
+
+set.seed(5400)
+K <- 20; n <- 200
+acc <- rbinom(K, n, 0.70) / n                          # observed accuracy of each prompt
+max(acc)                                               # the best-looking prompt
+1 - pnorm((max(acc) - 0.70) / sqrt(0.70 * 0.30 / n))   # its one-sided p-value
+rbinom(1, n, 0.70) / n                                 # the same prompt on 200 new questions
+
+
+## 1.10 Power when $H_0$ is false
+
+# Simulation on the power when H0 is false
+set.seed(5400)
+n   <- 30
+mu  <- 2
+sig <- 2
+alp <- 0.05
+
+# H_0 is false
+mu_0 <- 1
+
+pvals2 <- pvalDist(n, mu, mu_0, sig, alp)
+
+# power
+mean(pvals2 < alp)
+
+par(mfrow = c(1, 2))
+hist(pvals2,
+  main = "Histogram of observed p-val",
+  xlab = "Observed p-values")
+qqunif(pvals2)
+
+
+## 1.11 Power curve under different sample sizes
+
+set.seed(5400)
+mu  <- 2
+sig <- 2
+alp <- 0.05
+# H_0 is false
+mu_0  <- 1
+nlist <- seq(5, 50, 3)
+rejprobs <- rep(NA, length(nlist))
+for (i in seq_along(nlist)) {
+  rejprobs[i] <- mean(pvalDist(nlist[i],
+    mu, mu_0, sig, alp, B = 2000) < alp)
+} # or use the sapply function
+
+plot(y = rejprobs, x = nlist, type = "b",
+  xlab = "Sample Sizes", ylab = "Prob of Rej H0")
+
+
+## 1.12 Power curve under different true means
+
+# By hand
+set.seed(5400)
+n <- 30
+mulist <- seq(1, 3, 0.1)
+sig <- 2
+alp <- 0.05
+mu_0 <- 1
+
+rejprobs <- rep(0.5, length(mulist))     # <- change this line
+
+plot(y = rejprobs, x = mulist, type = "b",
+  xlab = "True Mean", ylab = "Prob of Rej H0")
+
+
+## 1.13 Application: detecting text from a watermarked model
+
+wm_z <- function(green, gamma = 0.5) {     # green: one 0/1 entry per token
+  T <- length(green)
+  (sum(green) - gamma * T) / sqrt(T * gamma * (1 - gamma))
+}
+set.seed(5400)
+human <- rbinom(100, 1, 0.5)    # 100 tokens written by a person
+model <- rbinom(100, 1, 0.7)    # 100 tokens from a watermarked model: 70% green
+c(human = wm_z(human), model = wm_z(model))
+1 - pnorm(4)                    # Type I error of the rule z > 4
+
+set.seed(5400)
+Tlist <- seq(10, 300, 10)
+power <- sapply(Tlist, function(T) {
+  G <- rbinom(2000, T, 0.7)                    # green counts of 2000 watermarked texts
+  mean((G - 0.5 * T) / sqrt(T * 0.25) > 4)
+})
+plot(Tlist, power, type = "b",
+  xlab = "Number of tokens", ylab = "Prob of detecting the watermark")
+
+
+## 1.15 What breaks when normality fails
+
+pvalDistExp <- function(n, mu, mu_0, alp = 0.05, B = 10000) {
+  # simulate data from exp dist
+  Xlist <- rexp(B * n, rate = 1/mu)
+  Xlist <- matrix(Xlist, B, n)
+  Xbarlist <- rowMeans(Xlist)
+  sdlist <- apply(Xlist, 1, sd)
+  t_stat <- (Xbarlist - mu_0) / (sdlist / sqrt(n))
+
+  # returns observed p-value
+  2 * pt(-abs(t_stat), n - 1)
+}
+
+set.seed(5400)
+r1 <- pvalDistExp(10, mu = 2, mu_0 = 2)
+# Type I error
+mean(r1 < alp)
+
+
+## 1.16 A generic version
+
+#' Simulation of p-values
+#'
+#' The function simulates the observed p-values
+#'   under different underlying distributions
+#'
+#' @param n      sample size
+#' @param dist   norm, exp, unif, gamma, etc
+#' @param mu_0   mean to be tested
+#' @param alp    significance level, default is 0.05
+#' @param B      simulation size, default is 10000
+#' @param ...    args passed to the dist function
+#' @return
+#' a vector of observed pvals
+
+pvalDist2 <- function(n, dist, mu_0, alp = 0.05, B = 10000, ...) {
+  # simulate data from user-specified dist
+  Xlist <- do.call(paste0("r", dist), list(B * n, ...))
+  Xlist <- matrix(Xlist, B, n)
+
+  # compute t-statistic for each sample
+  Xbarlist <- rowMeans(Xlist)
+  sdlist <- apply(Xlist, 1, sd)
+  t_stat <- (Xbarlist - mu_0) / (sdlist / sqrt(n))
+
+  # returns observed p-value
+  pt(-abs(t_stat), n - 1) + 1 - pt(abs(t_stat), n - 1)
+}
+
+set.seed(5400)
+r2 <- pvalDist2(10, "exp", mu_0 = 2, alp = alp, rate = 1/2)
+# Type I error
+mean(r2 < alp)
+
+# By hand
+set.seed(5400)
+n <- 10
+mulist <- seq(1, 3, 0.1)
+alp  <- 0.05
+mu_0 <- 1
+
+rejprobs <- rep(0.5, length(mulist))     # <- change this line
+
+plot(y = rejprobs, x = mulist, type = "b",
+  xlab = "True Means", ylab = "Prob of Rej H0",
+  main = "Power Curve With True Distribution Exp")
+
+
+## 2.3 Example 1: normal distribution
+
+set.seed(5400)
+mu <- mu_0 <- 1 # H0 is true
+n <- 30; sig <- 2; alp <- 0.05
+pval <- pvalDist(n, mu, mu_0, sig, alp = alp, B = 10000)
+(theta_est <- mean(pval < alp))
+
+# 95% simple conservative CI
+moe <- qnorm(0.975) * 0.5 / sqrt(10000)
+(CI <- theta_est + moe * c(-1, 1))
+diff(CI)
+
+set.seed(5400)
+mu <- mu_0 <- 1 # H0 is true
+n <- 30; sig <- 2; alp <- 0.05
+m <- 0.005  # moe of 95% CI is at most m
+# replicates
+(B <- ceiling((qnorm(0.975) * 0.5 / m)^2))
+
+B <- 10000   # 38415 is slow in the browser; delete this line on your own computer
+pval <- pvalDist(n, mu, mu_0, sig, alp = alp, B = B)
+# estimated Type I error rate
+(theta_est <- mean(pval < alp))
+
+# 95% simple conservative CI
+moe <- qnorm(0.975) * 0.5 / sqrt(B)
+(CI <- theta_est + moe * c(-1, 1))
+diff(CI)
+
+prop.test(x = sum(pval < alp), n = B, correct = FALSE,
+  conf.level = 0.95)$conf.int
+
+
+## 2.4 Example 2: exponential distribution
+
+set.seed(5400)
+mu <- mu_0 <- 1 # H0 is true
+n <- 30; alp <- 0.05
+m <- 0.005  # moe of 95% CI is at most m
+B <- ceiling((qnorm(0.975) * 0.5 / m)^2)
+B <- 10000   # the formula gives 38415, which is slow in the browser; delete this line on your own computer
+pval2 <- pvalDist2(n, "exp", mu_0, alp = alp, B = B, rate = 1/mu)
+# estimated Type I error rate
+(theta_est2 <- mean(pval2 < alp))
+
+# 95% simple conservative CI
+moe <- qnorm(0.975) * 0.5 / sqrt(B)
+theta_est2 + moe * c(-1, 1)
+
+prop.test(x = sum(pval2 < alp), n = B, correct = FALSE,
+  conf.level = 0.95)$conf.int
+
+
+## 2.5 Application: is model A better than model B?
+
+set.seed(5400)
+n <- 300
+d <- rnorm(n)                                  # difficulty of each question
+A <- rbinom(n, 1, plogis(1.0 + 2 * d))
+B <- rbinom(n, 1, plogis(1.3 + 2 * d))
+c(accA = mean(A), accB = mean(B))
+c(se_paired   = sd(B - A) / sqrt(n),
+  se_unpaired = sqrt(var(A) / n + var(B) / n))
+t.test(B - A)$p.value                          # paired: one-sample t-test on D
+
+powerAB <- function(n, reps = 1000) {
+  mean(replicate(reps, {
+    d <- rnorm(n)
+    A <- rbinom(n, 1, plogis(1.0 + 2 * d))
+    B <- rbinom(n, 1, plogis(1.3 + 2 * d))
+    t.test(B - A)$p.value < 0.05
+  }))
+}
+set.seed(5400)
+sapply(c(100, 300, 500, 1000), powerAB)
