@@ -40,6 +40,9 @@ website:
       - section: "Section 4: Bootstrap and Permutation"
         contents:
           - auto: "notes/section4/*.qmd"
+      - section: "Tech Guide"
+        contents:
+          - auto: "notes/tech/*.qmd"
 
 format:
   live-html:

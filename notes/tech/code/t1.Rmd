@@ -1,0 +1,14 @@
+---
+title: "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+output: html_document
+---
+
+### 10.1 Several jobs at once
+
+```{r}
+nlist <- c(10, 20, 50, 100, 200)
+files <- paste0("TypeIerr_", nlist, "_exp.RData")
+res <- sapply(files, function(f) { load(f); TypeIerr })
+names(res) <- nlist
+res
+```
