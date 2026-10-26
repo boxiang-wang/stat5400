@@ -1,5 +1,65 @@
 [
   {
+    "objectID": "notes/tech/t2.html",
+    "href": "notes/tech/t2.html",
+    "title": "STAT:5400 Tech Guide 2 — Parallel Computing",
+    "section": "",
+    "text": "PDF  Open in Codespace\nThe code on this page starts several R processes. It does not run in the browser. Copy a block and paste it into R, on your own computer or on an lnx machine. The shell blocks go into a terminal.\nThis is a very brief introduction to parallel computing, which makes your code faster by running several processes at the same time. This page also shows how to profile R code using the package profvis.\nTo see the number of cores, in a terminal:\nIn R:",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 2 — Parallel Computing"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t2.html#introduction-to-the-parallel-package",
+    "href": "notes/tech/t2.html#introduction-to-the-parallel-package",
+    "title": "STAT:5400 Tech Guide 2 — Parallel Computing",
+    "section": "1 Introduction to the parallel package",
+    "text": "1 Introduction to the parallel package\nThis part is based on https://homepage.stat.uiowa.edu/~luke/classes/295-hpc/notes/snow.pdf. The snow package (Simple Network of Workstations) by Luke Tierney is now part of the parallel package, which comes with R.\n\nThe parallel package uses an ordinary R session as the master and creates several workers.\nJobs are sent to the workers and the results are returned to the master.\n\nTo work on an lnx machine, we first log in and start R:\nssh hawkid@l-lnx200.divms.uiowa.edu\nR\nWe now create 5 workers on the same machine:\nlibrary(parallel)\ncl &lt;- makeCluster(5)\ndo.call(\"rbind\", clusterCall(cl, function(cl) Sys.info()[\"nodename\"]))\nWe can stop the workers by stopCluster(cl) before we leave R.\n\n1.1 Cluster-level functions\nBelow are some cluster-level functions.\n\nCall a function on all workers:\n\nclusterCall(cl, exp, 1)\n\nEvaluate an expression on all workers:\n\nclusterEvalQ(cl, library(boot))\n\nApply a function on all workers:\n\nclusterApply(cl, 1:3, get(\"+\"), 3)\n\nSend global variables to the workers:\n\nx &lt;- 2; y &lt;- 1\nclusterExport(cl, c(\"x\", \"y\"))\nclusterApply(cl, 1:3, function(a) a^x + a * y)\nNote that a worker is a fresh R session. It does not have your variables, your functions, or the packages you loaded. We send them with clusterExport and clusterEvalQ.\n\n\n1.2 parLapply\nparLapply is a parallel version of the lapply function. It splits the list approximately evenly across the workers.\nx &lt;- 1:1000 / 1001\nsystem.time(qtukey(x, 2, df = 2))\nsystem.time(unlist(parLapply(cl, x, qtukey, 2, df = 2)))\nOn a laptop with 16 cores, the first line takes about 6.7 seconds and the second about 1.7 seconds with 5 workers.\n\n\n1.3 Apply-type functions\nThere are some apply-type functions we can use:\nx &lt;- 2; y &lt;- 1\nclusterExport(cl, c(\"x\", \"y\"))\nparSapply(cl, 1:3, function(a) a^x + a * y)\nparApply(cl, matrix(1:10, ncol = 2), 2, sum)\nAlso parCapply and parRapply, which apply a function to the columns and the rows of a matrix:\n(A &lt;- matrix(c(1, 2, 3, 4, 5, 6), nrow = 2))\nparCapply(cl, A, sum)\nparRapply(cl, A, sum)\nTwo notes:\n\nset.seed before parSapply does not make the result reproducible, because each worker draws its own random numbers. Use clusterSetRNGStream(cl, 5400) instead. It gives each worker its own stream of random numbers.\nOn Mac and Linux, mclapply(x, fun, mc.cores = 5) does the same job as parLapply without creating a cluster. It does not work on Windows.\n\n\n\n1.4 A real example: bootstrap\nWe now illustrate a real example for the bootstrap. We adopt an example that we have used before: how to use the bootstrap to make inference about the sample correlation (lecture note S4P1, the bootstrap \\(t\\) interval). It needs a bootstrap inside a bootstrap.\nUsing the package profvis, we can easily see where the most time is spent:\nlibrary(profvis)\nlibrary(boot)\nlaw &lt;- read.csv(\"https://boxiang-wang.github.io/stat5400/notes/section4/data/law.csv\")\n\np &lt;- profvis({\n  t1 &lt;- Sys.time()\n  # estimate cor and the variance of the bootstrap replicates\n  mean.se &lt;- function(x, i) {\n    corfun &lt;- function(x, i) cor(x$LSAT[i], x$GPA[i])\n    v &lt;- var(boot(data = x[i, ], statistic = corfun, R = 2000)$t)\n    c(corfun(x, i), v)\n  }\n  boot.obj &lt;- boot(data = law, statistic = mean.se, R = 200)\n  boot.ci(boot.obj, type = \"all\")\n  t2 &lt;- Sys.time()\n  difftime(t2, t1, unit = \"sec\")\n})\np\nhtmlwidgets::saveWidget(p, \"profile.html\", selfcontained = FALSE)\np opens the profile in the viewer of RStudio or Positron. The last line also saves it as a web page.\nThe whole computation takes about 10 seconds on the laptop. The profile shows that almost all the time is spent in the inner boot.\nMethod 1: we use clusterEvalQ to evaluate the boot function on each worker. Each worker runs 40 outer replicates, and c combines the five boot objects into one with 200 replicates.\ninvisible(clusterEvalQ(cl, {\n  library(boot)\n  law &lt;- read.csv(\"https://boxiang-wang.github.io/stat5400/notes/section4/data/law.csv\")\n  # estimate cor and the variance of the bootstrap replicates\n  mean.se &lt;- function(x, i) {\n    corfun &lt;- function(x, i) cor(x$LSAT[i], x$GPA[i])\n    v &lt;- var(boot(data = x[i, ], statistic = corfun, R = 2000)$t)\n    c(corfun(x, i), v)\n  }\n}))\nclusterSetRNGStream(cl, 5400)\nt1 &lt;- Sys.time()\nres &lt;- clusterEvalQ(cl, boot(data = law, statistic = mean.se, R = 40))\ncl_boot &lt;- do.call(c, res)\nboot.ci(cl_boot, type = c(\"norm\", \"basic\", \"perc\", \"stud\"))\nt2 &lt;- Sys.time()\ndifftime(t2, t1, unit = \"sec\")\nMethod 2: we write the bootstrap procedure as a function and call parLapply.\ncl_boot_func &lt;- function(...) {\n  library(boot)\n  law &lt;- read.csv(\"https://boxiang-wang.github.io/stat5400/notes/section4/data/law.csv\")\n  mean.se &lt;- function(x, i) {\n    corfun &lt;- function(x, i) cor(x$LSAT[i], x$GPA[i])\n    v &lt;- var(boot(data = x[i, ], statistic = corfun, R = 2000)$t)\n    c(corfun(x, i), v)\n  }\n  boot(data = law, statistic = mean.se, R = 40)\n}\nclusterSetRNGStream(cl, 5400)\nt1 &lt;- Sys.time()\ncl_boot &lt;- do.call(c, parLapply(cl, seq_along(cl), cl_boot_func))\nboot.ci(cl_boot, type = c(\"norm\", \"basic\", \"perc\", \"stud\"))\nt2 &lt;- Sys.time()\ndifftime(t2, t1, unit = \"sec\")\nBoth methods take about 2 seconds with 5 workers. We are done with the cluster:\nstopCluster(cl)\n\n\n1.5 foreach\nAn alternative to the parallel package is foreach, which can be used with several parallel computing packages. It writes a parallel loop like a for loop. Install foreach and doParallel first.\nlibrary(doParallel)\nlibrary(foreach)\ncl &lt;- makeCluster(3)\nregisterDoParallel(cl)\nforeach(i = 1:3) %dopar% sqrt(i)\nforeach(i = 1:3, .combine = c, .errorhandling = \"pass\") %dopar% {\n  sqrt(i)\n}\nstopCluster(cl)\n%dopar% runs the loop body on the workers. .combine = c combines the results into a vector.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 2 — Parallel Computing"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t2.html#distributed-learning",
+    "href": "notes/tech/t2.html#distributed-learning",
+    "title": "STAT:5400 Tech Guide 2 — Parallel Computing",
+    "section": "2 Distributed learning",
+    "text": "2 Distributed learning\nAnother straightforward way of running code in parallel is batch processing, as we did at the end of Tech Guide 1.\nWe write a script distributed.R and save it in a directory, say ~/5400/parallel.\n\nThe script gets the arguments nodeid, seedid, R1, and R2 from the command line. R1 and R2 are the numbers of inner and outer bootstrap replicates.\nThe script saves the whole R image in an .RData file. This is a good practice, since we can trace back if there is an error, unless the file is too large.\n\nPaste the whole block into a terminal to create the file:\nmkdir -p ~/5400/parallel\ncd ~/5400/parallel\ncat &gt; distributed.R &lt;&lt;'EOF'\n# load arguments\nargs &lt;- commandArgs(TRUE)\nif (length(args) == 0) stop(\"No arguments supplied.\")\nfor (a in args) eval(parse(text = a))\nif (!exists(\"nodeid\")) stop(\"no nodeid\")\nif (!exists(\"seedid\")) stop(\"no seedid\")\nif (!exists(\"R1\")) stop(\"no R1\")\nif (!exists(\"R2\")) stop(\"no R2\")\n\nset.seed(seedid)\nt1 &lt;- Sys.time()\nlibrary(boot)\nlaw &lt;- read.csv(\"https://boxiang-wang.github.io/stat5400/notes/section4/data/law.csv\")\n# estimate cor and the variance of the bootstrap replicates\nmean.se &lt;- function(x, i) {\n  corfun &lt;- function(x, i) cor(x$LSAT[i], x$GPA[i])\n  v &lt;- var(boot(data = x[i, ], statistic = corfun, R = R1)$t)\n  c(corfun(x, i), v)\n}\nboot.obj &lt;- boot(data = law, statistic = mean.se, R = R2)\nt2 &lt;- Sys.time()\nprint(difftime(t2, t1, unit = \"sec\"))\nsave.image(file = paste0(\"image_\", nodeid, \".RData\"))\nEOF\nIn the shell, we run the script 10 times, each with its own seed:\nR1=2000; R2=100\nndmax=10; nodeid=1\nwhile [ $nodeid -le $ndmax ]; do\n  nice -n19 Rscript --no-save distributed.R \"seedid=$nodeid; nodeid=$nodeid; R1=$R1; R2=$R2\" &gt; $nodeid.out 2&gt;&1 &\n  nodeid=$((nodeid + 1))\ndone\nwait\nls\n\nWe run the R script 10 times on 10 cores. Check the number of cores with nproc first. On a shared machine, do not use all of them.\nEach run does R2 = 100 outer replicates. We combine them later to get 1000 replicates in total.\n&gt; $nodeid.out sends the output of each run to its own file, for example 3.out.\n\nTo combine the results, we run the following R code in the same directory:\nids &lt;- 1:10\nall_boot &lt;- vector(\"list\", length(ids))\n# get the boot object from each R image\nfor (ii in seq_along(ids)) {\n  load(paste0(\"image_\", ids[ii], \".RData\"))\n  all_boot[[ii]] &lt;- boot.obj\n}\n# combine them together and get the bootstrap CI\nlibrary(boot)\nall_boot_c &lt;- do.call(c, all_boot)\nall_boot_c$R\nboot.ci(all_boot_c, type = c(\"norm\", \"basic\", \"perc\", \"stud\"))",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 2 — Parallel Computing"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t2.html#exercises",
+    "href": "notes/tech/t2.html#exercises",
+    "title": "STAT:5400 Tech Guide 2 — Parallel Computing",
+    "section": "3 Exercises",
+    "text": "3 Exercises\n By hand\n\nRun the qtukey example with makeCluster(k) for \\(k = 1, 2, 4, 8\\) and record the time for each \\(k\\). Plot the time against \\(k\\).\nRun the bootstrap example (Method 2) with 2, 4, and 8 workers. Is the time halved each time the number of workers doubles?\nLog in to an lnx machine. Print its number of cores. Run the distributed script with ndmax=5 and watch top in a second terminal.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 2 — Parallel Computing"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t2.html#references",
+    "href": "notes/tech/t2.html#references",
+    "title": "STAT:5400 Tech Guide 2 — Parallel Computing",
+    "section": "4 References",
+    "text": "4 References\n\nR Core Team, Package parallel. In R, type vignette(\"parallel\").\nLuke Tierney, Simple Network of Workstations for R.\nThe help page of boot, section Parallel operation.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 2 — Parallel Computing"
+    ]
+  },
+  {
     "objectID": "notes/section4/s4p1.html",
     "href": "notes/section4/s4p1.html",
     "title": "STAT:5400 Section 4.1 — Bootstrap and Jackknife",
@@ -824,6 +884,162 @@
       "Home",
       "Section 3: Simulation and Inference",
       "STAT:5400 Section 3.3 — Hypothesis Testing and Replicates"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html",
+    "href": "notes/tech/t1.html",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "",
+    "text": "PDF  Open in Codespace\nThe code on this page is shell code. It does not run in the browser. Copy a block and paste it into a terminal.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#unix-and-linux",
+    "href": "notes/tech/t1.html#unix-and-linux",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "1 UNIX and Linux",
+    "text": "1 UNIX and Linux\n\nIn 1969, Ken Thompson and Dennis Ritchie of Bell Labs developed the UNIX operating system. At that time, every model of computer had a different operating system.\nThe kernel is the core of UNIX. It controls how the hardware interacts with the software. All other functions are built around the kernel.\nUNIX was later rewritten in C. Thus UNIX became compatible with many hardware architectures.\nUNIX was first used only in large computing environments like universities, government, and large companies. macOS is a UNIX-based system.\nUNIX is not free. Richard Stallman decided to create a free UNIX-like system, GNU (GNU’s Not UNIX). Under the GNU license, everyone has the freedom to use, copy, and modify the software.\nLinus Torvalds developed the Linux kernel in 1991 and used the GNU license.\nBecause of the free nature, many operating systems have been distributed based on the Linux kernel. Free ones include Ubuntu, Debian, and Fedora. Commercial ones include Red Hat Enterprise Linux. Android is also based on Linux.\nNowadays, Linux runs on a wide range of hardware: personal machines, phones, servers, and cloud services. The lnx machines, IDAS, and Argon all run Linux.\nLinux is not on the midterm.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#remote-access-to-the-lnx-machines",
+    "href": "notes/tech/t1.html#remote-access-to-the-lnx-machines",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "2 Remote access to the lnx machines",
+    "text": "2 Remote access to the lnx machines\nThe department has Linux servers l-lnx200 to l-lnx217. You log in with your HawkID and its password.\n\nFor Mac users, open Terminal. For Windows users, open PowerShell. Then type\n\nssh hawkid@l-lnx200.divms.uiowa.edu\n\nIf one machine does not answer, try the next number.\nOff campus, you need the VPN first.\nFastX gives a Linux desktop in the browser. Log in with your HawkID and click the plus sign to start a new session.\nIf you write a file on your own computer, use the secure copy scp to upload it to the server. Run this on your own computer, not on the server:\n\nscp TypeIErr2.R hawkid@l-lnx200.divms.uiowa.edu:~/5400/\n\nThe Codespace of this course also has a terminal (menu Terminal, New Terminal). The commands on this page work there. The ssh and scp lines do not, because the Codespace is outside the campus network.\nIf you have issues with your Linux account, visit https://clas.uiowa.edu/linux/help.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#shell",
+    "href": "notes/tech/t1.html#shell",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "3 Shell",
+    "text": "3 Shell\n\nThe shell is a program that reads and runs your command. The departmental servers use the Bourne Again Shell (bash). macOS uses the Z shell (zsh) by default. For this page they are the same.\nTo run the shell, you need a terminal. With a terminal open, you see a blinking cursor. This is the command line where you type.\n\necho $SHELL\nTips:\n\nIn the shell, use the up arrow to go back to the command you just typed.\nUse the Tab key to complete a command or a file name.\nUse Ctrl + A to move the cursor to the beginning of the line and Ctrl + E to the end.\nUse Ctrl + C to stop a running command.\n\nYou may try these commands to get started:\ndate\ncal\nwhoami\nhostname\nOn Windows, these commands need a bash shell. Install Git for Windows, which comes with one. We do not use Git today.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#filesystem",
+    "href": "notes/tech/t1.html#filesystem",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "4 Filesystem",
+    "text": "4 Filesystem\n\nThe filesystem is how the files are organized on the disk. The Linux filesystem is a single tree. It begins at the root directory /.\nLinux uses the forward slash / instead of the backslash \\ as in Windows.\na/b is the file or directory b inside the directory a.\n\n\n\n\nSymbol\nPath\n\n\n\n\n/\nthe root directory\n\n\n~\nyour home directory\n\n\n.\nthe current directory\n\n\n..\nthe parent of the current directory\n\n\n\nFor the rest of this page, make a directory for practice and go there:\nmkdir -p ~/STAT5400/linux\ncd ~/STAT5400/linux",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#basic-commands",
+    "href": "notes/tech/t1.html#basic-commands",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "5 Basic commands",
+    "text": "5 Basic commands\n\n5.1 pwd, ls, and cd\npwd prints the working directory. ls lists the contents of a directory. It is perhaps the most commonly used command in Linux. cd changes the directory.\npwd\nls\nls -l\nls -a\ncd ..\npwd\ncd -\n\nls -l gives a long list with more details. ls -a includes hidden files, whose names start with a dot. You can also do ls -la.\ncd .. goes to the parent directory. cd ~ or cd alone goes to the home directory. cd - goes back to the previous directory.\n\n\n\n5.2 mkdir and touch\nmkdir makes directories. touch creates an empty file.\nmkdir dir1 dir2\ntouch a.txt b.txt c.txt\nls\nDo not use a space in a directory name.\n\n\n5.3 cp, mv, and rm\ncp copies. mv moves. mv can also be used to rename a file. cp -r copies a whole directory.\ncp a.txt a1.txt\nmv b.txt dir1/\nmv a1.txt a2.txt\ncp -r dir1 dir3\nls\nls dir1 dir3\nrm removes files and directories.\nrm a2.txt\nrm dir2\nrmdir dir2\nrm -r dir3\nls\n\nrm dir2 fails, because dir2 is a directory. rmdir removes an empty directory. rm -r removes a directory with everything inside.\nrm -rf removes everything regardless of being protected. Be very careful with this command. There is no trash can in Linux.\n\n\n\n5.4 cat, less, head, and tail\nWe first create a text file with the integers 1 to 100, one number per line:\nfor i in {1..100}; do echo $i; done &gt; numbers.txt\n\ncat displays the whole file. Use it when the file is short.\nless displays the file page by page. Use the arrow keys to move. Type q to quit.\nhead -n 4 prints the first 4 lines. tail -n 4 prints the last 4 lines.\nwc counts lines, words, and characters.\n\nhead -n 4 numbers.txt\ntail -n 4 numbers.txt\nwc numbers.txt\nThe output of wc is 100 100 292 numbers.txt. The file has 100 lines, 100 words, and 292 characters.\n\n\n5.5 sort and grep\nsort sorts the lines of a file. grep prints the lines that match a pattern.\nsort numbers.txt | head -n 5\nsort -n numbers.txt | head -n 5\ngrep 5 numbers.txt\nNote that sort sorts the lines as text, so 10 comes before 2. sort -n sorts them as numbers.\n\n\n5.6 man and history\nman opens the manual of a command. It is similar to help in R. history lists the commands you used.\nman ls\nhistory\nType q to leave the manual. You may also try ls --help.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#pipelines-and-redirection",
+    "href": "notes/tech/t1.html#pipelines-and-redirection",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "6 Pipelines and redirection",
+    "text": "6 Pipelines and redirection\n\nThe pipe | chains two commands. The output of the first command is the input of the second one. Usage: command1 | command2.\n\nls | sort -r\ngrep 5 numbers.txt | wc -l\n\n&gt; writes the output to a file. &gt;&gt; appends the output to the end of a file.\n\necho \"STAT:5400\" &gt; course.txt\ncat course.txt\necho \"Statistical Computing and AI\" &gt;&gt; course.txt\ncat course.txt\necho \"Statistical Computing and AI\" &gt; course.txt\ncat course.txt\nNote that &gt; replaces the file. The last cat shows one line only.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#shell-variables-and-metacharacters",
+    "href": "notes/tech/t1.html#shell-variables-and-metacharacters",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "7 Shell variables and metacharacters",
+    "text": "7 Shell variables and metacharacters\ncourseID=5400\necho $courseID\necho \"The course is $courseID\"\necho 'The course is $courseID'\necho $HOME\n\nNo spaces around =. Use $courseID to read the variable. Use unset courseID to delete it.\nDouble quotes fill in the variable. Single quotes keep the text as it is.\n$HOME is your home directory. $PATH is the list of directories where the shell looks for commands.\n\nMetacharacters:\n\n# starts a comment.\n; separates two commands on one line.\n* matches any number of characters in a file name. ? matches one character.\n\nls *.txt\nls ?ourse.txt\nls /bin/b*",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#file-permissions",
+    "href": "notes/tech/t1.html#file-permissions",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "8 File permissions",
+    "text": "8 File permissions\nUnlike Windows, Linux is a multi-user operating system. It has a better control over file security, so that a confidential file is not seen by other users.\nls -l numbers.txt\nThe first part of the output looks like -rw-r--r--. The security mode of a file has nine characters:\n\nthree sets: user, group, others;\nthree permissions: r, read; w, write; x, execute.\n\nSo -rw-r--r-- means the user can read and write, the group can read, and others can read.\nChange file permissions by chmod:\n\nthe first argument specifies which set to modify: u user, g group, o others, a all;\nthe second argument is + to add permissions or - to take them away;\nthe third argument is which permission to change.\n\nExamples:\n\nchmod g+w numbers.txt gives the group write permission for this file.\nchmod a+rx dir1 gives all users read and execute permission for the directory dir1.\n\nYou may also use the numerical format. chmod 754 numbers.txt gives read, write, and execute permissions to the user, read and execute to the group, and read to others.\n\n\n\n\n\n\nNoteThe numerical format\n\n\n\n\n\nEach digit is a sum: read 4, write 2, execute 1.\n\n\n\nValue\nPermissions\nSymbol\n\n\n\n\n0\nno permissions\n---\n\n\n1\nexecute only\n--x\n\n\n2\nwrite only\n-w-\n\n\n3\nwrite and execute\n-wx\n\n\n4\nread only\nr--\n\n\n5\nread and execute\nr-x\n\n\n6\nread and write\nrw-\n\n\n7\nread, write, and execute\nrwx\n\n\n\nchmod 600 file keeps a file private: only you can read and write it.\n\n\n\n\n8.1 A shell script\nA shell script is a text file of commands. The first line #!/bin/bash says which shell runs it.\nprintf '%s\\n' '#!/bin/bash' 'echo \"STAT:5400 is fun!\"' &gt; myscript.sh\ncat myscript.sh\nls -l myscript.sh\n./myscript.sh\nThe last line gives Permission denied. A new file has no execute permission. We add it and run the script again:\nchmod +x myscript.sh\nls -l myscript.sh\n./myscript.sh\nBelow is a shell script that prints all prime numbers between 2 and 50. It shows a for loop and an if in bash.\nfor num in {2..50}; do\n  prime=1\n  for ((i = 2; i &lt;= num / 2; i++)); do\n    if [ $((num % i)) -eq 0 ]; then\n      prime=0\n      break\n    fi\n  done\n  if [ $prime -eq 1 ]; then\n    echo $num\n  fi\ndone\nBash can do this, but it is slow. For statistical work, we write the loop in R and use the shell only to start R.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#text-editors",
+    "href": "notes/tech/t1.html#text-editors",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "9 Text editors",
+    "text": "9 Text editors\n\n9.1 nano\nUse nano to create a simple text file.\n\nTo create a new file, type nano hello.txt.\nType your text.\nPress Ctrl + O to save and Ctrl + X to exit. The commands are listed at the bottom of the screen.\nYou may check your new file using cat or less.\n\n\n\n9.2 Vim\nVi is a classic editor on Linux. Vim is “Vi improved”. Vim is controlled by the keyboard and has a steep learning curve. It is sometimes very convenient to use Vim to edit a file directly on the server.\nVim has two modes: command mode and insert mode. Use i to enter insert mode and Esc to go back to command mode.\n\nOpen a file: vim hello.txt. You start in command mode.\nType :set number to see the line numbers. Type :5 to move to line 5.\nUse x to delete a character. Use dd to delete a line. Use u to undo.\nType :wq to write and quit. Type :q! to quit without saving.\n\nType vimtutor in a terminal for a 30-minute tutorial. A cheat sheet: https://vim.rtorr.com/.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#batch-execution-of-r",
+    "href": "notes/tech/t1.html#batch-execution-of-r",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "10 Batch execution of R",
+    "text": "10 Batch execution of R\nLet us write an R script based on the example of computing the Type I error that we talked about in Section 3.3. We also let the script read n and dist from the command line.\nPaste the whole block into the terminal. The first line, cat &gt; TypeIErr2.R &lt;&lt;'EOF', writes everything up to the line EOF into the file TypeIErr2.R.\ncat &gt; TypeIErr2.R &lt;&lt;'EOF'\npvalDist2 &lt;- function(n, dist, mu_0, alp = 0.05, B = 10000, ...) {\n  # simulate data from user-specified dist\n  Xlist &lt;- do.call(paste0(\"r\", dist), list(B * n, ...))\n  Xlist &lt;- matrix(Xlist, B, n)\n  # compute t-statistic for each sample\n  Xbarlist &lt;- rowMeans(Xlist)\n  sdlist &lt;- apply(Xlist, 1, sd)\n  t_stat &lt;- (Xbarlist - mu_0) / (sdlist / sqrt(n))\n  # returns the observed p-values\n  pt(-abs(t_stat), n - 1) + 1 - pt(abs(t_stat), n - 1)\n}\n\n# read the arguments, e.g.  Rscript TypeIErr2.R 'n=10; dist=\"exp\"'\nargs &lt;- commandArgs(TRUE)\nif (length(args) == 0) stop(\"No arguments supplied.\")\nfor (a in args) eval(parse(text = a))\nif (!exists(\"n\")) stop(\"n is missing\")\nif (!exists(\"dist\")) stop(\"dist is missing\")\n\nset.seed(5400)\nalp &lt;- 0.05\nr2 &lt;- pvalDist2(n = n, dist = dist, mu_0 = 2, alp = alp, rate = 1/2)\nTypeIerr &lt;- mean(r2 &lt; alp)\ncat(\"n =\", n, \" dist =\", dist, \" Type I error =\", TypeIerr, \"\\n\")\nsave(TypeIerr, file = paste0(\"TypeIerr_\", n, \"_\", dist, \".RData\"))\nEOF\nIf you wrote the file on your own computer, upload it to the server with scp. Then connect to the server and run R in batch:\nnice -n19 Rscript --no-save --no-restore TypeIErr2.R 'n=10; dist=\"exp\"'\nls *.RData\n\nThe output is n = 10  dist = exp  Type I error = 0.1003, and a file TypeIerr_10_exp.RData is generated.\nRscript runs the R file without opening R. The text in quotes is passed to the script. commandArgs(TRUE) returns it, and eval(parse(text = a)) runs it as R code, so n and dist exist in the script.\nThe option nice -n19 lowers the priority of your job. It is required when you run a large job on a shared machine. The options --no-save --no-restore tell R not to save or restore the workspace.\nTry n=50. The file name changes with the arguments, so the runs do not overwrite each other.\n\nTo read the result later:\nRscript -e 'load(\"TypeIerr_10_exp.RData\"); TypeIerr'\nAn alternative is R CMD BATCH. It writes the code and the output into TypeIErr2.Rout:\nnice -n19 R CMD BATCH --no-save --no-restore '--args n=10 dist=\"exp\"' TypeIErr2.R\n\n10.1 Several jobs at once\nTo run several jobs at the same time, we add & at the end of the command. The shell starts the job in the background and goes to the next line without waiting. wait waits until all background jobs are done.\nfor n in 10 20 50 100 200; do\n  nice -n19 Rscript --no-save --no-restore TypeIErr2.R \"n=$n; dist=\\\"exp\\\"\" &\ndone\nwait\nls *.RData\n\nThe five runs use five cores at the same time. nproc prints the number of cores of the machine.\nOpen a second terminal and type top while they run. top lists the running processes, the busiest first. You will see five R processes. Type q to quit top.\nEach run saves its own file. To combine them in R:\n\nnlist &lt;- c(10, 20, 50, 100, 200)\nfiles &lt;- paste0(\"TypeIerr_\", nlist, \"_exp.RData\")\nres &lt;- sapply(files, function(f) { load(f); TypeIerr })\nnames(res) &lt;- nlist\nres\nIn Tech Guide 2, we do the same from inside R.\n\n\n\n\n\n\nNoteKeeping a job alive after you log out\n\n\n\n\n\nA job is killed when you close the connection. nohup keeps it alive.\nnohup nice -n19 Rscript TypeIErr2.R 'n=100; dist=\"exp\"' &gt; run.log 2&gt;&1 &\n&gt; run.log sends the output to the file run.log. 2&gt;&1 sends the error messages there too. The & at the end gives you the prompt back. Another tool is tmux: type tmux new -s job to open a session, start your job, press Ctrl + B and then D to leave, and type tmux attach -t job to come back later.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#exercises",
+    "href": "notes/tech/t1.html#exercises",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "11 Exercises",
+    "text": "11 Exercises\n By hand\n\nList all the files in /bin. Try ls /bin/*r to list the files ending in r, and ls /bin/b* to list the files beginning with b.\nType cd to go to the home directory. Make a new directory 5400. Inside it, make a directory tmp.\nCreate an empty file my.sh in tmp. Copy it to 5400. Delete the original file in tmp.\nIn 5400/my.sh, put the two lines #!/bin/bash and echo \"STAT:5400 is fun!\". Change the file permission and run the script.\nTry echo $HOME. Print the sentence My home directory is /space/hawkid by completing an echo command. Then write the sentence into a file home.txt.\nPrint all even numbers between 1 and 20 with a for loop.\nUpload TypeIErr2.R to an lnx machine with scp. Run it there with n=30 and dist=\"exp\". Load the saved file in R and print the Type I error.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
+    ]
+  },
+  {
+    "objectID": "notes/tech/t1.html#references",
+    "href": "notes/tech/t1.html#references",
+    "title": "STAT:5400 Tech Guide 1 — Linux and the lnx Machines",
+    "section": "12 References",
+    "text": "12 References\n\nRav Ahuja, Sam Prokopchuk, and Ramesh Sannareddy, Hands-on Introduction to Linux Commands and Shell Scripting, IBM, Coursera.\nWilliam Shotts, The Linux Command Line, a free book.\nJames Balamuta, Working with R on a cluster, a comparison of Rscript and R CMD BATCH.",
+    "crumbs": [
+      "Home",
+      "Tech Guide",
+      "STAT:5400 Tech Guide 1 — Linux and the lnx Machines"
     ]
   }
 ]

@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Boxiang Wang">
+<meta name="dcterms.date" content="2026-10-26">
+
+<title>STAT:5400 Tech Guide 1 — Linux and the lnx Machines – STAT 5400</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-1b8143a5af30aa0587ead8c64582f750.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">STAT 5400</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/boxiang-wang/stat5400"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../notes/tech/t1.html">Tech Guide</a></li><li class="breadcrumb-item"><a href="../../notes/tech/t1.html">STAT:5400 Tech Guide 1 — Linux and the lnx Machines</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT 5400 — Computing in Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Section 1: Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section1/s1p1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 1.1 — Introduction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Section 2: R, Python, and APIs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section2/s2p1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 2.1 — A First Look at R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section2/s2p2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 2.2 — A First Look at Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section2/s2p3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 2.3 — Functions, Loops, and Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section2/s2p4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 2.4 — LLM APIs and Prompting</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Section 3: Simulation and Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section3/s3p1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 3.1 — Random Number Generators</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section3/s3p2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 3.2 — CLT and Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section3/s3p3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 3.3 — Hypothesis Testing and Replicates</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Section 4: Bootstrap and Permutation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/section4/s4p1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Section 4.1 — Bootstrap and Jackknife</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Tech Guide</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/tech/t1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">STAT:5400 Tech Guide 1 — Linux and the lnx Machines</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/tech/t2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT:5400 Tech Guide 2 — Parallel Computing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../notes/tech/t1.html">Tech Guide</a></li><li class="breadcrumb-item"><a href="../../notes/tech/t1.html">STAT:5400 Tech Guide 1 — Linux and the lnx Machines</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">STAT:5400 Tech Guide 1 — Linux and the lnx Machines</h1>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author"><a href="https://boxiang-wang.github.io/">Boxiang Wang</a> </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://stat.uiowa.edu/">
+            Department of Statistics and Actuarial Science, University of Iowa
+            </a>
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 26, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="page-buttons">
+<p><a href="t1.pdf" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-file-pdf" aria-label="file-pdf"></i> PDF</a> <a class="btn btn-sm btn-outline-dark" href="https://codespaces.new/boxiang-wang/stat5400?quickstart=1" target="_blank" rel="noopener"><i class="fa-solid fa-code"></i> Open in Codespace</a></p>
+</div>
+<p>The code on this page is shell code. It does not run in the browser. Copy a block and paste it into a terminal.</p>
+<section id="unix-and-linux" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="unix-and-linux"><span class="header-section-number">1</span> UNIX and Linux</h2>
+<ul>
+<li>In 1969, Ken Thompson and Dennis Ritchie of Bell Labs developed the UNIX operating system. At that time, every model of computer had a different operating system.</li>
+<li>The <span class="term"><strong>kernel</strong></span> is the core of UNIX. It controls how the hardware interacts with the software. All other functions are built around the kernel.</li>
+<li>UNIX was later rewritten in C. Thus UNIX became compatible with many hardware architectures.</li>
+<li>UNIX was first used only in large computing environments like universities, government, and large companies. macOS is a UNIX-based system.</li>
+<li>UNIX is not free. Richard Stallman decided to create a free UNIX-like system, GNU (GNU’s Not UNIX). Under the GNU license, everyone has the freedom to use, copy, and modify the software.</li>
+<li>Linus Torvalds developed the Linux kernel in 1991 and used the GNU license.</li>
+<li>Because of the free nature, many operating systems have been distributed based on the Linux kernel. Free ones include Ubuntu, Debian, and Fedora. Commercial ones include Red Hat Enterprise Linux. Android is also based on Linux.</li>
+<li>Nowadays, Linux runs on a wide range of hardware: personal machines, phones, servers, and cloud services. The lnx machines, IDAS, and Argon all run Linux.</li>
+<li>Linux is not on the midterm.</li>
+</ul>
+</section>
+<section id="remote-access-to-the-lnx-machines" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="remote-access-to-the-lnx-machines"><span class="header-section-number">2</span> Remote access to the lnx machines</h2>
+<p>The department has Linux servers <code>l-lnx200</code> to <code>l-lnx217</code>. You log in with your HawkID and its password.</p>
+<ul>
+<li>For Mac users, open Terminal. For Windows users, open PowerShell. Then type</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> hawkid@l-lnx200.divms.uiowa.edu</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>If one machine does not answer, try the next number.</li>
+<li>Off campus, you need the <a href="https://its.uiowa.edu/vpn">VPN</a> first.</li>
+<li><a href="https://fastx.divms.uiowa.edu">FastX</a> gives a Linux desktop in the browser. Log in with your HawkID and click the plus sign to start a new session.</li>
+<li>If you write a file on your own computer, use the secure copy <code>scp</code> to upload it to the server. Run this on your own computer, not on the server:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> TypeIErr2.R hawkid@l-lnx200.divms.uiowa.edu:~/5400/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>The Codespace of this course also has a terminal (menu Terminal, New Terminal). The commands on this page work there. The <code>ssh</code> and <code>scp</code> lines do not, because the Codespace is outside the campus network.</li>
+<li>If you have issues with your Linux account, visit <a href="https://clas.uiowa.edu/linux/help" class="uri">https://clas.uiowa.edu/linux/help</a>.</li>
+</ul>
+</section>
+<section id="shell" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="shell"><span class="header-section-number">3</span> Shell</h2>
+<ul>
+<li>The <span class="term"><strong>shell</strong></span> is a program that reads and runs your command. The departmental servers use the Bourne Again Shell (bash). macOS uses the Z shell (zsh) by default. For this page they are the same.</li>
+<li>To run the shell, you need a <span class="term"><strong>terminal</strong></span>. With a terminal open, you see a blinking cursor. This is the command line where you type.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$SHELL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Tips:</p>
+<ul>
+<li>In the shell, use the up arrow to go back to the command you just typed.</li>
+<li>Use the Tab key to complete a command or a file name.</li>
+<li>Use <code>Ctrl + A</code> to move the cursor to the beginning of the line and <code>Ctrl + E</code> to the end.</li>
+<li>Use <code>Ctrl + C</code> to stop a running command.</li>
+</ul>
+<p>You may try these commands to get started:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cal</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">whoami</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hostname</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On Windows, these commands need a bash shell. Install <a href="https://gitforwindows.org">Git for Windows</a>, which comes with one. We do not use Git today.</p>
+</section>
+<section id="filesystem" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="filesystem"><span class="header-section-number">4</span> Filesystem</h2>
+<ul>
+<li>The <span class="term"><strong>filesystem</strong></span> is how the files are organized on the disk. The Linux filesystem is a single tree. It begins at the root directory <code>/</code>.</li>
+<li>Linux uses the forward slash <code>/</code> instead of the backslash <code>\</code> as in Windows.</li>
+<li><code>a/b</code> is the file or directory <code>b</code> inside the directory <code>a</code>.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Symbol</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>/</code></td>
+<td>the root directory</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>~</code></td>
+<td>your home directory</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>.</code></td>
+<td>the current directory</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>..</code></td>
+<td>the parent of the current directory</td>
+</tr>
+</tbody>
+</table>
+<p>For the rest of this page, make a directory for practice and go there:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/STAT5400/linux</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/STAT5400/linux</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="basic-commands" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="basic-commands"><span class="header-section-number">5</span> Basic commands</h2>
+<section id="pwd-ls-and-cd" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="pwd-ls-and-cd"><span class="header-section-number">5.1</span> <code>pwd</code>, <code>ls</code>, and <code>cd</code></h3>
+<p><code>pwd</code> prints the working directory. <code>ls</code> lists the contents of a directory. It is perhaps the most commonly used command in Linux. <code>cd</code> changes the directory.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-a</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="at">-</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>ls -l</code> gives a long list with more details. <code>ls -a</code> includes hidden files, whose names start with a dot. You can also do <code>ls -la</code>.</li>
+<li><code>cd ..</code> goes to the parent directory. <code>cd ~</code> or <code>cd</code> alone goes to the home directory. <code>cd -</code> goes back to the previous directory.</li>
+</ul>
+</section>
+<section id="mkdir-and-touch" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="mkdir-and-touch"><span class="header-section-number">5.2</span> <code>mkdir</code> and <code>touch</code></h3>
+<p><code>mkdir</code> makes directories. <code>touch</code> creates an empty file.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> dir1 dir2</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> a.txt b.txt c.txt</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Do not use a space in a directory name.</p>
+</section>
+<section id="cp-mv-and-rm" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="cp-mv-and-rm"><span class="header-section-number">5.3</span> <code>cp</code>, <code>mv</code>, and <code>rm</code></h3>
+<p><code>cp</code> copies. <code>mv</code> moves. <code>mv</code> can also be used to rename a file. <code>cp -r</code> copies a whole directory.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> a.txt a1.txt</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> b.txt dir1/</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> a1.txt a2.txt</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> dir1 dir3</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> dir1 dir3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>rm</code> removes files and directories.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> a2.txt</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> dir2</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmdir</span> dir2</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-r</span> dir3</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>rm dir2</code> fails, because <code>dir2</code> is a directory. <code>rmdir</code> removes an empty directory. <code>rm -r</code> removes a directory with everything inside.</li>
+<li><code>rm -rf</code> removes everything regardless of being protected. Be very careful with this command. There is no trash can in Linux.</li>
+</ul>
+</section>
+<section id="cat-less-head-and-tail" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="cat-less-head-and-tail"><span class="header-section-number">5.4</span> <code>cat</code>, <code>less</code>, <code>head</code>, and <code>tail</code></h3>
+<p>We first create a text file with the integers 1 to 100, one number per line:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">100</span><span class="dt">}</span><span class="kw">;</span> <span class="cf">do</span> <span class="bu">echo</span> <span class="va">$i</span><span class="kw">;</span> <span class="cf">done</span> <span class="op">&gt;</span> numbers.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>cat</code> displays the whole file. Use it when the file is short.</li>
+<li><code>less</code> displays the file page by page. Use the arrow keys to move. Type <code>q</code> to quit.</li>
+<li><code>head -n 4</code> prints the first 4 lines. <code>tail -n 4</code> prints the last 4 lines.</li>
+<li><code>wc</code> counts lines, words, and characters.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 4 numbers.txt</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-n</span> 4 numbers.txt</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> numbers.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The output of <code>wc</code> is <code>100 100 292 numbers.txt</code>. The file has 100 lines, 100 words, and 292 characters.</p>
+</section>
+<section id="sort-and-grep" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="sort-and-grep"><span class="header-section-number">5.5</span> <code>sort</code> and <code>grep</code></h3>
+<p><code>sort</code> sorts the lines of a file. <code>grep</code> prints the lines that match a pattern.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> numbers.txt <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 5</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-n</span> numbers.txt <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 5</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> 5 numbers.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note that <code>sort</code> sorts the lines as text, so <code>10</code> comes before <code>2</code>. <code>sort -n</code> sorts them as numbers.</p>
+</section>
+<section id="man-and-history" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="man-and-history"><span class="header-section-number">5.6</span> <code>man</code> and <code>history</code></h3>
+<p><code>man</code> opens the manual of a command. It is similar to <code>help</code> in R. <code>history</code> lists the commands you used.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">man</span> ls</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">history</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Type <code>q</code> to leave the manual. You may also try <code>ls --help</code>.</p>
+</section>
+</section>
+<section id="pipelines-and-redirection" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="pipelines-and-redirection"><span class="header-section-number">6</span> Pipelines and redirection</h2>
+<ul>
+<li>The pipe <code>|</code> chains two commands. The output of the first command is the input of the second one. Usage: <code>command1 | command2</code>.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-r</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> 5 numbers.txt <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>&gt;</code> writes the output to a file. <code>&gt;&gt;</code> appends the output to the end of a file.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"STAT:5400"</span> <span class="op">&gt;</span> course.txt</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> course.txt</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Statistical Computing and AI"</span> <span class="op">&gt;&gt;</span> course.txt</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> course.txt</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Statistical Computing and AI"</span> <span class="op">&gt;</span> course.txt</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> course.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note that <code>&gt;</code> replaces the file. The last <code>cat</code> shows one line only.</p>
+</section>
+<section id="shell-variables-and-metacharacters" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="shell-variables-and-metacharacters"><span class="header-section-number">7</span> Shell variables and metacharacters</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">courseID</span><span class="op">=</span>5400</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$courseID</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"The course is </span><span class="va">$courseID</span><span class="st">"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'The course is $courseID'</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$HOME</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>No spaces around <code>=</code>. Use <code>$courseID</code> to read the variable. Use <code>unset courseID</code> to delete it.</li>
+<li>Double quotes fill in the variable. Single quotes keep the text as it is.</li>
+<li><code>$HOME</code> is your home directory. <code>$PATH</code> is the list of directories where the shell looks for commands.</li>
+</ul>
+<p>Metacharacters:</p>
+<ul>
+<li><code>#</code> starts a comment.</li>
+<li><code>;</code> separates two commands on one line.</li>
+<li><code>*</code> matches any number of characters in a file name. <code>?</code> matches one character.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">*</span>.txt</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">?</span>ourse.txt</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /bin/b<span class="pp">*</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="file-permissions" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="file-permissions"><span class="header-section-number">8</span> File permissions</h2>
+<p>Unlike Windows, Linux is a multi-user operating system. It has a better control over file security, so that a confidential file is not seen by other users.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> numbers.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first part of the output looks like <code>-rw-r--r--</code>. The security mode of a file has nine characters:</p>
+<ul>
+<li>three sets: user, group, others;</li>
+<li>three permissions: <code>r</code>, read; <code>w</code>, write; <code>x</code>, execute.</li>
+</ul>
+<p>So <code>-rw-r--r--</code> means the user can read and write, the group can read, and others can read.</p>
+<p>Change file permissions by <code>chmod</code>:</p>
+<ul>
+<li>the first argument specifies which set to modify: <code>u</code> user, <code>g</code> group, <code>o</code> others, <code>a</code> all;</li>
+<li>the second argument is <code>+</code> to add permissions or <code>-</code> to take them away;</li>
+<li>the third argument is which permission to change.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><code>chmod g+w numbers.txt</code> gives the group write permission for this file.</li>
+<li><code>chmod a+rx dir1</code> gives all users read and execute permission for the directory <code>dir1</code>.</li>
+</ul>
+<p>You may also use the numerical format. <code>chmod 754 numbers.txt</code> gives read, write, and execute permissions to the user, read and execute to the group, and read to others.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="The numerical format">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The numerical format
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Each digit is a sum: read 4, write 2, execute 1.</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Value</th>
+<th>Permissions</th>
+<th style="text-align: center;">Symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td>no permissions</td>
+<td style="text-align: center;"><code>---</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td>execute only</td>
+<td style="text-align: center;"><code>--x</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td>write only</td>
+<td style="text-align: center;"><code>-w-</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td>write and execute</td>
+<td style="text-align: center;"><code>-wx</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td>read only</td>
+<td style="text-align: center;"><code>r--</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td>read and execute</td>
+<td style="text-align: center;"><code>r-x</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td>read and write</td>
+<td style="text-align: center;"><code>rw-</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7</td>
+<td>read, write, and execute</td>
+<td style="text-align: center;"><code>rwx</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>chmod 600 file</code> keeps a file private: only you can read and write it.</p>
+</div>
+</div>
+</div>
+<section id="a-shell-script" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="a-shell-script"><span class="header-section-number">8.1</span> A shell script</h3>
+<p>A shell script is a text file of commands. The first line <code>#!/bin/bash</code> says which shell runs it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">'%s\n'</span> <span class="st">'#!/bin/bash'</span> <span class="st">'echo "STAT:5400 is fun!"'</span> <span class="op">&gt;</span> myscript.sh</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> myscript.sh</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> myscript.sh</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./myscript.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The last line gives <code>Permission denied</code>. A new file has no execute permission. We add it and run the script again:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x myscript.sh</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> myscript.sh</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./myscript.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Below is a shell script that prints all prime numbers between 2 and 50. It shows a <code>for</code> loop and an <code>if</code> in bash.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> num <span class="kw">in</span> <span class="dt">{</span><span class="dv">2</span><span class="dt">..</span><span class="dv">50</span><span class="dt">}</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">prime</span><span class="op">=</span>1</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="kw">((</span><span class="va">i</span> <span class="op">=</span> <span class="dv">2</span><span class="kw">;</span> <span class="va">i</span> <span class="op">&lt;=</span> <span class="va">num</span> <span class="op">/</span> <span class="dv">2</span><span class="kw">;</span> <span class="va">i</span><span class="op">++</span><span class="kw">));</span> <span class="cf">do</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">[</span> <span class="va">$((num</span> <span class="op">%</span> <span class="va">i))</span> <span class="ot">-eq</span> 0 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>      <span class="va">prime</span><span class="op">=</span>0</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">break</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">done</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="bu">[</span> <span class="va">$prime</span> <span class="ot">-eq</span> 1 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="va">$num</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">fi</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Bash can do this, but it is slow. For statistical work, we write the loop in R and use the shell only to start R.</p>
+</section>
+</section>
+<section id="text-editors" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="text-editors"><span class="header-section-number">9</span> Text editors</h2>
+<section id="nano" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="nano"><span class="header-section-number">9.1</span> nano</h3>
+<p>Use <code>nano</code> to create a simple text file.</p>
+<ul>
+<li>To create a new file, type <code>nano hello.txt</code>.</li>
+<li>Type your text.</li>
+<li>Press <code>Ctrl + O</code> to save and <code>Ctrl + X</code> to exit. The commands are listed at the bottom of the screen.</li>
+<li>You may check your new file using <code>cat</code> or <code>less</code>.</li>
+</ul>
+</section>
+<section id="vim" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="vim"><span class="header-section-number">9.2</span> Vim</h3>
+<p>Vi is a classic editor on Linux. Vim is “Vi improved”. Vim is controlled by the keyboard and has a steep learning curve. It is sometimes very convenient to use Vim to edit a file directly on the server.</p>
+<p>Vim has two modes: command mode and insert mode. Use <code>i</code> to enter insert mode and <code>Esc</code> to go back to command mode.</p>
+<ul>
+<li>Open a file: <code>vim hello.txt</code>. You start in command mode.</li>
+<li>Type <code>:set number</code> to see the line numbers. Type <code>:5</code> to move to line 5.</li>
+<li>Use <code>x</code> to delete a character. Use <code>dd</code> to delete a line. Use <code>u</code> to undo.</li>
+<li>Type <code>:wq</code> to write and quit. Type <code>:q!</code> to quit without saving.</li>
+</ul>
+<p>Type <code>vimtutor</code> in a terminal for a 30-minute tutorial. A cheat sheet: <a href="https://vim.rtorr.com/" class="uri">https://vim.rtorr.com/</a>.</p>
+</section>
+</section>
+<section id="batch-execution-of-r" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="batch-execution-of-r"><span class="header-section-number">10</span> Batch execution of R</h2>
+<p>Let us write an R script based on the example of computing the Type I error that we talked about in Section 3.3. We also let the script read <code>n</code> and <code>dist</code> from the command line.</p>
+<p>Paste the whole block into the terminal. The first line, <code>cat &gt; TypeIErr2.R &lt;&lt;'EOF'</code>, writes everything up to the line <code>EOF</code> into the file <code>TypeIErr2.R</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> TypeIErr2.R <span class="op">&lt;&lt;'EOF'</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="st">pvalDist2 &lt;- function(n, dist, mu_0, alp = 0.05, B = 10000, ...) {</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # simulate data from user-specified dist</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Xlist &lt;- do.call(paste0("r", dist), list(B * n, ...))</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Xlist &lt;- matrix(Xlist, B, n)</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # compute t-statistic for each sample</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="st">  Xbarlist &lt;- rowMeans(Xlist)</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="st">  sdlist &lt;- apply(Xlist, 1, sd)</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="st">  t_stat &lt;- (Xbarlist - mu_0) / (sdlist / sqrt(n))</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="st">  # returns the observed p-values</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="st">  pt(-abs(t_stat), n - 1) + 1 - pt(abs(t_stat), n - 1)</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="st"># read the arguments, e.g.  Rscript TypeIErr2.R 'n=10; dist="exp"'</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="st">args &lt;- commandArgs(TRUE)</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="st">if (length(args) == 0) stop("No arguments supplied.")</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="st">for (a in args) eval(parse(text = a))</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="st">if (!exists("n")) stop("n is missing")</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="st">if (!exists("dist")) stop("dist is missing")</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="st">set.seed(5400)</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="st">alp &lt;- 0.05</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="st">r2 &lt;- pvalDist2(n = n, dist = dist, mu_0 = 2, alp = alp, rate = 1/2)</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="st">TypeIerr &lt;- mean(r2 &lt; alp)</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="st">cat("n =", n, " dist =", dist, " Type I error =", TypeIerr, "\n")</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="st">save(TypeIerr, file = paste0("TypeIerr_", n, "_", dist, ".RData"))</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you wrote the file on your own computer, upload it to the server with <code>scp</code>. Then connect to the server and run R in batch:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nice</span> <span class="at">-n19</span> Rscript <span class="at">--no-save</span> <span class="at">--no-restore</span> TypeIErr2.R <span class="st">'n=10; dist="exp"'</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">*</span>.RData</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>The output is <code>n = 10  dist = exp  Type I error = 0.1003</code>, and a file <code>TypeIerr_10_exp.RData</code> is generated.</li>
+<li><code>Rscript</code> runs the R file without opening R. The text in quotes is passed to the script. <code>commandArgs(TRUE)</code> returns it, and <code>eval(parse(text = a))</code> runs it as R code, so <code>n</code> and <code>dist</code> exist in the script.</li>
+<li>The option <code>nice -n19</code> lowers the priority of your job. It is required when you run a large job on a shared machine. The options <code>--no-save --no-restore</code> tell R not to save or restore the workspace.</li>
+<li>Try <code>n=50</code>. The file name changes with the arguments, so the runs do not overwrite each other.</li>
+</ul>
+<p>To read the result later:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">'load("TypeIerr_10_exp.RData"); TypeIerr'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>An alternative is <code>R CMD BATCH</code>. It writes the code and the output into <code>TypeIErr2.Rout</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nice</span> <span class="at">-n19</span> R CMD BATCH <span class="at">--no-save</span> <span class="at">--no-restore</span> <span class="st">'--args n=10 dist="exp"'</span> TypeIErr2.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="several-jobs-at-once" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="several-jobs-at-once"><span class="header-section-number">10.1</span> Several jobs at once</h3>
+<p>To run several jobs at the same time, we add <code>&amp;</code> at the end of the command. The shell starts the job in the background and goes to the next line without waiting. <code>wait</code> waits until all background jobs are done.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> 10 20 50 100 200<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nice</span> <span class="at">-n19</span> Rscript <span class="at">--no-save</span> <span class="at">--no-restore</span> TypeIErr2.R <span class="st">"n=</span><span class="va">$n</span><span class="st">; dist=</span><span class="dt">\"</span><span class="st">exp</span><span class="dt">\"</span><span class="st">"</span> <span class="kw">&amp;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">wait</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="pp">*</span>.RData</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>The five runs use five cores at the same time. <code>nproc</code> prints the number of cores of the machine.</li>
+<li>Open a second terminal and type <code>top</code> while they run. <code>top</code> lists the running processes, the busiest first. You will see five <code>R</code> processes. Type <code>q</code> to quit <code>top</code>.</li>
+<li>Each run saves its own file. To combine them in R:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>nlist <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"TypeIerr_"</span>, nlist, <span class="st">"_exp.RData"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">sapply</span>(files, <span class="cf">function</span>(f) { <span class="fu">load</span>(f); TypeIerr })</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(res) <span class="ot">&lt;-</span> nlist</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In Tech Guide 2, we do the same from inside R.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Keeping a job alive after you log out">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Keeping a job alive after you log out
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>A job is killed when you close the connection. <code>nohup</code> keeps it alive.</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nohup</span> nice <span class="at">-n19</span> Rscript TypeIErr2.R <span class="st">'n=100; dist="exp"'</span> <span class="op">&gt;</span> run.log <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">&amp;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>&gt; run.log</code> sends the output to the file <code>run.log</code>. <code>2&gt;&amp;1</code> sends the error messages there too. The <code>&amp;</code> at the end gives you the prompt back. Another tool is <code>tmux</code>: type <code>tmux new -s job</code> to open a session, start your job, press <code>Ctrl + B</code> and then <code>D</code> to leave, and type <code>tmux attach -t job</code> to come back later.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="exercises"><span class="header-section-number">11</span> Exercises</h2>
+<p><span class="mode"><i class="fa-solid fa-hand-paper" aria-label="hand-paper"></i> By hand</span></p>
+<ol type="1">
+<li>List all the files in <code>/bin</code>. Try <code>ls /bin/*r</code> to list the files ending in <code>r</code>, and <code>ls /bin/b*</code> to list the files beginning with <code>b</code>.</li>
+<li>Type <code>cd</code> to go to the home directory. Make a new directory <code>5400</code>. Inside it, make a directory <code>tmp</code>.</li>
+<li>Create an empty file <code>my.sh</code> in <code>tmp</code>. Copy it to <code>5400</code>. Delete the original file in <code>tmp</code>.</li>
+<li>In <code>5400/my.sh</code>, put the two lines <code>#!/bin/bash</code> and <code>echo "STAT:5400 is fun!"</code>. Change the file permission and run the script.</li>
+<li>Try <code>echo $HOME</code>. Print the sentence <code>My home directory is /space/hawkid</code> by completing an <code>echo</code> command. Then write the sentence into a file <code>home.txt</code>.</li>
+<li>Print all even numbers between 1 and 20 with a <code>for</code> loop.</li>
+<li>Upload <code>TypeIErr2.R</code> to an lnx machine with <code>scp</code>. Run it there with <code>n=30</code> and <code>dist="exp"</code>. Load the saved file in R and print the Type I error.</li>
+</ol>
+</section>
+<section id="references" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="references"><span class="header-section-number">12</span> References</h2>
+<ul>
+<li>Rav Ahuja, Sam Prokopchuk, and Ramesh Sannareddy, <a href="https://www.coursera.org/learn/hands-on-introduction-to-linux-commands-and-shell-scripting"><em>Hands-on Introduction to Linux Commands and Shell Scripting</em></a>, IBM, Coursera.</li>
+<li>William Shotts, <a href="https://linuxcommand.org/tlcl.php"><em>The Linux Command Line</em></a>, a free book.</li>
+<li>James Balamuta, <a href="https://thecoatlessprofessor.com/programming/r/working-with-r-on-a-cluster/"><em>Working with R on a cluster</em></a>, a comparison of <code>Rscript</code> and <code>R CMD BATCH</code>.</li>
+</ul>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../notes/tech";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/boxiang-wang\.github\.io\/stat5400\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
