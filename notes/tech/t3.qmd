@@ -64,7 +64,7 @@ Would you like to use a personal library instead? (yes/No/cancel)
 Would you like to create a personal library ... to install packages into? (yes/No/cancel)
 ```
 
-Answer `yes` to both. R creates a folder under `~/R` and installs the packages there.
+Answer `yes` to both. R creates a folder under `~/R` and installs the packages there. In R in a terminal, R may also ask us to choose a CRAN mirror. Type `1` and press Enter.
 
 We can also create the personal library ourselves. In R:
 
@@ -226,13 +226,12 @@ A folder `man` is generated with the file `pvalDist2.Rd` inside it. The `NAMESPA
 
 4.  (Optional) We add a [**vignette**]{.term}, a long-form document that shows how to use the package. Building a vignette needs pandoc, a program that converts documents between formats. RStudio and Positron come with it. Run `rmarkdown::pandoc_available()` first. If it is `FALSE`, skip this step.
 
-    `use_vignette` creates a template `vignettes/pvalDist.Rmd` and adds `knitr` and `rmarkdown` to `DESCRIPTION`. We keep the template as it is and build it.
+    `use_vignette` creates a template `vignettes/pvalDist.Rmd` and adds `knitr` and `rmarkdown` to `DESCRIPTION`. We keep the template as it is. `R CMD build` in the next step builds it. Note that in R in a terminal, for example on the lnx machines, `use_vignette` opens the new file in an editor. If it opens nano, press `Ctrl-X` to return to R.
 
 ```{r}
 rmarkdown::pandoc_available()
 proj_set("pvalDist")
 use_vignette("pvalDist")
-build_vignettes("pvalDist")
 ```
 
 5.  We now build, install, and check the package. These are shell commands. We run them from R with `system`, in the folder `mydir` that contains `pvalDist`. You may also type them in a terminal.
@@ -277,7 +276,7 @@ tstat_R <- function(x, mu_0) {
 
 ### C++
 
-The R package `Rcpp` connects R and C++. We write the C++ version into the file `tstat_C.cpp` in `mydir`. The line `// [[Rcpp::export]]` tells `Rcpp` to make the function available in R. The comments that start with `//'` are roxygen comments. They are used when the file goes into a package.
+The R package `Rcpp` connects R and C++. We write the C++ version into the file `tstat_C.cpp` in `mydir`. The line `// [[Rcpp::export]]` tells `Rcpp` to make the function available in R. The comments that start with `//'` are roxygen comments. They are used when the file goes into a package. The line `@useDynLib pvalDist, .registration = TRUE` tells R to load the compiled code of the package `pvalDist`. The line `@importFrom Rcpp sourceCpp` makes sure that `Rcpp` is loaded too.
 
 ```{r}
 cat(file = "tstat_C.cpp", r"---(#include <Rcpp.h>
@@ -290,6 +289,8 @@ using namespace Rcpp;
 //' @return The t statistic.
 //' @examples
 //' tstat_C(c(1, 2, 3, 5), mu_0 = 2)
+//' @useDynLib pvalDist, .registration = TRUE
+//' @importFrom Rcpp sourceCpp
 //' @export
 // [[Rcpp::export]]
 double tstat_C(NumericVector x, double mu_0) {
@@ -381,14 +382,18 @@ d[, "Version"] <- "0.0.2"
 write.dcf(d, "pvalDist/DESCRIPTION")
 ```
 
-`use_rcpp` prepares the package for `Rcpp`. It creates the folder `src` and adds `Rcpp` to `Imports` and `LinkingTo` in `DESCRIPTION`. It also writes the file `R/pvalDist-package.R`. That file holds two roxygen lines, `@useDynLib pvalDist, .registration = TRUE` and `@importFrom Rcpp sourceCpp`.
+We now prepare the package for `Rcpp`. `use_package` adds `Rcpp` to `LinkingTo` and `Imports` in `DESCRIPTION`. We also create the folder `src` for the C++ code.
 
 ```{r}
 proj_set("pvalDist")
-use_rcpp()
+use_package("Rcpp", "LinkingTo")
+use_package("Rcpp")
+dir.create("pvalDist/src")
 ```
 
-We copy the C++ file into `src` and run `compileAttributes`. It writes the R wrapper `R/RcppExports.R` and the file `src/RcppExports.cpp` for us. The roxygen comments in the C++ file go into the R wrapper, so `document` uses them.
+Note that `usethis` also has the function `use_rcpp`. Without a file name, it often stops with an error, so we do not use it here.
+
+We copy the C++ file into `src` and run `compileAttributes`. It writes the R wrapper `R/RcppExports.R` and the file `src/RcppExports.cpp` for us. The roxygen comments in the C++ file go into the R wrapper, so `document` uses them and adds `useDynLib(pvalDist, .registration = TRUE)` to `NAMESPACE`.
 
 ```{r}
 file.copy("tstat_C.cpp", "pvalDist/src/tstat_C.cpp")
@@ -404,9 +409,13 @@ system("R CMD INSTALL pvalDist_0.0.2.tar.gz")
 system("R CMD check pvalDist_0.0.2.tar.gz")
 ```
 
-We test the package. Restart R first if the old version is still loaded.
+We test the package. Restart R first, because the old version `0.0.1` is still loaded. In RStudio, use Session > Restart R. In a terminal, type `q("no")` and start R again. A restart may keep old objects, such as `tstat_C` from `sourceCpp`. They would hide the functions of the package, so we remove them with `rm(list = ls())`. Then we load `devtools` and set the working directory again.
 
 ```{r}
+rm(list = ls())
+library(devtools)
+mydir <- "~/STAT5400/package"
+setwd(mydir)
 library(pvalDist)
 packageVersion("pvalDist")
 tstat_C(c(1, 2, 3, 5), mu_0 = 2)
@@ -483,9 +492,10 @@ system("R CMD INSTALL pvalDist_0.0.3.tar.gz")
 system("R CMD check pvalDist_0.0.3.tar.gz")
 ```
 
-We test the three functions. Restart R first if the old version is still loaded.
+We test the three functions. Restart R first, because the old version `0.0.2` is still loaded. As before, we remove the old objects first.
 
 ```{r}
+rm(list = ls())
 library(pvalDist)
 packageVersion("pvalDist")
 x <- c(1, 2, 3, 5)
