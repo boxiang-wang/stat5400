@@ -441,7 +441,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <p>On the lnx machines, we cannot write to the system library. The first time we run <code>install.packages</code>, R asks</p>
 <pre><code>Would you like to use a personal library instead? (yes/No/cancel)
 Would you like to create a personal library ... to install packages into? (yes/No/cancel)</code></pre>
-<p>Answer <code>yes</code> to both. R creates a folder under <code>~/R</code> and installs the packages there.</p>
+<p>Answer <code>yes</code> to both. R creates a folder under <code>~/R</code> and installs the packages there. In R in a terminal, R may also ask us to choose a CRAN mirror. Type <code>1</code> and press Enter.</p>
 <p>We can also create the personal library ourselves. In R:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.getenv</span>(<span class="st">"R_LIBS_USER"</span>)                   <span class="co"># the personal library</span></span>
@@ -589,13 +589,12 @@ Would you like to create a personal library ... to install packages into? (yes/N
 <p>A folder <code>man</code> is generated with the file <code>pvalDist2.Rd</code> inside it. The <code>NAMESPACE</code> file now exports <code>pvalDist2</code> and imports <code>pt</code> and <code>sd</code>.</p>
 <ol start="4" type="1">
 <li><p>(Optional) We add a <span class="term"><strong>vignette</strong></span>, a long-form document that shows how to use the package. Building a vignette needs pandoc, a program that converts documents between formats. RStudio and Positron come with it. Run <code>rmarkdown::pandoc_available()</code> first. If it is <code>FALSE</code>, skip this step.</p>
-<p><code>use_vignette</code> creates a template <code>vignettes/pvalDist.Rmd</code> and adds <code>knitr</code> and <code>rmarkdown</code> to <code>DESCRIPTION</code>. We keep the template as it is and build it.</p></li>
+<p><code>use_vignette</code> creates a template <code>vignettes/pvalDist.Rmd</code> and adds <code>knitr</code> and <code>rmarkdown</code> to <code>DESCRIPTION</code>. We keep the template as it is. <code>R CMD build</code> in the next step builds it. Note that in R in a terminal, for example on the lnx machines, <code>use_vignette</code> opens the new file in an editor. If it opens nano, press <code>Ctrl-X</code> to return to R.</p></li>
 </ol>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">pandoc_available</span>()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">proj_set</span>(<span class="st">"pvalDist"</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_vignette</span>(<span class="st">"pvalDist"</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">build_vignettes</span>(<span class="st">"pvalDist"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_vignette</span>(<span class="st">"pvalDist"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="5" type="1">
 <li>We now build, install, and check the package. These are shell commands. We run them from R with <code>system</code>, in the folder <code>mydir</code> that contains <code>pvalDist</code>. You may also type them in a terminal.</li>
@@ -632,7 +631,7 @@ Would you like to create a personal library ... to install packages into? (yes/N
 </div>
 <section id="c" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="c"><span class="header-section-number">3.1</span> C++</h3>
-<p>The R package <code>Rcpp</code> connects R and C++. We write the C++ version into the file <code>tstat_C.cpp</code> in <code>mydir</code>. The line <code>// [[Rcpp::export]]</code> tells <code>Rcpp</code> to make the function available in R. The comments that start with <code>//'</code> are roxygen comments. They are used when the file goes into a package.</p>
+<p>The R package <code>Rcpp</code> connects R and C++. We write the C++ version into the file <code>tstat_C.cpp</code> in <code>mydir</code>. The line <code>// [[Rcpp::export]]</code> tells <code>Rcpp</code> to make the function available in R. The comments that start with <code>//'</code> are roxygen comments. They are used when the file goes into a package. The line <code>@useDynLib pvalDist, .registration = TRUE</code> tells R to load the compiled code of the package <code>pvalDist</code>. The line <code>@importFrom Rcpp sourceCpp</code> makes sure that <code>Rcpp</code> is loaded too.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="at">file =</span> <span class="st">"tstat_C.cpp"</span>, r<span class="st">"---(#include &lt;Rcpp.h&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="st">using namespace Rcpp;</span></span>
@@ -644,18 +643,20 @@ Would you like to create a personal library ... to install packages into? (yes/N
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="st">//' @return The t statistic.</span></span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="st">//' @examples</span></span>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="st">//' tstat_C(c(1, 2, 3, 5), mu_0 = 2)</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="st">//' @export</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="st">// [[Rcpp::export]]</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="st">double tstat_C(NumericVector x, double mu_0) {</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="st">  int n = x.size();</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="st">  double s = 0.0, ss = 0.0;</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="st">  for (int i = 0; i &lt; n; i++) s += x[i];</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="st">  double xbar = s / n;</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="st">  for (int i = 0; i &lt; n; i++) ss += (x[i] - xbar) * (x[i] - xbar);</span></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="st">  double sd = sqrt(ss / (n - 1));</span></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="st">  return (xbar - mu_0) / (sd / sqrt(n));</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="st">)---"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="st">//' @useDynLib pvalDist, .registration = TRUE</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="st">//' @importFrom Rcpp sourceCpp</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="st">//' @export</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="st">// [[Rcpp::export]]</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="st">double tstat_C(NumericVector x, double mu_0) {</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="st">  int n = x.size();</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="st">  double s = 0.0, ss = 0.0;</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="st">  for (int i = 0; i &lt; n; i++) s += x[i];</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="st">  double xbar = s / n;</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="st">  for (int i = 0; i &lt; n; i++) ss += (x[i] - xbar) * (x[i] - xbar);</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="st">  double sd = sqrt(ss / (n - 1));</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="st">  return (xbar - mu_0) / (sd / sqrt(n));</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="st">)---"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><code>Rcpp::sourceCpp</code> compiles the file and creates the R function <code>tstat_C</code>.</p>
 <div class="cell">
@@ -725,12 +726,15 @@ Would you like to create a personal library ... to install packages into? (yes/N
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>d[, <span class="st">"Version"</span>] <span class="ot">&lt;-</span> <span class="st">"0.0.2"</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.dcf</span>(d, <span class="st">"pvalDist/DESCRIPTION"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>use_rcpp</code> prepares the package for <code>Rcpp</code>. It creates the folder <code>src</code> and adds <code>Rcpp</code> to <code>Imports</code> and <code>LinkingTo</code> in <code>DESCRIPTION</code>. It also writes the file <code>R/pvalDist-package.R</code>. That file holds two roxygen lines, <code>@useDynLib pvalDist, .registration = TRUE</code> and <code>@importFrom Rcpp sourceCpp</code>.</p>
+<p>We now prepare the package for <code>Rcpp</code>. <code>use_package</code> adds <code>Rcpp</code> to <code>LinkingTo</code> and <code>Imports</code> in <code>DESCRIPTION</code>. We also create the folder <code>src</code> for the C++ code.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proj_set</span>(<span class="st">"pvalDist"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_rcpp</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_package</span>(<span class="st">"Rcpp"</span>, <span class="st">"LinkingTo"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">use_package</span>(<span class="st">"Rcpp"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"pvalDist/src"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We copy the C++ file into <code>src</code> and run <code>compileAttributes</code>. It writes the R wrapper <code>R/RcppExports.R</code> and the file <code>src/RcppExports.cpp</code> for us. The roxygen comments in the C++ file go into the R wrapper, so <code>document</code> uses them.</p>
+<p>Note that <code>usethis</code> also has the function <code>use_rcpp</code>. Without a file name, it often stops with an error, so we do not use it here.</p>
+<p>We copy the C++ file into <code>src</code> and run <code>compileAttributes</code>. It writes the R wrapper <code>R/RcppExports.R</code> and the file <code>src/RcppExports.cpp</code> for us. The roxygen comments in the C++ file go into the R wrapper, so <code>document</code> uses them and adds <code>useDynLib(pvalDist, .registration = TRUE)</code> to <code>NAMESPACE</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="st">"tstat_C.cpp"</span>, <span class="st">"pvalDist/src/tstat_C.cpp"</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>Rcpp<span class="sc">::</span><span class="fu">compileAttributes</span>(<span class="st">"pvalDist"</span>)</span>
@@ -742,11 +746,15 @@ Would you like to create a personal library ... to install packages into? (yes/N
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"R CMD INSTALL pvalDist_0.0.2.tar.gz"</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"R CMD check pvalDist_0.0.2.tar.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We test the package. Restart R first if the old version is still loaded.</p>
+<p>We test the package. Restart R first, because the old version <code>0.0.1</code> is still loaded. In RStudio, use Session &gt; Restart R. In a terminal, type <code>q("no")</code> and start R again. A restart may keep old objects, such as <code>tstat_C</code> from <code>sourceCpp</code>. They would hide the functions of the package, so we remove them with <code>rm(list = ls())</code>. Then we load <code>devtools</code> and set the working directory again.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pvalDist)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"pvalDist"</span>)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tstat_C</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>), <span class="at">mu_0 =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>mydir <span class="ot">&lt;-</span> <span class="st">"~/STAT5400/package"</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(mydir)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pvalDist)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"pvalDist"</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tstat_C</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>), <span class="at">mu_0 =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that <code>Rcpp.package.skeleton("mypkg")</code> creates a whole package with <code>Rcpp</code> directly. Follow the file <code>Read-and-delete-me</code> inside it.</p>
 </section>
@@ -811,16 +819,17 @@ Would you like to create a personal library ... to install packages into? (yes/N
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"R CMD INSTALL pvalDist_0.0.3.tar.gz"</span>)</span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"R CMD check pvalDist_0.0.3.tar.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We test the three functions. Restart R first if the old version is still loaded.</p>
+<p>We test the three functions. Restart R first, because the old version <code>0.0.2</code> is still loaded. As before, we remove the old objects first.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pvalDist)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"pvalDist"</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tstat_C</span>(x, <span class="at">mu_0 =</span> <span class="dv">2</span>)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tstat_F</span>(x, <span class="at">mu_0 =</span> <span class="dv">2</span>)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5400</span>)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pvalDist2</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">dist =</span> <span class="st">"exp"</span>, <span class="at">mu_0 =</span> <span class="dv">2</span>, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">rate =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(p <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pvalDist)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"pvalDist"</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tstat_C</span>(x, <span class="at">mu_0 =</span> <span class="dv">2</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tstat_F</span>(x, <span class="at">mu_0 =</span> <span class="dv">2</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">5400</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pvalDist2</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">dist =</span> <span class="st">"exp"</span>, <span class="at">mu_0 =</span> <span class="dv">2</span>, <span class="at">B =</span> <span class="dv">1000</span>, <span class="at">rate =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(p <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Read <em>Writing R Extensions</em>, <a href="https://cran.r-project.org/doc/manuals/r-devel/R-exts.html" class="uri">https://cran.r-project.org/doc/manuals/r-devel/R-exts.html</a>, for more information.</p>
 </section>

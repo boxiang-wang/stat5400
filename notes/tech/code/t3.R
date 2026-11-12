@@ -99,7 +99,6 @@ cat(readLines("pvalDist/NAMESPACE"), sep = "\n")
 rmarkdown::pandoc_available()
 proj_set("pvalDist")
 use_vignette("pvalDist")
-build_vignettes("pvalDist")
 
 system("R CMD build pvalDist")
 system("R CMD INSTALL pvalDist_0.0.1.tar.gz")
@@ -133,6 +132,8 @@ using namespace Rcpp;
 //' @return The t statistic.
 //' @examples
 //' tstat_C(c(1, 2, 3, 5), mu_0 = 2)
+//' @useDynLib pvalDist, .registration = TRUE
+//' @importFrom Rcpp sourceCpp
 //' @export
 // [[Rcpp::export]]
 double tstat_C(NumericVector x, double mu_0) {
@@ -203,7 +204,9 @@ d[, "Version"] <- "0.0.2"
 write.dcf(d, "pvalDist/DESCRIPTION")
 
 proj_set("pvalDist")
-use_rcpp()
+use_package("Rcpp", "LinkingTo")
+use_package("Rcpp")
+dir.create("pvalDist/src")
 
 file.copy("tstat_C.cpp", "pvalDist/src/tstat_C.cpp")
 Rcpp::compileAttributes("pvalDist")
@@ -213,6 +216,10 @@ system("R CMD build pvalDist")
 system("R CMD INSTALL pvalDist_0.0.2.tar.gz")
 system("R CMD check pvalDist_0.0.2.tar.gz")
 
+rm(list = ls())
+library(devtools)
+mydir <- "~/STAT5400/package"
+setwd(mydir)
 library(pvalDist)
 packageVersion("pvalDist")
 tstat_C(c(1, 2, 3, 5), mu_0 = 2)
@@ -271,6 +278,7 @@ system("R CMD build pvalDist")
 system("R CMD INSTALL pvalDist_0.0.3.tar.gz")
 system("R CMD check pvalDist_0.0.3.tar.gz")
 
+rm(list = ls())
 library(pvalDist)
 packageVersion("pvalDist")
 x <- c(1, 2, 3, 5)
