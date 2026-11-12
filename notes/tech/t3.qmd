@@ -66,6 +66,8 @@ Would you like to create a personal library ... to install packages into? (yes/N
 
 Answer `yes` to both. R creates a folder under `~/R` and installs the packages there. In R in a terminal, R may also ask us to choose a CRAN mirror. Type `1` and press Enter.
 
+Note that when a line asks a question, R may take the next line that we paste as the answer. So we run the line `install.packages("profvis")` alone, and answer the questions, before we run the other lines.
+
 We can also create the personal library ourselves. In R:
 
 ```{r}
@@ -409,7 +411,7 @@ system("R CMD INSTALL pvalDist_0.0.2.tar.gz")
 system("R CMD check pvalDist_0.0.2.tar.gz")
 ```
 
-We test the package. Restart R first, because the old version `0.0.1` is still loaded. In RStudio, use Session > Restart R. In a terminal, type `q("no")` and start R again. A restart may keep old objects, such as `tstat_C` from `sourceCpp`. They would hide the functions of the package, so we remove them with `rm(list = ls())`. Then we load `devtools` and set the working directory again.
+We test the package. Restart R first, so that R uses the newly installed version. In RStudio, use Session > Restart R. In a terminal, type `q("no")` and start R again. A restart may keep old objects, such as `tstat_C` from `sourceCpp`. They would hide the functions of the package, so we remove them with `rm(list = ls())`. Then we load `devtools` and set the working directory again.
 
 ```{r}
 rm(list = ls())
@@ -492,7 +494,7 @@ system("R CMD INSTALL pvalDist_0.0.3.tar.gz")
 system("R CMD check pvalDist_0.0.3.tar.gz")
 ```
 
-We test the three functions. Restart R first, because the old version `0.0.2` is still loaded. As before, we remove the old objects first.
+We test the three functions. Restart R first, so that R uses the newly installed version. As before, we remove the old objects first.
 
 ```{r}
 rm(list = ls())
