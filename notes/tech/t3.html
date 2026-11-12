@@ -442,6 +442,7 @@ All code on this page, in one file: <a class="codefile" href="https://github.com
 <pre><code>Would you like to use a personal library instead? (yes/No/cancel)
 Would you like to create a personal library ... to install packages into? (yes/No/cancel)</code></pre>
 <p>Answer <code>yes</code> to both. R creates a folder under <code>~/R</code> and installs the packages there. In R in a terminal, R may also ask us to choose a CRAN mirror. Type <code>1</code> and press Enter.</p>
+<p>Note that when a line asks a question, R may take the next line that we paste as the answer. So we run the line <code>install.packages("profvis")</code> alone, and answer the questions, before we run the other lines.</p>
 <p>We can also create the personal library ourselves. In R:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.getenv</span>(<span class="st">"R_LIBS_USER"</span>)                   <span class="co"># the personal library</span></span>
@@ -746,7 +747,7 @@ Would you like to create a personal library ... to install packages into? (yes/N
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"R CMD INSTALL pvalDist_0.0.2.tar.gz"</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"R CMD check pvalDist_0.0.2.tar.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We test the package. Restart R first, because the old version <code>0.0.1</code> is still loaded. In RStudio, use Session &gt; Restart R. In a terminal, type <code>q("no")</code> and start R again. A restart may keep old objects, such as <code>tstat_C</code> from <code>sourceCpp</code>. They would hide the functions of the package, so we remove them with <code>rm(list = ls())</code>. Then we load <code>devtools</code> and set the working directory again.</p>
+<p>We test the package. Restart R first, so that R uses the newly installed version. In RStudio, use Session &gt; Restart R. In a terminal, type <code>q("no")</code> and start R again. A restart may keep old objects, such as <code>tstat_C</code> from <code>sourceCpp</code>. They would hide the functions of the package, so we remove them with <code>rm(list = ls())</code>. Then we load <code>devtools</code> and set the working directory again.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
@@ -819,7 +820,7 @@ Would you like to create a personal library ... to install packages into? (yes/N
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"R CMD INSTALL pvalDist_0.0.3.tar.gz"</span>)</span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"R CMD check pvalDist_0.0.3.tar.gz"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We test the three functions. Restart R first, because the old version <code>0.0.2</code> is still loaded. As before, we remove the old objects first.</p>
+<p>We test the three functions. Restart R first, so that R uses the newly installed version. As before, we remove the old objects first.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pvalDist)</span>
